@@ -6,7 +6,10 @@
                     <span class="member_num">構成員番号：XXXXXX</span>
                     <span class="welcom">ようこそ、XXXさん</span>
                 </div>
-                <button class="close-btn">閉じる</button>
+                <form action="/logout" method="post">
+                    @csrf
+                    <button class="close-btn">閉じる</button>
+                </form>
             </div>
         </div>
     </div>
