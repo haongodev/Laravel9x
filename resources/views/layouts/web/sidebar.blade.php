@@ -10,6 +10,24 @@
                     @csrf
                     <button class="close-btn">閉じる</button>
                 </form>
+                <button class="registed-btn">現在の単位登録数</button>
+                <ul class="list-info">
+                    <li>
+                        <span class="bg-primary">SV</span><span>15</span>
+                    </li>
+                    <li>
+                        <span class="bg-yellow">研修・学会等</span><span>8</span>
+                    </li>
+                    <li>
+                        <span class="bg-green">社会的活動</span><span>22</span>
+                    </li>
+                </ul>
+                <div class="cert-box">
+                    <button class="handle-btn">認定期限</button>
+                    <span>2028年度</span>
+                </div>
+                <button class="scheduled-btn">現在の単位登録数</button>
+                <p class="current-time">2028年 2月 28日</p>
             </div>
         </div>
     </div>

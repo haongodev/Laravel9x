@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CreditRegistrationController;
 use App\Http\Controllers\MyPageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Authenticate;
@@ -18,7 +19,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/mypage',[MyPageController::class, 'index']);
+
+Route::group(['prefix' => 'mypage'],function() {
+    Route::get('/',[MyPageController::class, 'index'])->name('mypage');
+
+    Route::group(['prefix' => 'credit-registration'],function() {
+        Route::get('/',[CreditRegistrationController::class, 'index'])->name('creditRegistration');
+        Route::get('/registry',[CreditRegistrationController::class, 'registry'])->name('creditRegistry');
+    });
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

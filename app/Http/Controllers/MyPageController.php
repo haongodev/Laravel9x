@@ -6,7 +6,7 @@ class MyPageController extends Controller
 {
     public function index()
     {
-        return view('myPage');
+        return view('myPage/index');
     }
 
 }

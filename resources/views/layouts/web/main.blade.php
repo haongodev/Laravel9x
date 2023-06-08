@@ -14,12 +14,15 @@
 </head>
 
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">
-
+@stack('styles')
 @include('layouts.web.header')
 <div class="wrapper-container">
     @include('layouts.web.sidebar')
 
-    @yield('content')
+    <div class="main-content">
+
+        @yield('content')
+    </div>
 </div>
 
 @stack('js')

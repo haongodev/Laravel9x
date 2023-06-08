@@ -1,0 +1,56 @@
+.form-registry .vertical-button{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    gap: 40px;
+}
+.form-registry .vertical-button button{
+    width: 100%;
+    font-size: 20px;
+    border: unset;
+    color: #fff;
+    padding: 10px 70px;
+}
+.form-registry .vertical-button .redirect-btn{
+    border-radius: 25px;
+    background: #FFB366;
+}
+.form-registry .vertical-button .credited-btn{
+    border-radius: 15px;
+    background: #60C659;
+}
+.form-registry .vertical-button .credited{
+    border-top: 1px solid #cbd5e1;
+    padding-top: 20px;
+}
+.form-registry .input-group{
+    display: flex;
+    margin-top: 20px;
+}
+.form-registry .input-group label{
+    margin-right: 15px;
+}
+.form-registry .input-group select{
+    width: 85%;
+    padding: 6px;
+    font-size: 15px;
+}
+.form-registry .action{
+    text-align: center;
+    margin-top: 20px;
+}
+.form-registry .action .action-btn{
+    color: #fff;
+    background: #FFB366;
+    border-radius: 20px;
+    border: unset;
+    padding: 10px 30px;
+}
+.form-registry .area-input{
+    margin-top: 20px;
+}
+.form-registry .area-input #w3review{
+    width: 100%;
+    resize: vertical;
+}
