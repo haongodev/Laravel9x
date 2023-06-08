@@ -6,6 +6,7 @@
                     <span class="member_num">構成員番号：XXXXXX</span>
                     <span class="welcom">ようこそ、XXXさん</span>
                 </div>
+<<<<<<< HEAD
                 <button class="close-btn">閉じる</button>
                 <button class="registed-btn">現在の単位登録数</button>
                 <ul class="list-info">
@@ -25,6 +26,12 @@
                 </div>
                 <button class="scheduled-btn">現在の単位登録数</button>
                 <p class="current-time">2028年 2月 28日</p>
+=======
+                <form action="/logout" method="post">
+                    @csrf
+                    <button class="close-btn">閉じる</button>
+                </form>
+>>>>>>> 976eb1ce1ddda47962535145da97e579185cd8d0
             </div>
         </div>
     </div>

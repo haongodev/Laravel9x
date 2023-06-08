@@ -1,0 +1,18 @@
+
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: #fff; }
+
+.show-password.open{
+    background-image:url('/assets/images/icon/password_show.png');
+}
+.show-password{
+    background-image:url('/assets/images/icon/password_hide.png');
+    background-size: cover;
+    position: absolute;
+    top: calc(50% - 16px);
+    right: 12px;
+    width: 32px;
+    height: 32px;
+}
+
