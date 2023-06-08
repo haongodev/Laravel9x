@@ -1,104 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset=utf-8>
-    <title>Ví dụ HTML đầu tiên - Chào mừng đến với Khóa học HTML cơ bản</title>
-</head>
-<style>
-    /* Bảng điều khiển cho form */
-    .form-control {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 50px;
-    }
+@extends('layouts.web.main_without_login', ['pageSlug' => 'myPage'])
 
-    /* Bao bọc cho label và form input */
-    .form-group {
-        width: 100%;
-        margin-bottom: 15px; /* khoảng cách giữa các form input */
-    }
+@section('content')
 
-    /* Thuộc tính của label */
-    .form-label {
-        display: inline-block;
-        margin-bottom: 5px;
-        font-size: 16px;
-    }
+<div class="container-fluid mt-5">
+    <div class="row d-flex align-items-center" style="height: 100%;">
+        <div class="col-md-6 offset-md-3">
+            <div class="">
+                <div class="text-center">
+                    <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
+                </div>
+                <form class="" action="/login" method="post">
+                    @csrf
+                    <div class="row no-gutters mt-4">
+                        <label class="col-md-3 col-lg-2 col-sm-12 text-center" for="username">ID</label>
+                        <div class=" col-md-9 col-lg-10 col-sm-12">
+                        <input type="text" class="form-control" placeholder="" id="id" required
+                               name="id">
+                        </div>
+                    </div>
+                    <div class="row no-gutters mt-4">
+                        <label class="col-md-3 col-lg-2 col-sm-12 text-center" for="password">パスワード</label>
+                        <div class=" col-md-9 col-lg-10 col-sm-12" style="position: relative">
+                        <input type="password" placeholder="" id="password" class="form-control"
+                               name="password" required>
+                            <div  id="show" class="show-password"></div>
+                        </div>
 
-    /* Thuộc tính của form input */
-    .form-input {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-        box-sizing: border-box;
-        font-size: 16px;
-    }
-
-    /* Hover state cho các form input */
-    .form-input:focus {
-        outline-color: #007bff;
-    }
-
-    /* Thuộc tính cho nút Đăng nhập */
-    .form-submit-btn {
-        padding: 10px;
-        border-radius: 5px;
-        border: none;
-        background-color: #007bff;
-        color: #fff;
-        width: 100%;
-        transition: background-color 0.3s ease-in-out;
-    }
-
-    /* Hover state cho nút Đăng nhập */
-    .form-submit-btn:hover {
-        background-color: #0062cc;
-    }
-
-    /* Dòng chân trên đáy của phần tử */
-    hr {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-</style>
-<body>
-<div style="width: 50%; align: center">
-    @php@endphp
-    @foreach($errors->all() as $error)
-        {{$error}}
-    @endforeach
-    <form action="/login" method="post">
-        @csrf
-    <div class="form-control">
-        <div class="form-group">
-            <label for="username" class="form-label">Tên đăng nhập:</label>
-            <input type="text" id="username" class="form-input" name="id" required>
+                    </div>
+                    @error('id')
+                    <div class="row no-gutters mt-4">
+                       <div class="col-md-9 offset-md-2"><span class="text-danger">{{$message}}</span></div>
+                    </div>
+                    @enderror
+                    <div class="row no-gutters mt-4">
+                        <div class="offset-lg-5 col-lg-12 col-md-7 offset-md-5 col-sm-7 offset-sm-5">
+                            <input style="width: 150px" type="submit" value="ログイン" class="btn btn-block btn-primary m-auto">
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="password" class="form-label">Mật khẩu:</label>
-            <input type="password" id="password" class="form-input" name="password" required>
-            <span id="show-password" onclick="togglePassword()">Hiện mật khẩu</span>
-        </div>
-        <button type="submit" class="form-submit-btn">Đăng nhập</button>
-        <hr>
     </div>
-    </form>
 </div>
+
 <script>
-    function togglePassword() {
-        var passwordInput = document.getElementById("password");
-        var showPasswordButton = document.getElementById("show-password");
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            showPasswordButton.innerHTML = "Ẩn mật khẩu";
+    $('#show').click(function(){
+        var type = $('#password').attr('type');
+        console.log(type);
+        if (type === "password") {
+            $('#password').attr('type','text')
+            $(this).addClass('open')
         } else {
-            passwordInput.type = "password";
-            showPasswordButton.innerHTML = "Hiện mật khẩu";
+            $('#password').attr('type','password')
+            $(this).removeClass('open')
         }
-    }
+    })
+
 </script>
 </body>
 </html>
+@endsection
