@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row">
                 <div class="title-sign">
-                    <span class="member_num">構成員番号：XXXXXX</span>
-                    <span class="welcom">ようこそ、XXXさん</span>
+                    <span class="member_num">構成員番号：{{auth()->user()->id}}</span>
+                    <span class="welcom">ようこそ、{{auth()->user()->name}}さん</span>
                 </div>
                 <form action="/logout" method="post">
                     @csrf
