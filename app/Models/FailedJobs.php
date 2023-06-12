@@ -5,17 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class GuidanceSetting
- * @package App\Models
+ * @property string $connection
+ * @property string $exception
+ * @property string $payload
+ * @property string $queue
+ * @property string $uuid
+ * @property int    $failed_at
  */
-class GuidanceSetting extends Model
+class FailedJobs extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'guidance_settings';
+    protected $table = 'failed_jobs';
 
     /**
      * The primary key for the model.
@@ -30,7 +34,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $fillable = [
-        'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date', 'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date'
+        'connection', 'exception', 'failed_at', 'payload', 'queue', 'uuid'
     ];
 
     /**
@@ -39,7 +43,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $hidden = [
-
+        
     ];
 
     /**
@@ -48,7 +52,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'id' => 'int', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime'
+        'connection' => 'string', 'exception' => 'string', 'failed_at' => 'timestamp', 'payload' => 'string', 'queue' => 'string', 'uuid' => 'string'
     ];
 
     /**
@@ -57,7 +61,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $dates = [
-        'registration_date', 'update_date', 'registration_date', 'update_date'
+        'failed_at'
     ];
 
     /**

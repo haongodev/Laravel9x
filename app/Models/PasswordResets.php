@@ -5,24 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class GuidanceSetting
- * @package App\Models
+ * @property string $email
+ * @property string $token
+ * @property int    $created_at
  */
-class GuidanceSetting extends Model
+class PasswordResets extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'guidance_settings';
+    protected $table = 'password_resets';
 
     /**
      * The primary key for the model.
      *
      * @var string
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'email';
 
     /**
      * Attributes that should be mass-assignable.
@@ -30,7 +31,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $fillable = [
-        'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date', 'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date'
+        'created_at', 'token'
     ];
 
     /**
@@ -39,7 +40,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $hidden = [
-
+        
     ];
 
     /**
@@ -48,7 +49,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'id' => 'int', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime'
+        'email' => 'string', 'created_at' => 'timestamp', 'token' => 'string'
     ];
 
     /**
@@ -57,7 +58,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $dates = [
-        'registration_date', 'update_date', 'registration_date', 'update_date'
+        'created_at'
     ];
 
     /**

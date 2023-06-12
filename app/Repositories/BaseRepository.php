@@ -38,6 +38,8 @@ abstract class BaseRepository implements RepositoryInterface
     }
 
 
+
+
     /**
      * @param $id
      * @param array $inputs
@@ -74,33 +76,6 @@ abstract class BaseRepository implements RepositoryInterface
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function destroyAll(): bool
-    {
-        try {
-            return $this->model->delete();
-        } catch (QueryException $exc) {
-            Log::error($exc->getMessage(), $exc->getTrace());
-            return false;
-        }
-    }
-
-    /**
-     * @param $id
-     * @return bool
-     */
-    public function forceDelete($id): bool
-    {
-        try {
-            $data = $this->getById($id, [], true);
-            return $data ? $data->forceDelete() : false;
-        } catch (QueryException $exc) {
-            Log::error($exc->getMessage(), $exc->getTrace());
-            return false;
-        }
-    }
 
     /**
      * @param $id

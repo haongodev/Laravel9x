@@ -5,17 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class GuidanceSetting
- * @package App\Models
+ * @property int    $created_at
+ * @property int    $email_verified_at
+ * @property int    $updated_at
+ * @property string $email
+ * @property string $name
+ * @property string $password
+ * @property string $remember_token
  */
-class GuidanceSetting extends Model
+class SysUsers extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'guidance_settings';
+    protected $table = 'sys_users';
 
     /**
      * The primary key for the model.
@@ -30,7 +35,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $fillable = [
-        'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date', 'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date'
+        'created_at', 'email', 'email_verified_at', 'name', 'password', 'remember_token', 'updated_at'
     ];
 
     /**
@@ -39,7 +44,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $hidden = [
-
+        
     ];
 
     /**
@@ -48,7 +53,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'id' => 'int', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime'
+        'created_at' => 'timestamp', 'email' => 'string', 'email_verified_at' => 'timestamp', 'name' => 'string', 'password' => 'string', 'remember_token' => 'string', 'updated_at' => 'timestamp'
     ];
 
     /**
@@ -57,7 +62,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $dates = [
-        'registration_date', 'update_date', 'registration_date', 'update_date'
+        'created_at', 'email_verified_at', 'updated_at'
     ];
 
     /**

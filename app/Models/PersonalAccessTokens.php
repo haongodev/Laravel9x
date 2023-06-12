@@ -5,17 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class GuidanceSetting
- * @package App\Models
+ * @property string $abilities
+ * @property string $name
+ * @property string $token
+ * @property string $tokenable_type
+ * @property int    $created_at
+ * @property int    $expires_at
+ * @property int    $last_used_at
+ * @property int    $updated_at
  */
-class GuidanceSetting extends Model
+class PersonalAccessTokens extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'guidance_settings';
+    protected $table = 'personal_access_tokens';
 
     /**
      * The primary key for the model.
@@ -30,7 +36,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $fillable = [
-        'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date', 'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date'
+        'abilities', 'created_at', 'expires_at', 'last_used_at', 'name', 'token', 'tokenable_id', 'tokenable_type', 'updated_at'
     ];
 
     /**
@@ -39,7 +45,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $hidden = [
-
+        
     ];
 
     /**
@@ -48,7 +54,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'id' => 'int', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime'
+        'abilities' => 'string', 'created_at' => 'timestamp', 'expires_at' => 'timestamp', 'last_used_at' => 'timestamp', 'name' => 'string', 'token' => 'string', 'tokenable_type' => 'string', 'updated_at' => 'timestamp'
     ];
 
     /**
@@ -57,7 +63,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $dates = [
-        'registration_date', 'update_date', 'registration_date', 'update_date'
+        'created_at', 'expires_at', 'last_used_at', 'updated_at'
     ];
 
     /**

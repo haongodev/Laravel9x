@@ -13,8 +13,9 @@ class MyPageController extends Controller
     }
     public function index()
     {
-        $content = $this->guidanceSettingService->getByScreenId('A001');
-        return view('myPage/index',['content'=>$content]);
+        $guidanceData = $this->guidanceSettingService->getByScreenId('A001');
+
+        return view('myPage/index',['guidanceData'=>$guidanceData]);
     }
 
 }

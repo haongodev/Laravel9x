@@ -5,17 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class GuidanceSetting
- * @package App\Models
+ * @property int      $id
+ * @property int      $type_native_id
+ * @property int      $input_method
+ * @property int      $level
+ * @property int      $score
+ * @property string   $answer
+ * @property string   $title
+ * @property DateTime $registration_date
+ * @property DateTime $update_date
  */
-class GuidanceSetting extends Model
+class AnsQuestionSettings extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'guidance_settings';
+    protected $table = 'ans_question_settings';
 
     /**
      * The primary key for the model.
@@ -30,7 +37,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $fillable = [
-        'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date', 'active_flg', 'guidance', 'location_id', 'registration_date', 'screen_id', 'sentence_class', 'update_date'
+        'parent_question_id', 'question_id', 'type_native_id', 'answer', 'input_method', 'level', 'registration_date', 'score', 'title', 'update_date'
     ];
 
     /**
@@ -39,7 +46,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $hidden = [
-
+        
     ];
 
     /**
@@ -48,7 +55,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'id' => 'int', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime', 'active_flg' => 'boolean', 'guidance' => 'string', 'location_id' => 'int', 'registration_date' => 'datetime', 'screen_id' => 'int', 'sentence_class' => 'int', 'update_date' => 'datetime'
+        'id' => 'int', 'type_native_id' => 'int', 'answer' => 'string', 'input_method' => 'int', 'level' => 'int', 'registration_date' => 'datetime', 'score' => 'int', 'title' => 'string', 'update_date' => 'datetime'
     ];
 
     /**
@@ -57,7 +64,7 @@ class GuidanceSetting extends Model
      * @var array
      */
     protected $dates = [
-        'registration_date', 'update_date', 'registration_date', 'update_date'
+        'registration_date', 'update_date'
     ];
 
     /**
