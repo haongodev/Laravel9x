@@ -13,6 +13,7 @@
                 <button class="registed-btn">現在の単位登録数</button>
                 @php
                     $answerInfoPattern = answerInfoPattern();
+
                 @endphp
                 <ul class="list-info">
                     <li>
