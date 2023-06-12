@@ -4,7 +4,13 @@
     {{ Breadcrumbs::render('mypage') }}
     <div class="container">
         <div class="row">
-            this is my page
+            @if($guidanceData)
+                @if($guidanceData->sentence_class)
+                    {!! $guidanceData->guidance !!}
+                @else
+                    {{$guidanceData->guidance}}
+                @endif
+            @endif
         </div>
     </div>
 @endsection
