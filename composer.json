@@ -7,15 +7,17 @@
     "require": {
         "php": "^8.0.2",
         "diglactic/laravel-breadcrumbs": "^8.1",
+        "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
-        "bennett-treptow/laravel-migration-generator": "^4.3",
         "barryvdh/laravel-debugbar": "^3.8",
+        "bennett-treptow/laravel-migration-generator": "^4.3",
         "fakerphp/faker": "^1.9.1",
+        "laracademy/generators": "^3.6",
         "laravel/breeze": "^1.19",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
@@ -29,7 +31,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files" : [
+            "app/Helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

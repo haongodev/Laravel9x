@@ -3,31 +3,40 @@
         <div class="container">
             <div class="row">
                 <div class="title-sign">
-                    <span class="member_num">構成員番号：XXXXXX</span>
-                    <span class="welcom">ようこそ、XXXさん</span>
+                    <span class="member_num">構成員番号：{{auth()->user()->id}}</span>
+                    <span class="welcom">ようこそ、{{auth()->user()->name}}さん</span>
                 </div>
                 <form action="/logout" method="post">
                     @csrf
                     <button class="close-btn">閉じる</button>
                 </form>
                 <button class="registed-btn">現在の単位登録数</button>
+                @php
+                    $answerInfoPattern = answerInfoPattern();
+
+                @endphp
                 <ul class="list-info">
                     <li>
-                        <span class="bg-primary">SV</span><span>15</span>
+                        <span class="bg-primary">SV</span><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
                     </li>
                     <li>
-                        <span class="bg-yellow">研修・学会等</span><span>8</span>
+                        <span class="bg-yellow">研修・学会等</span><span>{{$answerInfoPattern[1]['score_total'] ?? 0}}</span>
                     </li>
                     <li>
-                        <span class="bg-green">社会的活動</span><span>22</span>
+                        <span class="bg-green">社会的活動</span><span>{{$answerInfoPattern[2]['score_total'] ?? 0}}</span>
                     </li>
                 </ul>
-                <div class="cert-box">
-                    <button class="handle-btn">認定期限</button>
-                    <span>2028年度</span>
-                </div>
-                <button class="scheduled-btn">現在の単位登録数</button>
-                <p class="current-time">2028年 2月 28日</p>
+                @if(auth()->user()->membership_type == 2)
+                    <div class="cert-box">
+                        <button class="handle-btn">認定期限</button>
+                        <span>{{getCertificationYear()}}年度</span>
+                    </div>
+                @endif
+                @php $scheduledDate = scheduledDate() @endphp
+                @if($scheduledDate)
+                    <button class="scheduled-btn">次回のさくらセット取り組み予定</button>
+                    <p class="current-time">{{date('Y年 m月 d日')}}</p>
+                @endif
             </div>
         </div>
     </div>
@@ -42,7 +51,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('creditRegistration')}}">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-2.svg">
                             <span>研鑽を積み上げる（単位申請）</span>
                         </a>
