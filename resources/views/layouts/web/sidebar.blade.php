@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('creditRegistration')}}">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-2.svg">
                             <span>研鑽を積み上げる（単位申請）</span>
                         </a>

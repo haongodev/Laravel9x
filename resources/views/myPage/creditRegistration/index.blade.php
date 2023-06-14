@@ -2,10 +2,28 @@
 
 @section('content')
     {{ Breadcrumbs::render('creditRegistration') }}
+    <div>
+        @if(!empty($guidanceData[1]))
+            @if($guidanceData[1]->sentence_class)
+                {!! $guidanceData[1]->guidance !!}
+            @else
+                {!! $guidanceData[1]->guidance !!}
+            @endif
+        @endif
+    </div>
     <div class="container">
         <div class="row" style="height: 800px; width:800px;margin: 0 auto;">
             <canvas id="myChart"></canvas>
         </div>
+    </div>
+    <div>
+        @if(!empty($guidanceData[2]))
+            @if($guidanceData[2]->sentence_class)
+                {!! $guidanceData[2]->guidance !!}
+            @else
+                {!! $guidanceData[2]->guidance !!}
+            @endif
+        @endif
     </div>
 @endsection
 @push('js')
@@ -14,7 +32,7 @@
     <script>
         const ctx = document.getElementById('myChart');
 
-        new Chart(ctx, {
+        var myChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: ['SV', '研修・学会等', '社会的活動'],
@@ -44,5 +62,26 @@
             },
             plugins: [ChartDataLabels]
         });
+        ctx.onclick = function (e){
+            var activePoints = myChart.getElementsAtEventForMode(e, 'point', myChart.options);
+            var firstPoint = activePoints[0];
+            var label = myChart.data.labels[firstPoint.index];
+            var url = '';
+            switch (label) {
+                case 'SV' :
+                    url = '{{route('creditRegistry')}}';
+                    break;
+                case '研修・学会等' :
+                    url = 'A009';
+                    break;
+                case '社会的活動' :
+                    url = 'A015';
+                    break;
+            }
+            if(url){
+                window.location.href=url;
+            }
+        }
+
     </script>
 @endpush

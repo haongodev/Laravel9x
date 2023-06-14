@@ -25,7 +25,7 @@ class MyPageController extends Controller
      */
     public function index()
     {
-        $guidanceData = $this->guidanceSettingService->getByScreenId('A001');
+        $guidanceData = $this->guidanceSettingService->getByScreenId('A001')->first();
 
         return view('myPage/index',['guidanceData'=>$guidanceData]);
     }
