@@ -28,17 +28,29 @@
     display: flex;
     margin-top: 20px;
 }
+.form-registry .input-group .group-control{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .form-registry .input-group label{
     margin-right: 15px;
 }
-.form-registry .input-group select{
-    width: 85%;
+.form-registry .input-group input[type="text"]{
+    margin-left: 5px;
+}
+.form-registry .input-group select,input{
     padding: 6px;
     font-size: 15px;
+    border:1px solid #5c5c5c;
+    border-radius: 6px;
 }
 .form-registry .action{
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
+    gap: 30px;
 }
 .form-registry .action .action-btn{
     color: #fff;
@@ -53,4 +65,52 @@
 .form-registry .area-input #w3review{
     width: 100%;
     resize: vertical;
+}
+.form-registry .action button{
+    color: #fff;
+    border-radius: 20px;
+    border: unset;
+    padding: 10px 50px;
+    cursor: pointer;
+}
+.form-registry .action .accept-btn{
+    background: #007FFF;
+}
+.form-registry .action .decline-btn{
+    background: #FFB366;
+}
+.form-registry .date-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-registry .date-group span{
+    width: 4%;
+    text-align: center;
+}
+.form-registry .date-group input{
+    width: 48%;
+}
+.form-registry .date-group.second{
+    justify-content: flex-start;
+}
+.form-registry .date-group.second input{
+    width: 46%;
+}
+.form-registry table {
+    width: 100%;
+}
+.form-registry table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.form-registry td,th {
+    padding: 5px;
+}
+.form-registry th {
+    background: #FFE4E1;
+}
+.form-registry td {
+    display: flex;
+    align-items: center;
 }

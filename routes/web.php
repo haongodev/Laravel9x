@@ -25,7 +25,9 @@ Route::group(['prefix' => 'mypage'],function() {
 
     Route::group(['prefix' => 'credit-registration'],function() {
         Route::get('/',[CreditRegistrationController::class, 'index'])->name('creditRegistration');
-        Route::get('/registry',[CreditRegistrationController::class, 'registry'])->name('creditRegistry');
+        Route::get('/typeSelected',[CreditRegistrationController::class, 'typeSelected'])->name('typeSelected');
+        Route::get('/creditRegistry',[CreditRegistrationController::class, 'creditRegistry'])->name('creditRegistry');
+        Route::post('/handleCreditRegistry',[CreditRegistrationController::class, 'handleCreditRegistry'])->name('handleCreditRegistry');
     });
 });
 
