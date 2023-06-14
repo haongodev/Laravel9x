@@ -20,8 +20,13 @@ class GuidanceSettingService
         $this->guidanceSettingRepository = $guidanceSettingRepository;
     }
 
-    public function getByScreenId($screenId = 0)
+    /**
+     * @param int $screenId
+     * @param array $filter
+     * @return mixed
+     */
+    public function getByScreenId($screenId = 0, array $filter = [])
     {
-        return $this->guidanceSettingRepository->getByScreenId($screenId);
+        return $this->guidanceSettingRepository->getByScreenId($screenId, $filter);
     }
 }
