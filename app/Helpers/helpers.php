@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 if (!function_exists('answerInfoPattern')) {
     function answerInfoPattern()
     {
-        $currentYear = date('m') > 3 ? date('Y') : date('Y-m-d', strtotime('-1 year'));
+        $currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
         $memberId = auth()->user()->id;
         $answerInfoData = AnswerInfo::select([
             'answer_info.type_native_id',

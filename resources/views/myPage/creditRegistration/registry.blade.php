@@ -1,17 +1,25 @@
 @extends('layouts.web.main', ['pageSlug' => 'myPage.myPage'])
 @push('styles')
-    <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet" />
+    <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
 @endpush
 @section('content')
     {{ Breadcrumbs::render('creditRegistry') }}
     <div class="container">
-        <div class="contain1">
+        <div class="contain1 pb-3">
+            @if($guidanceData)
+                @if($guidanceData->sentence_class)
+                    {!! $guidanceData->guidance !!}
+                @else
+                    {{$guidanceData->guidance}}
+                @endif
+            @endif
+
         </div>
         <div class="form-registry">
             <form action="#">
                 <div class="vertical-button">
                     <div class="redirect">
-                        <button type="button" class="redirect-btn">
+                        <button type="button" class="redirect-btn" onclick="window.location.href='A004'">
                             単位登録する
                         </button>
                     </div>

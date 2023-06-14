@@ -33,4 +33,17 @@ class AnswerInfoRepository
         $answerInfo->groupBy('type_native_id')->get();
 
     }
+
+    public function getTitle()
+    {
+        $memberId = auth()->user()->id;
+        $currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
+        return $this->model
+            ->select('title')
+            ->join('answer_manage', function ($q) {
+                $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+            })
+            ->where('answer_manage.member_id', $memberId)
+            ;
+    }
 }

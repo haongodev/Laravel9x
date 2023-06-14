@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -19,14 +20,16 @@ class CreditRegistrationController extends Controller
     {
         $this->guidanceSettingService = $guidanceSettingService;
     }
+
     public function index()
     {
         $guidanceData = $this->guidanceSettingService->getByScreenId('A002');
-        return view('myPage/creditRegistration/index',['guidanceData'=>$guidanceData]);
+        return view('myPage/creditRegistration/index', ['guidanceData' => $guidanceData]);
     }
 
     public function registry()
     {
-        return view('myPage/creditRegistration/registry');
+        $guidanceData = $this->guidanceSettingService->getByScreenId('A002', ['location_id' => 1])->first();
+        return view('myPage/creditRegistration/registry', ['guidanceData' => $guidanceData]);
     }
 }
