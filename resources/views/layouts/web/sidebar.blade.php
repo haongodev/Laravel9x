@@ -84,5 +84,11 @@
             </div>
         </div>
     </div>
-
+    <div class="sub-desc">
+        <ul class="text-danger">
+            <li>
+                <p>本協会の受講履歴を確認したい場合はマイページの「研修受講履歴」を選択 してください。</p>
+            </li>
+        </ul>
+    </div>
 </div>
