@@ -103,9 +103,9 @@
                 if (data == '') {
                     toastr.options = {
                         "target": "#w3review",
-                        'fadeOut': 30000,
-                        'timeOut': 30000,
-                        'extendedTimeOut': 30000
+                        'fadeOut': 5000,
+                        'timeOut': 5000,
+                        'extendedTimeOut': 5000
                     }
                     toastr.success('該当する単位はありません');
                 } else {

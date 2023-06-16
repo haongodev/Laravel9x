@@ -29,7 +29,7 @@
 </div>
 
 <script src="{{asset('assets/js/jquery.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{asset('assets/js/toastr/toastr.min.js')}}"></script>
 @stack('js')
 
 </body>
