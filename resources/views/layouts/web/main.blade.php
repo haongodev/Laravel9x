@@ -9,22 +9,27 @@
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
     <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet" />
+    <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />
 </head>
 
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">
 @stack('styles')
+@include('components.popup')
+@if (session('popup_confirm'))
+    @include('components.popup_confirm')
+@endif
 @include('layouts.web.header')
 <div class="wrapper-container">
     @include('layouts.web.sidebar')
 
     <div class="main-content">
-
         @yield('content')
     </div>
 </div>
 
+<script src="{{asset('assets/js/jquery.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 @stack('js')
 
 </body>

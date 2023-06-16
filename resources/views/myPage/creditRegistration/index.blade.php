@@ -69,7 +69,7 @@
             var url = '';
             switch (label) {
                 case 'SV' :
-                    url = '{{route('creditRegistry')}}';
+                    url = '{{route('typeSelected')}}';
                     break;
                 case '研修・学会等' :
                     url = 'A009';

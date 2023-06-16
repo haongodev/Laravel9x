@@ -18,9 +18,16 @@ Breadcrumbs::for('creditRegistration', function (BreadcrumbTrail $trail) {
     $trail->push('研鑽を積み上げる(単位登録)', route('creditRegistration'));
 });
 
-// creditRegistration > registry
-Breadcrumbs::for('creditRegistry', function (BreadcrumbTrail $trail) {
+// creditRegistration > type selected
+Breadcrumbs::for('typeSelected', function (BreadcrumbTrail $trail) {
     $trail->parent('creditRegistration');
-    $trail->push('(選択した類型)', route('creditRegistry'));
+    $trail->push('(選択した類型)', route('typeSelected'));
+//  $trail->push($category->title, route('category', $category)); for dynamic
+});
+
+// creditRegistration > type selected > registry
+Breadcrumbs::for('creditRegistry', function (BreadcrumbTrail $trail) {
+    $trail->parent('typeSelected');
+    $trail->push('単位登録', route('creditRegistry'));
 //  $trail->push($category->title, route('category', $category)); for dynamic
 });

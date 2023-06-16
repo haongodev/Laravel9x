@@ -15,6 +15,15 @@ class AnswerManageRepository
         $this->model = $model;
     }
 
-    //public function getRegistrationYear
+    public function getRegistrationYearByTypeNativeId($typeNativeId = 0)
+    {
+        $memberId = auth()->user()->id ?? '';
+        return $this->model
+            ->join('answer_info', function ($q) {
+            $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+        })->where('member_id',$memberId)
+            ->where('type_native_id',$typeNativeId)
+            ->groupBy('registration_year')->pluck('registration_year');
+    }
 
 }
