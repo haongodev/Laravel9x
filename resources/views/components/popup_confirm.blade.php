@@ -6,13 +6,13 @@
                 <img class="close-icon" src="{{ asset('assets') }}/images/menu-icon/close.png" alt="close icon">
             </div>
         </div>
-        <div class="popup-content">
+        <div class="popup-content" id="table-confirm-registry">
             <div class="header-content">
                 <span>スーパービジョン（SV）</span>
                 <button class="btn-export-pdf">PDF</button>
             </div>
             <div class="content">
-                <table id="table-confirm-registry">
+                <table>
                     <tr>
                         <th>自身の立場</th>
                             <td>{{ session('popup_confirm')['own_position'] }}</td>

@@ -139,8 +139,9 @@
 @endsection
 @push('js')
     <script src="{{asset('assets/js-lib/toastr.min.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script>
-        window.jsPDF = window.jspdf.jsPDF;
 
         $('.decline-btn').click(function (){
             var isValid = true;
@@ -196,22 +197,21 @@
             $('.btn-popup-accept').attr('last-confirm',true);
         })
         $('.btn-export-pdf').click(function () {
-            exportPDF('table-confirm-registry');
-        })
-        var specialElementHandlers = {
-            // element with id of "bypass" - jQuery style selector
-            '.no-export': function (element, renderer) {
-                // true = "handled elsewhere, bypass text extraction"
-                return true;
-            }
-        };
-        function exportPDF(id) {
-            var doc = new jsPDF('p', 'pt', 'a4');
-            //A4 - 595x842 pts
-            //https://www.gnu.org/software/gv/manual/html_node/Paper-Keywords-and-paper-size-in-points.html
+            $('.btn-export-pdf').addClass('hidden');
+            html2canvas($('#table-confirm-registry')[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download("registry-details.pdf");
 
-            doc.autoTable({ html: '#'+id })
-            doc.save('table.pdf')
-        }
+                    $('.btn-export-pdf').removeClass('hidden');
+                }
+            });
+        })
     </script>
 @endpush
