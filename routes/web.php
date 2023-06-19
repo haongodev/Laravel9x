@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 
-Route::group(['prefix' => 'mypage'],function() {
+Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
     Route::get('/',[MyPageController::class, 'index'])->name('mypage');
 
     Route::group(['prefix' => 'credit-registration'],function() {

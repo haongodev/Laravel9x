@@ -7,7 +7,7 @@
     @if(auth()->check())
     <div class="right-side">
         <div class="container">
-            <button type="button" class="header-buttom">私の研鑽データ</button>
+            <button type="button" class="header-buttom" onclick="window.location.href='{{route('mypage')}}'">私の研鑽データ</button>
         </div>
     </div>
     @endif
