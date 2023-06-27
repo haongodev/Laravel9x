@@ -29,6 +29,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/typeSelected',[CreditRegistrationController::class, 'searchTypeSelected'])->name('searchTypeSelected');
         Route::get('/creditRegistry',[CreditRegistrationController::class, 'creditRegistry'])->name('creditRegistry');
         Route::post('/handleCreditRegistry',[CreditRegistrationController::class, 'handleCreditRegistry'])->name('handleCreditRegistry');
+        Route::post('/getBranchQuestion',[CreditRegistrationController::class, 'getBranchQuestion'])->name('getBranchQuestion');
     });
 });
 
