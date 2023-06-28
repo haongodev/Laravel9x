@@ -1,7 +1,5 @@
-<?php
-//var_dump($questionSettingData);
-?>
-<div class="input-group">
+<div
+    class="input-group after-question-id-{{$questionSetting->id}} before-question-id-{{$questionSetting->parent_question_option_id}}">
     <div class="w-100 group-control">
         <label for="email" class="w-25">研鑽目的</label>
         <div class="w-75 table-group">
@@ -73,3 +71,4 @@
         </div>
     </div>
 </div>
+
