@@ -11,11 +11,11 @@
                 <tr rowspan="{{count($questionSetting->question_option_setting)}}">
                     <th>3 専門職・実践者としての力</th>
                     @foreach($questionSetting->question_option_setting as $questionOption)
-                        <td><input class="branch-question" type="checkbox" name="PAAP[]" value="5" id="checkbox5"
+                        <td><input class="branch-question" type="checkbox" name="PAAP[]" value="5" id="checkbox{{$questionOption->option_name}}"
                                    data-question-option-setting-id="{{$questionOption->id}}"
                                    data-parent-question-id="{{$questionSetting->id}}"
                             > <label
-                                for="checkbox5">{{$questionOption->option_name}}</label></td>
+                                for="checkbox{{$questionOption->option_name}}">{{$questionOption->option_name}}</label></td>
                     @endforeach
                 </tr>
 

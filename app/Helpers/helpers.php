@@ -51,3 +51,15 @@ if (!function_exists('scheduledDate')) {
     }
 
 }
+
+if (!function_exists('groupClassQuestionOption')) {
+    function groupClassQuestionOption($questionOptionData)
+    {
+        $data = [];
+        foreach ($questionOptionData as $key => $questionOption) {
+            $data[$questionOption->class_name][] = $questionOption;
+        }
+        return $data;
+    }
+}
+
