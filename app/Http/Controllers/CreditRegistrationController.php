@@ -72,6 +72,28 @@ class CreditRegistrationController extends Controller
     {
         return view('myPage/creditRegistration/registry');
     }
+    public function creditEdit(Request $request)
+    {
+        $fakeData = (object)[
+            "own_position" => 2,
+            "SVR_attributes" => "nothing to know",
+            "TOPL" => "hao ngo",
+            "type_SV" => 2,
+            "SV_frequency" => "2",
+            "s_period" => "2023-07-02T23:48",
+            "e_period" => "2023-07-14T23:48",
+            "SV_contract" => "2023-07-21T23:48",
+            "goal_study" => [
+                "study_purpose" => ["1"],
+                "SAAMOS" => ["3"],
+                "PAAP" => ["5"],
+                "brainstorming" => ["10"],
+                "PEAR" => ["11"],
+                "SWA" => ["13"],
+            ]
+        ];
+        return view('myPage/creditRegistration/edit',['data' => $fakeData]);
+    }
 
     public function handleCreditRegistry(Request $request)
     {

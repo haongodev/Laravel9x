@@ -7,6 +7,9 @@
     @if(auth()->check())
     <div class="right-side">
         <div class="container">
+            @if (isset($header_button))
+                {!! $header_button !!}
+            @endif
             <button type="button" class="header-buttom" onclick="window.location.href='{{route('mypage')}}'">私の研鑽データ</button>
         </div>
     </div>

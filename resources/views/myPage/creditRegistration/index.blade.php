@@ -1,4 +1,4 @@
-@extends('layouts.web.main', ['pageSlug' => 'myPage.myPage'])
+@extends('layouts.web.main', ['pageSlug' => '研鑽を積み上げる (単位登録)'])
 
 @section('content')
     {{ Breadcrumbs::render('creditRegistration') }}
@@ -72,10 +72,10 @@
                     url = '{{route('typeSelected')}}';
                     break;
                 case '研修・学会等' :
-                    url = 'A009';
+                    url = '{{route('cls')}}';
                     break;
                 case '社会的活動' :
-                    url = 'A015';
+                    url = '';
                     break;
             }
             if(url){
