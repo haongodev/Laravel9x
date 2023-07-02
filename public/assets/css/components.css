@@ -1,5 +1,5 @@
 .popup-wrapper{
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
@@ -102,4 +102,28 @@
     width: unset!important;
     font-size: 25px !important;
     padding: 35px 35px 35px 50px;
+}
+.popup_show_scoring_board .layout-popup .popup-content{
+    margin-top: 10px;
+}
+.popup_show_scoring_board .layout-popup .popup-content .content .btn-title{
+    background: #007FFF;
+    font-size: 24pt;
+    border: unset;
+    color: #fff;
+    border-radius: 30px;
+    padding: 5px 50px;
+}
+.popup_show_scoring_board .layout-popup .popup-content .content .input-group{
+    margin: 50px 0;
+}
+.popup_show_scoring_board .layout-popup .popup-content .content .input-group .date-group{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.popup_show_scoring_board .layout-popup .popup-content .content .input-group .date-group input{
+    font-size: 12pt;
+    padding: 10px;
+    border-radius: 6px;
 }

@@ -1,4 +1,4 @@
-@extends('layouts.web.main', ['pageSlug' => 'myPage.myPage'])
+@extends('layouts.web.main', ['pageSlug' => '選択した類型'])
 @push('styles')
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
 @endpush
@@ -31,18 +31,18 @@
                     </div>
                 </div>
                 <div class="input-group">
-                    <div class="w-50">
+                    <div class="w-50 group-control">
                         <label for="registration_year">登録年度</label>
-                        <select id="registration_year" name="registration_year">
+                        <select id="registration_year" name="registration_year" style="width:80%;margin-right: 20px;">
                             <option value="0">（登録年度）</option>
                             @foreach($registrationYearData as $value)
                                 <option value="{{$value}}">{{$value}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="w-50">
+                    <div class="w-50 group-control">
                         <label for="title">項目</label>
-                        <select id="title" name="title">
+                        <select id="title" name="title" style="width:80%;">
                             <option value="0">（項目）</option>
                             @foreach($titleData as $value)
                                 <option value="{{$value}}">{{$value}}</option>
@@ -59,8 +59,7 @@
                     {{--                        2023年9月～ 2023年12月 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX研修--}}
                     {{--                    </textarea>--}}
 
-                    <div style="width: 100%; height: 200px; border: 1px solid; overflow: auto; padding: 5px"
-                         id="w3review">
+                    <div style="height: 200px; border: 1px solid; overflow: auto; padding: 5px" id="w3review">
 
                     </div>
                 </div>

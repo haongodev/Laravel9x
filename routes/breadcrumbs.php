@@ -13,10 +13,23 @@ Breadcrumbs::for('mypage', function (BreadcrumbTrail $trail) {
     $trail->push('私の研鑽データ', route('mypage'));
 });
 
+// Sakura set
+Breadcrumbs::for('sakuraSet', function (BreadcrumbTrail $trail) {
+    $trail->parent('mypage');
+    $trail->push('さくらセットに取り組む', route('sakuraSet'));
+});
+
+// CurrentLearningSituation
+Breadcrumbs::for('cls', function (BreadcrumbTrail $trail) {
+    $trail->parent('mypage');
+    $trail->push('現在の研鑽状況', route('cls'));
+});
+
 // creditRegistration
 Breadcrumbs::for('creditRegistration', function (BreadcrumbTrail $trail) {
     $trail->push('研鑽を積み上げる(単位登録)', route('creditRegistration'));
 });
+
 
 // creditRegistration > type selected
 Breadcrumbs::for('typeSelected', function (BreadcrumbTrail $trail) {
@@ -27,7 +40,14 @@ Breadcrumbs::for('typeSelected', function (BreadcrumbTrail $trail) {
 
 // creditRegistration > type selected > registry
 Breadcrumbs::for('creditRegistry', function (BreadcrumbTrail $trail) {
-    $trail->parent('typeSelected');
+    $trail->parent('creditRegistration');
     $trail->push('単位登録', route('creditRegistry'));
+//  $trail->push($category->title, route('category', $category)); for dynamic
+});
+
+// creditRegistration > type selected > registry > edit
+Breadcrumbs::for('creditEdit', function (BreadcrumbTrail $trail) {
+    $trail->parent('creditRegistry');
+    $trail->push('修正', route('creditEdit'));
 //  $trail->push($category->title, route('category', $category)); for dynamic
 });
