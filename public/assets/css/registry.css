@@ -43,7 +43,6 @@
     padding: 6px;
     font-size: 15px;
     border:1px solid #5c5c5c;
-    border-radius: 6px;
 }
 
 .form-registry .input-group select, textarea {
@@ -70,7 +69,7 @@
     margin-top: 20px;
 }
 .form-registry .area-input #w3review{
-    width: 100%;
+    width: calc(100% - 12px);
     resize: vertical;
 }
 .form-registry .action button{
@@ -120,4 +119,11 @@
 .form-registry td {
     display: flex;
     align-items: center;
+}
+
+textarea {
+    resize: none;
+    overflow: hidden;
+    min-height: 50px;
+    max-height: 100px;
 }

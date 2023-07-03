@@ -1,0 +1,111 @@
+.sakura-set .without{
+    margin: 30px 0;
+    text-align: center;
+    border: 1px dashed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.sakura-set .top-contain{
+    height: 120pt;
+}
+.sakura-set .bottom-contain{
+    height: 290pt;
+}
+.sakura-set .button-list{
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+    align-items: center;
+}
+.sakura-set .button-list button{
+    border: unset;
+    background: #FFB366;
+    font-size: 12pt;
+    color: #fff;
+    padding: 10px;
+    border-radius: 30px;
+    width: 40%;
+    cursor: pointer;
+}
+.sakura-set .botton-navigate{
+    display: flex;
+    justify-content: space-between;
+    font-size: 12pt;
+    border: 1px solid #dbdbdb;
+    border-radius: 10px;
+    padding: 5px;
+    margin:30px 0;
+}
+.sakura-set .botton-navigate .pull-left,.pull-right{
+    width: 50%;
+}
+.sakura-set .botton-navigate .pull-left ul{
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sakura-set .botton-navigate .pull-right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.sakura-set .botton-navigate button{
+    font-size: 12pt;
+    border:unset;
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+.sakura-set .botton-navigate .pull-left button{
+    background: #3399FF;
+    border-radius: 10px;
+}
+.sakura-set .botton-navigate .pull-right button{
+    background: #FF6666;
+    border-radius: 25px;
+}
+.sakuraSet-sideBar{
+    margin-bottom: 20px;
+    border: 1px solid #94a3b8;
+    padding: 20px;
+    text-align: center;
+    font-size: 12pt;
+}
+.sakuraSet-sideBar ul{
+    list-style-type: none;
+    color: #72C02C;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.sakuraSet-sideBar ul li button{
+    cursor: pointer;
+    width: 30%;
+    border: unset;
+    color: #fff;
+    font-size: 12pt;
+    border-radius: 25px;
+    padding: 5px 0;
+}
+.sakuraSet-sideBar ul li:nth-child(1) button{
+    background: #66CC00;
+}
+.sakuraSet-sideBar ul li:nth-child(2) button{
+    background: #3399FF;
+}
+.sakuraSet-sideBar ul li:nth-child(3) button{
+    background: #FF3333;
+}
+.sakuraSet-sideBar ul li:nth-child(4) button{
+    background: #FF8000;
+}
+.popup-wrapper .layout-popup{
+    width: 30%!important;
+}
+.popup-wrapper .layout-popup .popup-content{
+    margin-bottom: 80px!important;
+}

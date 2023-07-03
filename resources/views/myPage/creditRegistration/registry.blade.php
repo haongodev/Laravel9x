@@ -1,16 +1,9 @@
-@extends('layouts.web.main', ['pageSlug' => 'myPage.myPage'])
+@extends('layouts.web.main', ['pageSlug' => '単位登録'])
 @push('styles')
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
+    <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css"
           rel="stylesheet"/>
-    <style>
-        textarea {
-            resize: none;
-            overflow: hidden;
-            min-height: 50px;
-            max-height: 100px;
-        }
-    </style>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
 
 @endpush
@@ -30,6 +23,7 @@
             <form action="{{ route('handleCreditRegistry') }}" method="post" id="registry">
                 @csrf
                 <input type="hidden" value="1" name="confirm">
+                <input type="hidden" id="urlGetQuestion" value="{{route('getBranchQuestion')}}">
                 @foreach($questionSettingData as $key => $questionSetting)
                     @if($questionSetting->input_method ==0)
                         <div class="input-group">
@@ -200,7 +194,7 @@
                         >
                             <div class="w-100 group-control">
                                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
-                                <select class="w-75 select-branch-question"
+                                <select class="w-75 select-branch-question select-chosen"
                                         id="question_select_{{$questionSetting->id}}" name="own_position">
                                     <option value="">Choose Option</option>
                                     @foreach($questionSetting->question_option_setting as $questionOption)
@@ -215,10 +209,12 @@
                             </div>
                     @endif
                     @if($questionSetting->input_method ==6)
-                        <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0">
+                        <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+                        <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0"
+                             data-current-question-id="{{$questionSetting->id}}">
                             <div class="w-100 group-control">
                                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
-                                <select class="w-75 select-branch-question" multiple
+                                <select class="w-75 select-branch-question select-chosen" multiple
                                         id="question_select_{{$questionSetting->id}}" name="own_position">
                                     <option value="">Choose Option</option>
                                     @foreach($questionSetting->question_option_setting as $questionOption)
@@ -229,6 +225,7 @@
 
                                 </select>
                             </div>
+                        </div>
                         </div>
                     @endif
                 @endforeach
@@ -253,6 +250,8 @@
 @endsection
 @push('js')
     <script src="{{asset('assets/js-lib/toastr.min.js')}}"></script>
+    <script src="{{asset('assets/js-lib/chosen.jquery.js')}}"></script>
+    <script src="{{asset('assets/js/registry.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
@@ -332,106 +331,9 @@
                 }
             });
         })
-        $('#registry').on('click', '.branch-question', function (e) {
-            var this_choose = $(this);
-            var isGetQuestion = true;
-            var question_setting_id = this_choose.data('question-option-setting-id');
-            var parent_question_id = this_choose.data('parent-question-id');
-            if (this_choose.attr('type') == 'checkbox') {
-                if (this_choose.is(':checked') == false) {
-                    removeQuestion(this_choose)
-                    // $('.question-option-setting-id-'+question_setting_id).remove()
-                    //$('.before-question-id-' + question_setting_id).html('')
-                 //   $('.before-question-id-' + question_setting_id).remove()
-                    isGetQuestion = false;
-                }
-            }
-            if (this_choose.attr('type') == 'radio') {
-                var parent_div = this_choose.closest('div.input-group');
-                // $(parent_div).find('input[type="radio"]').each(function () {
-                //     if ($(this).is(':checked') == false) {
-                //         var current_id = $(this).data('question-option-setting-id');
-                //         $('.before-question-id-' + current_id).remove()
-                //     }
-                // })
-            }
-            if (this_choose.attr('type') == 'radio') {
-                var parent_div = this_choose.closest('div.input-group');
-                $(parent_div).find('input[type="radio"]').each(function () {
-                    if ($(this).is(':checked') == false) {
-                        // var current_id = $(this).data('question-option-setting-id');
-                        // $('.before-question-id-' + current_id).remove()
-                        removeQuestion($(this))
-                    }
-                })
-            }
 
 
-            if (isGetQuestion) {
-                getQuestionBranch(this_choose, question_setting_id)
-            }
-        })
-        $('#registry').on('change', '.select-branch-question', function (e) {
-            var this_choose = $(this);
-            var id = $(this).attr('id');
-            $('#' + id + '>option').each(function (index) {
-                var current_id = $(this).data('question-option-setting-id');
 
-                if (!$(this).is(':selected')) {
-                    removeQuestion($(this))
-                } else {
-                    if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
-                        console.log('add', current_id);
-                        getQuestionBranch(this_choose, current_id)
-                    }
-
-                }
-
-            });
-
-        })
-
-        function getQuestionBranch(this_choose, question_setting_id) {
-            $.ajax({
-                type: "post",
-                url: '{{route('getBranchQuestion')}}',
-                cache: false,
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {question_setting_id: question_setting_id},
-                success: function (data) {
-                    console.log(data);
-                    nextQuestion(this_choose, data)
-                },
-            });
-        }
-
-        function nextQuestion(this_choose, data) {
-            var current_question_id = this_choose.closest('div.input-group').data('current-question-id');
-
-            $('.first-child-question-id-'+current_question_id).append(data.html)
-          //  this_choose.closest('div.input-group').after(data.html)
-        }
-
-        function removeQuestion(this_choose){
-            var current_question_id = this_choose.closest('div.input-group').data('current-question-id');
-            var current_id = this_choose.data('question-option-setting-id');
-            //if checkbox exist child when remove
-            if($('.first-child-question-id-'+current_question_id).find('.before-question-id-'+current_id).html()){
-                $('.first-child-question-id-'+current_question_id).find('.first-div').each(function(index, obj){
-                    $(this).remove();
-                });
-            }
-
-        }
-        function auto_grow(element) {
-            element.style.height = "5px";
-            element.style.height = (element.scrollHeight) + "px";
-        }
-
-        $('.select-branch-question').select2({
-            placeholder: 'Select an option',
-            minimumResultsForSearch: -1,
-            disableSearch: true
-        });
+        $(".select-chosen").chosen({no_results_text: "Oops, nothing found!"});
     </script>
 @endpush

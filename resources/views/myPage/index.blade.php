@@ -1,4 +1,4 @@
-@extends('layouts.web.main', ['pageSlug' => 'myPage.myPage'])
+@extends('layouts.web.main', ['pageSlug' => '私の研鑽データ'])
 
 @section('content')
     {{ Breadcrumbs::render('mypage') }}

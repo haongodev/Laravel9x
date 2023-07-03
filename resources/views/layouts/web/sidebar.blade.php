@@ -13,7 +13,6 @@
                 <button class="registed-btn">現在の単位登録数</button>
                 @php
                     $answerInfoPattern = answerInfoPattern();
-
                 @endphp
                 <ul class="list-info">
                     <li>
@@ -62,8 +61,8 @@
                             <span>現在の研鑽状況（単位取得状況）</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li class="{{ (request()->is('mypage/sakuraSet')) ? 'active' : '' }}">
+                        <a href="{{ route('sakuraSet') }}">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-4.svg">
                             <span>さくらセットに取り組む</span>
                         </a>
@@ -91,4 +90,7 @@
             </li>
         </ul>
     </div>
+    @if (isset($sidebarInclude))
+        {!! $sidebarInclude !!}
+    @endif
 </div>

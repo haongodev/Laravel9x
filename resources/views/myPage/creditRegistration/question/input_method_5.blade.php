@@ -6,7 +6,7 @@
     >
         <div class="w-100 group-control">
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
-            <select class="w-75 select-branch-question" id="question_select_{{$questionSetting->id}}"
+            <select class="w-75 select-branch-question select-chosen" id="question_select_{{$questionSetting->id}}"
                     name="own_position">
                 <option value="">Choose Option</option>
                 @foreach($questionSetting->question_option_setting as $questionOption)
@@ -19,9 +19,6 @@
         </div>
     </div>
     <script>
-        $('.select-branch-question').select2({
-            placeholder: 'Select an option',
-            minimumResultsForSearch: -1
-        });
+        $(".select-chosen").chosen({no_results_text: "Oops, nothing found!"});
     </script>
 </div>
