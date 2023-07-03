@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use App\Services\GuidanceSettingService;
 use App\Services\AnswerManageService;
 use App\Services\AnswerInfoService;
+use App\Services\QuestionManageService;
+use App\Services\QuestionSettingService;
 
 class CreditRegistrationController extends Controller
 {
@@ -27,18 +29,36 @@ class CreditRegistrationController extends Controller
     protected $answerInfoService;
 
     /**
-     * MyPageController constructor.
+     * @var QuestionManageService
+     */
+    protected $questionManageService;
+
+    /**
+     * @var QuestionSettingService
+     */
+    protected $questionSettingService;
+
+    /**
+     * CreditRegistrationController constructor.
      * @param GuidanceSettingService $guidanceSettingService
+     * @param AnswerManageService $answerManageService
+     * @param AnswerInfoService $answerInfoService
+     * @param QuestionManageService $questionManageService
+     * @param QuestionSettingService $questionSettingService
      */
     public function __construct(
         GuidanceSettingService $guidanceSettingService,
         AnswerManageService $answerManageService,
-        AnswerInfoService $answerInfoService
+        AnswerInfoService $answerInfoService,
+        QuestionManageService $questionManageService,
+        QuestionSettingService $questionSettingService,
     )
     {
         $this->guidanceSettingService = $guidanceSettingService;
         $this->answerManageService = $answerManageService;
         $this->answerInfoService = $answerInfoService;
+        $this->questionManageService = $questionManageService;
+        $this->questionSettingService = $questionSettingService;
     }
 
     public function index()
@@ -64,13 +84,23 @@ class CreditRegistrationController extends Controller
         $data = $request->all();
         //Current pattern
         $data['type_native_id'] = 0;
-        $creditsData = $this->answerInfoService->searchCredits($request->all());
+        $creditsData = $this->answerInfoService->searchCredits($data);
         return response()->json(['data' => $creditsData]);
     }
 
     public function creditRegistry(Request $request)
     {
-        return view('myPage/creditRegistration/registry');
+        $guidanceData = $this->guidanceSettingService->getByScreenId('A004');
+        $questionManageData = $this->questionManageService->getByTypeNativeId(0);
+        $questionId = $questionManageData->first()->id ?? '';
+        $questionSettingData = $this->questionSettingService->getByQuestionId($questionId);
+        $questionSettingChildData = $this->questionSettingService->getChildByQuestionId($questionId);
+
+        return view('myPage/creditRegistration/registry',[
+            'guidanceData' => $guidanceData,
+            'questionSettingData' => $questionSettingData,
+            'questionSettingChildData' => $questionSettingChildData
+        ]);
     }
     public function creditEdit(Request $request)
     {
@@ -108,5 +138,20 @@ class CreditRegistrationController extends Controller
                 return response()->json(['message' => 'successfully']);
             }
         }
+    }
+
+    public function getBranchQuestion(Request $request)
+    {
+        $questionSettingId = $request->get('question_setting_id');
+
+        $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionSettingId);
+        $returnHTML = '';
+        if($questionSetting){
+            $viewQuestion = 'input_method_'.$questionSetting->input_method;
+            $returnHTML = view('myPage/creditRegistration/question/'.$viewQuestion)->with('questionSetting', $questionSetting)->render();
+        }
+
+        return response()->json( array('success' => true, 'html'=>$returnHTML) );
+
     }
 }

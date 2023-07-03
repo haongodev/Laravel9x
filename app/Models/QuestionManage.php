@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class QuestionOptionsSettings
+ * Class QuestionManage
  * @package App\Models
  */
-class QuestionOptionsSettings extends Model
+class QuestionManage extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'question_options_settings';
+    protected $table = 'question_manage';
 
     /**
      * The primary key for the model.
@@ -30,7 +30,7 @@ class QuestionOptionsSettings extends Model
      * @var array
      */
     protected $fillable = [
-        'type_native_id', 'class_name', 'option_name', 'question_id', 'registration_date', 'score', 'sort_order', 'update_date', 'class_name', 'option_name', 'question_id', 'registration_date', 'score', 'sort_order', 'update_date'
+        'id', 'type_native_id', 'active_flg', 'update_date', 'registration_date',
     ];
 
     /**
@@ -48,7 +48,7 @@ class QuestionOptionsSettings extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'type_native_id' => 'int', 'class_name' => 'string', 'option_name' => 'string', 'question_id' => 'int', 'registration_date' => 'datetime', 'score' => 'int', 'sort_order' => 'int', 'update_date' => 'datetime', 'class_name' => 'string', 'option_name' => 'string', 'question_id' => 'int', 'registration_date' => 'datetime', 'score' => 'int', 'sort_order' => 'int', 'update_date' => 'datetime'
+        'id' => 'int', 'type_native_id' => 'int',  'active_flg' => 'int', 'update_date' => 'datetime','registration_date' => 'datetime',
     ];
 
     /**
@@ -57,7 +57,7 @@ class QuestionOptionsSettings extends Model
      * @var array
      */
     protected $dates = [
-        'registration_date', 'update_date', 'registration_date', 'update_date'
+        'registration_date', 'update_date'
     ];
 
     /**

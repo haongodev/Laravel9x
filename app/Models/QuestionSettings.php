@@ -5,22 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int      $id
- * @property int      $type_native_id
- * @property int      $id
- * @property int      $type_native_id
- * @property int      $input_method
- * @property int      $level
- * @property int      $score
- * @property int      $input_method
- * @property int      $level
- * @property int      $score
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property string   $title
- * @property string   $title
+ * Class QuestionSettings
+ * @package App\Models
  */
 class QuestionSettings extends Model
 {
@@ -53,7 +39,7 @@ class QuestionSettings extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**
@@ -86,4 +72,9 @@ class QuestionSettings extends Model
     // Functions ...
 
     // Relations ...
+
+    public function question_option_setting()
+    {
+        return $this->hasMany(QuestionOptionsSettings::class,'question_settings_id','id');
+    }
 }
