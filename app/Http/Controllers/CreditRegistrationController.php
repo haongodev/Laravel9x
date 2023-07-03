@@ -94,11 +94,12 @@ class CreditRegistrationController extends Controller
         $questionManageData = $this->questionManageService->getByTypeNativeId(0);
         $questionId = $questionManageData->first()->id ?? '';
         $questionSettingData = $this->questionSettingService->getByQuestionId($questionId);
+        $questionSettingChildData = $this->questionSettingService->getChildByQuestionId($questionId);
 
-        $questionSettingId = $questionSettingData->first()->id ?? '';
         return view('myPage/creditRegistration/registry',[
             'guidanceData' => $guidanceData,
             'questionSettingData' => $questionSettingData,
+            'questionSettingChildData' => $questionSettingChildData
         ]);
     }
 

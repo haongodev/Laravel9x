@@ -11,6 +11,8 @@
             max-height: 100px;
         }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+
 @endpush
 @section('content')
     {{ Breadcrumbs::render('creditRegistry') }}
@@ -32,17 +34,20 @@
                     @if($questionSetting->input_method ==0)
                         <div class="input-group">
                             <div class="w-100 group-control">
-                                <label for="email" class="w-25">SVRの属性</label>
+                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
                                 <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"
                                        value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>
                             </div>
                         </div>
                         @php unset($questionSettingData[$key])@endphp
+                        @if(isset($questionSettingChildData[$questionSetting->id]))
+                            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+                        @endif
                     @endif
                     @if($questionSetting->input_method ==1)
                         <div class="input-group">
                             <div class="w-100 group-control">
-                                <label for="email" class="w-25">SVRの属性</label>
+                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
                                 {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
                                 {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
                                 <textarea class="w-75"
@@ -50,26 +55,63 @@
                             </div>
                         </div>
                         @php unset($questionSettingData[$key])@endphp
+                        @if(isset($questionSettingChildData[$questionSetting->id]))
+                            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+                        @endif
+                    @endif
+                    @if($questionSetting->input_method ==7)
+                        <div class="input-group">
+                            <div class="w-100 group-control">
+                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                <div class="w-75 date-group second">
+                                    <input type="datetime-local" name="SV_contract"
+                                           value="{{ session('popup_confirm')['SV_contract'] ?? ''}}"/>
+                                </div>
+                            </div>
+                        </div>
+                        @php unset($questionSettingData[$key])@endphp
+                        @if(isset($questionSettingChildData[$questionSetting->id]))
+                            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+                        @endif
+                    @endif
+                    @if($questionSetting->input_method ==8)
+                        <div class="input-group">
+                            <div class="w-100 group-control">
+                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                <div class="w-75 date-group">
+                                    <input type="datetime-local" name="s_period"
+                                           value="{{ session('popup_confirm')['s_period'] ?? ''}}"/>
+                                    <span>~</span>
+                                    <input type="datetime-local" name="e_period"
+                                           value="{{ session('popup_confirm')['e_period'] ?? ''}}"/>
+                                </div>
+                            </div>
+                        </div>
+                        @php unset($questionSettingData[$key])@endphp
+                        @if(isset($questionSettingChildData[$questionSetting->id]))
+                            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+                        @endif
                     @endif
                 @endforeach
                 @foreach($questionSettingData as $key => $questionSetting)
                     @if($questionSetting->input_method ==2)
-
-                        <div class="input-group" data-after-question-id="{{$questionSetting->id}}"
-                             data-before-question-id="0">
+                        <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+                        <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+{{--                             data-before-question-id="0"--}}
+                             data-current-question-id="{{$questionSetting->id}}"
+                        >
                             <div class="w-100 group-control">
-                                <label for="email" class="w-25">研鑽目的</label>
+                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
                                 <div class="w-75 table-group">
                                     <table>
                                         <tr>
                                             @foreach($questionSetting->question_option_setting as $questionOption)
                                                 <td><input class="branch-question" type="checkbox" name="PAAP[]"
-                                                           value="5" id="checkbox{{$questionOption->option_name}}"
+                                                           value="5" id="checkbox{{$questionOption->id}}"
                                                            data-question-option-setting-id="{{$questionOption->id}}"
-                                                           data-parent-question-id="{{$questionSetting->id}}"
                                                     >
                                                     <label
-                                                        for="checkbox{{$questionOption->option_name}}">{{$questionOption->option_name}}</label>
+                                                        for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
                                                 </td>
                                             @endforeach
                                         </tr>
@@ -77,6 +119,7 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     @endif
                     @if($questionSetting->input_method ==3)
@@ -86,54 +129,60 @@
                             $index = 0;
                             $currentClass = '';
                         @endphp
-                        <div
-                            class="input-group after-question-id-{{$questionSetting->id}} before-question-id-{{$questionSetting->parent_question_option_id}}">
-                            <div class="w-100 group-control">
-                                <label for="email" class="w-25">研鑽目的</label>
-                                <div class="w-75 table-group">
-                                    <table>
+                            <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+                                <div
+                                    class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+                                    data-current-question-id="{{$questionSetting->id}}"
+                                >
+                                    <div class="w-100 group-control">
+                                        <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                        <div class="w-75 table-group">
+                                            <table>
 
-                                        @foreach($groupQuestionOptionData as $className => $groupQuestionOption)
-                                            @php
-                                                $index += $currentClass == $className ? 0 : 1;
-                                                $currentClass = $className
-                                            @endphp
-                                            <tr>
-                                                <th class="bg-red">{{$index}} {{$className}}</th>
-                                                @foreach($groupQuestionOption as $keyOption => $questionOption)
-                                                    <td><input class="branch-question" type="checkbox"
-                                                               name="study_purpose[]" value="1"
-                                                               id="checkbox{{$questionOption->option_name}}"
-                                                               data-question-option-setting-id="{{$questionOption->id}}"
-                                                               data-parent-question-id="{{$questionSetting->id}}"
-                                                        >
-                                                        <label
-                                                            for="checkbox{{$questionOption->option_name}}">({{$keyOption+1}}
-                                                            ){{$questionOption->option_name}}</label></td>
+                                                @foreach($groupQuestionOptionData as $className => $groupQuestionOption)
+                                                    @php
+                                                        $index += $currentClass == $className ? 0 : 1;
+                                                        $currentClass = $className
+                                                    @endphp
+                                                    <tr>
+                                                        <th class="bg-red">{{$index}} {{$className}}</th>
+                                                        @foreach($groupQuestionOption as $keyOption => $questionOption)
+                                                            <td><input class="branch-question" type="checkbox"
+                                                                       name="study_purpose[]" value="1"
+                                                                       id="checkbox{{$questionOption->id}}"
+                                                                       data-question-option-setting-id="{{$questionOption->id}}"
+                                                                >
+                                                                <label
+                                                                    for="checkbox{{$questionOption->id}}">({{$keyOption+1}}
+                                                                    )
+                                                                    {{$questionOption->option_name}}</label></td>
+                                                        @endforeach
+                                                    </tr>
                                                 @endforeach
-                                            </tr>
-                                        @endforeach
-                                    </table>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     @endif
                     @if($questionSetting->input_method ==4)
-                        <div class="input-group" data-after-question-id="{{$questionSetting->id}}"
-                             data-before-question-id="0">
+                            <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+                        <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+{{--                             data-before-question-id="0"--}}
+                             data-current-question-id="{{$questionSetting->id}}">
                             <div class="w-100 group-control">
-                                <label for="email" class="w-25">研鑽目的x</label>
+                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
                                 <div class="w-75 table-group">
                                     <table>
                                         <tr>
                                             @foreach($questionSetting->question_option_setting as $questionOption)
-                                                <td><input class="branch-question" type="radio" name="PAAP[]"
-                                                           value="5" id="checkbox{{$questionOption->option_name}}"
+                                                <td><input class="branch-question" type="radio" name="question_{{$questionSetting->id}}[]"
+                                                           value="5" id="checkbox{{$questionOption->id}}"
                                                            data-question-option-setting-id="{{$questionOption->id}}"
-                                                           data-parent-question-id="{{$questionSetting->id}}"
+
                                                     >
                                                     <label
-                                                        for="checkbox{{$questionOption->option_name}}">{{$questionOption->option_name}}</label>
+                                                        for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
                                                 </td>
                                             @endforeach
                                         </tr>
@@ -142,16 +191,40 @@
                                 </div>
                             </div>
                         </div>
+                            </div>
                     @endif
                     @if($questionSetting->input_method ==5)
-                        <div class="input-group">
+                            <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+                        <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+                             data-current-question-id="{{$questionSetting->id}}"
+                        >
                             <div class="w-100 group-control">
-                                <label for="email" class="w-25">自身の立場</label>
-                                <select class="w-75 branch-question" id="email" name="own_position">
+                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                <select class="w-75 select-branch-question"
+                                        id="question_select_{{$questionSetting->id}}" name="own_position">
                                     <option value="">Choose Option</option>
                                     @foreach($questionSetting->question_option_setting as $questionOption)
                                         <option
-                                            value="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
+                                            value="{{$questionOption->id}}"
+                                            data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+                            </div>
+                    @endif
+                    @if($questionSetting->input_method ==6)
+                        <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0">
+                            <div class="w-100 group-control">
+                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                <select class="w-75 select-branch-question" multiple
+                                        id="question_select_{{$questionSetting->id}}" name="own_position">
+                                    <option value="">Choose Option</option>
+                                    @foreach($questionSetting->question_option_setting as $questionOption)
+                                        <option
+                                            value="{{$questionOption->id}}"
+                                            data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
                                     @endforeach
 
                                 </select>
@@ -160,59 +233,6 @@
                     @endif
                 @endforeach
 
-
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">SVRの属性</label>
-                        <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"
-                               value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">相手の氏名</label>
-                        <input class="w-75" type="text" name="TOPL" placeholder="本協会の認定SVR"
-                               value="{{ session('popup_confirm')['TOPL'] ?? ''}}"/>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">SVの種類</label>
-                        <select class="w-75" id="email" name="type_SV">
-                            <option value="1">個別SV</option>
-                            <option value="2">BMW</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">SVの頻度</label>
-                        <select class="w-75" id="email" name="SV_frequency">
-                            <option value="2">継続（６回以上／１年）</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">実施期間</label>
-                        <div class="w-75 date-group">
-                            <input type="datetime-local" name="s_period"
-                                   value="{{ session('popup_confirm')['s_period'] ?? ''}}"/>
-                            <span>~</span>
-                            <input type="datetime-local" name="e_period"
-                                   value="{{ session('popup_confirm')['e_period'] ?? ''}}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">SV契約</label>
-                        <div class="w-75 date-group second">
-                            <input type="datetime-local" name="SV_contract"
-                                   value="{{ session('popup_confirm')['SV_contract'] ?? ''}}"/>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="action">
                     <button type="submit" class="accept-btn">確認</button>
@@ -236,7 +256,9 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+
         //window.jsPDF = window.jspdf.jsPDF;
 
         $('.decline-btn').click(function () {
@@ -310,40 +332,63 @@
                 }
             });
         })
-        $('#registry').on('click', '.branch-question', function () {
+        $('#registry').on('click', '.branch-question', function (e) {
             var this_choose = $(this);
             var isGetQuestion = true;
             var question_setting_id = this_choose.data('question-option-setting-id');
             var parent_question_id = this_choose.data('parent-question-id');
             if (this_choose.attr('type') == 'checkbox') {
                 if (this_choose.is(':checked') == false) {
+                    removeQuestion(this_choose)
                     // $('.question-option-setting-id-'+question_setting_id).remove()
                     //$('.before-question-id-' + question_setting_id).html('')
-                    $('.before-question-id-' + question_setting_id).remove()
+                 //   $('.before-question-id-' + question_setting_id).remove()
                     isGetQuestion = false;
                 }
             }
             if (this_choose.attr('type') == 'radio') {
                 var parent_div = this_choose.closest('div.input-group');
-                $(parent_div).find('input[type="radio"]').each(function () {
-                    if ($(this).is(':checked') == false) {
-                        var current_id = $(this).data('question-option-setting-id');
-                        $('.before-question-id-' + current_id).remove()
-                    }
-                })
+                // $(parent_div).find('input[type="radio"]').each(function () {
+                //     if ($(this).is(':checked') == false) {
+                //         var current_id = $(this).data('question-option-setting-id');
+                //         $('.before-question-id-' + current_id).remove()
+                //     }
+                // })
             }
             if (this_choose.attr('type') == 'radio') {
                 var parent_div = this_choose.closest('div.input-group');
                 $(parent_div).find('input[type="radio"]').each(function () {
                     if ($(this).is(':checked') == false) {
-                        var current_id = $(this).data('question-option-setting-id');
-                        $('.before-question-id-' + current_id).remove()
+                        // var current_id = $(this).data('question-option-setting-id');
+                        // $('.before-question-id-' + current_id).remove()
+                        removeQuestion($(this))
                     }
                 })
             }
+
+
             if (isGetQuestion) {
-                getQuestionBranch(this_choose, question_setting_id, parent_question_id)
+                getQuestionBranch(this_choose, question_setting_id)
             }
+        })
+        $('#registry').on('change', '.select-branch-question', function (e) {
+            var this_choose = $(this);
+            var id = $(this).attr('id');
+            $('#' + id + '>option').each(function (index) {
+                var current_id = $(this).data('question-option-setting-id');
+
+                if (!$(this).is(':selected')) {
+                    removeQuestion($(this))
+                } else {
+                    if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
+                        console.log('add', current_id);
+                        getQuestionBranch(this_choose, current_id)
+                    }
+
+                }
+
+            });
+
         })
 
         function getQuestionBranch(this_choose, question_setting_id) {
@@ -361,12 +406,32 @@
         }
 
         function nextQuestion(this_choose, data) {
-            this_choose.closest('div.input-group').after(data.html)
+            var current_question_id = this_choose.closest('div.input-group').data('current-question-id');
+
+            $('.first-child-question-id-'+current_question_id).append(data.html)
+          //  this_choose.closest('div.input-group').after(data.html)
         }
 
+        function removeQuestion(this_choose){
+            var current_question_id = this_choose.closest('div.input-group').data('current-question-id');
+            var current_id = this_choose.data('question-option-setting-id');
+            //if checkbox exist child when remove
+            if($('.first-child-question-id-'+current_question_id).find('.before-question-id-'+current_id).html()){
+                $('.first-child-question-id-'+current_question_id).find('.first-div').each(function(index, obj){
+                    $(this).remove();
+                });
+            }
+
+        }
         function auto_grow(element) {
             element.style.height = "5px";
             element.style.height = (element.scrollHeight) + "px";
         }
+
+        $('.select-branch-question').select2({
+            placeholder: 'Select an option',
+            minimumResultsForSearch: -1,
+            disableSearch: true
+        });
     </script>
 @endpush

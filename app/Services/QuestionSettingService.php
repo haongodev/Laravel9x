@@ -25,6 +25,10 @@ class QuestionSettingService
         return $this->questionSettingRepository->getByQuestionId($questionId);
     }
 
+    public function getChildByQuestionId($questionId = 0)
+    {
+        return $this->questionSettingRepository->getChildByQuestionId($questionId);
+    }
     public function getById($id = 0)
     {
         return $this->questionSettingRepository->getById($id);
