@@ -112,6 +112,7 @@ body{
 .wrapper-container .left-side .side-top .container .row .list-info li{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .wrapper-container .left-side .side-top .container .row .list-info li > span:nth-child(1){
     text-align: center;
