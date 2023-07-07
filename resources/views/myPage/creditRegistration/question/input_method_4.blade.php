@@ -10,8 +10,8 @@
                 <table>
                     <tr>
                         @foreach($questionSetting->question_option_setting as $questionOption)
-                            <td><input class="branch-question" type="radio" name="question_{{$questionSetting->id}}[]"
-                                       value="5" id="checkbox{{$questionOption->id}}"
+                            <td><input class="branch-question" type="radio" name="question[{{$questionSetting->id}}]"
+                                       value="{{$questionOption->id}}" id="checkbox{{$questionOption->id}}"
                                        data-question-option-setting-id="{{$questionOption->id}}"
                                 >
                                 <label

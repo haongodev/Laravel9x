@@ -29,6 +29,7 @@ class QuestionSettingService
     {
         return $this->questionSettingRepository->getChildByQuestionId($questionId);
     }
+
     public function getById($id = 0)
     {
         return $this->questionSettingRepository->getById($id);
@@ -37,6 +38,22 @@ class QuestionSettingService
     public function getByParentQuestionOptionId($parentId = 0)
     {
         return $this->questionSettingRepository->getByParentQuestionOptionId($parentId);
+    }
+
+    public function getQuestionIdByRegistry($dataRegistry = [])
+    {
+        $data = [];
+        if (!empty($dataRegistry['question'])) {
+            foreach ($dataRegistry['question'] as $key => $value) {
+                $data[] = $key;
+            }
+        }
+        return $data;
+    }
+
+    public function getByIds(array $ids = [])
+    {
+        return $this->questionSettingRepository->getByIds($ids);
     }
 }
 

@@ -7,7 +7,7 @@
         <div class="w-100 group-control">
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
             <select class="w-75 select-branch-question select-chosen" id="question_select_{{$questionSetting->id}}"
-                    name="own_position">
+                    name="question[{{$questionSetting->id}}]">
                 <option value="">Choose Option</option>
                 @foreach($questionSetting->question_option_setting as $questionOption)
                     <option
