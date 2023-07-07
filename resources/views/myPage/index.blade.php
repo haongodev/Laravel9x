@@ -1,0 +1,18 @@
+@extends('layouts.web.main', ['pageSlug' => '私の研鑽データ'])
+
+@section('content')
+    {{ Breadcrumbs::render('mypage') }}
+    <div class="container">
+        <div class="row">
+            @if($guidanceData)
+                @if($guidanceData->sentence_class)
+                    {!! $guidanceData->guidance !!}
+                @else
+                    {{$guidanceData->guidance}}
+                @endif
+            @endif
+        </div>
+    </div>
+@endsection
+@push('js')
+@endpush
