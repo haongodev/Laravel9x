@@ -52,13 +52,13 @@
                     <li>
                         <a href="{{route('creditRegistration')}}">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-2.svg">
-                            <span>研鑽を積み上げる（単位申請）</span>
+                            <span>研鑽を積み上げる (単位申請)</span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-3.svg">
-                            <span>現在の研鑽状況（単位取得状況）</span>
+                            <span>現在の研鑽状況 (単位取得状況)</span>
                         </a>
                     </li>
                     <li class="{{ (request()->is('mypage/sakuraSet')) ? 'active' : '' }}">
