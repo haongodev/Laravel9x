@@ -21,16 +21,16 @@ class Authenticate
 
     }
 
-    public function getToken(Request $request)
+    public function getUrl(Request $request)
     {
         $id = $request->get('id');
         $token = $request->bearerToken();
 
-        $tokenLogin = Str::random(32);
         $user = User::where('id', $id)->get()->first();
-        $tokenUser = $user->api_token ?? '';
+        $tokenUser = md5($user->user_add_info->member_id ?? '');
         if ($token == $tokenUser) {
-            return response()->json(['token' => $tokenLogin]);
+            $url =  route('api_login',['id'=>$id, 'token'=>$user->password]);
+            return response()->json(['url' => $url]);
         } else {
             return response()->json(['message' => 'Unauthorized'], 401);
         }

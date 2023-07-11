@@ -47,6 +47,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::any('api/login', [Authenticate::class, 'login']);
+Route::any('api/login', [Authenticate::class, 'login'])->name('api_login');
 require __DIR__.'/auth.php';
 

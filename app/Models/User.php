@@ -50,4 +50,9 @@ class User extends Authenticatable
         return DB::table('users_add_info')->where('member_id', $userId)->pluck('membership_type')->first();
 
     }
+
+    public function user_add_info()
+    {
+        return $this->hasOne(UsersAddInfo::class,'users_id','id');
+    }
 }
