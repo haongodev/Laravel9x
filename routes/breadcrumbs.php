@@ -40,7 +40,7 @@ Breadcrumbs::for('typeSelected', function (BreadcrumbTrail $trail) {
 
 // creditRegistration > type selected > registry
 Breadcrumbs::for('creditRegistry', function (BreadcrumbTrail $trail) {
-    $trail->parent('creditRegistration');
+    $trail->parent('typeSelected');
     $trail->push('単位登録', route('creditRegistry'));
 //  $trail->push($category->title, route('category', $category)); for dynamic
 });

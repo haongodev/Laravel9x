@@ -33,7 +33,7 @@
                 <div class="input-group">
                     <div class="w-50 group-control">
                         <label for="registration_year">登録年度</label>
-                        <select id="registration_year" name="registration_year" style="width:80%;margin-right: 20px;">
+                        <select id="registration_year" name="registration_year" style="width:75%;">
                             <option value="0">（登録年度）</option>
                             @foreach($registrationYearData as $value)
                                 <option value="{{$value}}">{{$value}}</option>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="w-50 group-control">
                         <label for="title">項目</label>
-                        <select id="title" name="title" style="width:80%;">
+                        <select id="title" name="title" style="width:75%;">
                             <option value="0">（項目）</option>
                             @foreach($titleData as $value)
                                 <option value="{{$value}}">{{$value}}</option>

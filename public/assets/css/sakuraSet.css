@@ -72,10 +72,11 @@
     border: 1px solid #94a3b8;
     padding: 20px;
     text-align: center;
-    font-size: 12pt;
+    font-size: 20px;
 }
 .sakuraSet-sideBar ul{
     list-style-type: none;
+    font-size: 20px;
     color: #72C02C;
     padding: 0;
     display: flex;
@@ -84,10 +85,10 @@
 }
 .sakuraSet-sideBar ul li button{
     cursor: pointer;
-    width: 30%;
+    width: 50%;
     border: unset;
     color: #fff;
-    font-size: 12pt;
+    font-size: 19px;
     border-radius: 25px;
     padding: 5px 0;
 }
