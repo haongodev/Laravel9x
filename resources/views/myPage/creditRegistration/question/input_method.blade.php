@@ -3,7 +3,7 @@
     <div class="input-group">
         <div class="w-100 group-control">
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
-            <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"
+            <input class="w-75" type="text" name="question[{{$questionSetting->id}}]" placeholder="本協会の認定SVR"
                    value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>
         </div>
     </div>
@@ -14,7 +14,7 @@
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
             {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
             {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
-            <textarea class="w-75"
+            <textarea class="w-75" name="question[{{$questionSetting->id}}]"
                       oninput="auto_grow(this)">{{ session('popup_confirm')['SVR_attributes'] ?? ''}}</textarea>
         </div>
     </div>
@@ -29,8 +29,8 @@
                 <table>
                     <tr>
                         @foreach($questionSetting->question_option_setting as $questionOption)
-                            <td><input class="branch-question" type="checkbox" name="PAAP[]"
-                                       value="5" id="checkbox{{$questionOption->option_name}}"
+                            <td><input class="branch-question" type="checkbox" name="question[{{$questionSetting->id}}]"
+                                       value="{{$questionOption->id}}" id="checkbox{{$questionOption->option_name}}"
                                        data-question-option-setting-id="{{$questionOption->id}}"
                                 >
                                 <label
@@ -67,7 +67,7 @@
                             <th class="bg-red">{{$index}} {{$className}}</th>
                             @foreach($groupQuestionOption as $keyOption => $questionOption)
                                 <td><input class="branch-question" type="checkbox"
-                                           name="study_purpose[]" value="1"
+                                           name="question[{{$questionSetting->id}}][]" value="{{$questionOption->id}}"
                                            id="checkbox{{$questionOption->option_name}}"
                                            data-question-option-setting-id="{{$questionOption->id}}"
                                     >
@@ -91,8 +91,8 @@
                 <table>
                     <tr>
                         @foreach($questionSetting->question_option_setting as $questionOption)
-                            <td><input class="branch-question" type="radio" name="PAAP[]"
-                                       value="5" id="checkbox{{$questionOption->option_name}}"
+                            <td><input class="branch-question" type="radio" name="question[{{$questionSetting->id}}]"
+                                       value="{{$questionOption->id}}" id="checkbox{{$questionOption->option_name}}"
                                        data-question-option-setting-id="{{$questionOption->id}}"
 
                                 >
@@ -111,7 +111,7 @@
     <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0">
         <div class="w-100 group-control">
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
-            <select class="w-75 select-branch-question" id="question_select_{{$questionSetting->id}}" name="own_position">
+            <select class="w-75 select-branch-question" id="question_select_{{$questionSetting->id}}" name="question[{{$questionSetting->id}}]">
                 <option value="">Choose Option</option>
                 @foreach($questionSetting->question_option_setting as $questionOption)
                     <option
@@ -126,7 +126,7 @@
     <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0">
         <div class="w-100 group-control">
             <label for="email" class="w-25">自身の立場</label>
-            <select class="w-75 select-branch-question" multiple id="question_select_{{$questionSetting->id}}" name="own_position">
+            <select class="w-75 select-branch-question" multiple id="question_select_{{$questionSetting->id}}" name="question[{{$questionSetting->id}}][]">
                 <option value="">Choose Option</option>
                 @foreach($questionSetting->question_option_setting as $questionOption)
                     <option
@@ -142,7 +142,7 @@
         <div class="w-100 group-control">
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
             <div class="w-75 date-group second">
-                <input type="datetime-local" name="SV_contract"
+                <input type="datetime-local" name="question[{{$questionSetting->id}}]"
                        value="{{ session('popup_confirm')['SV_contract'] ?? ''}}"/>
             </div>
         </div>
@@ -154,10 +154,10 @@
         <div class="w-100 group-control">
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
             <div class="w-75 date-group">
-                <input type="datetime-local" name="s_period"
+                <input type="datetime-local" name="question[{{$questionSetting->id}}][start]"
                        value="{{ session('popup_confirm')['s_period'] ?? ''}}"/>
                 <span>~</span>
-                <input type="datetime-local" name="e_period"
+                <input type="datetime-local" name="question[{{$questionSetting->id}}][end]"
                        value="{{ session('popup_confirm')['e_period'] ?? ''}}"/>
             </div>
         </div>

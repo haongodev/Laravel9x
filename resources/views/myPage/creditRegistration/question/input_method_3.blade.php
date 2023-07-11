@@ -22,7 +22,7 @@
                             <th class="bg-red">{{$index}} {{$className}}</th>
                             @foreach($groupQuestionOption as $keyOption => $questionOption)
                                 <td><input class="branch-question" type="checkbox"
-                                           name="study_purpose[]" value="1"
+                                           name="question[{{$questionSetting->id}}][]" value="{{$questionOption->id}}"
                                            id="checkbox{{$questionOption->id}}"
                                            data-question-option-setting-id="{{$questionOption->id}}"
                                     >

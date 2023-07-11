@@ -17,6 +17,6 @@ use App\Http\Controllers\Api\Authenticate;
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-Route::any('/token', [Authenticate::class, 'getToken']);
+Route::any('/get_url', [Authenticate::class, 'getUrl']);
 
 

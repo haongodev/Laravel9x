@@ -20,5 +20,28 @@ class QuestionOptionSettingService
         $this->questionOptionSettingRepository = $questionOptionSettingRepository;
     }
 
+    public function getQuestionOptionIdByRegistry(array $dataRegistry = [])
+    {
+        $data = [];
+        if (!empty($dataRegistry['question'])) {
+            foreach ($dataRegistry['question'] as $key => $value) {
+                if(is_array($value)){
+                  foreach ($value as $key2 => $value2){
+                      $data[] = $value2;
+                  }
+                }else{
+                    $data[] = $value;
+                }
+
+            }
+        }
+        return $data;
+    }
+
+    public function getByIds(array $ids = [])
+    {
+        return $this->questionOptionSettingRepository->getByIds($ids);
+    }
+
 }
 

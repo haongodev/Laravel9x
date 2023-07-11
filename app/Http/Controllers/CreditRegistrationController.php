@@ -10,6 +10,7 @@ use App\Services\AnswerManageService;
 use App\Services\AnswerInfoService;
 use App\Services\QuestionManageService;
 use App\Services\QuestionSettingService;
+use App\Services\QuestionOptionSettingService;
 
 class CreditRegistrationController extends Controller
 {
@@ -39,6 +40,11 @@ class CreditRegistrationController extends Controller
     protected $questionSettingService;
 
     /**
+     * @var QuestionOptionSettingService
+     */
+    protected $questionOptionSettingService;
+
+    /**
      * CreditRegistrationController constructor.
      * @param GuidanceSettingService $guidanceSettingService
      * @param AnswerManageService $answerManageService
@@ -52,6 +58,7 @@ class CreditRegistrationController extends Controller
         AnswerInfoService $answerInfoService,
         QuestionManageService $questionManageService,
         QuestionSettingService $questionSettingService,
+        QuestionOptionSettingService $questionOptionSettingService,
     )
     {
         $this->guidanceSettingService = $guidanceSettingService;
@@ -59,6 +66,7 @@ class CreditRegistrationController extends Controller
         $this->answerInfoService = $answerInfoService;
         $this->questionManageService = $questionManageService;
         $this->questionSettingService = $questionSettingService;
+        $this->questionOptionSettingService = $questionOptionSettingService;
     }
 
     public function index()
@@ -90,8 +98,9 @@ class CreditRegistrationController extends Controller
 
     public function creditRegistry(Request $request)
     {
+        $typeNativeId = 0;
         $guidanceData = $this->guidanceSettingService->getByScreenId('A004');
-        $questionManageData = $this->questionManageService->getByTypeNativeId(0);
+        $questionManageData = $this->questionManageService->getByTypeNativeId($typeNativeId);
         $questionId = $questionManageData->first()->id ?? '';
         $questionSettingData = $this->questionSettingService->getByQuestionId($questionId);
         $questionSettingChildData = $this->questionSettingService->getChildByQuestionId($questionId);
@@ -99,7 +108,8 @@ class CreditRegistrationController extends Controller
         return view('myPage/creditRegistration/registry',[
             'guidanceData' => $guidanceData,
             'questionSettingData' => $questionSettingData,
-            'questionSettingChildData' => $questionSettingChildData
+            'questionSettingChildData' => $questionSettingChildData,
+            'typeNativeId' => $typeNativeId,
         ]);
     }
     public function creditEdit(Request $request)
@@ -127,9 +137,16 @@ class CreditRegistrationController extends Controller
 
     public function handleCreditRegistry(Request $request)
     {
+
         /* show confirm */
         if ($request->has('confirm')) {
             Session::put('popup_confirm', $request->except(['_token', 'confirm']));
+            $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+            $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
+            $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
+            $questionOptionSettingRegistryData = $this->questionOptionSettingService->getByIds($questionOptionSettingIds);
+            Session::put('question_confirm', $questionSettingRegistryData);
+            Session::put('question_option_confirm', $questionOptionSettingRegistryData);
             return redirect()->route('creditRegistry');
         } else {
             if (Session::get('popup_confirm')) {

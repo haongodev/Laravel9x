@@ -24,12 +24,14 @@
                 @csrf
                 <input type="hidden" value="1" name="confirm">
                 <input type="hidden" id="urlGetQuestion" value="{{route('getBranchQuestion')}}">
+                <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
                 @foreach($questionSettingData as $key => $questionSetting)
                     @if($questionSetting->input_method ==0)
                         <div class="input-group">
                             <div class="w-100 group-control">
                                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
-                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"
+                                <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
+                                       placeholder="本協会の認定SVR"
                                        value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>
                             </div>
                         </div>
@@ -44,7 +46,7 @@
                                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                                 {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
                                 {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
-                                <textarea class="w-75"
+                                <textarea class="w-75" name="question[{{$questionSetting->id}}]"
                                           oninput="auto_grow(this)">{{ session('popup_confirm')['SVR_attributes'] ?? ''}}</textarea>
                             </div>
                         </div>
@@ -58,7 +60,7 @@
                             <div class="w-100 group-control">
                                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                                 <div class="w-75 date-group second">
-                                    <input type="datetime-local" name="SV_contract"
+                                    <input type="datetime-local" name="question[{{$questionSetting->id}}]"
                                            value="{{ session('popup_confirm')['SV_contract'] ?? ''}}"/>
                                 </div>
                             </div>
@@ -73,10 +75,10 @@
                             <div class="w-100 group-control">
                                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                                 <div class="w-75 date-group">
-                                    <input type="datetime-local" name="s_period"
+                                    <input type="datetime-local" name="question[{{$questionSetting->id}}][start]"
                                            value="{{ session('popup_confirm')['s_period'] ?? ''}}"/>
                                     <span>~</span>
-                                    <input type="datetime-local" name="e_period"
+                                    <input type="datetime-local" name="question[{{$questionSetting->id}}][end]"
                                            value="{{ session('popup_confirm')['e_period'] ?? ''}}"/>
                                 </div>
                             </div>
@@ -90,30 +92,32 @@
                 @foreach($questionSettingData as $key => $questionSetting)
                     @if($questionSetting->input_method ==2)
                         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-                        <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
-{{--                             data-before-question-id="0"--}}
-                             data-current-question-id="{{$questionSetting->id}}"
-                        >
-                            <div class="w-100 group-control">
-                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
-                                <div class="w-75 table-group">
-                                    <table>
-                                        <tr>
-                                            @foreach($questionSetting->question_option_setting as $questionOption)
-                                                <td><input class="branch-question" type="checkbox" name="PAAP[]"
-                                                           value="5" id="checkbox{{$questionOption->id}}"
-                                                           data-question-option-setting-id="{{$questionOption->id}}"
-                                                    >
-                                                    <label
-                                                        for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
-                                                </td>
-                                            @endforeach
-                                        </tr>
+                            <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+                                 {{--                             data-before-question-id="0"--}}
+                                 data-current-question-id="{{$questionSetting->id}}"
+                            >
+                                <div class="w-100 group-control">
+                                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                    <div class="w-75 table-group">
+                                        <table>
+                                            <tr>
+                                                @foreach($questionSetting->question_option_setting as $questionOption)
+                                                    <td><input class="branch-question" type="checkbox"
+                                                               name="question[{{$questionSetting->id}}][]"
+                                                               value="{{$questionOption->id}}"
+                                                               id="checkbox{{$questionOption->id}}"
+                                                               data-question-option-setting-id="{{$questionOption->id}}"
+                                                        >
+                                                        <label
+                                                            for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
+                                                    </td>
+                                                @endforeach
+                                            </tr>
 
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     @endif
                     @if($questionSetting->input_method ==3)
@@ -123,109 +127,114 @@
                             $index = 0;
                             $currentClass = '';
                         @endphp
-                            <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-                                <div
-                                    class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
-                                    data-current-question-id="{{$questionSetting->id}}"
-                                >
-                                    <div class="w-100 group-control">
-                                        <label for="email" class="w-25">{{$questionSetting->title}}</label>
-                                        <div class="w-75 table-group">
-                                            <table>
+                        <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+                            <div
+                                class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+                                data-current-question-id="{{$questionSetting->id}}"
+                            >
+                                <div class="w-100 group-control">
+                                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                    <div class="w-75 table-group">
+                                        <table>
 
-                                                @foreach($groupQuestionOptionData as $className => $groupQuestionOption)
-                                                    @php
-                                                        $index += $currentClass == $className ? 0 : 1;
-                                                        $currentClass = $className
-                                                    @endphp
-                                                    <tr>
-                                                        <th class="bg-red">{{$index}} {{$className}}</th>
-                                                        @foreach($groupQuestionOption as $keyOption => $questionOption)
-                                                            <td><input class="branch-question" type="checkbox"
-                                                                       name="study_purpose[]" value="1"
-                                                                       id="checkbox{{$questionOption->id}}"
-                                                                       data-question-option-setting-id="{{$questionOption->id}}"
-                                                                >
-                                                                <label
-                                                                    for="checkbox{{$questionOption->id}}">({{$keyOption+1}}
-                                                                    )
-                                                                    {{$questionOption->option_name}}</label></td>
-                                                        @endforeach
-                                                    </tr>
-                                                @endforeach
-                                            </table>
-                                        </div>
+                                            @foreach($groupQuestionOptionData as $className => $groupQuestionOption)
+                                                @php
+                                                    $index += $currentClass == $className ? 0 : 1;
+                                                    $currentClass = $className
+                                                @endphp
+                                                <tr>
+                                                    <th class="bg-red">{{$index}} {{$className}}</th>
+                                                    @foreach($groupQuestionOption as $keyOption => $questionOption)
+                                                        <td><input class="branch-question" type="checkbox"
+                                                                   name="question[{{$questionSetting->id}}][]"
+                                                                   value="{{$questionOption->id}}"
+                                                                   id="checkbox{{$questionOption->id}}"
+                                                                   data-question-option-setting-id="{{$questionOption->id}}"
+                                                            >
+                                                            <label
+                                                                for="checkbox{{$questionOption->id}}">({{$keyOption+1}}
+                                                                )
+                                                                {{$questionOption->option_name}}</label></td>
+                                                    @endforeach
+                                                </tr>
+                                            @endforeach
+                                        </table>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     @endif
                     @if($questionSetting->input_method ==4)
-                            <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-                        <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
-{{--                             data-before-question-id="0"--}}
-                             data-current-question-id="{{$questionSetting->id}}">
-                            <div class="w-100 group-control">
-                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
-                                <div class="w-75 table-group">
-                                    <table>
-                                        <tr>
-                                            @foreach($questionSetting->question_option_setting as $questionOption)
-                                                <td><input class="branch-question" type="radio" name="question_{{$questionSetting->id}}[]"
-                                                           value="5" id="checkbox{{$questionOption->id}}"
-                                                           data-question-option-setting-id="{{$questionOption->id}}"
+                        <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+                            <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+                                 {{--                             data-before-question-id="0"--}}
+                                 data-current-question-id="{{$questionSetting->id}}">
+                                <div class="w-100 group-control">
+                                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                    <div class="w-75 table-group">
+                                        <table>
+                                            <tr>
+                                                @foreach($questionSetting->question_option_setting as $questionOption)
+                                                    <td><input class="branch-question" type="radio"
+                                                               name="question[{{$questionSetting->id}}]"
+                                                               value="{{$questionOption->id}}"
+                                                               id="checkbox{{$questionOption->id}}"
+                                                               data-question-option-setting-id="{{$questionOption->id}}"
 
-                                                    >
-                                                    <label
-                                                        for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
-                                                </td>
-                                            @endforeach
-                                        </tr>
+                                                        >
+                                                        <label
+                                                            for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
+                                                    </td>
+                                                @endforeach
+                                            </tr>
 
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                            </div>
                     @endif
                     @if($questionSetting->input_method ==5)
-                            <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-                        <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
-                             data-current-question-id="{{$questionSetting->id}}"
-                        >
-                            <div class="w-100 group-control">
-                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
-                                <select class="w-75 select-branch-question select-chosen"
-                                        id="question_select_{{$questionSetting->id}}" name="own_position">
-                                    <option value="">Choose Option</option>
-                                    @foreach($questionSetting->question_option_setting as $questionOption)
-                                        <option
-                                            value="{{$questionOption->id}}"
-                                            data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
-                                    @endforeach
+                        <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+                            <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+                                 data-current-question-id="{{$questionSetting->id}}"
+                            >
+                                <div class="w-100 group-control">
+                                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                    <select class="w-75 select-branch-question select-chosen"
+                                            id="question_select_{{$questionSetting->id}}"
+                                            name="question[{{$questionSetting->id}}]">
+                                        <option value="">Choose Option</option>
+                                        @foreach($questionSetting->question_option_setting as $questionOption)
+                                            <option
+                                                value="{{$questionOption->id}}"
+                                                data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
+                                        @endforeach
 
-                                </select>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                            </div>
                     @endif
                     @if($questionSetting->input_method ==6)
                         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-                        <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0"
-                             data-current-question-id="{{$questionSetting->id}}">
-                            <div class="w-100 group-control">
-                                <label for="email" class="w-25">{{$questionSetting->title}}</label>
-                                <select class="w-75 select-branch-question select-chosen" multiple
-                                        id="question_select_{{$questionSetting->id}}" name="own_position">
-                                    <option value="">Choose Option</option>
-                                    @foreach($questionSetting->question_option_setting as $questionOption)
-                                        <option
-                                            value="{{$questionOption->id}}"
-                                            data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
-                                    @endforeach
+                            <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0"
+                                 data-current-question-id="{{$questionSetting->id}}">
+                                <div class="w-100 group-control">
+                                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                                    <select class="w-75 select-branch-question select-chosen" multiple
+                                            id="question_select_{{$questionSetting->id}}"
+                                            name="question[{{$questionSetting->id}}][]">
+                                        <option value="">Choose Option</option>
+                                        @foreach($questionSetting->question_option_setting as $questionOption)
+                                            <option
+                                                value="{{$questionOption->id}}"
+                                                data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
+                                        @endforeach
 
-                                </select>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     @endif
                 @endforeach
@@ -249,13 +258,18 @@
     </div>
 @endsection
 @push('js')
+
     <script src="{{asset('assets/js-lib/toastr.min.js')}}"></script>
     <script src="{{asset('assets/js-lib/chosen.jquery.js')}}"></script>
     <script src="{{asset('assets/js/registry.js')}}"></script>
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
     <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+                src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+            integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
 
         //window.jsPDF = window.jspdf.jsPDF;
@@ -316,6 +330,7 @@
         })
         $('.btn-export-pdf').click(function () {
             $('.btn-export-pdf').addClass('hidden');
+            var file_name = $('#table-confirm-registry').find('input[name="file_name"]').val()
             html2canvas($('#table-confirm-registry')[0], {
                 onrendered: function (canvas) {
                     var data = canvas.toDataURL();
@@ -325,7 +340,7 @@
                             width: 500
                         }]
                     };
-                    pdfMake.createPdf(docDefinition).download("registry-details.pdf");
+                    pdfMake.createPdf(docDefinition).download(file_name);
 
                     $('.btn-export-pdf').removeClass('hidden');
                 }

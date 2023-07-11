@@ -1,3 +1,19 @@
+<?php
+//dd(session('popup_confirm'),session('question_confirm'),session('question_option_confirm'));
+$questionSettingRegistry = session('popup_confirm')['question'] ?? [];
+$questionSettingData = session('question_confirm');
+$questionOptionSettingData = session('question_option_confirm');
+if(!empty(session('popup_confirm')['type_native_id'])){
+    if(session('popup_confirm')['type_native_id'] ==1){
+        $patternName = '学会・研修等、';
+    }else{
+        $patternName = '社会的活動';
+    }
+}else{
+    $patternName = 'スーパービジョン（SV）';
+}
+$fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
+?>
 <div class="popup-wrapper confirm-popup">
     <div class="layout-popup">
         <div class="popup-header">
@@ -7,44 +23,77 @@
             </div>
         </div>
         <div class="popup-content" id="table-confirm-registry">
+            <link href="https://cms-wot.local/assets/css/components.css" rel="stylesheet">
+            <input type="hidden" name="file_name" value="{{$fileName}}">
             <div class="header-content">
-                <span>スーパービジョン（SV）</span>
+                <span>{{$patternName}}</span>
                 <button class="btn-export-pdf">PDF</button>
             </div>
-            <div class="content">
+            <div class="content scroll">
                 <table>
-                    <tr>
-                        <th>自身の立場</th>
-                            <td>{{ session('popup_confirm')['own_position'] ??''}}</td>
-                    </tr>
-                    <tr>
-                        <th>SVRの属性</th>
-                        <td>{{ session('popup_confirm')['SVR_attributes'] ?? '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>相手の氏名</th>
-                        <td>{{ session('popup_confirm')['TOPL'] ?? ''}}</td>
-                    </tr>
-                    <tr>
-                        <th>SVの種類</th>
-                        <td>{{ session('popup_confirm')['type_SV'] ?? ''}}</td>
-                    </tr>
-                    <tr>
-                        <th>SVの頻度</th>
-                        <td>{{ session('popup_confirm')['SV_frequency'] ?? '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>実施期間</th>
-                        <td>{{ session('popup_confirm')['s_period'] ?? ''}} ~ {{ session('popup_confirm')['e_period'] ?? ''}}</td>
-                    </tr>
-                    <tr>
-                        <th>SV契約</th>
-                        <td>{{ session('popup_confirm')['SV_contract']  ?? ''}}</td>
-                    </tr>
-                    <tr>
-                        <th>登録できる単位数</th>
-                        <td>1</td>
-                    </tr>
+                    @foreach($questionSettingRegistry as $questionSettingId => $answer)
+                        @php $questionSetting = $questionSettingData[$questionSettingId] @endphp
+                        <tr>
+                            <th>{{$questionSetting->title}}</th>
+                            <td>
+                                {{--Answer input --}}
+                                @if(!in_array($questionSetting->input_method,config('constants.questionBranching')))
+
+                                    @if(in_array($questionSetting->input_method, [0,1]))
+                                        {{$answer}}
+                                    @elseif($questionSetting->input_method ==7)
+                                        {{date('Y年 m月 d日',strtotime($answer))}}
+                                    @elseif($questionSetting->input_method ==8)
+                                        {{date('Y年 m月 d日',strtotime($answer['start']))}}
+                                        ~ {{ date('Y年 m月 d日',strtotime($answer['end']))}}
+                                    @endif
+                                    {{--Answer option --}}
+                                @else
+                                    {{--Answer multi option --}}
+                                    @if(in_array($questionSetting->input_method,[2,3,6]))
+                                        @foreach($answer as $key2 => $answer2)
+                                            {{$questionOptionSettingData[$answer2]->option_name}}<br>
+                                        @endforeach
+                                        {{--Answer only option --}}
+                                    @else
+                                        {{$questionOptionSettingData[$answer]->option_name}}
+                                    @endif
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    {{--                    <tr>--}}
+                    {{--                        <th>自身の立場</th>--}}
+                    {{--                            <td>{{ session('popup_confirm')['own_position'] ??''}}</td>--}}
+                    {{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <th>SVRの属性</th>--}}
+                    {{--                        <td>{{ session('popup_confirm')['SVR_attributes'] ?? '' }}</td>--}}
+                    {{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <th>相手の氏名</th>--}}
+                    {{--                        <td>{{ session('popup_confirm')['TOPL'] ?? ''}}</td>--}}
+                    {{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <th>SVの種類</th>--}}
+                    {{--                        <td>{{ session('popup_confirm')['type_SV'] ?? ''}}</td>--}}
+                    {{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <th>SVの頻度</th>--}}
+                    {{--                        <td>{{ session('popup_confirm')['SV_frequency'] ?? '' }}</td>--}}
+                    {{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <th>実施期間</th>--}}
+                    {{--                        <td>{{ session('popup_confirm')['s_period'] ?? ''}} ~ {{ session('popup_confirm')['e_period'] ?? ''}}</td>--}}
+                    {{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <th>SV契約</th>--}}
+                    {{--                        <td>{{ session('popup_confirm')['SV_contract']  ?? ''}}</td>--}}
+                    {{--                    </tr>--}}
+                    {{--                    <tr>--}}
+                    {{--                        <th>登録できる単位数</th>--}}
+                    {{--                        <td>1</td>--}}
+                    {{--                    </tr>--}}
                 </table>
             </div>
         </div>
