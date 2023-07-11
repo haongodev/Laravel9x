@@ -129,7 +129,4 @@
     padding: 10px;
     border-radius: 6px;
 }
-.popup-wrapper .content.scroll{
-    overflow: auto;
-    height: 500px;
-}
+

@@ -330,6 +330,7 @@
         })
         $('.btn-export-pdf').click(function () {
             $('.btn-export-pdf').addClass('hidden');
+            var file_name = $('#table-confirm-registry').find('input[name="file_name"]').val()
             html2canvas($('#table-confirm-registry')[0], {
                 onrendered: function (canvas) {
                     var data = canvas.toDataURL();
@@ -339,7 +340,7 @@
                             width: 500
                         }]
                     };
-                    pdfMake.createPdf(docDefinition).download("registry-details.pdf");
+                    pdfMake.createPdf(docDefinition).download(file_name);
 
                     $('.btn-export-pdf').removeClass('hidden');
                 }
