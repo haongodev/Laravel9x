@@ -30,7 +30,16 @@ class QuestionSettings extends Model
      * @var array
      */
     protected $fillable = [
-        'parent_question_id', 'question_display_id', 'question_id', 'type_native_id', 'parent_question_id', 'question_display_id', 'question_id', 'type_native_id', 'input_method', 'level', 'registration_date', 'score', 'title', 'update_date', 'input_method', 'level', 'registration_date', 'score', 'title', 'update_date'
+        'parent_question_id',
+        'question_display_id',
+        'question_id',
+        'type_native_id',
+        'input_method',
+        'level',
+        'registration_date',
+        'score',
+        'title',
+        'update_date',
     ];
 
     /**
@@ -48,7 +57,14 @@ class QuestionSettings extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'type_native_id' => 'int', 'id' => 'int', 'type_native_id' => 'int', 'input_method' => 'int', 'level' => 'int', 'registration_date' => 'datetime', 'score' => 'int', 'title' => 'string', 'update_date' => 'datetime', 'input_method' => 'int', 'level' => 'int', 'registration_date' => 'datetime', 'score' => 'int', 'title' => 'string', 'update_date' => 'datetime'
+        'id' => 'int',
+        'type_native_id' => 'int',
+        'input_method' => 'int',
+        'level' => 'int',
+        'registration_date' => 'datetime',
+        'score' => 'int',
+        'title' => 'string',
+        'update_date' => 'datetime',
     ];
 
     /**
