@@ -48,7 +48,7 @@ class QuestionOptionsSettings extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'type_native_id' => 'int', 'class_name' => 'string', 'option_name' => 'string', 'question_id' => 'int', 'registration_date' => 'datetime', 'score' => 'int', 'sort_order' => 'int', 'update_date' => 'datetime', 'class_name' => 'string', 'option_name' => 'string', 'question_id' => 'int', 'registration_date' => 'datetime', 'score' => 'int', 'sort_order' => 'int', 'update_date' => 'datetime'
+        'id' => 'int', 'question_settings_id' => 'int', 'type_native_id' => 'int', 'class_name' => 'string', 'option_name' => 'string','score' => 'int', 'registration_date' => 'datetime:Y-m-d H:i:s',  'sort_order' => 'int', 'update_date' => 'datetime:Y-m-d H:i:s'
     ];
 
     /**

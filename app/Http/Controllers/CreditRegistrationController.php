@@ -11,6 +11,7 @@ use App\Services\AnswerInfoService;
 use App\Services\QuestionManageService;
 use App\Services\QuestionSettingService;
 use App\Services\QuestionOptionSettingService;
+use App\Services\CreditRegistrationService;
 
 class CreditRegistrationController extends Controller
 {
@@ -45,6 +46,11 @@ class CreditRegistrationController extends Controller
     protected $questionOptionSettingService;
 
     /**
+     * @var CreditRegistrationService
+     */
+    protected $creditRegistrationService;
+
+    /**
      * CreditRegistrationController constructor.
      * @param GuidanceSettingService $guidanceSettingService
      * @param AnswerManageService $answerManageService
@@ -59,6 +65,7 @@ class CreditRegistrationController extends Controller
         QuestionManageService $questionManageService,
         QuestionSettingService $questionSettingService,
         QuestionOptionSettingService $questionOptionSettingService,
+        CreditRegistrationService $creditRegistrationService
     )
     {
         $this->guidanceSettingService = $guidanceSettingService;
@@ -67,6 +74,7 @@ class CreditRegistrationController extends Controller
         $this->questionManageService = $questionManageService;
         $this->questionSettingService = $questionSettingService;
         $this->questionOptionSettingService = $questionOptionSettingService;
+        $this->creditRegistrationService = $creditRegistrationService;
     }
 
     public function index()
@@ -105,13 +113,15 @@ class CreditRegistrationController extends Controller
         $questionSettingData = $this->questionSettingService->getByQuestionId($questionId);
         $questionSettingChildData = $this->questionSettingService->getChildByQuestionId($questionId);
 
-        return view('myPage/creditRegistration/registry',[
+        return view('myPage/creditRegistration/registry', [
             'guidanceData' => $guidanceData,
             'questionSettingData' => $questionSettingData,
             'questionSettingChildData' => $questionSettingChildData,
             'typeNativeId' => $typeNativeId,
+            'questionManagerId' => $questionId,
         ]);
     }
+
     public function creditEdit(Request $request)
     {
         $fakeData = (object)[
@@ -132,7 +142,7 @@ class CreditRegistrationController extends Controller
                 "SWA" => ["13"],
             ]
         ];
-        return view('myPage/creditRegistration/edit',['data' => $fakeData]);
+        return view('myPage/creditRegistration/edit', ['data' => $fakeData]);
     }
 
     public function handleCreditRegistry(Request $request)
@@ -151,7 +161,14 @@ class CreditRegistrationController extends Controller
         } else {
             if (Session::get('popup_confirm')) {
                 /* handle with database here */
+                $answer = $this->creditRegistrationService->insertAnswer();
+                if (!$answer) {
+                    return redirect()->route('creditRegistry');
+                }
+                /**/
                 Session::forget('popup_confirm');
+                Session::forget('question_confirm');
+                Session::forget('question_option_confirm');
                 return response()->json(['message' => 'successfully']);
             }
         }
@@ -163,12 +180,12 @@ class CreditRegistrationController extends Controller
 
         $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionSettingId);
         $returnHTML = '';
-        if($questionSetting){
-            $viewQuestion = 'input_method_'.$questionSetting->input_method;
-            $returnHTML = view('myPage/creditRegistration/question/'.$viewQuestion)->with('questionSetting', $questionSetting)->render();
+        if ($questionSetting) {
+            $viewQuestion = 'input_method_' . $questionSetting->input_method;
+            $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion)->with('questionSetting', $questionSetting)->render();
         }
 
-        return response()->json( array('success' => true, 'html'=>$returnHTML) );
+        return response()->json(array('success' => true, 'html' => $returnHTML));
 
     }
 }
