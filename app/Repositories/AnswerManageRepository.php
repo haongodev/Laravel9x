@@ -22,8 +22,17 @@ class AnswerManageRepository
             ->join('answer_info', function ($q) {
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
         })->where('member_id',$memberId)
-            ->where('type_native_id',$typeNativeId)
+            ->where('answer_manage.type_native_id',$typeNativeId)
             ->groupBy('registration_year')->pluck('registration_year');
     }
 
+    public function getLastId()
+    {
+        return $this->model->orderBy('id','DESC')->get()->pluck('id')->first();
+    }
+
+    public function store($data)
+    {
+        return $this->model->create($data);
+    }
 }

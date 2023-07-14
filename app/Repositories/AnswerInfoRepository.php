@@ -42,7 +42,7 @@ class AnswerInfoRepository
                 $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
             })
             ->where('member_id', $memberId)
-            ->where('type_native_id', $typeNativeId)
+            ->where('answer_info.type_native_id', $typeNativeId)
             ->where('level', 1)
             ->where('registration_year', date('Y'))
             ->groupBy('title')
@@ -87,7 +87,7 @@ class AnswerInfoRepository
                 $join->on('answer_info.answer_manage_id', '=', 'answer_info2.answer_manage_id');
             })
             ->where('member_id', $memberId)
-            ->where('type_native_id', $typeNativeId)
+            ->where('answer_info.type_native_id', $typeNativeId)
             ->where('level', 1)
             ->when(!empty($registrationYear), function ($query) use ($registrationYear) {
                 return $query->where('registration_year', $registrationYear);
@@ -97,5 +97,10 @@ class AnswerInfoRepository
             });
 
         return $answerInfo1->get();
+    }
+
+    public function store($data)
+    {
+        return $this->model->insert($data);
     }
 }

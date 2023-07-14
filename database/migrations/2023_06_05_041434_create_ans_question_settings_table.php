@@ -25,7 +25,7 @@ class CreateAnsQuestionSettingsTable extends Migration
             $table->text('answer')->comment("解答");
             $table->dateTime('update_date')->comment("更新日");
             $table->dateTime('registration_date')->comment("登録日");
-            
+
             $table->primary(['id', 'question_id', 'type_native_id', 'parent_question_id']);
         });
     }

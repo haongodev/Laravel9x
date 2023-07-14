@@ -61,10 +61,10 @@ class QuestionSettings extends Model
         'type_native_id' => 'int',
         'input_method' => 'int',
         'level' => 'int',
-        'registration_date' => 'datetime',
+        'registration_date' => 'datetime:Y-m-d H:i:s',
         'score' => 'int',
         'title' => 'string',
-        'update_date' => 'datetime',
+        'update_date' => 'datetime:Y-m-d H:i:s',
     ];
 
     /**

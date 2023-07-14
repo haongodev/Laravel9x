@@ -52,11 +52,11 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
                                     {{--Answer multi option --}}
                                     @if(in_array($questionSetting->input_method,[2,3,6]))
                                         @foreach($answer as $key2 => $answer2)
-                                            {{$questionOptionSettingData[$answer2]->option_name}}<br>
+                                            {{$questionOptionSettingData[$answer2]->option_name ?? ''}}<br>
                                         @endforeach
                                         {{--Answer only option --}}
                                     @else
-                                        {{$questionOptionSettingData[$answer]->option_name}}
+                                        {{$questionOptionSettingData[$answer]->option_name ?? ''}}
                                     @endif
                                 @endif
                             </td>
