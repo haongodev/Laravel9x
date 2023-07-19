@@ -7,10 +7,17 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use App\Http\Requests\LoginApiRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
 
 class Authenticate
 {
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
     public function login(LoginApiRequest $request)
     {
 
@@ -23,13 +30,13 @@ class Authenticate
 
     public function getUrl(Request $request)
     {
-        $id = $request->get('id');
+        $memberId = $request->get('membership_no');
         $token = $request->bearerToken();
 
-        $user = User::where('id', $id)->get()->first();
-        $tokenUser = md5($user->user_add_info->member_id ?? '');
+        $user = $this->userService->getByMemberId($memberId);
+        $tokenUser = md5($user->member_id ?? '');
         if ($token == $tokenUser) {
-            $url =  route('api_login',['id'=>$id, 'token'=>$user->password]);
+            $url =  route('api_login',['id'=>$user->users_id, 'token'=>$user->password]);
             return response()->json(['url' => $url]);
         } else {
             return response()->json(['message' => 'Unauthorized'], 401);
