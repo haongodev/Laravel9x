@@ -66,7 +66,7 @@ class AnswerInfoRepository
                 $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
             })
             ->where('member_id', $memberId)
-            ->where('type_native_id', $typeNativeId)
+            ->where('answer_info.type_native_id', $typeNativeId)
             ->where('title', '期間')
             ->when(!empty($registrationYear), function ($query) use ($registrationYear) {
                 return $query->where('registration_year', $registrationYear);
@@ -102,5 +102,10 @@ class AnswerInfoRepository
     public function store($data)
     {
         return $this->model->insert($data);
+    }
+
+    public function getByAnswerManageId($answerManageId = 0)
+    {
+        return $this->model->where('answer_manage_id', $answerManageId)->get();
     }
 }

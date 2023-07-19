@@ -34,4 +34,9 @@ class AnswerInfoService
     {
         return $this->answerInfoRepository->searchCredits($data);
     }
+
+    public function getByAnswerManageId($answerManageId = 0)
+    {
+        return $this->answerInfoRepository->getByAnswerManageId($answerManageId);
+    }
 }
