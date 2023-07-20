@@ -101,7 +101,11 @@ class CreditRegistrationController extends Controller
         //Current pattern
         $data['type_native_id'] = 0;
         $creditsData = $this->answerInfoService->searchCredits($data);
-        return response()->json(['data' => $creditsData]);
+        $returnHTML = '';
+        if ($creditsData) {
+            $returnHTML = view('myPage/creditRegistration/search_type_selected')->with('creditsData', $creditsData)->render();
+        }
+        return response()->json(['data' => $returnHTML]);
     }
 
     public function creditRegistry(Request $request)
@@ -187,5 +191,16 @@ class CreditRegistrationController extends Controller
 
         return response()->json(array('success' => true, 'html' => $returnHTML));
 
+    }
+
+    public function popupRegistered(Request $request)
+    {
+        $answerManageId = $request->get('answer_manage_id');
+        $answerData = $this->answerInfoService->getByAnswerManageId($answerManageId);
+        $returnHTML = '';
+        if($answerData){
+            $returnHTML = view('components/popup_confirm_registered')->with('answerData', $answerData)->render();
+        }
+        return $returnHTML;
     }
 }
