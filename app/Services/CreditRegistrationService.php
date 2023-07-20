@@ -121,14 +121,14 @@ class CreditRegistrationService
         $formData = Session::get('popup_confirm');
         $questionSettingData = session('question_confirm');
         $questionOptionSettingData = session('question_option_confirm');
-        $index  = 0;
+        $index  = 1;
         foreach ($formData['question'] as $questionSettingId => $answer) {
             $questionSetting = $questionSettingData[$questionSettingId];
             $dataInsertInfo[$index]['answer_manage_id'] = $idManager;
             $dataInsertInfo[$index]['original_question_id'] = $questionSettingId;
             $dataInsertInfo[$index]['type_native_id'] = $formData['type_native_id'];
             $dataInsertInfo[$index]['title'] = $questionSetting->title;
-            $dataInsertInfo[$index]['level'] = $questionSetting->level;
+            $dataInsertInfo[$index]['level'] = $index;
             $dataInsertInfo[$index]['input_method'] = $questionSetting->input_method;
             $dataInsertInfo[$index]['terminal_flg'] = $questionSetting->terminal_flg ? 1: 0;
             $tempAnswer = '';

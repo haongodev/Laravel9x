@@ -106,6 +106,6 @@ class AnswerInfoRepository
 
     public function getByAnswerManageId($answerManageId = 0)
     {
-        return $this->model->where('answer_manage_id', $answerManageId)->get();
+        return $this->model->where('answer_manage_id', $answerManageId)->orderBy('level','ASC')->get();
     }
 }

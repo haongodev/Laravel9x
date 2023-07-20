@@ -105,8 +105,6 @@ class CreditRegistrationController extends Controller
         if ($creditsData) {
             $returnHTML = view('myPage/creditRegistration/search_type_selected')->with('creditsData', $creditsData)->render();
         }
-       // dd($returnHTML);
-       // return response()->json(array('success' => true, 'html' => $returnHTML));
         return response()->json(['data' => $returnHTML]);
     }
 
