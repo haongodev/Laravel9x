@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 37px;
 }
 .sakura-set .top-contain{
     height: 120pt;
@@ -15,18 +16,22 @@
 .sakura-set .button-list{
     display: flex;
     flex-flow: column;
-    gap: 20px;
+    gap: 30px;
     align-items: center;
 }
 .sakura-set .button-list button{
     border: unset;
     background: #FFB366;
-    font-size: 12pt;
-    color: #fff;
+    font-size: 29px;
     padding: 10px;
-    border-radius: 30px;
-    width: 40%;
+    color: #fff;
+    border-radius: 50px;
+    min-width: 573px;
     cursor: pointer;
+}
+.sakura-set .button-list button a{
+    text-decoration: none;
+    color: #fff;
 }
 .sakura-set .botton-navigate{
     display: flex;
@@ -46,6 +51,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 43px;
 }
 .sakura-set .botton-navigate .pull-right{
     display: flex;
@@ -53,9 +59,9 @@
     align-items: center;
 }
 .sakura-set .botton-navigate button{
-    font-size: 12pt;
+    font-size: 24px;
     border:unset;
-    padding: 5px 10px;
+    padding: 12px;
     color: #fff;
     cursor: pointer;
 }
@@ -65,7 +71,11 @@
 }
 .sakura-set .botton-navigate .pull-right button{
     background: #FF6666;
-    border-radius: 25px;
+    border-radius: 50px;
+    font-size: 37px;
+}
+.sakura-set .botton-navigate .pull-right .had-change{
+    background: #FF8000!important;
 }
 .sakuraSet-sideBar{
     margin-bottom: 20px;
@@ -82,6 +92,9 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+.sakuraSet-sideBar ul li span{
+    cursor: pointer;
 }
 .sakuraSet-sideBar ul li button{
     cursor: pointer;
@@ -105,8 +118,53 @@
     background: #FF8000;
 }
 .popup-wrapper .layout-popup{
-    width: 30%!important;
+    width: 34%!important;
 }
 .popup-wrapper .layout-popup .popup-content{
-    margin-bottom: 80px!important;
+    margin-bottom: 30px!important;
+}
+.popup-wrapper .layout-popup .popup-content .header-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup-wrapper .layout-popup .popup-content .header-content button{
+    color: #fff;
+    border-radius: 50px;
+    border: unset;
+    padding: 10px 50px;
+    cursor: pointer;
+    font-size: 32px;
+    min-width: 640px;
+    margin-bottom: 50px;
+    background: #FFB366;
+}
+.yourTry .button-list{
+    display: flex;
+    flex-flow: column;
+    gap: 30px;
+    align-items: center;
+}
+.yourTry .button-list button{
+    border: unset;
+    background: #FFB366;
+    font-size: 29px;
+    padding: 10px;
+    color: #fff;
+    border-radius: 50px;
+    min-width: 590pt;
+    cursor: pointer;
+}
+.yourTry .button-list button:nth-last-child(1){
+    background: #FF6666 !important;
+}
+.yourTry .button-list button a{
+    text-decoration: none;
+    color: #fff;
+}
+.popup-a013 .header-content,.popup-a014 .header-content,.popup-a015 .header-content{
+    flex-flow: column!important;
+}
+.popup-a013 .header-content button:nth-child(1),.popup-a014 .header-content button:nth-child(1),.popup-a015 .header-content button:nth-child(1){
+    background: #3399FF!important;
 }

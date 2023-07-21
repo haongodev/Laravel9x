@@ -93,4 +93,15 @@
     @if (isset($sidebarInclude))
         {!! $sidebarInclude !!}
     @endif
+    @if (isset($guidanceInclude))
+    <div class="guidance-desc">
+        @foreach($guidanceInclude as $guidance)
+            @if($guidance->sentence_class === 1)
+                {!! $guidance->guidance !!}
+            @else
+                {{ $guidance->guidance }}
+            @endif
+        @endforeach
+    </div>
+    @endif
 </div>

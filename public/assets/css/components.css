@@ -29,40 +29,44 @@
 .popup-wrapper .layout-popup .popup-content{
     margin-top: 30px;
 }
-.popup-wrapper .layout-popup .popup-content .header-content{
+.confirm-popup .layout-popup .popup-content .header-content{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.popup-wrapper .layout-popup .popup-content .header-content button{
+.confirm-popup .layout-popup .popup-content .header-content button{
     color: #fff;
-    border-radius: 20px;
+    border-radius: 50px;
     border: unset;
     padding: 10px 50px;
     cursor: pointer;
     background: #FFB366;
-}
-.popup-wrapper .layout-popup .popup-content .header-content span{
     font-size: 23px;
+    min-width: 80px;
+}
+.confirm-popup .layout-popup .popup-content .header-content span{
+    font-size: 32px;
 }
 .popup-wrapper .layout-popup .popup-content .content{
-    font-size: 30px;
     text-align: center;
     padding: 0 60px;
+    font-size: 28pt;
 }
 .popup-wrapper .layout-popup .popup-footer{
     display: flex;
     justify-content: center;
     gap: 150px;
-    margin-top: 30px;
+    margin: 30px 0px;
 }
 .popup-wrapper .layout-popup .popup-footer button{
     color: #fff;
-    border-radius: 20px;
+    border-radius:50px;
     border: unset;
-    padding: 10px 50px;
+    padding: 0px 50px;
     cursor: pointer;
     background: #FFB366;
+    font-size: 32px;
+    min-width: 227px;
 }
 .confirm-popup .layout-popup .popup-footer .btn-popup-accept{
     background: #007FFF;
@@ -74,14 +78,19 @@
     padding: 30px 0 0 0;
 }
 .confirm-popup .layout-popup .popup-content .content table{
+    border-collapse: collapse;
     width: 100%;
     border-spacing: 0;
+    font-size: 27px;
 }
 .confirm-popup .layout-popup .popup-content .content table th{
     background: #FFE6CC;
     text-align: left;
     width: 30%;
     padding: 0 20px;
+}
+.confirm-popup .layout-popup .popup-content .content table, td, th {
+    border: 1px solid;
 }
 #toast-container{
     width: 100% !important;
@@ -108,7 +117,10 @@
 .popup_show_scoring_board .layout-popup .popup-content{
     margin-top: 10px;
 }
-.popup_show_scoring_board .layout-popup .popup-content .content .btn-title{
+.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content{
+    text-align: center;
+}
+.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content .btn-title{
     background: #007FFF;
     font-size: 24pt;
     border: unset;
@@ -116,17 +128,77 @@
     border-radius: 30px;
     padding: 5px 50px;
 }
-.popup_show_scoring_board .layout-popup .popup-content .content .input-group{
+.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content .input-group{
     margin: 50px 0;
 }
-.popup_show_scoring_board .layout-popup .popup-content .content .input-group .date-group{
+.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content .input-group .date-group{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
-.popup_show_scoring_board .layout-popup .popup-content .content .input-group .date-group input{
+.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content .input-group .date-group input{
     font-size: 12pt;
     padding: 10px;
     border-radius: 6px;
+    min-width: 190pt;
+}
+.become-manager-screen .content-manager{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.become-manager-screen .content-manager .flex-column{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.become-manager-screen .content-manager .flex-column div button{
+    background: #97D077;
+    border: unset;
+    border-radius: 25px;
+    min-width: 430pt;
+    padding: 7px;
+    color: #fff;
+    font-size: 22pt;
+}
+.become-manager-screen .content-manager .flex-column .flex-between{
+    min-width: 430pt;
+    margin: 0 auto;
+}
+.become-manager-screen .content-manager .flex-column .flex-between button{
+    border: unset;
+    background: #FF9933;
+    padding: 10px;
+    color: #fff;
+    border-radius: 50px;
+    min-width: 195px;
+    font-size: 22pt;
+}
+.become-manager-screen .content-manager .flex-column .sub-content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.become-manager-screen .content-manager .flex-column .sub-content .flex-column .sub-title button{
+    background: #B9E0A5 !important;
+}
+.become-manager-screen .title-manager button{
+    background: #3399FF;
+    border: unset;
+    padding: 10px;
+    border-radius: 50px;
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 24pt;
+    min-width: 480pt;
+}
+.become-manager-screen .content-manager .action-manage button{
+    background: #B3B3B3;
+    min-width: 115pt;
+    border: unset;
+    padding: 10px;
+    font-size: 12pt;
+    color: #fff;
+    border-radius: 25px;
 }
 
