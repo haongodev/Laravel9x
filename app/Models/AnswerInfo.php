@@ -26,6 +26,9 @@ class AnswerInfo extends Model
      */
     protected $table = 'answer_info';
 
+    public const CREATED_AT = 'registration_date';
+    public const UPDATED_AT = 'update_date';
+
     /**
      * The primary key for the model.
      *
@@ -39,7 +42,7 @@ class AnswerInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'type_native_id', 'answer', 'input_method', 'level', 'original_question_id', 'registration_date', 'score', 'terminal_flg', 'title', 'update_date'
+        'id','answer_manage_id','original_question_id','type_native_id','title','level','input_method','score','terminal_flg','answer','update_date','registration_date',
     ];
 
     /**
@@ -48,17 +51,9 @@ class AnswerInfo extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'int', 'type_native_id' => 'int', 'answer' => 'string', 'input_method' => 'int', 'level' => 'int', 'original_question_id' => 'int', 'registration_date' => 'datetime', 'score' => 'int', 'terminal_flg' => 'boolean', 'title' => 'string', 'update_date' => 'datetime'
-    ];
 
     /**
      * The attributes that should be mutated to dates.

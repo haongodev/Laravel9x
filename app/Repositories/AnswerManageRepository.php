@@ -55,4 +55,14 @@ class AnswerManageRepository
         $result = $result->groupBy('type_native_id')->select('type_native_id', \DB::raw('SUM(score) as total_score'))->get();
         return $result;
     }
+
+    public function getLastId()
+    {
+        return $this->model->orderBy('id','DESC')->get()->pluck('id')->first();
+    }
+
+    public function store($data)
+    {
+        return $this->model->create($data);
+    }
 }

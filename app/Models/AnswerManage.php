@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AnswerManage extends Model
 {
+
     /**
      * The database table used by the model.
      *
@@ -22,6 +23,9 @@ class AnswerManage extends Model
      */
     protected $table = 'answer_manage';
 
+
+    public const CREATED_AT = 'registration_date';
+    public const UPDATED_AT = 'update_date';
     /**
      * The primary key for the model.
      *
@@ -35,7 +39,7 @@ class AnswerManage extends Model
      * @var array
      */
     protected $fillable = [
-        'member_id', 'question_id', 'registration_year', 'active_flg', 'registration_date', 'update_date'
+        'id','member_id', 'question_id','type_native_id', 'registration_year', 'registration_date', 'update_date'
     ];
 
     /**
@@ -44,17 +48,9 @@ class AnswerManage extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'int', 'member_id' => 'string', 'question_id' => 'int', 'registration_year' => 'int', 'active_flg' => 'int', 'registration_date' => 'datetime', 'update_date' => 'datetime'
-    ];
 
     /**
      * The attributes that should be mutated to dates.

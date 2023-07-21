@@ -108,10 +108,7 @@
                     }
                     toastr.success('該当する単位はありません');
                 } else {
-                    $.each(data, function (index, value) {
-                        var html = '<a href="#">' + value.answer1 + ' ' + value.answer2 + '</a><br>';
-                        $('#w3review').append(html);
-                    });
+                    $('#w3review').append(data);
                 }
 
             }

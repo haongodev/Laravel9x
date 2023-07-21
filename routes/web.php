@@ -38,6 +38,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/getBranchQuestion',[CreditRegistrationController::class, 'getBranchQuestion'])->name('getBranchQuestion');
         Route::get('/creditEdit',[CreditRegistrationController::class, 'creditEdit'])->name('creditEdit');
         Route::post('/handleCreditRegistry/{id?}',[CreditRegistrationController::class, 'handleCreditRegistry'])->name('handleCreditRegistry');
+        Route::post('/popup-registered',[CreditRegistrationController::class, 'popupRegistered'])->name('popupRegistered');
     });
 
     Route::group(['prefix' => 'sakuraSet'],function() {

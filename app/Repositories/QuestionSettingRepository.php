@@ -15,9 +15,12 @@ class QuestionSettingRepository
         $this->model = $model;
     }
 
-    public function getByQuestionId($questionId = 0)
+    public function getByQuestionId($questionId = 0, $allLevel = 0)
     {
-        return $this->model->where('question_id', $questionId)->where('level', 1)->get();
+        return $this->model->where('question_id', $questionId)
+            ->when(empty($allLevel), function ($query)  {
+                return $query->where('level', 1);
+            })->get();
     }
 
     public function getChildByQuestionId($questionId = 0)

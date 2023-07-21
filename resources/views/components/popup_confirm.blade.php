@@ -31,135 +31,37 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
             </div>
             <div class="content scroll">
                 <table>
-                    <tbody>
-                    <tr>
-                        <th>cau hoi method 0</th>
-                        <td>
-                            dfvdfv
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi con method 0</th>
-                        <td>
-                            wefwef
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method 1</th>
-                        <td>
-                            wefwef
-                            sfsdf
-                            sfsdfsdf
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method 7</th>
-                        <td>
-                            2023年 07月 07日
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method 8</th>
-                        <td>
-                            2023年 07月 12日
-                            ~ 2023年 07月 13日
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method 2</th>
-                        <td>
-                            question_3_1<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi con method 8</th>
-                        <td>
-                            question_14_1<br>
-                            question_14_3<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi con method 8</th>
-                        <td>
-                            question_15_2<br>
-                            question_15_3<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method 3</th>
-                        <td>
-                            question_4_3<br>
-                            question_4_4<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi con method 3</th>
-                        <td>
-                            question_16_2<br>
-                            question_16_3<br>
-                            question_16_4<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi con method 3 method 3</th>
-                        <td>
-                            question_17_2<br>
-                            question_17_3<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method 4</th>
-                        <td>
-                            question_5_2
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi con method 4</th>
-                        <td>
-                            question_18_3
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi con method 4</th>
-                        <td>
-                            question_19_3
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method 5</th>
-                        <td>
-                            question_6_4
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method con method 5</th>
-                        <td>
-                            question_20_2
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method 6</th>
-                        <td>
-                            question_7_2<br>
-                            question_7_4<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method con 6</th>
-                        <td>
-                            question_23_2<br>
-                            question_23_3<br>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>cau hoi method con 6</th>
-                        <td>
-                            question_24_1<br>
-                            question_24_2<br>
-                            question_24_3<br>
-                        </td>
-                    </tr>
-                    </tbody>
+                    @foreach($questionSettingRegistry as $questionSettingId => $answer)
+                        @php $questionSetting = $questionSettingData[$questionSettingId] @endphp
+                        <tr>
+                            <th>{{$questionSetting->title}}</th>
+                            <td>
+                                {{--Answer input --}}
+                                @if(!in_array($questionSetting->input_method,config('constants.questionBranching')))
+
+                                    @if(in_array($questionSetting->input_method, [0,1]))
+                                        {{$answer}}
+                                    @elseif($questionSetting->input_method ==7)
+                                        {{date('Y年 m月 d日',strtotime($answer))}}
+                                    @elseif($questionSetting->input_method ==8)
+                                        {{date('Y年 m月 d日',strtotime($answer['start']))}}
+                                        ~ {{ date('Y年 m月 d日',strtotime($answer['end']))}}
+                                    @endif
+                                    {{--Answer option --}}
+                                @else
+                                    {{--Answer multi option --}}
+                                    @if(in_array($questionSetting->input_method,[2,3,6]))
+                                        @foreach($answer as $key2 => $answer2)
+                                            {{$questionOptionSettingData[$answer2]->option_name ?? ''}}<br>
+                                        @endforeach
+                                        {{--Answer only option --}}
+                                    @else
+                                        {{$questionOptionSettingData[$answer]->option_name ?? ''}}
+                                    @endif
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
                 </table>
             </div>
         </div>

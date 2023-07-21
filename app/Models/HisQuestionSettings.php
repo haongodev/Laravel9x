@@ -24,6 +24,8 @@ class HisQuestionSettings extends Model
      */
     protected $table = 'his_question_settings';
 
+    public const CREATED_AT = 'registration_date';
+    public const UPDATED_AT = 'update_date';
     /**
      * The primary key for the model.
      *
@@ -37,7 +39,7 @@ class HisQuestionSettings extends Model
      * @var array
      */
     protected $fillable = [
-        'input_method', 'level', 'parent_question_id', 'parent_question_option_id', 'question_id', 'registration_date', 'score', 'terminal_flg', 'title', 'type_native_id', 'update_date'
+        'id','question_id','type_native_id','title','level','parent_question_id','parent_question_option_id','input_method','score','terminal_flg','update_date','registration_date',
     ];
 
     /**
@@ -46,7 +48,7 @@ class HisQuestionSettings extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**

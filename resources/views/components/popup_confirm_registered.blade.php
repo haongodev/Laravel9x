@@ -1,0 +1,94 @@
+<?php
+//dd(session('popup_confirm'),session('question_confirm'),session('question_option_confirm'));
+$questionSettingRegistry = session('popup_confirm')['question'] ?? [];
+$questionSettingData = session('question_confirm');
+$questionOptionSettingData = session('question_option_confirm');
+if (!empty(session('popup_confirm')['type_native_id'])) {
+    if (session('popup_confirm')['type_native_id'] == 1) {
+        $patternName = '学会・研修等、';
+    } else {
+        $patternName = '社会的活動';
+    }
+} else {
+    $patternName = 'スーパービジョン（SV）';
+}
+$fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
+?>
+<div class="popup-wrapper confirm-popup">
+    <div class="layout-popup">
+        <div class="popup-header">
+            <div class="title"></div>
+            <div class="close-side">
+                <img class="close-icon" src="{{ asset('assets') }}/images/menu-icon/close.png" alt="close icon">
+            </div>
+        </div>
+        <div class="popup-content" id="table-confirm-registry">
+            <link href="https://cms-wot.local/assets/css/components.css" rel="stylesheet">
+            <input type="hidden" name="file_name" value="{{$fileName}}">
+            <div class="header-content">
+                <span>{{$patternName}}</span>
+                <button class="btn-export-pdf">PDF</button>
+            </div>
+            <div class="content">
+                <table>
+                    <?php $score = 0?>
+                    @foreach($answerData as $answer)
+                        <tr>
+                            <?php $score += $answer->score?>
+                            <th>{{$answer->title}}</th>
+                            @if(in_array($answer->input_method,[2,3,6]))
+                                <td>{!! str_replace(',','<br>',$answer->answer) !!}</td>
+                            @else
+                                <td>{{$answer->answer}}</td>
+                            @endif
+
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <th>登録できる単位数</th>
+                        <td>{{$score}}</td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="popup-footer">
+            <button type="button" class="btn-next" register="true">修正する</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.close-icon,.btn-popup-decline').click(function (e) {
+            $('.popup-wrapper .popup-content .content').html('');
+            $('.popup-wrapper').addClass('hidden');
+            $('.btn-popup-accept').removeAttr('last-confirm');
+        })
+
+        $('.btn-export-pdf').click(function () {
+            $('.btn-export-pdf').addClass('hidden');
+            var file_name = $('#table-confirm-registry').find('input[name="file_name"]').val()
+            html2canvas($('#table-confirm-registry')[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download(file_name);
+
+                    $('.btn-export-pdf').removeClass('hidden');
+                }
+            });
+        })
+
+        $('.btn-next').click(function (){
+
+        })
+    })
+</script>
