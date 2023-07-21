@@ -18,6 +18,11 @@ Breadcrumbs::for('sakuraSet', function (BreadcrumbTrail $trail) {
     $trail->parent('mypage');
     $trail->push('さくらセットに取り組む', route('sakuraSet'));
 });
+// Sakura set > your try
+Breadcrumbs::for('yourTry', function (BreadcrumbTrail $trail) {
+    $trail->parent('sakuraSet');
+    $trail->push('あなたの取り組み状況', route('yourTry'));
+});
 
 // CurrentLearningSituation
 Breadcrumbs::for('cls', function (BreadcrumbTrail $trail) {

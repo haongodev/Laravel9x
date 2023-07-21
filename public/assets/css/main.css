@@ -29,6 +29,9 @@ body{
 .hidden{
     display: none!important;
 }
+.ovf-hidden{
+    overflow: hidden!important;
+}
 .flex-between{
     display: flex;
     justify-content: space-between;
@@ -227,7 +230,7 @@ body{
     margin-top: 50px;
 }
 .head-chart .side-left span{
-    font-size: 28px;
+    font-size: 28pt;
 }
 .head-chart .side-left select{
     padding: 10px;
@@ -236,10 +239,11 @@ body{
 }
 .head-chart .side-right button{
     color: #fff;
-    border-radius: 20px;
+    border-radius: 30px;
     border: unset;
     padding: 10px 25px;
     cursor: pointer;
+    font-size: 17pt;
     background: #FFB366;
 }
 .head-chart .side-right button a{
@@ -251,10 +255,33 @@ body{
     flex-direction: column;
     justify-content: space-around;
     height: 100%;
+    position: absolute;
+    right: -160px;
+    top: 0;
+}
+.flags > div{
+    max-width: 160px;
 }
 .flags-goal{
     display: flex;
     align-items: center;
     justify-content: space-around;
-    height: 100%;
+}
+.color_score0{
+    color: #006AC7;
+    font-weight: bolder;
+}
+.color_score1{
+    color: #FFBA00;
+    font-weight: bolder;
+}
+.color_score2{
+    color: #009A51;
+    font-weight: bolder;
+}
+.flags .text-info-score{
+    font-size: 17pt;
+    font-weight: 500;
+    color: #555;
+    white-space: nowrap;
 }

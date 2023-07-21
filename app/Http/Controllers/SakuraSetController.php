@@ -11,4 +11,7 @@ class SakuraSetController extends Controller
     {
         return view('myPage/sakuraSet/index');
     }
+    public function yourTry(){
+        return view('myPage/sakuraSet/yourTry');
+    }
 }
