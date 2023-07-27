@@ -2,7 +2,7 @@
     [
         'pageSlug' => 'らセットに取り組む',
         'header_button' => '<button type="button" class="header-buttom" style="background:#FFFF00;color:#000;">さくらセットについて</button>',
-        'sidebarInclude' => view('components.sakuraSet_sideBar')
+        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraReview'=>$sakuraReview])
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css/sakuraSet.css" rel="stylesheet" />
@@ -10,9 +10,17 @@
 @section('content')
     {{ Breadcrumbs::render('sakuraSet') }}
     <div class="container sakura-set">
-        <div class="top-contain without">（文章）</div>
+        @foreach($guidance as $guidanceData)
+            <div class="top-contain without">
+                @if($guidanceData->sentence_class === 1)
+                    {!! $guidanceData->guidance !!}
+                @else
+                    {{ $guidanceData->guidance }}
+                @endif
+            </div>
+        @endforeach
         <div class="button-list">
-            <button type="button">さくらセットを理解する</button>
+            <button type="button"><a href="https://www.jamhsw.or.jp/ugoki/kensyu/sakura-set.html" target="_blank">さくらセットを理解する</a></button>
             <button type="button"><a href="{{ route('yourTry') }}">あなたの取り組み状況</a></button>
             <button type="button" class="btn">振返り担当者の申請</button>
         </div>
@@ -20,13 +28,14 @@
             <div class="pull-left">
                 <ul>
                     <li>
-                        <button>共有解除</button>
+                        <button>担当者</button>
                     </li>
                     <li>
-                        振り返り
-                    </li>
-                    <li>
-                        花子
+                        @if(!$sakuraMember)
+                            未申請
+                        @else
+                            {{ $userInfo->name1.' '.$userInfo->name2 }}
+                        @endif
                     </li>
                 </ul>
             </div>
@@ -34,7 +43,15 @@
                 <button>共有解除</button>
             </div>
         </div>
-        <div class="bottom-contain without">（文章）</div>
+        @foreach($guidance as $guidanceData)
+            <div class="bottom-contain without">
+                @if($guidanceData->sentence_class === 1)
+                    {!! $guidanceData->guidance !!}
+                @else
+                    {{ $guidanceData->guidance }}
+                @endif
+            </div>
+        @endforeach
     </div>
 @endsection
 @push('js')

@@ -8,7 +8,7 @@
         </div>
         <div class="popup-content">
             <div class="header-content">
-                <button class="title-popup">確認</button>
+                <button class="title-popup">作成・保存・共有する</button>
                 <button class="title-popup">作成する</button>
                 <button class="title-popup">保存・共有する（アップロード）</button>
             </div>

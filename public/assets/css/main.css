@@ -130,7 +130,8 @@ body{
     justify-content: space-between;
     align-items: center;
 }
-.wrapper-container .left-side .side-top .container .row .list-info li > span:nth-child(1){
+.wrapper-container .left-side .side-top .container .row .list-info li > a{
+    text-decoration: none;
     text-align: center;
     width: 50%;
     padding: 5px;
