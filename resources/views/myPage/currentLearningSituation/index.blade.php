@@ -71,6 +71,9 @@
                         </div>
                         <div class="green-flag flags-goal2">
                         </div>
+                        <div class="red-flag flags-goal3 hidden">
+                            <img width="61" src="{{ asset('assets/images/icon/goal_flag3.png') }}">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,7 +106,14 @@
         updateScaleMax1(initCoreChart1Data);
         updateScaleMax2(initCoreChart2Data);
         var AmountScore = dataInitCore2.reduce((accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue), 0);
-        $('.total-score').html(AmountScore)
+        $('.total-score').html(AmountScore);
+        if(AmountScore > 100){
+            $('.flags-goal3').removeClass('hidden');
+        }
+        const allScoresGreaterThan20 = initCoreChart2Data.every(item => parseInt(item.total_score) > 20);
+        if(allScoresGreaterThan20){
+            $('.flags-goal3').removeClass('hidden');
+        }
         $('.date-group input').datepicker({
             format: 'yyyy年  mm月',
         });
