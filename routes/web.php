@@ -21,6 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/send-email', [SakuraSetController::class, 'testMail']);
 
 Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
     Route::get('/',[MyPageController::class, 'index'])->name('mypage');
@@ -44,6 +45,8 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
     Route::group(['prefix' => 'sakuraSet'],function() {
         Route::get('/',[SakuraSetController::class, 'index'])->name('sakuraSet');
         Route::get('/yourTry',[SakuraSetController::class, 'yourTry'])->name('yourTry');
+        Route::post('/sakuraUpdate',[SakuraSetController::class, 'update'])->name('sakuraUpdate');
+        Route::post('/sakuraDelete',[SakuraSetController::class, 'delete'])->name('sakuraDelete');
     });
 });
 

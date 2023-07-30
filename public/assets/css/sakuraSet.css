@@ -38,7 +38,7 @@
     font-size: 12pt;
     border: 1px solid #dbdbdb;
     border-radius: 10px;
-    padding: 5px;
+    padding: 0px 10px;
     margin:30px 0;
 }
 .sakura-set .botton-navigate .pull-left,.pull-right{
@@ -64,9 +64,20 @@
     color: #fff;
     cursor: pointer;
 }
-.sakura-set .botton-navigate .pull-left button{
+.sakura-set .botton-navigate button{
+    font-size: 24px;
+    border:unset;
+    padding: 12px;
+    color: #fff;
+    cursor: pointer;
+}
+.sakura-set .botton-navigate .pull-left .active{
     background: #3399FF;
-    border-radius: 10px;
+    border-radius: 15px;
+}
+.sakura-set .botton-navigate .pull-left .in-active{
+    background: #B3B3B3;
+    border-radius: 15px;
 }
 .sakura-set .botton-navigate .pull-right button{
     background: #FF6666;

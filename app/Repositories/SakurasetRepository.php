@@ -14,16 +14,25 @@ class SakurasetRepository
     {
         $this->model = $model;
     }
-    public function getByLoggedId($where,$type,$with){
+    public function getByLoggedId($where,$with){
         $result = $this->model;
         if($with){
             $result = $result->with($with);
         }
-        $result = $result->where($where[0],$where[1]);
-        if(!$type){
-            return $result->first();
-        }else{
-            return $result->orderBy('registration_date','ASC')->get();
+        return $result->where($where[0],$where[1])->first();
+    }
+    public function updateSakura($data,$where){
+        try {
+            $model = $this->model->where($where)->first();
+            if ($model) {
+                $model->update($data);
+                return $model;
+            } else {
+                return null;
+            }
+        } catch (QueryException $exc) {
+            Log::error($exc->getMessage(), $exc->getTrace());
+            return null;
         }
     }
 }
