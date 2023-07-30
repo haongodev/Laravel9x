@@ -100,6 +100,18 @@
         })
 
         $('.become-manager').click(function () {
+            $.ajax({
+                url: '{{ route("sakuraSheet") }}',
+                type: 'GET',
+                success: function(response) {
+                    if(response.success){
+                        
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
             $('.popup-wrapper .popup-content .header-content').html('');
             $('.popup-wrapper .popup-footer').addClass('hidden');
             $('.popup-wrapper .popup-content .content').html(manager_scre);

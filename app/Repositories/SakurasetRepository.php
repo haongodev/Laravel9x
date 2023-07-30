@@ -35,4 +35,16 @@ class SakurasetRepository
             return null;
         }
     }
+    public function getReviewer($member){
+        return $this->model->with('reviewer_member:users_id,member_id,email,name1,name2')->where('member_id',$member)->first()->toArray()['reviewer_member'];
+    }
+    public function getSheetInfoByReviewerId($inst,$reviewerId,$kind){
+        $model = $inst->model->select('id','file_name','member_id')->where([['member_id',$reviewerId],['share_flg',1]])->whereNull('delete_date');
+        if($kind == 'only'){
+            $model = $model->first();
+        }else{
+            $model = $model->get();
+        }
+        return $model;
+    }
 }

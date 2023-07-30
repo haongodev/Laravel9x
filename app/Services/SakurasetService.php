@@ -25,4 +25,10 @@ class SakurasetService
     public function updateSakura($dataUpdate,$where){
         return $this->sakurasetRepository->updateSakura($dataUpdate,$where);
     }
+    public function getReviewerbyMember($member){
+        return $this->sakurasetRepository->getReviewer($member);
+    }
+    public function getFileInfoByReviewerId($repoInst,$reviewerId,$kind){
+        return $this->sakurasetRepository->getSheetInfoByReviewerId($repoInst,$reviewerId,$kind);
+    }
 }

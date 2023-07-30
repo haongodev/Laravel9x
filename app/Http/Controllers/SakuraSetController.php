@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Services\GuidanceSettingService;
 use App\Services\SakurasetService;
 use App\Services\UserAddInfoService;
+use App\Repositories\FacesheetManageRepository;
+use App\Repositories\InitiativetableManageRepository;
+use App\Repositories\ReflectionsheetManageRepository;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Mail\SendMail;
@@ -24,20 +27,41 @@ class SakuraSetController extends Controller
      * @var UserAddInfoService
      */
     protected $userAddInfoService;
+    /**
+     * @var FacesheetManageRepository
+     */
+    protected $facesheetManageRepository;
+    /**
+     * @var InitiativetableManageRepository
+     */
+    protected $initiativetableManageRepository;
+    /**
+     * @var ReflectionsheetManageRepository
+     */
+    protected $reflectionsheetManageRepository;
 
     /**
      * SakuraSet constructor.
      * @param GuidanceSettingService $guidanceSettingService
      * @param SakurasetService $sakurasetService
      * @param UserAddInfoService $userAddInfoService
+     * @param FacesheetManageService $facesheetManageService
+     * @param InitiativetableManageService $initiativetableManageService
+     * @param ReflectionsheetManageService $reflectionsheetManageService
      */
     public function __construct(
         GuidanceSettingService $guidanceSettingService,
         SakurasetService $sakurasetService,
-        UserAddInfoService $userAddInfoService){
+        UserAddInfoService $userAddInfoService,
+        FacesheetManageRepository $facesheetManageRepository,
+        InitiativetableManageRepository $initiativetableManageRepository,
+        ReflectionsheetManageRepository $reflectionsheetManageRepository){
         $this->guidanceSettingService = $guidanceSettingService;
         $this->sakurasetService = $sakurasetService;
         $this->userAddInfoService = $userAddInfoService;
+        $this->facesheetManageRepository = $facesheetManageRepository;
+        $this->initiativetableManageRepository = $initiativetableManageRepository;
+        $this->reflectionsheetManageRepository = $reflectionsheetManageRepository;
     }
     public function index()
     {
@@ -114,5 +138,15 @@ class SakuraSetController extends Controller
     }
     public function yourTry(){
         return view('myPage/sakuraSet/yourTry');
+    }
+    public function getSheet(Request $request){
+        $reviewer = $this->sakurasetService->getReviewerbyMember(auth()->user()->id);
+        if($reviewer === null){
+            return response()->json(['success' => false, 'message' => 'Reviewer do not exist','data' => []]);
+        }
+        $faceSheet = $this->sakurasetService->getFileInfoByReviewerId($this->facesheetManageRepository,$reviewer['member_id'],'only');
+        $initTable = $this->sakurasetService->getFileInfoByReviewerId($this->initiativetableManageRepository,$reviewer['member_id'],'list');
+        $refSheet = $this->sakurasetService->getFileInfoByReviewerId($this->reflectionsheetManageRepository,$reviewer['member_id'],'only');
+        dd($initTable);
     }
 }
