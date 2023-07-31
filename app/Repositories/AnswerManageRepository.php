@@ -18,12 +18,42 @@ class AnswerManageRepository
     public function getRegistrationYearByTypeNativeId($typeNativeId = 0)
     {
         $memberId = auth()->user()->id ?? '';
-        return $this->model
+        $result = $this->model
             ->join('answer_info', function ($q) {
+            $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+        })->where('member_id',$memberId);
+        if (is_array($typeNativeId)){
+            $result = $result->whereIn('type_native_id',$typeNativeId);
+        }else{
+            $result = $result->where('type_native_id',$typeNativeId);
+        }
+        return $result->groupBy('registration_year')->pluck('registration_year');
+    }
+    public function sumCoreCredits($year){
+        $memberId = auth()->user()->id;
+        if(is_array($year)){
+            if($year[0] > $year[1]){
+                $year = [$year[1],$year[0]];
+            }
+            $years = [];
+            for ($i = $year[0]; $i <= $year[1]; $i++) {
+                $years[] = $i;
+            }
+            $year = $years;
+        }
+        $result = $this->model
+            ->join('answer_info', function ($q) use ($year){
                 $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
-            })->where('member_id', $memberId)
-            ->where('answer_manage.type_native_id', $typeNativeId)
-            ->groupBy('registration_year')->pluck('registration_year');
+            })
+            ->where('member_id', $memberId)
+            ->whereIn('type_native_id', [0,1,2]);
+        if(is_array($year)){
+            $result = $result->whereIn('registration_year',$year);
+        }else{
+            $result = $result->where('registration_year',$year);
+        }
+        $result = $result->groupBy('type_native_id')->select('type_native_id', \DB::raw('SUM(score) as total_score'))->get();
+        return $result;
     }
 
     public function getLastId()

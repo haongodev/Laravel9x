@@ -16,13 +16,13 @@
                 @endphp
                 <ul class="list-info">
                     <li>
-                        <span class="bg-primary">SV</span><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
+                        <a href="{{route('typeSelected')}}" class="bg-primary">SV</a><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
                     </li>
                     <li>
-                        <span class="bg-yellow">研修・学会等</span><span>{{$answerInfoPattern[1]['score_total'] ?? 0}}</span>
+                        <a href="{{route('typeSelected')}}" class="bg-yellow">研修・学会等</a><span>{{$answerInfoPattern[1]['score_total'] ?? 0}}</span>
                     </li>
                     <li>
-                        <span class="bg-green">社会的活動</span><span>{{$answerInfoPattern[2]['score_total'] ?? 0}}</span>
+                        <a href="{{route('typeSelected')}}" class="bg-green">社会的活動</a><span>{{$answerInfoPattern[2]['score_total'] ?? 0}}</span>
                     </li>
                 </ul>
                 @if(auth()->user()->membership_type == 2)
@@ -92,5 +92,16 @@
     </div>
     @if (isset($sidebarInclude))
         {!! $sidebarInclude !!}
+    @endif
+    @if (isset($guidanceInclude))
+    <div class="guidance-desc">
+        @foreach($guidanceInclude as $guidance)
+            @if($guidance->sentence_class === 1)
+                {!! $guidance->guidance !!}
+            @else
+                {{ $guidance->guidance }}
+            @endif
+        @endforeach
+    </div>
     @endif
 </div>

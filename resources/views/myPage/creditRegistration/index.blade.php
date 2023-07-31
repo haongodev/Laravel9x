@@ -69,21 +69,8 @@
             var activePoints = myChart.getElementsAtEventForMode(e, 'point', myChart.options);
             var firstPoint = activePoints[0];
             var label = myChart.data.labels[firstPoint.index];
-            var url = '';
-            switch (label) {
-                case 'SV' :
-                    url = '{{route('typeSelected')}}';
-                    break;
-                case '研修・学会等' :
-                    url = '{{route('cls')}}';
-                    break;
-                case '社会的活動' :
-                    url = '';
-                    break;
-            }
-            if(url){
-                window.location.href=url;
-            }
+            var url = '{{route('typeSelected')}}';
+            window.location.href=url;
         }
 
     </script>

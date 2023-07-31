@@ -84,4 +84,9 @@ class SakurasetManage extends Model
     // Functions ...
 
     // Relations ...
+    
+    public function user_add_info()
+    {
+        return $this->hasOne(UsersAddInfo::class,'users_id','member_id');
+    }
 }

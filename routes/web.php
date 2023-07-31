@@ -25,8 +25,10 @@ Route::get('/', function () {
 Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
     Route::get('/',[MyPageController::class, 'index'])->name('mypage');
 
-    Route::get('/cls',[CurrentLearningSituationController::class, 'index'])->name('cls');
-
+    Route::group(['prefix' => 'cls'],function() {
+        Route::get('/',[CurrentLearningSituationController::class, 'index'])->name('cls');
+        Route::get('/getSumCoreByYear/{year}',[CurrentLearningSituationController::class, 'getSumCoreByYear'])->name('getSumCoreByYear');
+    });
     Route::group(['prefix' => 'credit-registration'],function() {
         Route::get('/',[CreditRegistrationController::class, 'index'])->name('creditRegistration');
         Route::get('/typeSelected',[CreditRegistrationController::class, 'typeSelected'])->name('typeSelected');
@@ -43,6 +45,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
 
     Route::group(['prefix' => 'sakuraSet'],function() {
         Route::get('/',[SakuraSetController::class, 'index'])->name('sakuraSet');
+        Route::get('/yourTry',[SakuraSetController::class, 'yourTry'])->name('yourTry');
     });
 });
 

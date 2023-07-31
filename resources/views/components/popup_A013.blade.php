@@ -1,4 +1,4 @@
-<div class="popup-wrapper hidden">
+<div class="popup-wrapper hidden popup-a013">
     <div class="layout-popup">
         <div class="popup-header">
             <div class="title"></div>
@@ -8,15 +8,10 @@
         </div>
         <div class="popup-content">
             <div class="header-content">
-
+                <button class="title-popup">作成・保存・共有する</button>
+                <button class="title-popup">作成する</button>
+                <button class="title-popup">保存・共有する（アップロード）</button>
             </div>
-            <div class="content">
-
-            </div>
-        </div>
-        <div class="popup-footer">
-            <button type="button" class="btn-popup-accept">はい</button>
-            <button type="button" class="btn-popup-decline">いいえ</button>
         </div>
     </div>
 </div>
