@@ -30,6 +30,13 @@ class SakurasetManage extends Model
     protected $table = 'sakuraset_manage';
 
     /**
+     * The database edit column updated_at name to update_date.
+     *
+     * @var string
+     */
+
+    const UPDATED_AT = 'update_date';
+    /**
      * The primary key for the model.
      *
      * @var string
@@ -85,8 +92,13 @@ class SakurasetManage extends Model
 
     // Relations ...
     
-    public function user_add_info()
+    public function made_member()
     {
         return $this->hasOne(UsersAddInfo::class,'users_id','member_id');
+    }
+    
+    public function reviewer_member()
+    {
+        return $this->hasOne(UsersAddInfo::class,'users_id','reviewer_id');
     }
 }

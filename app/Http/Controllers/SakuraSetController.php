@@ -6,6 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Services\GuidanceSettingService;
 use App\Services\SakurasetService;
 use App\Services\UserAddInfoService;
+use App\Repositories\FacesheetManageRepository;
+use App\Repositories\InitiativetableManageRepository;
+use App\Repositories\ReflectionsheetManageRepository;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Mail\SendMail;
+
 
 class SakuraSetController extends Controller
 {
@@ -21,38 +29,189 @@ class SakuraSetController extends Controller
      * @var UserAddInfoService
      */
     protected $userAddInfoService;
+    /**
+     * @var FacesheetManageRepository
+     */
+    protected $facesheetManageRepository;
+    /**
+     * @var InitiativetableManageRepository
+     */
+    protected $initiativetableManageRepository;
+    /**
+     * @var ReflectionsheetManageRepository
+     */
+    protected $reflectionsheetManageRepository;
 
     /**
      * SakuraSet constructor.
      * @param GuidanceSettingService $guidanceSettingService
      * @param SakurasetService $sakurasetService
      * @param UserAddInfoService $userAddInfoService
+     * @param FacesheetManageService $facesheetManageService
+     * @param InitiativetableManageService $initiativetableManageService
+     * @param ReflectionsheetManageService $reflectionsheetManageService
      */
     public function __construct(
         GuidanceSettingService $guidanceSettingService,
         SakurasetService $sakurasetService,
-        UserAddInfoService $userAddInfoService){
+        UserAddInfoService $userAddInfoService,
+        FacesheetManageRepository $facesheetManageRepository,
+        InitiativetableManageRepository $initiativetableManageRepository,
+        ReflectionsheetManageRepository $reflectionsheetManageRepository){
         $this->guidanceSettingService = $guidanceSettingService;
         $this->sakurasetService = $sakurasetService;
         $this->userAddInfoService = $userAddInfoService;
+        $this->facesheetManageRepository = $facesheetManageRepository;
+        $this->initiativetableManageRepository = $initiativetableManageRepository;
+        $this->reflectionsheetManageRepository = $reflectionsheetManageRepository;
     }
     public function index()
     {
         $guidanceData = $this->guidanceSettingService->getByScreenId('A011',['location_id' => 1]);
-        $sakuraMember = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id]);
-        $sakuraReview = $this->sakurasetService->getByLoggedId(['reviewer_id',auth()->user()->id],'list','user_add_info');
-        $userInfo = null;
-        if($sakuraMember){
-            $userInfo = $this->userAddInfoService->getByUserId($sakuraMember->member_id,['name1','name2','email']);
-        }
+        $with = [
+            'made_member' => function ($query) {
+                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+            },
+            'reviewer_member' => function ($query) {
+                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+            },
+        ];
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],$with);
         return view('myPage/sakuraSet/index',[
             'guidance' => $guidanceData,
-            'userInfo' => $userInfo, 
-            'sakuraMember' => $sakuraMember, 
-            'sakuraReview' => $sakuraReview,
+            'sakuraManage' => $sakuraManage, 
         ]);
+    }
+    public function update(Request $request){
+        if(!$request->all()){
+            return response()->json(['success' => false, 'data' => []]);
+        }
+        $with = [
+            'made_member' => function ($query) {
+                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+            },
+            'reviewer_member' => function ($query) {
+                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+            },
+        ];
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],$with);
+        $where = [
+            'reviewer_id' => $sakuraManage->reviewer_member->users_id
+        ];
+        $dataUpdate = $request->except(['view']);
+        $updateSakura = $this->sakurasetService->updateSakura($dataUpdate,$where);
+        $msg = '';
+        if($updateSakura){
+            $msg = 'Updated Successfully';
+            $emailConfig = ['to' => $sakuraManage->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $sakuraManage->made_member];
+            $view = 'email.sakuraSet.'.$request->view;
+            if(!view()->exists($view)){
+                $msg = 'Template Email do not exist';
+            }else{
+                $status = Mail::send(new SendMail($view, $emailConfig));
+                if(!$status){
+                    $msg = 'send email failed';
+                }
+            }
+            return response()->json(['success' => true, 'message' => $msg,'data' => []]);
+        }
+    }
+    public function delete(Request $request){
+        if(!$request->all()){
+            return response()->json(['success' => false, 'data' => []]);
+        }
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],['reviewer_member','made_member']);
+        if($sakuraManage->reviewer_member){
+            $emailConfig = ['to' => $sakuraManage->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $sakuraManage->made_member];
+            if($sakuraManage->delete()){
+                $msg = 'Delete Successfully';
+                $view = 'email.sakuraSet.'.$request->view;
+                if(!view()->exists($view)){
+                    $msg = 'Template Email do not exist';
+                }else{
+                    $status = Mail::send(new SendMail($view, $emailConfig));
+                    if(!$status){
+                        $msg = 'send email failed';
+                    }
+                }
+            }
+        }
+        return response()->json(['success' => true, 'message' => $msg,'data' => []]);
     }
     public function yourTry(){
         return view('myPage/sakuraSet/yourTry');
+    }
+    public function getSheet(Request $request){
+        $reviewer = $this->sakurasetService->getReviewerbyMember(auth()->user()->id);
+        if($reviewer === null){
+            return response()->json(['success' => false, 'message' => 'Reviewer do not exist','data' => []]);
+        }
+        $faceSheet = $this->sakurasetService->getFileInfoByReviewerId($this->facesheetManageRepository,$reviewer['member_id'],'only',['id','file_name','display_name','member_id']);
+        $refSheet = $this->sakurasetService->getFileInfoByReviewerId($this->reflectionsheetManageRepository,$reviewer['member_id'],'list',['id','file_name','display_name','member_id','class']);
+        $initTable = $this->sakurasetService->getFileInfoByReviewerId($this->initiativetableManageRepository,$reviewer['member_id'],'only',['id','file_name','display_name','member_id']);
+        $data = [
+            'facesheet' => $faceSheet,
+            'freflectionsheet' => $refSheet,
+            'initiative' => $initTable,
+        ];
+        return response()->json(['success' => true, 'message' => 'success','data' => $data]);
+    }
+    public function backup(Request $request){
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|mimes:png,jpg,jpeg,csv,txt,pdf|max:2048'
+        ]);
+        $instance = null;
+        $repo = null;
+        switch ($request->backup_type) {
+            case 'facesheet':
+                $repo = $this->facesheetManageRepository;
+                $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
+                break;
+            case 'initiative':
+                $repo = $this->initiativetableManageRepository;
+                $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
+                break;
+            default:
+                # code...
+                break;
+        }
+        if ($validator->fails()) {
+            $data['success'] = false;
+            $data['message'] = $validator->errors()->first('file');// Error response
+        }else{
+            if($request->file('file')) {
+                $file = $request->file('file');
+                $location = 'storage/'.$request->member_id.'/'.$request->backup_type;
+                $newFilename = $file->getClientOriginalName();
+                // check old file exist
+                if (file_exists($location . '/' . $instance->file_name)) {
+                    $extension = pathinfo($instance->file_name, PATHINFO_EXTENSION);
+                    $newFilenameWithoutExtension = pathinfo($instance->file_name, PATHINFO_FILENAME);
+                    $namebk = $newFilenameWithoutExtension.'_bk.'.$extension;
+                    rename($location . '/' . $instance->file_name, $location . '/' . $namebk);
+                    // insert file backup to db
+                    $this->sakurasetService->createBackupData($repo,$namebk,$instance->display_name,$request->member_id);
+                }
+                $file->move($location,$newFilename);
+                // update new name for file
+                $instance->file_name = $newFilename;
+                $instance->save();
+                $msg = 'Change success';
+                $reviewer = $this->sakurasetService->getByLoggedId(['reviewer_id',$request->member_id],['reviewer_member','made_member']);
+                $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer->made_member];
+                $view = 'email.sakuraSet.backup_'.$request->backup_type;
+                if(!view()->exists($view)){
+                    $msg = 'Template Email do not exist';
+                }else{
+                    $status = Mail::send(new SendMail($view, $emailConfig));
+                    if(!$status){
+                        $msg = 'Send email failed';
+                    }
+                }
+                $data['success'] = true;
+                $data['message'] = $msg;
+            }
+        }
+        return response()->json($data);
     }
 }

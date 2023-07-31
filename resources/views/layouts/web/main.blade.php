@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />
+    <meta class="base_url" value="{{url('/')}}" />
 </head>
 
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">
