@@ -1,4 +1,3 @@
-
 @if($questionSetting->input_method ==0)
     <div class="input-group">
         <div class="w-100 group-control">

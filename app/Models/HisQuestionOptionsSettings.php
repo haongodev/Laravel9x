@@ -23,6 +23,8 @@ class HisQuestionOptionsSettings extends Model
      * @var string
      */
     protected $table = 'his_question_options_settings';
+    public const CREATED_AT = 'registration_date';
+    public const UPDATED_AT = 'update_date';
 
     /**
      * The primary key for the model.
@@ -46,7 +48,7 @@ class HisQuestionOptionsSettings extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**

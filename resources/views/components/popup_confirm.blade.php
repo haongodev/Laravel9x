@@ -23,7 +23,7 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
             </div>
         </div>
         <div class="popup-content" id="table-confirm-registry">
-            <link href="https://cms-wot.local/assets/css/components.css" rel="stylesheet">
+            <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet">
             <input type="hidden" name="file_name" value="{{$fileName}}">
             <div class="header-content">
                 <span>{{$patternName}}</span>

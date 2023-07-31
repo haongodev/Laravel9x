@@ -1,3 +1,7 @@
+<?php
+$answerData = $answerInfoData[$questionSetting->id] ?? [];
+$arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
+?>
 <div class="first-child-question-id-{{$questionSetting->id}} first-div">
     <div
         class="input-group current-question-id-{{$questionSetting->id}}
@@ -13,10 +17,10 @@
                     {{-- 3 --}}
                     <tr rowspan="{{count($questionSetting->question_option_setting)}}">
                         @foreach($questionSetting->question_option_setting as $questionOption)
-                            <td><input class="branch-question" type="checkbox" name="question[{{$questionSetting->id}}][]" value="{{$questionOption->id}}"
+                            <td><input class="branch-question branch-question-{{$questionSetting->id}}" type="checkbox" name="question[{{$questionSetting->id}}][]" value="{{$questionOption->id}}"
                                        id="checkbox{{$questionOption->id}}"
                                        data-question-option-setting-id="{{$questionOption->id}}"
-
+                                    {{in_array($questionOption->option_name, $arrAnswer) ? 'checked' : ''}}
                                 > <label
                                     for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
                             </td>
@@ -28,3 +32,35 @@
         </div>
     </div>
 </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#registry').find('.branch-question-{{$questionSetting->id}}').each(function (){
+                console.log('sss');
+                var this_choose = $(this);
+                var isGetQuestion = true;
+                var question_setting_id = this_choose.data('question-option-setting-id');
+                if (this_choose.attr('type') == 'checkbox') {
+                    if (this_choose.is(':checked') == false) {
+                        removeQuestion(this_choose)
+                        isGetQuestion = false;
+                    }
+                }
+
+                if (this_choose.attr('type') == 'radio') {
+                    var parent_div = this_choose.closest('div.input-group');
+                    $(parent_div).find('input[type="radio"]').each(function () {
+                        if ($(this).is(':checked') == false) {
+                            removeQuestion($(this))
+                        }
+                    })
+                }
+
+
+                if (isGetQuestion) {
+                    getQuestionBranch(this_choose, question_setting_id)
+                }
+            })
+        })
+    </script>
+

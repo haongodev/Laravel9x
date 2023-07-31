@@ -6,7 +6,7 @@ namespace App\Repositories;
 use App\Models\HisQuestionOptionsSettings;
 use Illuminate\Support\Facades\DB;
 
-class HisoryQuestionOptionsSettingRepository
+class HistoryQuestionOptionsSettingRepository
 {
     protected $model;
 
@@ -20,4 +20,8 @@ class HisoryQuestionOptionsSettingRepository
         return $this->model->updateOrCreate($data);
     }
 
+    public function getByIds($ids = [])
+    {
+        return $this->model->whereIn('id',$ids)->get()->keyBy('id');
+    }
 }

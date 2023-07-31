@@ -58,11 +58,21 @@ class AnswerManageRepository
 
     public function getLastId()
     {
-        return $this->model->orderBy('id','DESC')->get()->pluck('id')->first();
+        return $this->model->orderBy('id', 'DESC')->get()->pluck('id')->first();
     }
 
     public function store($data)
     {
         return $this->model->create($data);
+    }
+
+    public function update($id, $data)
+    {
+        return $this->model->where('id', $id)->update($data);
+    }
+
+    public function getById($id = 0)
+    {
+        return $this->model->where('id',$id)->get()->first();
     }
 }

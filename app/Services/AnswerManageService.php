@@ -39,5 +39,11 @@ class AnswerManageService
     public function getSumCoreByTypeNativeId($year){
         return $this->answerManageRepository->sumCoreCredits($year);
     }
+
+    public function getById($id = 0)
+    {
+        return $this->answerManageRepository->getById($id);
+    }
+
 }
 
