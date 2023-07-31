@@ -173,6 +173,7 @@
     border-radius: 50px;
     min-width: 195px;
     font-size: 22pt;
+    cursor: pointer;
 }
 .become-manager-screen .content-manager .flex-column .sub-content{
     display: flex;
@@ -200,5 +201,6 @@
     font-size: 12pt;
     color: #fff;
     border-radius: 25px;
+    cursor: pointer;
 }
 

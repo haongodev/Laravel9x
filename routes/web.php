@@ -4,6 +4,9 @@ use App\Http\Controllers\CreditRegistrationController;
 use App\Http\Controllers\CurrentLearningSituationController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\SakuraSetController;
+use App\Http\Controllers\FaceSheetController;
+use App\Http\Controllers\ReflectionsheetController;
+use App\Http\Controllers\InitiativetableController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Authenticate;
 /*
@@ -48,6 +51,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/sakuraUpdate',[SakuraSetController::class, 'update'])->name('sakuraUpdate');
         Route::post('/sakuraDelete',[SakuraSetController::class, 'delete'])->name('sakuraDelete');
         Route::get('/getSheet',[SakuraSetController::class, 'getSheet'])->name('sakuraSheet');
+        Route::post('/sakuraBackup',[SakuraSetController::class, 'backup'])->name('sakuraBackup');
     });
 });
 

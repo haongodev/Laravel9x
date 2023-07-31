@@ -28,7 +28,10 @@ class SakurasetService
     public function getReviewerbyMember($member){
         return $this->sakurasetRepository->getReviewer($member);
     }
-    public function getFileInfoByReviewerId($repoInst,$reviewerId,$kind){
-        return $this->sakurasetRepository->getSheetInfoByReviewerId($repoInst,$reviewerId,$kind);
+    public function getFileInfoByReviewerId($repoInst,$reviewerId,$kind,$select){
+        return $this->sakurasetRepository->getSheetInfoByReviewerId($repoInst,$reviewerId,$kind,$select);
+    }
+    public function createBackupData($repoInst,$namebk,$namedis,$memberId){
+        return $this->sakurasetRepository->createBackupData($repoInst,$namebk,$namedis,$memberId);
     }
 }

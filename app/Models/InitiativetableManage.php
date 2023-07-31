@@ -28,6 +28,20 @@ class InitiativetableManage extends Model
     protected $table = 'initiativetable_manage';
 
     /**
+     * The database edit column updated_at name to update_date.
+     *
+     * @var DateTime
+     */
+
+     const UPDATED_AT = 'update_date';
+         /**
+     * The database edit column created_at name to update_date.
+     *
+     * @var DateTime
+     */
+
+     const CREATED_AT = 'registration_date';
+    /**
      * The primary key for the model.
      *
      * @var string
@@ -40,7 +54,7 @@ class InitiativetableManage extends Model
      * @var array
      */
     protected $fillable = [
-        'delete_date', 'file_name', 'registration_date', 'share_flg', 'update_date', 'delete_date', 'file_name', 'registration_date', 'share_flg', 'update_date'
+        'delete_date', 'file_name', 'registration_date', 'share_flg', 'update_date', 'delete_date', 'file_name', 'registration_date', 'share_flg', 'update_date', 'member_id', 'display_name'
     ];
 
     /**

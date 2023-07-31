@@ -7,9 +7,10 @@
             <div>
                 <button>フェイスシート</button>
             </div>
-            <div class="flex-between">
-                <button>確認</button>
-                <button>実施者と共有</button>
+            <div class="flex-between facesheet hidden">
+                <button class="confirmation">確認</button>
+                <button class="swp">実施者と共有</button>
+                <input class="hidden facesheet-upload" type="file" />
             </div>
         </div>
 
@@ -17,36 +18,8 @@
             <div>
                 <button>振り返りシート</button>
             </div>
-            <div class="sub-content">
-                <div class="flex-column">
-                    <div class="sub-title">
-                        <button>6か月目</button>
-                    </div>
-                    <div class="flex-between">
-                        <button>確認</button>
-                        <button>実施者と共有</button>
-                    </div>
-                </div>
-
-                <div class="flex-column">
-                    <div class="sub-title">
-                        <button>12か月目</button>
-                    </div>
-                    <div class="flex-between">
-                        <button>確認</button>
-                        <button>実施者と共有</button>
-                    </div>
-                </div>
-
-                <div class="flex-column">
-                    <div class="sub-title">
-                        <button>随時</button>
-                    </div>
-                    <div class="flex-between">
-                        <button>確認</button>
-                        <button>実施者と共有</button>
-                    </div>
-                </div>
+            <div class="sub-content freflectionsheet hidden">
+                
             </div>
         </div>
 
@@ -54,13 +27,14 @@
             <div>
                 <button>さくらセット取り組み表</button>
             </div>
-            <div class="flex-between">
-                <button>確認</button>
-                <button>実施者と共有</button>
+            <div class="flex-between initiative hidden">
+                <button class="confirmation">確認</button>
+                <button class="swp">実施者と共有</button>
+                <input class="hidden initiative-upload" type="file" />
             </div>
         </div>
         <div class="action-manage">
-            <button>戻る</button>
+            <button class="btn-off-popup">戻る</button>
         </div>
     </div>
 </div>
