@@ -12,6 +12,8 @@ use App\Services\QuestionManageService;
 use App\Services\QuestionSettingService;
 use App\Services\QuestionOptionSettingService;
 use App\Services\CreditRegistrationService;
+use App\Services\HistoryQuestionSettingService;
+use App\Services\HistoryQuestionOptionSettingService;
 
 class CreditRegistrationController extends Controller
 {
@@ -51,6 +53,16 @@ class CreditRegistrationController extends Controller
     protected $creditRegistrationService;
 
     /**
+     * @var HistoryQuestionSettingService
+     */
+    protected $historyQuestionSettingService;
+
+    /**
+     * @var HistoryQuestionOptionSettingService
+     */
+    protected $historyQuestionOptionSettingService;
+
+    /**
      * CreditRegistrationController constructor.
      * @param GuidanceSettingService $guidanceSettingService
      * @param AnswerManageService $answerManageService
@@ -65,7 +77,9 @@ class CreditRegistrationController extends Controller
         QuestionManageService $questionManageService,
         QuestionSettingService $questionSettingService,
         QuestionOptionSettingService $questionOptionSettingService,
-        CreditRegistrationService $creditRegistrationService
+        CreditRegistrationService $creditRegistrationService,
+        HistoryQuestionSettingService $historyQuestionSettingService,
+        HistoryQuestionOptionSettingService $historyQuestionOptionSettingService
     )
     {
         $this->guidanceSettingService = $guidanceSettingService;
@@ -75,6 +89,8 @@ class CreditRegistrationController extends Controller
         $this->questionSettingService = $questionSettingService;
         $this->questionOptionSettingService = $questionOptionSettingService;
         $this->creditRegistrationService = $creditRegistrationService;
+        $this->historyQuestionSettingService = $historyQuestionSettingService;
+        $this->historyQuestionOptionSettingService = $historyQuestionOptionSettingService;
     }
 
     public function index()
@@ -128,25 +144,32 @@ class CreditRegistrationController extends Controller
 
     public function creditEdit(Request $request)
     {
-        $fakeData = (object)[
-            "own_position" => 2,
-            "SVR_attributes" => "nothing to know",
-            "TOPL" => "hao ngo",
-            "type_SV" => 2,
-            "SV_frequency" => "2",
-            "s_period" => "2023-07-02T23:48",
-            "e_period" => "2023-07-14T23:48",
-            "SV_contract" => "2023-07-21T23:48",
-            "goal_study" => [
-                "study_purpose" => ["1"],
-                "SAAMOS" => ["3"],
-                "PAAP" => ["5"],
-                "brainstorming" => ["10"],
-                "PEAR" => ["11"],
-                "SWA" => ["13"],
-            ]
-        ];
-        return view('myPage/creditRegistration/edit', ['data' => $fakeData]);
+        $answerManageId = $request->get('answer_manage_id');
+        if (!$answerManageId) {
+            abort(404);
+        }
+        $guidanceData = $this->guidanceSettingService->getByScreenId('A007');
+        $answerManage = $this->answerManageService->getById($answerManageId);
+        $answerInfoData = $this->answerInfoService->getByAnswerManageId($answerManageId);
+        $originalQuestionIds = $answerInfoData->pluck('original_question_id')->toArray();
+        if(Session::get('popup_confirm')){
+            $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
+        }
+       // dd($answerInfoData);
+        Session::put('answer_info_data', $answerInfoData);
+        //Get original question id get from answer info data
+
+
+        $hisQuestionSettingData = $this->historyQuestionSettingService->getByOriginalQuestionIds($originalQuestionIds);
+
+        return view('myPage/creditRegistration/edit', [
+            'guidanceData' => $guidanceData,
+            'questionSettingData' => $hisQuestionSettingData,
+            'answerInfoData' => $answerInfoData,
+            'answerManageId' => $answerManageId,
+            'questionManagerId' => $answerManage->question_id,
+            'typeNativeId' => $answerManage->type_native_id,
+        ]);
     }
 
     public function handleCreditRegistry(Request $request)
@@ -178,6 +201,37 @@ class CreditRegistrationController extends Controller
         }
     }
 
+    public function handleCreditUpdate(Request $request)
+    {
+
+        /* show confirm */
+        if ($request->has('confirm')) {
+            // Set session question + answer from form
+            Session::put('popup_confirm', $request->except(['_token', 'confirm']));
+            $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+            $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
+            $questionSettingRegistryData = $this->historyQuestionSettingService->getByIds($questionSettingIds);
+            $questionOptionSettingRegistryData = $this->historyQuestionOptionSettingService->getByIds($questionOptionSettingIds);
+            //Get data question setting from form
+            Session::put('question_confirm', $questionSettingRegistryData);
+            //Get data question option setting from form
+            Session::put('question_option_confirm', $questionOptionSettingRegistryData);
+            return redirect()->route('creditEdit',['answer_manage_id'=>1,'original_question_id'=>1]);
+        } else {
+            if (Session::get('popup_confirm')) {
+                /* handle with database here */
+                $answer = $this->creditRegistrationService->updateAnswer();
+                if (!$answer) {
+                    return redirect()->route('creditRegistry');
+                }
+                /**/
+                Session::forget('popup_confirm');
+                Session::forget('question_confirm');
+                Session::forget('question_option_confirm');
+                return response()->json(['message' => 'successfully']);
+            }
+        }
+    }
     public function getBranchQuestion(Request $request)
     {
         $questionSettingId = $request->get('question_setting_id');
@@ -193,13 +247,38 @@ class CreditRegistrationController extends Controller
 
     }
 
+    public function getBranchHisQuestion(Request $request)
+    {
+        $questionSettingId = $request->get('question_setting_id');
+
+        $questionSetting = $this->historyQuestionSettingService->getByParentQuestionOptionId($questionSettingId);
+        $answerInfoData = Session::get('answer_info_data');
+
+        $returnHTML = '';
+        if ($questionSetting) {
+            $viewQuestion = 'input_method_' . $questionSetting->input_method;
+            $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion, [
+                'questionSetting' => $questionSetting,
+                'answerInfoData' => $answerInfoData
+            ])->render();
+        }
+
+        return response()->json(array('success' => true, 'html' => $returnHTML));
+
+    }
+
     public function popupRegistered(Request $request)
     {
         $answerManageId = $request->get('answer_manage_id');
+        $originalQuestionId = $request->get('original_question_id');
         $answerData = $this->answerInfoService->getByAnswerManageId($answerManageId);
         $returnHTML = '';
-        if($answerData){
-            $returnHTML = view('components/popup_confirm_registered')->with('answerData', $answerData)->render();
+        if ($answerData) {
+            $returnHTML = view('components/popup_confirm_registered', [
+                'answerData' => $answerData,
+                'answerManageId' => $answerManageId,
+                'originalQuestionId' => $originalQuestionId,
+            ])->render();
         }
         return $returnHTML;
     }

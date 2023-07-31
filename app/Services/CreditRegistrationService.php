@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Repositories\AnswerManageRepository;
 use App\Repositories\AnswerInfoRepository;
 use App\Repositories\HistoryQuestionSettingRepository;
-use App\Repositories\HisoryQuestionOptionsSettingRepository;
+use App\Repositories\HistoryQuestionOptionsSettingRepository;
 use App\Repositories\QuestionSettingRepository;
 use App\Repositories\QuestionOptionSettingRepository;
 use Carbon\Carbon;
@@ -51,7 +51,7 @@ class CreditRegistrationService
      * @param AnswerManageRepository $answerManageRepository
      * @param AnswerInfoRepository $answerInfoRepository
      * @param HistoryQuestionSettingRepository $historyQuestionSettingRepository
-     * @param HisoryQuestionOptionsSettingRepository $historyQuestionOptionsSettingRepository
+     * @param HistoryQuestionOptionsSettingRepository $historyQuestionOptionsSettingRepository
      * @param QuestionSettingRepository $questionSettingRepository
      * @param QuestionOptionSettingRepository $questionOptionSettingRepository
      */
@@ -59,7 +59,7 @@ class CreditRegistrationService
         AnswerManageRepository $answerManageRepository,
         AnswerInfoRepository $answerInfoRepository,
         HistoryQuestionSettingRepository $historyQuestionSettingRepository,
-        HisoryQuestionOptionsSettingRepository $historyQuestionOptionsSettingRepository,
+        HistoryQuestionOptionsSettingRepository $historyQuestionOptionsSettingRepository,
         QuestionSettingRepository $questionSettingRepository,
         QuestionOptionSettingRepository $questionOptionSettingRepository,
     )
@@ -101,7 +101,6 @@ class CreditRegistrationService
             DB::commit();
             return $answerManager;
         } catch (QueryException $exc) {
-            dd($exc->getMessage());
             DB::rollBack();
             Log::error($exc->getMessage(), $exc->getTrace());
             return false;
@@ -137,9 +136,9 @@ class CreditRegistrationService
                 if (in_array($questionSetting->input_method, [0, 1])) {
                     $tempAnswer = $answer;
                 } elseif ($questionSetting->input_method == 7) {
-                    $tempAnswer = date('Y年 m月 d日',strtotime($answer));
+                    $tempAnswer = date('Y-m-d H:i:s',strtotime($answer));
                 } elseif ($questionSetting->input_method == 8) {
-                    $tempAnswer = date('Y年 m月 d日',strtotime($answer['start'])).' ~ '.date('Y年 m月 d日',strtotime($answer['end']));
+                    $tempAnswer = date('Y-m-d H:i:s',strtotime($answer['start'])).' , '.date('Y-m-d H:i:s',strtotime($answer['end']));
                 }
                 $score = $questionSetting->score;
             } else {
@@ -184,5 +183,91 @@ class CreditRegistrationService
         }
         return $his;
     }
+
+    public function updateAnswer()
+    {
+        DB::beginTransaction();
+        try {
+            $dataUpdateManager = $dataInsertInfo = [];
+            $formData = Session::get('popup_confirm');
+            $answerManageId = $formData['answer_manage_id'];
+
+            $questionManageId = $formData['question_manager_id'];
+            $dataUpdateManager['id'] = $answerManageId;
+            $dataUpdateManager['question_id']  = $questionManageId;
+            $dataUpdateManager['type_native_id']  = $formData['type_native_id'];
+            $dataUpdateManager['member_id']  = auth()->user()->id;
+            $currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
+            $dataUpdateManager['registration_year'] = $currentYear;
+            $answerManager = $this->answerManageRepository->update($answerManageId,$dataUpdateManager);
+
+            /*Delete old data before insert*/
+            $this->answerInfoRepository->deleteAnswerManagerById($answerManageId);
+            /* Insert data answer info */
+            $dataInsertInfo = $this->filterDataAnswerInfo($answerManageId);
+            $this->answerInfoRepository->store($dataInsertInfo);
+
+            /* Insert history question setting*/
+            $this->insertHistoryQuestionSetting($questionManageId);
+            /* Insert history question option setting*/
+            $this->insertHistoryQuestionOptionSetting($questionManageId);
+            DB::commit();
+            return $answerManager;
+        } catch (QueryException $exc) {
+            DB::rollBack();
+            Log::error($exc->getMessage(), $exc->getTrace());
+            return false;
+        }
+    }
+
+    /**
+     * Create sample answer info from form
+     */
+    public function getAnswerInfoForm()
+    {
+        $answerData = $data = [];
+
+        $formData = Session::get('popup_confirm');
+        $questionSettingData = session('question_confirm');
+        $questionOptionSettingData = session('question_option_confirm');
+        foreach ($formData['question'] as $questionSettingId => $answer) {
+            $questionSetting = $questionSettingData[$questionSettingId];
+            $tempAnswer = '';
+            $score = 0;
+            if (!in_array($questionSetting->input_method, config('constants.questionBranching'))) {
+                if (in_array($questionSetting->input_method, [0, 1])) {
+                    $tempAnswer = $answer;
+                } elseif ($questionSetting->input_method == 7) {
+                    $tempAnswer = date('Y-m-d H:i:s',strtotime($answer));
+                } elseif ($questionSetting->input_method == 8) {
+                    $tempAnswer = date('Y-m-d H:i:s',strtotime($answer['start'])).' , '.date('Y-m-d H:i:s',strtotime($answer['end']));
+                }
+                $score = $questionSetting->score;
+            } else {
+                //Answer multi option
+                if (in_array($questionSetting->input_method, [2, 3, 6])) {
+                    foreach ($answer as $key2 => $answer2) {
+                        $comma = $tempAnswer ? ',' : '';
+                        $tempAnswer .= $comma.$questionOptionSettingData[$answer2]->option_name;
+                        $score+=$questionOptionSettingData[$answer2]->score;
+                    }
+                } else {
+                    {
+                        $tempAnswer = $questionOptionSettingData[$answer]->option_name;
+                    }
+                }
+            }
+            $answerData['answer'] = $tempAnswer;
+            $data[$questionSettingId]= (object)$answerData;
+        }
+        //Session::forget('popup_confirm');
+        //Session::forget('question_confirm');
+       // Session::forget('question_option_confirm');
+
+        return $data;
+
+    }
+
+
 }
 

@@ -37,5 +37,10 @@ class AnswerManageService
         return $this->answerManageRepository->getRegistrationYearByTypeNativeId($typeNativeId);
     }
 
+    public function getById($id = 0)
+    {
+        return $this->answerManageRepository->getById($id);
+    }
+
 }
 

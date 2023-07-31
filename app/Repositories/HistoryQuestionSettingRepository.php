@@ -20,4 +20,20 @@ class HistoryQuestionSettingRepository
         return $this->model->updateOrCreate($data);
     }
 
+    public function getByOriginalQuestionIds($originalQuestionIds = 0)
+    {
+        return $this->model->whereIn('id', $originalQuestionIds)->get();
+    }
+
+    public function getByParentQuestionOptionId($parentId)
+    {
+        return $this->model->where('parent_question_option_id', $parentId)->get()->first();
+    }
+
+    public function getByIds($ids = [])
+    {
+
+        return $this->model->whereIn('id', $ids)->get()->keyBy('id');
+
+    }
 }

@@ -23,7 +23,7 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
             </div>
         </div>
         <div class="popup-content" id="table-confirm-registry">
-            <link href="https://cms-wot.local/assets/css/components.css" rel="stylesheet">
+            <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet">
             <input type="hidden" name="file_name" value="{{$fileName}}">
             <div class="header-content">
                 <span>{{$patternName}}</span>
@@ -53,7 +53,9 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
             </div>
         </div>
         <div class="popup-footer">
-            <button type="button" class="btn-next" register="true">修正する</button>
+            <button type="button" class="btn-next" register="true"
+                    onclick="window.location='{{Route('creditEdit',['answer_manage_id'=>$answerManageId, 'original_question_id' => $originalQuestionId])}}'">
+                修正する</button>
         </div>
     </div>
 </div>

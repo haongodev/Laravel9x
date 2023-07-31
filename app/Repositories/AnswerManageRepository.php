@@ -20,19 +20,29 @@ class AnswerManageRepository
         $memberId = auth()->user()->id ?? '';
         return $this->model
             ->join('answer_info', function ($q) {
-            $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
-        })->where('member_id',$memberId)
-            ->where('answer_manage.type_native_id',$typeNativeId)
+                $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+            })->where('member_id', $memberId)
+            ->where('answer_manage.type_native_id', $typeNativeId)
             ->groupBy('registration_year')->pluck('registration_year');
     }
 
     public function getLastId()
     {
-        return $this->model->orderBy('id','DESC')->get()->pluck('id')->first();
+        return $this->model->orderBy('id', 'DESC')->get()->pluck('id')->first();
     }
 
     public function store($data)
     {
         return $this->model->create($data);
+    }
+
+    public function update($id, $data)
+    {
+        return $this->model->where('id', $id)->update($data);
+    }
+
+    public function getById($id = 0)
+    {
+        return $this->model->where('id',$id)->get()->first();
     }
 }

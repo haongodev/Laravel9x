@@ -1,132 +1,30 @@
 @extends('layouts.web.main', ['pageSlug' => '修正'])
 @push('styles')
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet" />
+    <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css" rel="stylesheet" />
 @endpush
 @section('content')
     {{ Breadcrumbs::render('creditEdit') }}
     <div class="container">
         <div class="contain1">
+            @if(!empty($guidanceData[1]))
+                @if($guidanceData[1]->sentence_class)
+                    {!! $guidanceData[1]->guidance !!}
+                @else
+                    {!! $guidanceData[1]->guidance !!}
+                @endif
+            @endif
         </div>
         <div class="form-registry">
-            <form action="{{ route('handleCreditRegistry') }}" method="post">
+            <form action="{{ route('handleCreditUpdate') }}" method="post" id="registry">
                 @csrf
                 <input type="hidden" value="1" name="confirm">
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">自身の立場</label>
-                        <select class="w-75" id="email" name="own_position">
-                            <option value="1" {{ $data->own_position === 1 ? "selected" : "" }} >SVR</option>
-                            <option value="2" {{ $data->own_position === 2 ? "selected" : "" }} >BMW</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">SVRの属性</label>
-                        <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR" value="{{ old('SVR_attributes',$data->SVR_attributes) }}"/>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">相手の氏名</label>
-                        <input class="w-75" type="text" name="TOPL" placeholder="本協会の認定SVR" value="{{ old('TOPL',$data->TOPL) }}"/>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">SVの種類</label>
-                        <select class="w-75" id="email" name="type_SV">
-                            <option value="1" {{ $data->type_SV === 1 ? "selected" : "" }}>個別SV</option>
-                            <option value="2" {{ $data->type_SV === 2 ? "selected" : "" }}>BMW</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">SVの頻度</label>
-                        <select class="w-75" id="email" name="SV_frequency">
-                            <option value="2" {{ $data->SV_frequency === 2 ? "selected" : "" }}>継続（６回以上／１年）</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">実施期間</label>
-                        <div class="w-75 date-group">
-                            <input type="datetime-local" name="s_period" value="{{ old('s_period',$data->s_period) }}"/>
-                            <span>~</span>
-                            <input type="datetime-local" name="e_period" value="{{ old('e_period',$data->e_period) }}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">SV契約</label>
-                        <div class="w-75 date-group second">
-                            <input type="datetime-local" name="SV_contract" value="{{ old('SV_contract',$data->SV_contract) }}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <div class="w-100 group-control">
-                        <label for="email" class="w-25">研鑽目的</label>
-                        <div class="w-75 table-group">
-                            <table>
-                                {{-- 1 --}}
-                                <tr>
-                                    <th class="bg-red" rowspan="2">1 仕事と暮らしの調和</th>
-                                    <td ><input type="checkbox" name="study_purpose[]" value="1" id="checkbox1" {{ in_array("1",$data->goal_study['study_purpose']) ? "checked" : "" }}> <label for="checkbox1">(1)健康状態の自己管理</label></td>
-                                </tr>
-                                <tr>
-                                    <td ><input type="checkbox" name="study_purpose[]" value="2" id="checkbox2" {{ in_array("2",$data->goal_study['study_purpose']) ? "checked" : "" }}> <label for="checkbox2">(2)仕事と家庭のバランス</label></td>
-                                </tr>
-                                {{-- 2 --}}
-                                <tr>
-                                    <th rowspan="2">2 社会人・組織人としての力</th>
-                                    <td><input type="checkbox" name="SAAMOS[]" value="3" id="checkbox3" {{ in_array("3",$data->goal_study['SAAMOS']) ? "checked" : "" }}> <label for="checkbox3">(1)基本姿勢やマナー</label></td>
-                                </tr>
-                                <tr>
-                                    <td ><input type="checkbox" name="SAAMOS[]" value="4" id="checkbox4" {{ in_array("4",$data->goal_study['SAAMOS']) ? "checked" : "" }}> <label for="checkbox4">(2)組織人としての役割遂行</label></td>
-                                </tr>
-                                {{-- 3 --}}
-                                <tr>
-                                    <th rowspan="5">3 専門職・実践者としての力</th>
-                                    <td><input type="checkbox" name="PAAP[]" value="5" id="checkbox5" {{ in_array("5",$data->goal_study['PAAP']) ? "checked" : "" }}> <label for="checkbox5">(1)専門的支援関係形成力（個人、小集団、地域等）</label></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="PAAP[]" value="6" id="checkbox6" {{ in_array("6",$data->goal_study['PAAP']) ? "checked" : "" }}> <label for="checkbox6">(2)アセスメント力</label></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="PAAP[]" value="7" id="checkbox7" {{ in_array("7",$data->goal_study['PAAP']) ? "checked" : "" }}> <label for="checkbox7">(3)支援・介入・調整力</label></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="PAAP[]" value="8" id="checkbox8" {{ in_array("8",$data->goal_study['PAAP']) ? "checked" : "" }}> <label for="checkbox8">(4)連携・協働・チーム形成力<</label>/td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="PAAP[]" value="9" id="checkbox9" {{ in_array("9",$data->goal_study['PAAP']) ? "checked" : "" }}> <label for="checkbox9">(5)コミュニティへのアプローチ・ソーシャルアクションの力</label></td>
-                                </tr>
-                                {{-- 4 --}}
-                                <tr>
-                                    <th>4 自己研鑽</th>
-                                    <td><input type="checkbox" name="brainstorming[]" value="10" id="checkbox10" {{ in_array("10",$data->goal_study['brainstorming']) ? "checked" : "" }}> <label for="checkbox10">(1)専門性を養うために学び続ける力</label></td>
-                                </tr>
-                                {{-- 5 --}}
-                                <tr>
-                                    <th rowspan="2">5 専門職教育・研究</th>
-                                    <td><input type="checkbox" name="PEAR[]" value="11" id="checkbox11" {{ in_array("11",$data->goal_study['PEAR']) ? "checked" : "" }}> <label for="checkbox11">(1)ソーシャルワーカーを育てる力</label></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox" name="PEAR[]" value="12" id="checkbox12" {{ in_array("12",$data->goal_study['PEAR']) ? "checked" : "" }}> <label for="checkbox12">(2)研究、実践成果を示す力</label></td>
-                                </tr>
-                                <tr>
-                                    <th>6 ソーシャルワーカー意識</th>
-                                    <td><input type="checkbox" name="SWA[]" value="13" id="checkbox13" {{ in_array("13",$data->goal_study['SWA']) ? "checked" : "" }}> <label for="checkbox13">(1)ソーシャルワーカーアイデンティティ・モチベーションを維持する力</label></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <input type="hidden" value="{{$answerManageId}}" name="answer_manage_id">
+                <input type="hidden" id="urlGetQuestion" value="{{route('getBranchHisQuestion')}}">
+                <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
+                <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
+                @include('myPage.creditRegistration.registry_question_edit')
                 <div class="action">
                     <button type="submit" class="accept-btn">確認</button>
                     <button type="button" class="decline-btn">戻る</button>
@@ -134,11 +32,20 @@
             </form>
         </div>
         <div class="contain2">
+            @if(!empty($guidanceData[2]))
+                @if($guidanceData[2]->sentence_class)
+                    {!! $guidanceData[2]->guidance !!}
+                @else
+                    {!! $guidanceData[2]->guidance !!}
+                @endif
+            @endif
         </div>
     </div>
 @endsection
 @push('js')
     <script src="{{asset('assets/js-lib/toastr.min.js')}}"></script>
+    <script src="{{asset('assets/js-lib/chosen.jquery.js')}}"></script>
+    <script src="{{asset('assets/js/registry.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script>
@@ -164,7 +71,7 @@
             }
             if($(this).attr('register') !== undefined){
                 $.ajax({
-                    url: '{{ route('handleCreditRegistry') }}', // Replace with the appropriate route URL
+                    url: '{{ route('handleCreditUpdate') }}', // Replace with the appropriate route URL
                     type: 'POST',
                     data: { "_token": "{{ csrf_token() }}" },
                     success: function(response) {

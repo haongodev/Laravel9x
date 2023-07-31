@@ -81,3 +81,4 @@ function auto_grow(element) {
     element.style.height = "5px";
     element.style.height = (element.scrollHeight) + "px";
 }
+$(".select-chosen").chosen({no_results_text: "Oops, nothing found!"});

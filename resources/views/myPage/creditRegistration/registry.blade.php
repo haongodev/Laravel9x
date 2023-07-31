@@ -141,8 +141,5 @@
             });
         })
 
-
-
-        $(".select-chosen").chosen({no_results_text: "Oops, nothing found!"});
     </script>
 @endpush

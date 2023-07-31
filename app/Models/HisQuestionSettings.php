@@ -81,4 +81,8 @@ class HisQuestionSettings extends Model
     // Functions ...
 
     // Relations ...
+    public function question_option_setting()
+    {
+        return $this->hasMany(HisQuestionOptionsSettings::class,'question_settings_id','id');
+    }
 }
