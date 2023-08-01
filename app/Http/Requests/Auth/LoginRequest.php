@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use App\Models\UsersAddInfo;
 class LoginRequest extends FormRequest
 {
     /**
@@ -41,8 +42,9 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+        $userInfo = UsersAddInfo::where('member_id',$this->input('id'))->first();
         $credentials = [
-            'id'=>$this->input('id'),
+            'id'=>$userInfo->users_id ?? '',
             'password' => $this->input('password'),
             'active_flg' => true
         ];
