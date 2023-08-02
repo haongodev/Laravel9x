@@ -115,7 +115,7 @@ class CreditRegistrationController extends Controller
     {
         $data = $request->all();
         //Current pattern
-        $data['type_native_id'] = 0;
+        $data['type_native_id'] = $data['type_native_id'] ?? 0;
         $creditsData = $this->answerInfoService->searchCredits($data);
         $returnHTML = '';
         if ($creditsData) {
@@ -126,7 +126,7 @@ class CreditRegistrationController extends Controller
 
     public function creditRegistry(Request $request)
     {
-        $typeNativeId = 0;
+        $typeNativeId = $request->get('type_native_id',0);
         $guidanceData = $this->guidanceSettingService->getByScreenId('A004');
         $questionManageData = $this->questionManageService->getByTypeNativeId($typeNativeId);
         $questionId = $questionManageData->first()->id ?? '';
@@ -155,7 +155,7 @@ class CreditRegistrationController extends Controller
         if(Session::get('popup_confirm')){
             $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
         }
-       // dd($answerInfoData);
+
         Session::put('answer_info_data', $answerInfoData);
         //Get original question id get from answer info data
 
@@ -234,7 +234,7 @@ class CreditRegistrationController extends Controller
     }
     public function getBranchQuestion(Request $request)
     {
-        $questionSettingId = $request->get('question_setting_id');
+        $questionSettingId = $request->get('question_setting_id',0);
 
         $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionSettingId);
         $returnHTML = '';
