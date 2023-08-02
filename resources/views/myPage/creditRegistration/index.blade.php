@@ -69,7 +69,15 @@
             var activePoints = myChart.getElementsAtEventForMode(e, 'point', myChart.options);
             var firstPoint = activePoints[0];
             var label = myChart.data.labels[firstPoint.index];
-            var url = '{{route('typeSelected')}}';
+            var type_native_id = 0;
+            if(label=='社会的活動'){
+                type_native_id = 2
+            }else if(label=='SV'){
+                type_native_id = 0
+            }else{
+                type_native_id = 1;
+            }
+            var url = '{{route('typeSelected')}}?type_native_id='+type_native_id;
             window.location.href=url;
         }
 

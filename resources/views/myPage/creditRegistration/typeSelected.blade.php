@@ -17,10 +17,11 @@
         <div class="form-registry">
             <form action="{{route('searchTypeSelected')}}" method="post" id="formTypeSelected">
                 @csrf
+                <input type="hidden" name="type_native_id" value="{{request('type_native_id')}}">
                 <div class="vertical-button">
                     <div class="redirect">
                         <button type="button" class="redirect-btn"
-                                onclick="window.location.href='{{route('creditRegistry')}}'">
+                                onclick="window.location.href='{{route('creditRegistry',['type_native_id'=>request('type_native_id')])}}'">
                             単位登録する
                         </button>
                     </div>

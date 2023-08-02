@@ -23,9 +23,9 @@ class AnswerManageRepository
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
         })->where('member_id',$memberId);
         if (is_array($typeNativeId)){
-            $result = $result->whereIn('type_native_id',$typeNativeId);
+            $result = $result->whereIn('answer_manage.type_native_id',$typeNativeId);
         }else{
-            $result = $result->where('type_native_id',$typeNativeId);
+            $result = $result->where('answer_manage.type_native_id',$typeNativeId);
         }
         return $result->groupBy('registration_year')->pluck('registration_year');
     }
