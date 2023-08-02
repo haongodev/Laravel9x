@@ -160,28 +160,40 @@ class SakuraSetController extends Controller
         $validator = Validator::make($request->all(), [
             'file' => 'required|mimes:png,jpg,jpeg,csv,txt,pdf|max:2048'
         ]);
-        $instance = null;
-        $repo = null;
-        switch ($request->backup_type) {
-            case 'facesheet':
-                $repo = $this->facesheetManageRepository;
-                $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
-                break;
-            case 'initiative':
-                $repo = $this->initiativetableManageRepository;
-                $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
-                break;
-            default:
-                # code...
-                break;
-        }
         if ($validator->fails()) {
             $data['success'] = false;
             $data['message'] = $validator->errors()->first('file');// Error response
         }else{
+            $instance = null;
+            $repo = null;
+            $class = null;
             if($request->file('file')) {
                 $file = $request->file('file');
                 $location = 'storage/'.$request->member_id.'/'.$request->backup_type;
+                if($request->at){
+                    $location .= '/'.$request->at;
+                    if($request->at === 'at'){
+                        $class = 2;
+                    }elseif($request->at === '6m'){
+                        $class = 0;
+                    }else{
+                        $class = 1;
+                    }
+                }
+                switch ($request->backup_type) {
+                    case 'facesheet':
+                        $repo = $this->facesheetManageRepository;
+                        $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
+                        break;
+                    case 'initiative':
+                        $repo = $this->initiativetableManageRepository;
+                        $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
+                        break;
+                    default:
+                        $repo = $this->reflectionsheetManageRepository;
+                        $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,['member_id' => $request->member_id, 'class' => $class],'only',['id','file_name','display_name','member_id']);
+                        break;
+                }
                 $newFilename = $file->getClientOriginalName();
                 // check old file exist
                 if (file_exists($location . '/' . $instance->file_name)) {
@@ -190,24 +202,26 @@ class SakuraSetController extends Controller
                     $namebk = $newFilenameWithoutExtension.'_bk.'.$extension;
                     rename($location . '/' . $instance->file_name, $location . '/' . $namebk);
                     // insert file backup to db
-                    $this->sakurasetService->createBackupData($repo,$namebk,$instance->display_name,$request->member_id);
-                }
-                $file->move($location,$newFilename);
-                // update new name for file
-                $instance->file_name = $newFilename;
-                $instance->save();
-                $msg = 'Change success';
-                $reviewer = $this->sakurasetService->getByLoggedId(['reviewer_id',$request->member_id],['reviewer_member','made_member']);
-                $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer->made_member];
-                $view = 'email.sakuraSet.backup_'.$request->backup_type;
-                if(!view()->exists($view)){
-                    $msg = 'Template Email do not exist';
-                }else{
-                    $status = Mail::send(new SendMail($view, $emailConfig));
-                    if(!$status){
-                        $msg = 'Send email failed';
+                    $this->sakurasetService->createBackupData($repo,$namebk,$instance->display_name,$request->member_id,$class);
+                    
+                    $file->move($location,$newFilename);
+                    // update new name for file
+                    $instance->file_name = $newFilename;
+                    $instance->save();
+                    $msg = 'Change success';
+                    $reviewer = $this->sakurasetService->getByLoggedId(['reviewer_id',$request->member_id],['reviewer_member','made_member']);
+                    $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer->made_member];
+                    $view = 'email.sakuraSet.backup_'.$request->backup_type;
+                    if(!view()->exists($view)){
+                        $msg = 'Template Email do not exist';
+                    }else{
+                        $status = Mail::send(new SendMail($view, $emailConfig));
+                        if(!$status){
+                            $msg = 'Send email failed';
+                        }
                     }
                 }
+                
                 $data['success'] = true;
                 $data['message'] = $msg;
             }

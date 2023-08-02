@@ -135,6 +135,7 @@
                                                 '<div class="flex-between">'+
                                                     '<button class="confirmation" link="'+base_url+link+'">確認</button>'+
                                                     '<button class="swp">実施者と共有</button>'+
+                                                    '<input class="hidden freflectionsheet-upload" type="file" at="'+name_folder+'" member_id="'+element.member_id+'">'+
                                                 '</div>'+
                                             '</div>';
                                 });
@@ -289,7 +290,17 @@
             backupWithNewSWP(url,fd);
         })
         $('body').on('click','.freflectionsheet .swp',function (e) {
-
+            $(this).next('input').click();
+        })
+        $('body').on('change','.freflectionsheet-upload',function (e) {
+            var url = '{{ route("sakuraBackup") }}';
+            var files = $(this)[0].files;
+            var fd = new FormData();
+            fd.append('file',files[0]);
+            fd.append('member_id',$(this).attr('member_id'));
+            fd.append('at',$(this).attr('at'));
+            fd.append('backup_type','freflectionsheet');
+            backupWithNewSWP(url,fd);
         })
         function downloadFile(url,name){
             var link = document.createElement("a");
