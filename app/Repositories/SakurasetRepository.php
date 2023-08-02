@@ -39,7 +39,17 @@ class SakurasetRepository
         return $this->model->with('reviewer_member:users_id,member_id,email,name1,name2')->where('member_id',$member)->first()->toArray()['reviewer_member'];
     }
     public function getSheetInfoByReviewerId($inst,$reviewerId,$kind,$select){
-        $model = $inst->model->select($select)->where([['member_id',$reviewerId],['share_flg',1]])->whereNull('delete_date');
+        $where = [
+            ['share_flg',1]
+        ];
+        if(is_array($reviewerId)){
+            foreach($reviewerId as $key => $value){
+                array_push($where,[$key,$value]);
+            }
+        }else{
+            array_push($where,['member_id',$reviewerId]);
+        }
+        $model = $inst->model->select($select)->where($where)->whereNull('delete_date');
         if($kind == 'only'){
             $model = $model->first();
         }else{
@@ -47,12 +57,16 @@ class SakurasetRepository
         }
         return $model;
     }
-    public function createBackupData($inst,$namebk,$namedis,$memberId){
-        $inst->model->create([
+    public function createBackupData($inst,$namebk,$namedis,$memberId,$class){
+        $arrData = [
             'file_name' => $namebk,
             'share_flg' => 0,
             'member_id' => $memberId,
             'display_name' => $namedis,
-        ]);
+        ];
+        if($class !== null){
+            $arrData['class'] = $class;
+        }
+        $inst->model->create($arrData);
     }
 }

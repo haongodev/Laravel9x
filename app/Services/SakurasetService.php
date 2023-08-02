@@ -31,7 +31,7 @@ class SakurasetService
     public function getFileInfoByReviewerId($repoInst,$reviewerId,$kind,$select){
         return $this->sakurasetRepository->getSheetInfoByReviewerId($repoInst,$reviewerId,$kind,$select);
     }
-    public function createBackupData($repoInst,$namebk,$namedis,$memberId){
-        return $this->sakurasetRepository->createBackupData($repoInst,$namebk,$namedis,$memberId);
+    public function createBackupData($repoInst,$namebk,$namedis,$memberId,$class){
+        return $this->sakurasetRepository->createBackupData($repoInst,$namebk,$namedis,$memberId,$class);
     }
 }
