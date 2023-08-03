@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="popup-content">
-            <div class="header-content">
+            <div class="header-content not-remove">
                 <button class="title-popup">作成・保存・共有する</button>
                 <button class="title-popup">ダウンロードする</button>
                 <button class="title-popup">保存・共有する</button>

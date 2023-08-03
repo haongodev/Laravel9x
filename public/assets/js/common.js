@@ -8,7 +8,9 @@ $('.popup-wrapper').click(function (e){
 })
 
 $('.close-icon,.btn-popup-decline').click(function (e){
-    $('.popup-wrapper .popup-content .header-content').html('');
+    if(!$(this).parents('.popup-wrapper').find('.header-content').hasClass('not-remove')){
+        $('.popup-wrapper .popup-content .header-content').html('');
+    }
     $('.popup-wrapper .popup-content .content').html('');
     $('.popup-wrapper').addClass('hidden');
     $('.btn-popup-accept').removeAttr('last-confirm');
