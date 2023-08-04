@@ -30,6 +30,7 @@ class QuestionSettingService
         return $this->questionSettingRepository->getChildByQuestionId($questionId);
     }
 
+
     public function getById($id = 0)
     {
         return $this->questionSettingRepository->getById($id);
@@ -54,6 +55,15 @@ class QuestionSettingService
     public function getByIds(array $ids = [])
     {
         return $this->questionSettingRepository->getByIds($ids);
+    }
+
+    public function convertKeyToParentQuestionKey($questionSettingData)
+    {
+        $data = [];
+        foreach ($questionSettingData as $key => $questionSetting){
+            $data[$questionSetting->parent_question_id][]= $questionSetting;
+        }
+        return $data;
     }
 }
 

@@ -231,6 +231,7 @@ class CreditRegistrationService
         $questionSettingData = session('question_confirm');
         $questionOptionSettingData = session('question_option_confirm');
         foreach ($formData['question'] as $questionSettingId => $answer) {
+            if(!$answer){continue;}
             $questionSetting = $questionSettingData[$questionSettingId];
             $tempAnswer = '';
             $score = 0;

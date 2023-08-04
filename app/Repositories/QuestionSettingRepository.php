@@ -25,7 +25,7 @@ class QuestionSettingRepository
 
     public function getChildByQuestionId($questionId = 0)
     {
-        return $this->model->where('question_id', $questionId)->where('level',2)->where('parent_question_id','<>', 0)->get()->keyBy('parent_question_id');
+        return $this->model->where('question_id', $questionId)->where('level',2)->where('parent_question_id','<>', 0)->whereNull('parent_question_option_id')->get();
     }
     public function getById($id = 0)
     {

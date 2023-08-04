@@ -1,7 +1,7 @@
 $('#registry').on('click', '.branch-question', function (e) {
     var this_choose = $(this);
     var isGetQuestion = true;
-    var question_setting_id = this_choose.data('question-option-setting-id');
+    var question_option_setting_id = this_choose.data('question-option-setting-id');
     var parent_question_id = this_choose.data('parent-question-id');
     if (this_choose.attr('type') == 'checkbox') {
         if (this_choose.is(':checked') == false) {
@@ -19,9 +19,9 @@ $('#registry').on('click', '.branch-question', function (e) {
         })
     }
 
-
+    console.log(question_option_setting_id);
     if (isGetQuestion) {
-        getQuestionBranch(this_choose, question_setting_id)
+        getQuestionBranch(this_choose, question_option_setting_id)
     }
 })
 $('#registry').on('change', '.select-branch-question', function (e) {
@@ -44,13 +44,13 @@ $('#registry').on('change', '.select-branch-question', function (e) {
 
 })
 
-function getQuestionBranch(this_choose, question_setting_id) {
+function getQuestionBranch(this_choose, question_option_setting_id) {
     $.ajax({
         type: "post",
         url: $('#urlGetQuestion').val(),
         cache: false,
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        data: {question_setting_id: question_setting_id},
+        data: {question_option_setting_id: question_option_setting_id},
         success: function (data) {
             console.log(data);
             nextQuestion(this_choose, data)

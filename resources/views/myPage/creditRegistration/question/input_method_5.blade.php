@@ -1,6 +1,7 @@
 <?php
 $answerData = $answerInfoData[$questionSetting->id] ?? [];
 $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
+//dd($arrAnswer);
 ?>
 <div class="first-child-question-id-{{$questionSetting->id}} first-div">
     <div
@@ -9,7 +10,7 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
         data-current-question-id="{{$questionSetting->id}}"
     >
         <div class="w-100 group-control">
-            <label for="email" class="w-25">{{$questionSetting->title}}</label>
+            <label for="email" class="w-25">{{$questionSetting->title}}{{$questionSetting->id}}</label>
             <select class="w-75 select-branch-question select-branch-question-{{$questionSetting->id}} select-chosen" id="question_select_{{$questionSetting->id}}"
                     name="question[{{$questionSetting->id}}]">
                 <option value="">Choose Option</option>
@@ -33,7 +34,6 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
         var id = $(this).attr('id');
         $('#' + id + '>option').each(function (index) {
             var current_id = $(this).data('question-option-setting-id');
-
             if (!$(this).is(':selected')) {
                 removeQuestion($(this))
             } else {
