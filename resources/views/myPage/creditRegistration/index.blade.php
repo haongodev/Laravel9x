@@ -35,7 +35,7 @@
         var myChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['研修・学会等', '社会的活動','SV'],
+                labels: ['研修・学会等', '社会的活動','スーパービジョン'],
                 datasets: [{
                     label: '# of Votes',
                     data: [22, 22, 22],
@@ -58,7 +58,7 @@
                             return context.chart.data.labels[context.dataIndex];
                         },
                         font: {
-                            size: 40,
+                            size: 32,
                         }
                     }
                 }

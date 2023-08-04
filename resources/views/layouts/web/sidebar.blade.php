@@ -52,13 +52,13 @@
                     <li>
                         <a href="{{route('creditRegistration')}}">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-2.svg">
-                            <span>研鑽を積み上げる (単位申請)</span>
+                            <span>研鑽を積み上げる (単位登録)</span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-3.svg">
-                            <span>現在の研鑽状況 (単位取得状況)</span>
+                            <span>現在の研鑽状況 (単位登録状況)</span>
                         </a>
                     </li>
                     <li class="{{ (request()->is('mypage/sakuraSet')) ? 'active' : '' }}">
@@ -71,12 +71,6 @@
                         <a href="#">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-5.svg">
                             <span>認定更新手続き</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-6.png">
-                            <span>本協会の研修受講履歴</span>
                         </a>
                     </li>
                 </ul>
