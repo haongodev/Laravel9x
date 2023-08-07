@@ -71,3 +71,6 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
         </div>
     </div>
 </div>
+@php
+    Illuminate\Support\Facades\Session::forget('show_popup_confirm');
+@endphp

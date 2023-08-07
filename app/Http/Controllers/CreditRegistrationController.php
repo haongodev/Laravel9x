@@ -184,14 +184,16 @@ class CreditRegistrationController extends Controller
 
         /* show confirm */
         if ($request->has('confirm')) {
+            $typeNativeId = $request->get('type_native_id');
             Session::put('popup_confirm', $request->except(['_token', 'confirm']));
+            Session::put('show_popup_confirm', true);
             $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
             $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
             $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
             $questionOptionSettingRegistryData = $this->questionOptionSettingService->getByIds($questionOptionSettingIds);
             Session::put('question_confirm', $questionSettingRegistryData);
             Session::put('question_option_confirm', $questionOptionSettingRegistryData);
-            return redirect()->route('creditRegistry');
+            return redirect()->route('creditRegistry',['type_native_id'=>$typeNativeId]);
         } else {
             if (Session::get('popup_confirm')) {
                 /* handle with database here */
@@ -235,6 +237,7 @@ class CreditRegistrationController extends Controller
                 Session::forget('popup_confirm');
                 Session::forget('question_confirm');
                 Session::forget('question_option_confirm');
+                Session::forget('answer_info_data');
                 return response()->json(['message' => 'successfully']);
             }
         }

@@ -72,7 +72,7 @@
             var type_native_id = 0;
             if(label=='社会的活動'){
                 type_native_id = 2
-            }else if(label=='SV'){
+            }else if(label=='スーパービジョン'){
                 type_native_id = 0
             }else{
                 type_native_id = 1;
