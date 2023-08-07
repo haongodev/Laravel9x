@@ -10,7 +10,7 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
             <select class="w-75 select-branch-question select-branch-question-{{$questionSetting->id}} select-chosen" multiple id="question_select_{{$questionSetting->id}}"
                     name="question[{{$questionSetting->id}}][]">
-                <option value="">Choose Option</option>
+                <option value="">Blank</option>
                 @foreach($questionSetting->question_option_setting as $questionOption)
                     <option
                         value="{{$questionOption->id}}"
@@ -21,6 +21,9 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
             </select>
         </div>
     </div>
+    @if(isset($questionSettingChildData[$questionSetting->id]))
+        @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
+    @endif
     <script>
 
         $(".select-chosen").chosen({no_results_text: "Oops, nothing found!"});

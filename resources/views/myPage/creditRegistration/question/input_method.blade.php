@@ -11,7 +11,6 @@
                        value="{{$answerData->answer ?? ''}}"/>
             </div>
         </div>
-        @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
             @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
         @endif
@@ -26,7 +25,6 @@
                           oninput="auto_grow(this)">{{$answerData->answer ?? ''}}</textarea>
             </div>
         </div>
-        @php unset($questionSettingData[$key])@endphp
     @endif
     @if($questionSetting->input_method ==7)
         <div class="input-group">
@@ -38,7 +36,6 @@
                 </div>
             </div>
         </div>
-        @php unset($questionSettingData[$key])@endphp
     @endif
     @if($questionSetting->input_method ==8)
         @php
@@ -56,7 +53,6 @@
                 </div>
             </div>
         </div>
-        @php unset($questionSettingData[$key])@endphp
     @endif
 @endforeach
 @foreach($questionSettingChild as $key => $questionSetting)
@@ -180,7 +176,7 @@
                     <select class="w-75 select-branch-question select-chosen"
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}]">
-                        <option value="">Choose Option</option>
+                        <option value="">Blank</option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
                                 value="{{$questionOption->id}}"
@@ -202,7 +198,7 @@
                     <select class="w-75 select-branch-question select-chosen" multiple
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}][]">
-                        <option value="">Choose Option</option>
+                        <option value="">Blank</option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
                                 value="{{$questionOption->id}}"
