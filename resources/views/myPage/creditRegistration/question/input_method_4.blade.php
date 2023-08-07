@@ -29,6 +29,9 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
             </div>
         </div>
     </div>
+    @if(isset($questionSettingChildData[$questionSetting->id]))
+        @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
+    @endif
 </div>
 <script>
     $(document).ready(function(){

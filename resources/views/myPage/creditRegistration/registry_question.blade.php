@@ -189,7 +189,7 @@
                     <select class="w-75 select-branch-question select-chosen"
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}]">
-                        <option value="">Choose Option</option>
+                        <option value="">Blank</option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
                                 value="{{$questionOption->id}}"
@@ -211,7 +211,7 @@
                     <select class="w-75 select-branch-question select-chosen" multiple
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}][]">
-                        <option value="">Choose Option</option>
+                        <option value="">Blank</option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
                                 value="{{$questionOption->id}}"

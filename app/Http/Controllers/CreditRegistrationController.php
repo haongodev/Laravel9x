@@ -133,6 +133,7 @@ class CreditRegistrationController extends Controller
         $questionSettingData = $this->questionSettingService->getByQuestionId($questionId);
         $questionSettingChildData = $this->questionSettingService->getChildByQuestionId($questionId);
         $questionSettingChildData = $this->questionSettingService->convertKeyToParentQuestionKey($questionSettingChildData);
+        Session::put('question_child_data', $questionSettingChildData);
         $answerInfoData = [];
         if(Session::get('popup_confirm')){
             $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
@@ -247,13 +248,15 @@ class CreditRegistrationController extends Controller
         $questionOptionSettingId = $request->get('question_option_setting_id',-1);
 
         $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionOptionSettingId);
+        $questionSettingChildData = Session::get('question_child_data');
         $answerInfoData = Session::get('answer_info_data');
         $returnHTML = '';
         if ($questionSetting) {
             $viewQuestion = 'input_method_' . $questionSetting->input_method;
             $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion,[
                 'questionSetting'=> $questionSetting,
-                'answerInfoData' => $answerInfoData
+                'answerInfoData' => $answerInfoData,
+                'questionSettingChildData' => $questionSettingChildData
             ])->render();
         }
 
