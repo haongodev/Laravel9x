@@ -52,7 +52,7 @@
                     <li>
                         <a href="{{route('creditRegistration')}}">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-2.svg">
-                            <span>研鑽を積み上げる (単位登録)</span>
+                            <span>研鑽を記録する (単位登録)</span>
                         </a>
                     </li>
                     <li>
