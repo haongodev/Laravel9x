@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="title-sign">
-                    <span class="member_num">構成員番号：{{auth()->user()->id}}</span>
+                    <span class="member_num">構成員番号：{{auth()->user()->user_add_info->member_id ?? auth()->user()->id}}</span>
                     <span class="welcom">ようこそ、{{auth()->user()->name}}さん</span>
                 </div>
                 <form action="/logout" method="post">
@@ -16,7 +16,7 @@
                 @endphp
                 <ul class="list-info">
                     <li>
-                        <a href="{{route('typeSelected')}}" class="bg-primary">SV</a><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
+                        <a href="{{route('typeSelected')}}" class="bg-primary">スーパービジョン</a><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
                     </li>
                     <li>
                         <a href="{{route('typeSelected')}}" class="bg-yellow">研修・学会等</a><span>{{$answerInfoPattern[1]['score_total'] ?? 0}}</span>

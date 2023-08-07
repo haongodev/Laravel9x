@@ -26,18 +26,13 @@
                 <input type="hidden" id="urlGetQuestion" value="{{route('getBranchQuestion')}}">
                 <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
-{{--                @if(session('popup_confirm'))--}}
-{{--                    @include('myPage.creditRegistration.registry_question_old')--}}
-{{--                @else--}}
-{{--                    @include('myPage.creditRegistration.registry_question')--}}
-{{--                @endif--}}
                 @include('myPage.creditRegistration.registry_question')
-
-
-                <div class="action">
-                    <button type="submit" class="accept-btn">確認</button>
-                    <button type="button" class="decline-btn">戻る</button>
-                </div>
+                @if($isHasQuestion)
+                    <div class="action">
+                        <button type="submit" class="accept-btn">確認</button>
+                        <button type="button" class="decline-btn">戻る</button>
+                    </div>
+                @endif
             </form>
         </div>
         <div class="contain2">

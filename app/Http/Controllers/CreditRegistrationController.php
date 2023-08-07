@@ -137,7 +137,6 @@ class CreditRegistrationController extends Controller
         if(Session::get('popup_confirm')){
             $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
             Session::put('answer_info_data', $answerInfoData);
-            //dd($answerInfoData);
         }
         return view('myPage/creditRegistration/registry', [
             'guidanceData' => $guidanceData,
@@ -146,6 +145,7 @@ class CreditRegistrationController extends Controller
             'typeNativeId' => $typeNativeId,
             'questionManagerId' => $questionId,
             'answerInfoData' => $answerInfoData,
+            'isHasQuestion' => $questionSettingData->isEmpty() ? 0 : 1
         ]);
     }
 
