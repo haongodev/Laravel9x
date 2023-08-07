@@ -39,7 +39,7 @@ class HisQuestionOptionsSettings extends Model
      * @var array
      */
     protected $fillable = [
-        'class_name', 'option_name', 'question_id', 'question_settings_id', 'registration_date', 'score', 'sort_order', 'type_native_id', 'update_date'
+        'id', 'question_settings_id', 'question_id', 'type_native_id', 'class_name', 'option_name', 'score', 'sort_order', 'update_date', 'registration_date',
     ];
 
     /**

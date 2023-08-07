@@ -1,16 +1,19 @@
 @foreach($questionSettingData as $key => $questionSetting)
+    @php
+        $answerData = $answerInfoData[$questionSetting->id] ?? '';
+    @endphp
     @if($questionSetting->input_method ==0)
         <div class="input-group">
             <div class="w-100 group-control">
                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                 <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
                        placeholder="本協会の認定SVR"
-                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>
+                       value="{{$answerData->answer ?? ''}}"/>
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
         @endif
     @endif
     @if($questionSetting->input_method ==1)
@@ -20,12 +23,12 @@
                 {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
                 {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
                 <textarea class="w-75" name="question[{{$questionSetting->id}}]"
-                          oninput="auto_grow(this)">{{ session('popup_confirm')['SVR_attributes'] ?? ''}}</textarea>
+                          oninput="auto_grow(this)">{{$answerData->answer ?? ''}}</textarea>
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
         @endif
     @endif
     @if($questionSetting->input_method ==7)
@@ -34,35 +37,42 @@
                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group second">
                     <input type="datetime-local" name="question[{{$questionSetting->id}}]"
-                           value="{{ session('popup_confirm')['SV_contract'] ?? ''}}"/>
+                           value="{{$answerData->answer ?? ''}}"/>
                 </div>
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
         @endif
     @endif
     @if($questionSetting->input_method ==8)
+        @php
+            $arrAnswer =explode(',',$answerData->answer ?? '');
+        @endphp
         <div class="input-group">
             <div class="w-100 group-control">
                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group">
                     <input type="datetime-local" name="question[{{$questionSetting->id}}][start]"
-                           value="{{ session('popup_confirm')['s_period'] ?? ''}}"/>
+                           value="{{!empty($arrAnswer[0]) ? date('Y-m-d H:i:s',strtotime($arrAnswer[0])) : ''}}"/>
                     <span>~</span>
                     <input type="datetime-local" name="question[{{$questionSetting->id}}][end]"
-                           value="{{ session('popup_confirm')['e_period'] ?? ''}}"/>
+                           value="{{!empty($arrAnswer[1]) ? date('Y-m-d H:i:s',strtotime($arrAnswer[1])) : ''}}"/>
                 </div>
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
         @endif
     @endif
 @endforeach
 @foreach($questionSettingData as $key => $questionSetting)
+    @php
+        $answerData = $answerInfoData[$questionSetting->id] ?? '';
+        $arrAnswer = explode(',',$answerData->answer ?? '');
+    @endphp
     @if($questionSetting->input_method ==2)
         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
             <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
@@ -80,6 +90,7 @@
                                                value="{{$questionOption->id}}"
                                                id="checkbox{{$questionOption->id}}"
                                                data-question-option-setting-id="{{$questionOption->id}}"
+                                            {{in_array($questionOption->option_name, $arrAnswer) ? 'checked' : ''}}
                                         >
                                         <label
                                             for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
@@ -123,6 +134,7 @@
                                                    value="{{$questionOption->id}}"
                                                    id="checkbox{{$questionOption->id}}"
                                                    data-question-option-setting-id="{{$questionOption->id}}"
+                                                {{in_array($questionOption->option_name, $arrAnswer) ? 'checked' : ''}}
                                             >
                                             <label
                                                 for="checkbox{{$questionOption->id}}">({{$keyOption+1}}
@@ -153,7 +165,7 @@
                                                value="{{$questionOption->id}}"
                                                id="checkbox{{$questionOption->id}}"
                                                data-question-option-setting-id="{{$questionOption->id}}"
-
+                                            {{in_array($questionOption->option_name, $arrAnswer) ? 'checked' : ''}}
                                         >
                                         <label
                                             for="checkbox{{$questionOption->id}}">{{$questionOption->option_name}}</label>
@@ -181,6 +193,7 @@
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
                                 value="{{$questionOption->id}}"
+                                {{in_array($questionOption->option_name, $arrAnswer) ? 'selected' : ''}}
                                 data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
                         @endforeach
 
@@ -202,6 +215,7 @@
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
                                 value="{{$questionOption->id}}"
+                                {{in_array($questionOption->option_name, $arrAnswer) ? 'selected' : ''}}
                                 data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
                         @endforeach
 
@@ -210,5 +224,54 @@
             </div>
         </div>
     @endif
+    @if(isset($questionSettingChildData[$questionSetting->id]))
+        @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
+    @endif
 @endforeach
 
+@push('js')
+    <script>
+        $(document).ready(function(){
+            $('#registry').find('.branch-question').each(function (){
+                var this_choose = $(this);
+                var isGetQuestion = true;
+                var question_option_setting_id = this_choose.data('question-option-setting-id');
+
+                if (this_choose.attr('type') == 'checkbox') {
+                    if (this_choose.is(':checked') == false) {
+                        isGetQuestion = false;
+                    }
+                }
+
+                 if (this_choose.attr('type') == 'radio') {
+                         if ($(this).is(':checked') == false) {
+                             isGetQuestion = false;
+                        }
+                 }
+
+                if (isGetQuestion) {
+
+                    getQuestionBranch(this_choose, question_option_setting_id)
+                }
+            })
+
+            $('#registry').find('.select-branch-question').each(function (){
+                var this_choose = $(this);
+                var id = $(this).attr('id');
+                $('#' + id + '>option').each(function (index) {
+                    var current_id = $(this).data('question-option-setting-id');
+
+                    if (!$(this).is(':selected')) {
+                        removeQuestion($(this))
+                    } else {
+                        if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
+                            getQuestionBranch(this_choose, current_id)
+                        }
+
+                    }
+
+                });
+            })
+        })
+    </script>
+@endpush

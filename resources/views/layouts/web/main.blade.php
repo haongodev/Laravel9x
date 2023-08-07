@@ -19,7 +19,7 @@
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">
 @stack('styles')
 @include('components.popup')
-@if (session('popup_confirm'))
+@if (!empty(session('show_popup_confirm')))
     @include('components.popup_confirm')
 @endif
 @include('layouts.web.header')

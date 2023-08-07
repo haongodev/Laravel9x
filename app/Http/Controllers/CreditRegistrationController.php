@@ -132,13 +132,20 @@ class CreditRegistrationController extends Controller
         $questionId = $questionManageData->first()->id ?? '';
         $questionSettingData = $this->questionSettingService->getByQuestionId($questionId);
         $questionSettingChildData = $this->questionSettingService->getChildByQuestionId($questionId);
-
+        $questionSettingChildData = $this->questionSettingService->convertKeyToParentQuestionKey($questionSettingChildData);
+        $answerInfoData = [];
+        if(Session::get('popup_confirm')){
+            $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
+            Session::put('answer_info_data', $answerInfoData);
+            //dd($answerInfoData);
+        }
         return view('myPage/creditRegistration/registry', [
             'guidanceData' => $guidanceData,
             'questionSettingData' => $questionSettingData,
             'questionSettingChildData' => $questionSettingChildData,
             'typeNativeId' => $typeNativeId,
             'questionManagerId' => $questionId,
+            'answerInfoData' => $answerInfoData,
         ]);
     }
 
@@ -177,14 +184,16 @@ class CreditRegistrationController extends Controller
 
         /* show confirm */
         if ($request->has('confirm')) {
+            $typeNativeId = $request->get('type_native_id');
             Session::put('popup_confirm', $request->except(['_token', 'confirm']));
+            Session::put('show_popup_confirm', true);
             $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
             $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
             $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
             $questionOptionSettingRegistryData = $this->questionOptionSettingService->getByIds($questionOptionSettingIds);
             Session::put('question_confirm', $questionSettingRegistryData);
             Session::put('question_option_confirm', $questionOptionSettingRegistryData);
-            return redirect()->route('creditRegistry');
+            return redirect()->route('creditRegistry',['type_native_id'=>$typeNativeId]);
         } else {
             if (Session::get('popup_confirm')) {
                 /* handle with database here */
@@ -228,19 +237,24 @@ class CreditRegistrationController extends Controller
                 Session::forget('popup_confirm');
                 Session::forget('question_confirm');
                 Session::forget('question_option_confirm');
+                Session::forget('answer_info_data');
                 return response()->json(['message' => 'successfully']);
             }
         }
     }
     public function getBranchQuestion(Request $request)
     {
-        $questionSettingId = $request->get('question_setting_id',0);
+        $questionOptionSettingId = $request->get('question_option_setting_id',-1);
 
-        $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionSettingId);
+        $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionOptionSettingId);
+        $answerInfoData = Session::get('answer_info_data');
         $returnHTML = '';
         if ($questionSetting) {
             $viewQuestion = 'input_method_' . $questionSetting->input_method;
-            $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion)->with('questionSetting', $questionSetting)->render();
+            $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion,[
+                'questionSetting'=> $questionSetting,
+                'answerInfoData' => $answerInfoData
+            ])->render();
         }
 
         return response()->json(array('success' => true, 'html' => $returnHTML));
@@ -249,9 +263,9 @@ class CreditRegistrationController extends Controller
 
     public function getBranchHisQuestion(Request $request)
     {
-        $questionSettingId = $request->get('question_setting_id');
+        $questionOptionSettingId = $request->get('question_option_setting_id',-1);
 
-        $questionSetting = $this->historyQuestionSettingService->getByParentQuestionOptionId($questionSettingId);
+        $questionSetting = $this->historyQuestionSettingService->getByParentQuestionOptionId($questionOptionSettingId);
         $answerInfoData = Session::get('answer_info_data');
 
         $returnHTML = '';

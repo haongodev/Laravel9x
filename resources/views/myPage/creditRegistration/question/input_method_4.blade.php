@@ -33,24 +33,20 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
 <script>
     $(document).ready(function(){
         $('#registry').find('.branch-question-{{$questionSetting->id}}').each(function (){
-            console.log('sss');
+
             var this_choose = $(this);
             var isGetQuestion = true;
             var question_setting_id = this_choose.data('question-option-setting-id');
             if (this_choose.attr('type') == 'checkbox') {
                 if (this_choose.is(':checked') == false) {
-                    removeQuestion(this_choose)
                     isGetQuestion = false;
                 }
             }
 
             if (this_choose.attr('type') == 'radio') {
-                var parent_div = this_choose.closest('div.input-group');
-                $(parent_div).find('input[type="radio"]').each(function () {
-                    if ($(this).is(':checked') == false) {
-                        removeQuestion($(this))
-                    }
-                })
+                if ($(this).is(':checked') == false) {
+                    isGetQuestion = false;
+                }
             }
 
 

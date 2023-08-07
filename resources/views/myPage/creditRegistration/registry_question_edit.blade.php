@@ -1,11 +1,4 @@
-<?php
 
-//$questionSettingRegistry = session('popup_confirm')['question'] ?? [];
-//$questionSettingData = session('question_confirm');
-//$questionOptionSettingData = session('question_option_confirm');
-
-//dd($answerInfoData);
-?>
 @foreach($questionSettingData as $key => $questionSetting)
     @php
         if($questionSetting->level !=1){
@@ -61,7 +54,6 @@
     @if($questionSetting->input_method ==8)
         @php
             $arrAnswer =explode(',',$answerData->answer);
-        //dd($arrAnswer)
         @endphp
         <div class="input-group">
             <div class="w-100 group-control">
@@ -250,7 +242,7 @@ $(document).ready(function(){
     $('#registry').find('.branch-question').each(function (){
         var this_choose = $(this);
         var isGetQuestion = true;
-        var question_setting_id = this_choose.data('question-option-setting-id');
+        var question_option_setting_id = this_choose.data('question-option-setting-id');
         if (this_choose.attr('type') == 'checkbox') {
             if (this_choose.is(':checked') == false) {
                 removeQuestion(this_choose)
@@ -259,17 +251,14 @@ $(document).ready(function(){
         }
 
         if (this_choose.attr('type') == 'radio') {
-            var parent_div = this_choose.closest('div.input-group');
-            $(parent_div).find('input[type="radio"]').each(function () {
-                if ($(this).is(':checked') == false) {
-                    removeQuestion($(this))
-                }
-            })
+            if ($(this).is(':checked') == false) {
+                isGetQuestion = false;
+            }
         }
 
-
+        console.log(question_option_setting_id);
         if (isGetQuestion) {
-            getQuestionBranch(this_choose, question_setting_id)
+            getQuestionBranch(this_choose, question_option_setting_id)
         }
     })
 
