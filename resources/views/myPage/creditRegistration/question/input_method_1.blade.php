@@ -1,15 +1,15 @@
 <?php
 $answerData = $answerInfoData[$questionSetting->id] ?? [];
+$arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
 ?>
-<div class="first-child-question-id-{{$questionSetting->id}} first-div">
-    <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
-         data-current-question-id="{{$questionSetting->id}}">
+<div class="first-child-question-id-{{$questionSetting->id}} first-div question-input">
+    <div class="input-group question-input">
         <div class="w-100 group-control">
             <label for="email" class="w-25">{{$questionSetting->title}}</label>
-            <div class="w-75 date-group second">
-                <input type="date" name="question[{{$questionSetting->id}}]"
-                       value="{{!empty($answerData->answer) ? date('Y-m-d', strtotime($answerData->answer)) : ''}}"/>
-            </div>
+            {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
+            {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
+            <textarea class="w-75" name="question[{{$questionSetting->id}}]"
+                      oninput="auto_grow(this)">{{$answerData->answer ?? ''}}</textarea>
         </div>
     </div>
     <div class="question-link question-link-id-{{$questionSetting->id}}" data-current-question-id="{{$questionSetting->id}}">

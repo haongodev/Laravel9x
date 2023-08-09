@@ -135,3 +135,10 @@ textarea {
     min-height: 50px;
     max-height: 100px;
 }
+
+.form-registry .question-input{
+    display: flex;
+    margin-top: 20px;
+    gap: 20px;
+    flex-direction: column;
+}

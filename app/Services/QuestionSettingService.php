@@ -41,6 +41,11 @@ class QuestionSettingService
         return $this->questionSettingRepository->getByParentQuestionOptionId($parentId);
     }
 
+    public function getByParentQuestionId($parentId = 0)
+    {
+        return $this->questionSettingRepository->getByParentQuestionId($parentId);
+    }
+
     public function getQuestionIdByRegistry($dataRegistry = [])
     {
         $data = [];

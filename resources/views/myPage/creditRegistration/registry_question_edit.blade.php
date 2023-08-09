@@ -41,7 +41,7 @@
             <div class="w-100 group-control">
                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group second">
-                    <input type="datetime-local" name="question[{{$questionSetting->id}}]"
+                    <input type="date" name="question[{{$questionSetting->id}}]"
                            value="{{$answerData->answer}}"/>
                 </div>
             </div>
@@ -59,10 +59,10 @@
             <div class="w-100 group-control">
                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group">
-                    <input type="datetime-local" name="question[{{$questionSetting->id}}][start]"
+                    <input type="date" name="question[{{$questionSetting->id}}][start]"
                            value="{{date('Y-m-d H:i:s',strtotime($arrAnswer[0]))}}"/>
                     <span>~</span>
-                    <input type="datetime-local" name="question[{{$questionSetting->id}}][end]"
+                    <input type="date" name="question[{{$questionSetting->id}}][end]"
                            value="{{date('Y-m-d H:i:s',strtotime($arrAnswer[1]))}}"/>
                 </div>
             </div>
@@ -200,7 +200,7 @@ $arrAnswer = explode(',',$answerData->answer);
                     <select class="w-75 select-branch-question select-chosen"
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}]">
-                        <option value="">Blank</option>
+                        <option value=""></option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
                                 value="{{$questionOption->id}}"
@@ -222,7 +222,7 @@ $arrAnswer = explode(',',$answerData->answer);
                     <select class="w-75 select-branch-question select-chosen" multiple
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}][]">
-                        <option value="">Blank</option>
+                        <option value=""></option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
                                 value="{{$questionOption->id}}"

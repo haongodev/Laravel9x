@@ -37,6 +37,11 @@ class QuestionSettingRepository
         return $this->model->where('parent_question_option_id',$parentId)->get()->first();
     }
 
+    public function getByParentQuestionId($parentId = 0)
+    {
+        return $this->model->where('parent_question_id',$parentId)->where('level','<>','1')->whereNull('parent_question_option_id')->get()->first();
+    }
+
     public function getByIds(array $ids = [])
     {
         return $this->model->whereIn('id',$ids)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $ids) . ")"))->get()->keyBy('id');

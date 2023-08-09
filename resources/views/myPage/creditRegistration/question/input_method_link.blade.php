@@ -1,4 +1,4 @@
-@foreach($questionSettingData as $key => $questionSetting)
+@foreach($questionSettingChild as $key => $questionSetting)
     @php
         $answerData = $answerInfoData[$questionSetting->id] ?? '';
     @endphp
@@ -11,10 +11,6 @@
                        value="{{$answerData->answer ?? ''}}"/>
             </div>
         </div>
-        @php unset($questionSettingData[$key])@endphp
-        @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
-        @endif
     @endif
     @if($questionSetting->input_method ==1)
         <div class="input-group">
@@ -26,10 +22,7 @@
                           oninput="auto_grow(this)">{{$answerData->answer ?? ''}}</textarea>
             </div>
         </div>
-        @php unset($questionSettingData[$key])@endphp
-        @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
-        @endif
+
     @endif
     @if($questionSetting->input_method ==7)
         <div class="input-group">
@@ -41,10 +34,7 @@
                 </div>
             </div>
         </div>
-        @php unset($questionSettingData[$key])@endphp
-        @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
-        @endif
+
     @endif
     @if($questionSetting->input_method ==8)
         @php
@@ -62,13 +52,10 @@
                 </div>
             </div>
         </div>
-        @php unset($questionSettingData[$key])@endphp
-        @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
-        @endif
+
     @endif
 @endforeach
-@foreach($questionSettingData as $key => $questionSetting)
+@foreach($questionSettingChild as $key => $questionSetting)
     @php
         $answerData = $answerInfoData[$questionSetting->id] ?? '';
         $arrAnswer = explode(',',$answerData->answer ?? '');
@@ -224,9 +211,7 @@
             </div>
         </div>
     @endif
-    @if(isset($questionSettingChildData[$questionSetting->id]))
-        @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
-    @endif
+
 @endforeach
 
 @push('js')
@@ -243,11 +228,11 @@
                     }
                 }
 
-                 if (this_choose.attr('type') == 'radio') {
-                         if ($(this).is(':checked') == false) {
-                             isGetQuestion = false;
-                        }
-                 }
+                if (this_choose.attr('type') == 'radio') {
+                    if ($(this).is(':checked') == false) {
+                        isGetQuestion = false;
+                    }
+                }
 
                 if (isGetQuestion) {
 
