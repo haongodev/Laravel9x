@@ -81,4 +81,25 @@ function auto_grow(element) {
     element.style.height = "5px";
     element.style.height = (element.scrollHeight) + "px";
 }
-$(".select-chosen").chosen({no_results_text: "Oops, nothing found!"});
+
+$(".select-chosen").chosen({
+    no_results_text: "Oops, nothing found!",
+    "disable_search": true
+});
+
+function getQuestionLink(current_id) {
+    $.ajax({
+        type: "post",
+        url: $('#urlGetLinkQuestion').val(),
+        cache: false,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data: {question_setting_id: current_id},
+        success: function (data) {
+
+            if(data.isQuestionInput){
+                $('.question-link-id-'+current_id).closest('.input-group').addClass('question-input')
+            }
+            $('.question-link-id-'+current_id).append(data.html)
+        },
+    });
+}

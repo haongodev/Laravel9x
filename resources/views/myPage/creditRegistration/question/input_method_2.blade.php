@@ -31,9 +31,9 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
             </div>
         </div>
     </div>
-    @if(isset($questionSettingChildData[$questionSetting->id]))
-        @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
-    @endif
+    <div class="question-link question-link-id-{{$questionSetting->id}}" data-current-question-id="{{$questionSetting->id}}">
+
+    </div>
 </div>
 
     <script>
@@ -59,6 +59,12 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
                 if (isGetQuestion) {
                     getQuestionBranch(this_choose, question_setting_id)
                 }
+            })
+            $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function (){
+                var this_choose = $(this);
+                var current_id = this_choose.data('current-question-id')
+                console.log(current_id,'aa');
+                getQuestionLink(current_id)
             })
         })
     </script>

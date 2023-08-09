@@ -9,12 +9,23 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
         <div class="w-100 group-control">
             <label for="email" class="w-25">実施期間</label>
             <div class="w-75 date-group">
-                <input type="datetime-local" name="question[{{$questionSetting->id}}][start]"
-                       value="{{!empty($arrAnswer[0]) ? date('Y-m-d H:i:s',strtotime($arrAnswer[0])) : ''}}"/>
+                <input type="date" name="question[{{$questionSetting->id}}][start]"
+                       value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}"/>
                 <span>~</span>
-                <input type="datetime-local" name="question[{{$questionSetting->id}}][end]"
-                       value="{{!empty($arrAnswer[0]) ? date('Y-m-d H:i:s',strtotime($arrAnswer[1])) : ''}}"/>
+                <input type="date" name="question[{{$questionSetting->id}}][end]"
+                       value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[1])) : ''}}"/>
             </div>
         </div>
     </div>
+    <div class="question-link question-link-id-{{$questionSetting->id}}" data-current-question-id="{{$questionSetting->id}}">
+
+    </div>
 </div>
+<script>
+    $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function (){
+        var this_choose = $(this);
+        var current_id = this_choose.data('current-question-id')
+        console.log(current_id,'aa');
+        getQuestionLink(current_id)
+    })
+</script>

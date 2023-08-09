@@ -134,6 +134,13 @@ class CreditRegistrationController extends Controller
         $questionSettingChildData = $this->questionSettingService->getChildByQuestionId($questionId);
         $questionSettingChildData = $this->questionSettingService->convertKeyToParentQuestionKey($questionSettingChildData);
         Session::put('question_child_data', $questionSettingChildData);
+        $arrTest = [
+            '1'=>[2,3],
+            '3' => [4,5],
+            '5'=> [6,7],
+            '8'=> [9,10]
+        ];
+        Session::put('arrTest', $arrTest);
         $answerInfoData = [];
         if(Session::get('popup_confirm')){
             $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
@@ -146,7 +153,8 @@ class CreditRegistrationController extends Controller
             'typeNativeId' => $typeNativeId,
             'questionManagerId' => $questionId,
             'answerInfoData' => $answerInfoData,
-            'isHasQuestion' => $questionSettingData->isEmpty() ? 0 : 1
+            'isHasQuestion' => $questionSettingData->isEmpty() ? 0 : 1,
+            'arrTest' => $arrTest
         ]);
     }
 
@@ -261,6 +269,30 @@ class CreditRegistrationController extends Controller
         }
 
         return response()->json(array('success' => true, 'html' => $returnHTML));
+
+    }
+
+    public function getLinkQuestion(Request $request)
+    {
+        $questionSettingId = $request->get('question_setting_id',-1);
+
+        $questionSetting = $this->questionSettingService->getByParentQuestionId($questionSettingId);
+
+        //process add class css when question input
+        $isQuestionInput = false;
+        $answerInfoData = Session::get('answer_info_data');
+        $returnHTML = '';
+        if ($questionSetting) {
+            $isQuestionInput = $questionSetting->input_method == 0 || $questionSetting->input_method == 1 ? true : false;
+            $viewQuestion = 'input_method_' . $questionSetting->input_method;
+            $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion,[
+                'questionSetting'=> $questionSetting,
+                'answerInfoData' => $answerInfoData,
+
+            ])->render();
+        }
+
+        return response()->json(array('success' => true, 'html' => $returnHTML, 'current_question_id'=>$questionSettingId, 'isQuestionInput'=>$isQuestionInput));
 
     }
 

@@ -41,6 +41,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/handleCreditRegistry',[CreditRegistrationController::class, 'handleCreditRegistry'])->name('handleCreditRegistry');
         Route::post('/handleCreditUpdate',[CreditRegistrationController::class, 'handleCreditUpdate'])->name('handleCreditUpdate');
         Route::post('/getBranchQuestion',[CreditRegistrationController::class, 'getBranchQuestion'])->name('getBranchQuestion');
+        Route::post('/getLinkQuestion',[CreditRegistrationController::class, 'getLinkQuestion'])->name('getLinkQuestion');
         Route::post('/getBranchHisQuestion',[CreditRegistrationController::class, 'getBranchHisQuestion'])->name('getBranchHisQuestion');
         Route::get('/creditEdit',[CreditRegistrationController::class, 'creditEdit'])->name('creditEdit');
         Route::post('/handleCreditRegistry/{id?}',[CreditRegistrationController::class, 'handleCreditRegistry'])->name('handleCreditRegistry');
