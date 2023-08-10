@@ -35,6 +35,7 @@
 <script src="{{asset('assets/js/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('assets/js/common.js')}}"></script>
 @stack('js')
+@stack('sub_js')
 
 </body>
 

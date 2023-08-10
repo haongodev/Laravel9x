@@ -21,6 +21,7 @@
                 @csrf
                 <input type="hidden" value="1" name="confirm">
                 <input type="hidden" value="{{$answerManageId}}" name="answer_manage_id">
+                <input type="hidden" id="urlGetLinkQuestion" value="{{route('getLinkQuestion')}}">
                 <input type="hidden" id="urlGetQuestion" value="{{route('getBranchHisQuestion')}}">
                 <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
