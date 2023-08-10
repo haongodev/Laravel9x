@@ -16,13 +16,13 @@
                 @endphp
                 <ul class="list-info">
                     <li>
-                        <a href="{{route('typeSelected')}}" class="bg-primary">スーパービジョン</a><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
+                        <a href="{{route('typeSelected',['type_native_id'=>0])}}" class="bg-primary">スーパービジョン</a><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
                     </li>
                     <li>
-                        <a href="{{route('typeSelected')}}" class="bg-yellow">研修・学会等</a><span>{{$answerInfoPattern[1]['score_total'] ?? 0}}</span>
+                        <a href="{{route('typeSelected',['type_native_id'=>1])}}" class="bg-yellow">研修・学会等</a><span>{{$answerInfoPattern[1]['score_total'] ?? 0}}</span>
                     </li>
                     <li>
-                        <a href="{{route('typeSelected')}}" class="bg-green">社会的活動</a><span>{{$answerInfoPattern[2]['score_total'] ?? 0}}</span>
+                        <a href="{{route('typeSelected',['type_native_id'=>2])}}" class="bg-green">社会的活動</a><span>{{$answerInfoPattern[2]['score_total'] ?? 0}}</span>
                     </li>
                 </ul>
                 @if(auth()->user()->membership_type == 2)

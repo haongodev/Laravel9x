@@ -226,6 +226,7 @@ class CreditRegistrationController extends Controller
         if ($request->has('confirm')) {
             // Set session question + answer from form
             Session::put('popup_confirm', $request->except(['_token', 'confirm']));
+            Session::put('show_popup_confirm', true);
             $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
             $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
             $questionSettingRegistryData = $this->historyQuestionSettingService->getByIds($questionSettingIds);
