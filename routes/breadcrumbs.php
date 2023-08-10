@@ -38,8 +38,16 @@ Breadcrumbs::for('creditRegistration', function (BreadcrumbTrail $trail) {
 
 // creditRegistration > type selected
 Breadcrumbs::for('typeSelected', function (BreadcrumbTrail $trail) {
+    $typeNativeId = request('type_native_id',0);
+    if($typeNativeId == 1){
+        $title = '研修・学会等';
+    }else if($typeNativeId == 2){
+        $title = '社会的活動';
+    }else{
+        $title = 'スーパービジョン';
+    }
     $trail->parent('creditRegistration');
-    $trail->push('(選択した類型)', route('typeSelected'));
+    $trail->push($title, route('typeSelected'));
 //  $trail->push($category->title, route('category', $category)); for dynamic
 });
 
