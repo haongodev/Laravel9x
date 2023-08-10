@@ -5,7 +5,7 @@ $questionSettingData = session('question_confirm');
 $questionOptionSettingData = session('question_option_confirm');
 if(!empty(session('popup_confirm')['type_native_id'])){
     if(session('popup_confirm')['type_native_id'] ==1){
-        $patternName = '学会・研修等、';
+        $patternName = '研修・学会等';
     }else{
         $patternName = '社会的活動';
     }
