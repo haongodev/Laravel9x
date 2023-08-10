@@ -20,9 +20,6 @@ use App\Http\Controllers\Api\Authenticate;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/send-email', [SakuraSetController::class, 'testMail']);
 

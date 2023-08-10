@@ -68,7 +68,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" style="color: #808080">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-5.svg">
                             <span>認定更新手続き</span>
                         </a>
