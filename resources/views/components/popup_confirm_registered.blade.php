@@ -32,18 +32,25 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
             <div class="content">
                 <table>
                     <?php $score = 0?>
-                    @foreach($answerData as $answer)
-                        <tr>
-                            <?php $score += $answer->score?>
-                            <th>{{$answer->title}}</th>
-                            @if(in_array($answer->input_method,[2,3,6]))
-                                <td>{!! str_replace(',','<br>',$answer->answer) !!}</td>
-                            @else
-                                <td>{{$answer->answer}}</td>
-                            @endif
+                        @foreach($answerData as $answer)
+                            <tr>
+                                <?php $score += $answer->score?>
+                                <th>{{$answer->title}}</th>
+                                @if(in_array($answer->input_method,[2,3,6]))
+                                    <td>{!! str_replace(',','<br>',$answer->answer) !!}</td>
+                                @elseif($answer->input_method ==7)
+                                    <td>{{date('Y年 m月 d日',strtotime($answer->answer))}}</td>
+                                @elseif($answer->input_method == 8)
+                                        @php
+                                            $arrAnswer =explode(',',$answer->answer);
+                                        @endphp
+                                        <td>{{date('Y年 m月 d日',strtotime($arrAnswer[0]))}}~{{date('Y年 m月 d日',strtotime($arrAnswer[1]))}}</td>
+                                    @else
+                                    <td>{{$answer->answer}}</td>
+                                @endif
 
-                        </tr>
-                    @endforeach
+                            </tr>
+                        @endforeach
                     <tr>
                         <th>登録できる単位数</th>
                         <td>{{$score}}</td>

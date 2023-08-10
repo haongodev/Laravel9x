@@ -18,7 +18,7 @@
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
         @endif
     @endif
     @if($questionSetting->input_method ==1)
@@ -33,7 +33,7 @@
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
         @endif
     @endif
     @if($questionSetting->input_method ==7)
@@ -48,7 +48,7 @@
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
         @endif
     @endif
     @if($questionSetting->input_method ==8)
@@ -69,7 +69,7 @@
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSetting'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
         @endif
     @endif
 @endforeach
@@ -234,6 +234,9 @@ $arrAnswer = explode(',',$answerData->answer);
                 </div>
             </div>
         </div>
+    @endif
+    @if(isset($questionSettingChildData[$questionSetting->id]))
+        @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
     @endif
 @endforeach
 @push('js')
