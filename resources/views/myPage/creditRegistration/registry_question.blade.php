@@ -13,7 +13,7 @@
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
         @endif
     @endif
     @if($questionSetting->input_method ==1)
@@ -28,7 +28,7 @@
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
         @endif
     @endif
     @if($questionSetting->input_method ==7)
@@ -43,7 +43,7 @@
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
         @endif
     @endif
     @if($questionSetting->input_method ==8)
@@ -64,7 +64,7 @@
         </div>
         @php unset($questionSettingData[$key])@endphp
         @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
         @endif
     @endif
 @endforeach
@@ -225,7 +225,7 @@
         </div>
     @endif
     @if(isset($questionSettingChildData[$questionSetting->id]))
-        @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])
+        @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
     @endif
 @endforeach
 
