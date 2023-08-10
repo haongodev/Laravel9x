@@ -44,6 +44,10 @@ class AnswerManageService
     {
         return $this->answerManageRepository->getById($id);
     }
+    public function getSumCoreBwYear($from,$to)
+    {
+        return $this->answerManageRepository->sumCoreBwYear($from,$to);
+    }
 
 }
 

@@ -65,4 +65,11 @@ class CurrentLearningSituationController extends Controller
         $sumCoreByInitYear = $this->answerManageService->getSumCoreByTypeNativeId($year);
         return response()->json( array('success' => true, 'data' => $sumCoreByInitYear) );
     }
+    public function getStudyScoreBwMonth($date){
+        $date = explode('_',$date);
+        $from = $date[0];
+        $to = $date[1];
+        $getScoreBwYear = $this->answerManageService->getSumCoreBwYear($from,$to);
+        return response()->json( array('success' => true, 'data' => ['scoreBwYear' => $getScoreBwYear]) );
+    }
 }

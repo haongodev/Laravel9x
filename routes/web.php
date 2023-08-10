@@ -29,6 +29,8 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
     Route::group(['prefix' => 'cls'],function() {
         Route::get('/',[CurrentLearningSituationController::class, 'index'])->name('cls');
         Route::get('/getSumCoreByYear/{year}',[CurrentLearningSituationController::class, 'getSumCoreByYear'])->name('getSumCoreByYear');
+        Route::get('/getStudyScoreBwMonth/{date}',[CurrentLearningSituationController::class, 'getStudyScoreBwMonth'])->name('getStudyScoreBwMonth');
+        
     });
     Route::group(['prefix' => 'credit-registration'],function() {
         Route::get('/',[CreditRegistrationController::class, 'index'])->name('creditRegistration');

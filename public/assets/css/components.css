@@ -14,7 +14,7 @@
     background: #fff;
     border-radius: 7px;
     padding: 20px;
-    width: 25%;
+    width: 780pt;
     max-height: 85%;
     overflow: auto;
 }
@@ -114,13 +114,13 @@
     font-size: 25px !important;
     padding: 35px 35px 35px 50px;
 }
-.popup_show_scoring_board .layout-popup .popup-content{
+.popup_filter_scoring_board .layout-popup .popup-content{
     margin-top: 10px;
 }
-.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content{
+.popup_filter_scoring_board .layout-popup .popup-content .scoring_board_content{
     text-align: center;
 }
-.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content .btn-title{
+.popup_filter_scoring_board .layout-popup .popup-content .scoring_board_content .btn-title{
     background: #007FFF;
     font-size: 24pt;
     border: unset;
@@ -128,19 +128,49 @@
     border-radius: 30px;
     padding: 5px 50px;
 }
-.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content .input-group{
+.popup_filter_scoring_board .layout-popup .popup-content .scoring_board_content .input-group{
     margin: 50px 0;
 }
-.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content .input-group .date-group{
+.popup_filter_scoring_board .layout-popup .popup-content .scoring_board_content .input-group .date-group{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
-.popup_show_scoring_board .layout-popup .popup-content .scoring_board_content .input-group .date-group input{
+.popup_filter_scoring_board .layout-popup .popup-content .scoring_board_content .input-group .date-group input{
     font-size: 12pt;
     padding: 10px;
     border-radius: 6px;
     min-width: 190pt;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit,.graph-show-credit{
+    width: 50%;
+}
+.popup_study_scoring_board .layout-popup .popup-top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popup_study_scoring_board .layout-popup .popup-top .btn-title{
+    background: #FF9933;
+    font-size: 24pt;
+    border: unset;
+    color: #fff;
+    border-radius: 30px;
+    padding: 5px 50px;
+}
+.popup_study_scoring_board .layout-popup .popup-top .btn-export-pdf{
+    background: #FFB366;
+    font-size: 17pt;
+    border: unset;
+    color: #fff;
+    border-radius: 30px;
+    padding: 5px 25px;
+    margin-left: 50px;
 }
 .become-manager-screen .content-manager{
     display: flex;
