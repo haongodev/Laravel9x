@@ -4,7 +4,12 @@
        data-answer-manage-id="{{$credits->answer_manage_id}}"
        data-original-question-id="{{$credits->original_question_id}}"
     >
-        {{$credits->answer1}}  {{$credits->answer2}}</a><br>
+        @php
+            $arrAnswer =explode(',',$credits->answer2 ?? '');
+            $answer2 = !empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : '';
+            $answer2 .= !empty($arrAnswer[1]) ? '~'.date('Y-m-d',strtotime($arrAnswer[1])) : '';
+        @endphp
+        {{$credits->answer1}}  {{$answer2}}</a><br>
 @endforeach
 
 <script>
