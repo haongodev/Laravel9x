@@ -78,7 +78,7 @@
                 $('.popup-wrapper').removeClass('hidden');
                 window.scrollTo(0, 0)
             } else {
-                window.location.href = "{{ route('typeSelected')}}";
+                window.location.href = "{{ route('typeSelected',['type_native_id'=>request('type_native_id')])}}";
             }
         })
         $('.popup-wrapper').click(function (e) {
@@ -95,7 +95,7 @@
         })
         $('.btn-popup-accept').click(function () {
             if ($(this).attr('last-confirm') !== undefined) {
-                window.location.href = "{{ route('typeSelected')}}";
+                window.location.href = "{{ route('typeSelected',['type_native_id'=>request('type_native_id')])}}";
             }
             if ($(this).attr('register') !== undefined) {
                 $.ajax({
