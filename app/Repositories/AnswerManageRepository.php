@@ -46,16 +46,18 @@ class AnswerManageRepository
                 $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
             })
             ->where('member_id', $memberId)
-            ->whereIn('type_native_id', [0,1,2]);
+            ->whereIn('answer_manage.type_native_id', [0,1,2]);
         if(is_array($year)){
             $result = $result->whereIn('registration_year',$year);
         }else{
             $result = $result->where('registration_year',$year);
         }
-        $result = $result->groupBy('type_native_id')->select('type_native_id', \DB::raw('SUM(score) as total_score'))->get();
+        $result = $result->groupBy('answer_manage.type_native_id')->select('answer_manage.type_native_id', \DB::raw('SUM(score) as total_score'))->get();
         return $result;
     }
+    public function sumCoreBwYear($from,$to){
 
+    }
     public function getLastId()
     {
         return $this->model->orderBy('id', 'DESC')->get()->pluck('id')->first();

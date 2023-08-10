@@ -98,7 +98,6 @@
             });
 
             function show(data) {
-                console.log(data, data == '')
                 $('#w3review').html('');
                 if (data == '') {
                     toastr.options = {

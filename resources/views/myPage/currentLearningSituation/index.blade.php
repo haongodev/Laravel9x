@@ -79,7 +79,8 @@
             </div>
         @endif
     </div>
-    @include('components.popup_show_scoring_board')
+    @include('components.popup_filter_scoring_board')
+    @include('components.popup_study_scoring_board')
 @endsection
 @push('js')
     <script src="{{ asset('assets') }}/js-lib/cdn.jsdelivr.net_npm_chart.js" ></script>
@@ -316,11 +317,11 @@
             plugins: [ChartDataLabels]
         });
         $('.show-scoring-board').click(function (){
-            $('.popup_show_scoring_board').removeClass('hidden');
+            $('.popup_filter_scoring_board').removeClass('hidden');
             $('body').addClass('ovf-hidden');
         })
-        $('.popup_show_scoring_board .btn-popup-accept').click(function (){
-            var timeInput = $('.popup_show_scoring_board .date-group input');
+        $('.popup_filter_scoring_board .btn-popup-accept').click(function (){
+            var timeInput = $('.popup_filter_scoring_board .date-group input');
             var from = $(timeInput[0]).datepicker('getDate');
             var to = $(timeInput[1]).datepicker('getDate');
             from = new Date(from);
@@ -328,14 +329,29 @@
 
             toastr.options.timeOut = 3000;
             if (from > to) {
-                toastr.info('範囲指定に誤りがあります')
+                toastr.info('範囲指定に誤りがあります');
+                return false;
             }
             // nếu Thời hạn chỉ định vượt quá 5 năm 11 tháng ở Chỉ định thời hạn
             var exceeds5Years11Months = checkTimeDifferenceExceeds5Years11Months(from,to);
             if (exceeds5Years11Months) {
-                toastr.info('指定範囲が長過ぎます')
+                toastr.info('指定範囲が長過ぎます');
+                return false;
             }
-
+            var url = "{{ route('getStudyScoreBwMonth', ":from_:to") }}";
+            var monthYear = from.getFullYear()+'-'+(from.getMonth()+1)+'_'+to.getFullYear()+'-'+(to.getMonth()+1);
+            url = url.replace(':from_:to', monthYear);
+            $.ajax({
+                url: url, 
+                type: 'GET',
+                success: function(response) {
+                    $('.popup_filter_scoring_board').addClass('hidden');
+                    $('.popup_study_scoring_board').removeClass('hidden');
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
         })
         function updateScaleMax1(coreList){
             maxScales1 = coreList.length ? parseInt(coreList[0].total_score) : 0;

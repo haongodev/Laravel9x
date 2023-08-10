@@ -1,4 +1,4 @@
-<div class="popup-wrapper hidden popup_show_scoring_board">
+<div class="popup-wrapper hidden popup_filter_scoring_board">
     <div class="layout-popup" style="width: 30%">
         <div class="popup-header">
             <div class="title"></div>
