@@ -106,8 +106,10 @@
                         toastr.options.timeOut = 3000;
                         toastr.options.onHidden = function () {
                             $('.confirm-popup').addClass('hidden');
+                            window.location.href = "{{ route('typeSelected',['type_native_id'=>$typeNativeId])}}";
                         }
                         toastr.info('単位登録を実行しました。')
+
                     },
                     error: function (xhr) {
                         console.log(xhr.responseText);
