@@ -132,6 +132,7 @@ class CreditRegistrationService
             $dataInsertInfo[$index]['terminal_flg'] = $questionSetting->terminal_flg ? 1: 0;
             $tempAnswer = '';
             $score = 0;
+
             if (!in_array($questionSetting->input_method, config('constants.questionBranching'))) {
                 if (in_array($questionSetting->input_method, [0, 1])) {
                     $tempAnswer = $answer;
@@ -151,8 +152,8 @@ class CreditRegistrationService
                     }
                 } else {
                     {
-                        $tempAnswer = $questionOptionSettingData[$answer]->option_name;
-                        $score = $questionOptionSettingData[$answer]->score;
+                        $tempAnswer = $questionOptionSettingData[$answer]->option_name ?? '';
+                        $score = $questionOptionSettingData[$answer]->score ?? 0;
                     }
                 }
             }
