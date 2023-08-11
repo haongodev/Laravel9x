@@ -13,9 +13,9 @@
         <div class="button-list">
             <button type="button"><a href="https://www.jamhsw.or.jp/ugoki/kensyu/document/sakura_set/01_Carrier_rudder.pdf" target="_blank">キャリアラダーを確認する</a></button>
             <button type="button" class="open-A013">フェイスシートを作成・保存・共有する</button>
-            <button type="button" class="open-A014">振り返りシートを作成・保存・共有する</button>
+            <button type="button" class="open-A014">フェイスシート（研鑽計画）を作成・保存・共有する</button>
             <button type="button" class="open-A015">さくらセット取り組み表を作成・保存・共有する</button>
-            <button type="button" class="open-A016">更新用研鑽計画を作成・提出する</button>
+            <button type="button" class="open-A016">更新研修フェイスシート（研鑽計画）</button>
         </div>
     </div>
 

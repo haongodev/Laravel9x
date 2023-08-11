@@ -69,7 +69,9 @@ class CurrentLearningSituationController extends Controller
         $date = explode('_',$date);
         $from = $date[0];
         $to = $date[1];
-        $getScoreBwYear = $this->answerManageService->getSumCoreBwYear($from,$to);
-        return response()->json( array('success' => true, 'data' => ['scoreBwYear' => $getScoreBwYear]) );
+        $getScoreBwYear = $this->answerManageService->getSumScoreBwYear($from,$to);
+        $getScoreBwYearGoalStudy = $this->answerManageService->getSumScoreBwYearGoalStudy($from,$to);
+        $getScoreBwYearForPattern = $this->answerManageService->getSumScoreBwYearForPattern($from,$to);
+        return response()->json( array('success' => true, 'data' => ['scoreBwYear' => $getScoreBwYear, 'scoreBwYearGoalStudy' => $getScoreBwYearGoalStudy, 'scoreBwYearForPattern' => $getScoreBwYearForPattern]) );
     }
 }

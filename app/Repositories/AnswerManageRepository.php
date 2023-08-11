@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\AnswerManage;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AnswerManageRepository
 {
@@ -56,7 +57,46 @@ class AnswerManageRepository
         return $result;
     }
     public function sumCoreBwYear($from,$to){
-
+        $memberId = auth()->user()->id;
+        return $this->model
+        ->join('answer_info', function ($q){
+            $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+        })
+        ->select('answer_manage.registration_year', \DB::raw('SUM(answer_info.score) as total_score'))
+        ->where('answer_manage.member_id', $memberId)
+        ->whereIn('answer_manage.type_native_id', [0,1,2])
+        ->whereBetween('answer_manage.registration_date',[Carbon::parse($from)->format('Y-m-d h:i:s'),Carbon::parse($to)->format('Y-m-d h:i:s')])
+        ->groupBy('answer_manage.registration_year','answer_manage.type_native_id')->get();
+    }
+    public function sumCoreBwYearGoalStudy($from,$to){
+        $memberId = auth()->user()->id;
+        return $this->model
+        ->join('answer_info', function ($q){
+            $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+        })
+        ->select('answer_info.title','answer_info.answer','answer_manage.registration_year', \DB::raw('SUM(answer_info.score) as total_score'))
+        ->where('answer_manage.member_id', $memberId)
+        ->whereIn('answer_manage.type_native_id', [0,1,2])
+        ->where('answer_info.title', 'like', '%研鑽目的%')
+        ->whereBetween('answer_manage.registration_date',[Carbon::parse($from)->format('Y-m-d h:i:s'),Carbon::parse($to)->format('Y-m-d h:i:s')])
+        ->groupBy('answer_manage.registration_year','answer_info.answer','answer_info.title')->get();
+    }
+    public function sumScoreBwYearForPattern($from,$to){
+        $memberId = auth()->user()->id;
+        return $this->model
+        ->join('answer_info', function ($q){
+            $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+        })
+        ->select('answer_info.title','answer_info.answer','answer_manage.registration_year','answer_manage.type_native_id')
+        ->where('answer_manage.member_id', $memberId)
+        ->whereIn('answer_manage.type_native_id', [0,1,2])
+        ->whereBetween('answer_manage.registration_date',[Carbon::parse($from)->format('Y-m-d h:i:s'),Carbon::parse($to)->format('Y-m-d h:i:s')])
+        ->where(function ($q) {
+            $q->where('answer_info.title', 'like', '%実施日%')
+              ->orWhere('answer_info.title', 'like', '%修了日%')
+              ->orWhere('answer_info.title', 'like', '%内容%');
+        })
+        ->orderBy('answer_manage.type_native_id', 'ASC')->orderBy('answer_manage.registration_year', 'ASC')->get();
     }
     public function getLastId()
     {
