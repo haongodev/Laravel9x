@@ -83,8 +83,6 @@
     @include('components.popup_study_scoring_board')
 @endsection
 @push('js')
-    <script src="{{ asset('assets') }}/js-lib/cdn.jsdelivr.net_npm_chart.js" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="{{asset('assets/js-lib/toastr.min.js')}}"></script>
     <script src="{{asset('assets/js/datepicker.js')}}"></script>
 
@@ -347,6 +345,7 @@
                 success: function(response) {
                     $('.popup_filter_scoring_board').addClass('hidden');
                     $('.popup_study_scoring_board').removeClass('hidden');
+                    runRenderChart();
                 },
                 error: function(xhr) {
                     console.log(xhr.responseText);

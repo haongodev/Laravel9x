@@ -145,10 +145,78 @@
 .popup_study_scoring_board .layout-popup .popup-content .scoring_board_content{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 .popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit,.graph-show-credit{
     width: 50%;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table{
+    width: 100%;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table td,th{
+    border: 0px solid #fff;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit{
+    padding-right: 10px;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .graph-show-credit{
+    padding-left: 10px;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .graph-show-credit .table-graph{
+    border: 1px solid #CCCCCC;
+    box-shadow: 3px 3px 2px #cccccc;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .graph-show-credit .radar-graph{
+    text-align: center;
+    border: 1px solid #CCCCCC;
+    box-shadow: 3px 3px 2px #cccccc;
+    padding: 10px;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .graph-show-credit .radar-graph .title-radar{
+    font-size: 24pt;
+    border: unset;
+    background: #FF9933;
+    color: #fff;
+    border-radius: 50px;
+    padding: 7px 80px;
+    margin-top: 5px;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr th:not(:first-child) {
+    font-size: 16pt;
+    color: #fff;
+    padding: 15px;
+    font-weight: 500;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr th:nth-child(1){
+    background: #FF9E9E;
+    min-width: 63pt;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr th:nth-child(2){
+    background: #66B2FF;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr th:nth-child(3){
+    background: #FFD86B;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr th:nth-child(4){
+    background: #00C467;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr td {
+    padding: 10px;
+    font-size: 11pt;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr .col1{
+    background: #F8CECC;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr .col2{
+    background: #DBEEFF;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr .col3{
+    background: #FFF1CC;
+}
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table tbody tr .col4{
+    background: #E2FDF1;
 }
 .popup_study_scoring_board .layout-popup .popup-top{
     display: flex;
@@ -168,6 +236,7 @@
     font-size: 17pt;
     border: unset;
     color: #fff;
+    cursor: pointer;
     border-radius: 30px;
     padding: 5px 25px;
     margin-left: 50px;
