@@ -237,44 +237,46 @@
             },
             plugins: [ChartDataLabels]
         });
-        var myChart2 = new Chart(ctx2, {
-            type: 'bar',
-            data: data2,
-            options: {
-                barThickness: 80,
-                scales: {
-                    y: {
-                        ticks: {
-                            font: {
-                                size: 18,
-                                weight:'bold'
+        if(ctx2) {
+            var myChart2 = new Chart(ctx2, {
+                type: 'bar',
+                data: data2,
+                options: {
+                    barThickness: 80,
+                    scales: {
+                        y: {
+                            ticks: {
+                                font: {
+                                    size: 18,
+                                    weight: 'bold'
+                                },
+                                crossAlign: "far",
                             },
-                            crossAlign: "far",
+                            afterFit: function (scaleInstance) {
+                                scaleInstance.width = 120; // sets the width to 100px
+                            }
                         },
-                        afterFit: function(scaleInstance) {
-                            scaleInstance.width = 120; // sets the width to 100px
+                        x: {
+                            max: maxScales2,
                         }
                     },
-                    x: {
-                        max: maxScales2,
-                    }
-                },
-                plugins: {
-                    legend: false,
-                    datalabels: {
-                        display: true,
-                        color: 'white',
-                        formatter: function(value) {
-                            return value;
+                    plugins: {
+                        legend: false,
+                        datalabels: {
+                            display: true,
+                            color: 'white',
+                            formatter: function (value) {
+                                return value;
+                            }
                         }
-                    }
+                    },
+                    indexAxis: 'y',
                 },
-                indexAxis: 'y',
-            },
-            plugins: [ChartDataLabels]
-        });
-
-        var myChart3 = new Chart(ctx3, {
+                plugins: [ChartDataLabels]
+            });
+        }
+        if(ctx3){
+            var myChart3 = new Chart(ctx3, {
             type: 'bar',
             data: data3,
             options: {
@@ -314,6 +316,7 @@
             },
             plugins: [ChartDataLabels]
         });
+        }
         $('.show-scoring-board').click(function (){
             $('.popup_filter_scoring_board').removeClass('hidden');
             $('body').addClass('ovf-hidden');
@@ -340,7 +343,7 @@
             var monthYear = from.getFullYear()+'-'+(from.getMonth()+1)+'_'+to.getFullYear()+'-'+(to.getMonth()+1);
             url = url.replace(':from_:to', monthYear);
             $.ajax({
-                url: url, 
+                url: url,
                 type: 'GET',
                 success: function(response) {
                     $('.popup_filter_scoring_board').addClass('hidden');
@@ -438,12 +441,12 @@
             }
             return totalMonthsDifference > 11;
         }
-        $('.update-score-chart').change(function (e) { 
+        $('.update-score-chart').change(function (e) {
             var year = $(this).val();
             var url = "{{ route('getSumCoreByYear', ":year") }}";
             url = url.replace(':year', year);
             $.ajax({
-                    url: url, 
+                    url: url,
                     type: 'GET',
                     success: function(response) {
                         dataInitCore1 = [];

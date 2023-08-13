@@ -7,8 +7,16 @@
             </div>
         </div>
         <div class="popup-top">
-            <button type="button" class="btn-title">2023年 7月 ～ 2028年 1月　研鑽スコアリングボード</button>
+            <div class="btn-title">
+                <button type="button">2023年 7月 ～ 2028年 1月　研鑽スコアリングボード</button>
+            </div>
             <button type="button" class="btn-export-pdf">PDF</button>
+            <div class="hidden btn-title-chart1">
+                <button type="button">登録単位</button>
+            </div>
+            <div class="hidden btn-title-chart2">
+                <button type="button">研鑽目的</button>
+            </div>
         </div>
         <div class="popup-content">
             <div class="scoring_board_content">
@@ -100,32 +108,32 @@
                 </div>
                 <div class="graph-show-credit">
                     <div class="table-graph">
-                        <div style="height:100px;">
+                        <div>
                             <canvas id="column_chart_2024_stack" width="1211" height="100">
 
                             </canvas>
                         </div>
-                        <div style="height:200px;">
+                        <div>
                             <canvas id="column_chart_2024" width="1211" height="200">
 
                             </canvas>
                         </div>
-                        <div style="height:100px;">
+                        <div>
                             <canvas id="column_chart_2023_stack" width="1211" height="100">
 
                             </canvas>
                         </div>
-                        <div style="height:200px;">
+                        <div>
                             <canvas id="column_chart_2023" width="1211" height="200">
 
                             </canvas>
                         </div>
-                        <div style="height:100px;">
+                        <div>
                             <canvas id="column_chart_2022_stack" width="1211" height="100">
 
                             </canvas>
                         </div>
-                        <div style="height:200px;">
+                        <div>
                             <canvas id="column_chart_2022" width="1211" height="200">
 
                             </canvas>
@@ -133,7 +141,9 @@
                     </div>
                     <div class="radar-graph">
                         <button class="title-radar">研鑽目的</button>
-                        <canvas id="rardar_chart"></canvas>
+                        <div>
+                            <canvas width="1211" height="700" id="rardar_chart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,6 +164,7 @@
     var radarChart = null;
     function runRenderChart(){
         var widthChart = $('.table-graph').width();
+        $('#rardar_chart').css('width',widthChart+'px');
         year.forEach(function(val,index){
             $('#'+'column_chart_'+val).css('width',widthChart+'px');
             $('#'+'column_chart_'+val+'_stack').css('width',widthChart+'px');
@@ -177,7 +188,7 @@
                         weight: 'bold',
                         size: 16,
                     },
-                    borderWidth: 1,        
+                    borderWidth: 1,
                     barPercentage: 1,
                     categoryPercentage:1
                 }]
@@ -238,7 +249,7 @@
             options: {
                 barThickness: 20,
                 scales: {
-                    y: {        
+                    y: {
                         beginAtZero: true,
                         ticks: {
                             font: {
@@ -282,7 +293,7 @@
                 scales: {
                     y: {
                         ticks: {
-                            font: {             
+                            font: {
                                 size: 18,
                                 weight:'bold'
                             },
@@ -318,41 +329,41 @@
         var marksCanvas = document.getElementById("rardar_chart");
         var marksData = {
             labels: [
-                "健康状態の自己管理", 
+                "健康状態の自己管理",
                 "仕事と家庭のバランス",
-                "基本施設やマナー", 
-                "組織人としての役割遂行", 
-                ["専門的支援関係形成力","（個人、小集団、地域等）"], 
-                "アセスメント力", 
-                "支援・介入・調整力", 
-                "連携・協働・チーム形成力", 
-                "ソーシャルワーカーを育てる力", 
-                "専門性を養うために学び続ける力", 
-                ["コミュニティへのアプローチ・","ソーシャルアクションの力"], 
-                "研究、実践成果を示す力", 
-                ["ソーシャルワーカーアイデンティティ・","モチベーションを維持する力"], 
+                "基本施設やマナー",
+                "組織人としての役割遂行",
+                ["専門的支援関係形成力","（個人、小集団、地域等）"],
+                "アセスメント力",
+                "支援・介入・調整力",
+                "連携・協働・チーム形成力",
+                "ソーシャルワーカーを育てる力",
+                "専門性を養うために学び続ける力",
+                ["コミュニティへのアプローチ・","ソーシャルアクションの力"],
+                "研究、実践成果を示す力",
+                ["ソーシャルワーカーアイデンティティ・","モチベーションを維持する力"],
             ],
             datasets: [
                 {
                     label: "2023年度",
                     backgroundColor: "#B3FF66",
                     data: [15, 37, 43, 53, 61, 64, 69, 73, 78, 82, 90, 93, 100],
-                }, 
+                },
                 {
                     label: "2024年度",
                     backgroundColor: "#66FFFF",
                     data: [25, 50, 55, 59, 63, 66, 72, 74, 85, 88, 89, 97, 100]
-                }, 
+                },
                 {
                     label: "2025年度",
                     backgroundColor: "#9999FF",
                     data: [40, 41, 47, 50, 61, 70, 76, 79, 73, 87, 91, 94, 100]
-                }, 
+                },
                 {
                     label: "2026年度",
                     backgroundColor: "#FF99FF",
                     data: [10, 15, 50, 60, 65, 72, 77, 81, 90, 92, 95, 96, 99]
-                }, 
+                },
                 {
                     label: "2027年度",
                     backgroundColor: "#FFB366",
@@ -380,32 +391,96 @@
                         align: 'center',
                     },
                 },
+                responsive: false
             },
         });
     }
     $('.btn-export-pdf').click(function(){
-        var file_name = 'graph-show-credit'; 
-        html2canvas($('.table-show-credit'), {
+        var objChart = [];
+        var file_name = 'graph-show-credit';
+        var headPdf = '';
+        var titleChart1 = '';
+        var titleChart2 = '';
+        var tableHtml = '';
+        $('.popup-top .btn-title button').css('marginBottom','30px');
+        html2canvas($('.popup-top .btn-title'),{
             onrendered: function (canvas) {
-                var data1 = canvas.toDataURL();
-                var data2 = radarChart.toBase64Image();
-                var docDefinition = {
-                    content: [
-                        {
-                            image: data1,
-                            width: 500
-                        },
-                        {
-                            image: data2,
-                            width: 500
-                        },
-                        
-                    ]
-                };
-                
-                pdfMake.createPdf(docDefinition).download(file_name);
+                headPdf = canvas.toDataURL();
+                $('.popup-top .btn-title-chart1').removeClass('hidden');
+                html2canvas($('.popup-top .btn-title-chart1'),{
+                    onrendered: function (canvas) {
+                        $('.popup-top .btn-title-chart1').addClass('hidden');
+                        $('.popup-top .btn-title-chart2').removeClass('hidden');
+                        titleChart1 = canvas.toDataURL();
+                        html2canvas($('.popup-top .btn-title-chart2'),{
+                            onrendered: function (canvas) {
+                                $('.popup-top .btn-title-chart2').addClass('hidden');
+                                $('.table-show-credit').css('overflowX','unset');
+                                titleChart2 = canvas.toDataURL();
+                                html2canvas($('.table-show-credit table'), {
+                                    onrendered: function (canvas) {
+                                        tableHtml = canvas.toDataURL();
+                                        $('.table-show-credit').css('overflowX','auto');
+                                        $('.popup-top .btn-title button').css('marginBottom','unset');
+                                        exportPdfNow();
+                                    }
+                                });
+                            }
+                        })
+                    }
+                })
             }
-        });
+        })
+
+
+        function exportPdfNow(){
+            objChart.push({
+                image: headPdf,
+                width: 500,
+                alignment: "center"
+            })
+            objChart.push({
+                image: titleChart1,
+                width: 500,
+                alignment: "center"
+            })
+            chartList.forEach(function(val,index){
+                objChart.push({
+                    image: chartStackList[index].toBase64Image(),
+                    width: 500,
+                    alignment: "center"
+                })
+                objChart.push({
+                    image: val.toBase64Image(),
+                    width: 500,
+                    alignment: "center"
+                })
+            })
+            objChart.push({
+                image: titleChart2,
+                width: 500,
+                alignment: "center"
+            })
+            objChart.push({
+                image: radarChart.toBase64Image(),
+                width: 380,
+                alignment: "center"
+            })
+            objChart.push({
+                image: headPdf,
+                width: 500,
+                alignment: "center"
+            })
+            objChart.push({
+                image: tableHtml,
+                width: 500,
+                alignment: "center"
+            })
+            var docDefinition = {
+                content:objChart
+            };
+            pdfMake.createPdf(docDefinition).download(file_name);
+        }
     })
 </script>
 @endpush

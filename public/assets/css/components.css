@@ -150,6 +150,9 @@
 .popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit,.graph-show-credit{
     width: 50%;
 }
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit{
+    overflow-x: auto;
+}
 .popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table{
     width: 100%;
 }
@@ -223,13 +226,27 @@
     justify-content: center;
     align-items: center;
 }
-.popup_study_scoring_board .layout-popup .popup-top .btn-title{
+.popup_study_scoring_board .layout-popup .popup-top .btn-title button{
     background: #FF9933;
     font-size: 24pt;
     border: unset;
     color: #fff;
     border-radius: 30px;
     padding: 5px 50px;
+}
+.popup_study_scoring_board .layout-popup .popup-top .btn-title-chart1,.btn-title-chart2{
+    width: 100%;
+    text-align: center;
+}
+.popup_study_scoring_board .layout-popup .popup-top .btn-title-chart1 button,.btn-title-chart2 button{
+    background: #FF9933;
+    font-size: 22pt;
+    border: unset;
+    color: #fff;
+    border-radius: 30px;
+    padding: 0px 100px;
+    margin-bottom: 30px;
+    margin-top: 20px;
 }
 .popup_study_scoring_board .layout-popup .popup-top .btn-export-pdf{
     background: #FFB366;
