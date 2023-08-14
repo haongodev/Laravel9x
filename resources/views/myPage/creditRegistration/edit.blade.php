@@ -63,12 +63,12 @@
                 $('.popup-wrapper .popup-content .content').html('入力途中のデータが破棄されますがよろしいですか？');
                 $('.popup-wrapper').removeClass('hidden');
             }else{
-                window.location.href = "{{ route('typeSelected',['type_native_id'=>request('type_native_id')])}}";
+                window.location.href = "{{ route('typeSelected',['type_native_id'=>$typeNativeId])}}";
             }
         })
         $('.btn-popup-accept').click(function (){
             if($(this).attr('last-confirm') !== undefined){
-                window.location.href = "{{ route('typeSelected',['type_native_id'=>request('type_native_id')])}}";
+                window.location.href = "{{ route('typeSelected',['type_native_id'=>$typeNativeId])}}";
             }
             if($(this).attr('register') !== undefined){
                 $.ajax({

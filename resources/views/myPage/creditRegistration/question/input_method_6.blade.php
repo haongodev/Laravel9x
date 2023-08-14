@@ -2,6 +2,7 @@
 $answerData = $answerInfoData[$questionSetting->id] ?? [];
 $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
 ?>
+
 <div class="first-child-question-id-{{$questionSetting->id}} first-div">
     <div
         class="input-group  before-question-id-{{$questionSetting->parent_question_option_id}}"
@@ -24,10 +25,7 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
     <div class="question-link question-link-id-{{$questionSetting->id}}" data-current-question-id="{{$questionSetting->id}}">
 
     </div>
-    <script>
-
-        $(".select-chosen").chosen({no_results_text: "Oops, nothing found!"});
-    </script>
+    <script src="{{asset('assets/js/select.js')}}"></script>
 
 </div>
 <script>
