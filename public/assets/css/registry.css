@@ -142,3 +142,7 @@ textarea {
     gap: 20px;
     flex-direction: column;
 }
+
+.chosen-container .chosen-default{
+    color: transparent !important;
+}

@@ -3,6 +3,7 @@ $answerData = $answerInfoData[$questionSetting->id] ?? [];
 $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
 //dd($arrAnswer);
 ?>
+
 <div class="first-child-question-id-{{$questionSetting->id}} first-div">
     <div
         class="input-group after-question-id-{{$questionSetting->id}}
@@ -30,9 +31,9 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
 {{--    @if(isset($questionSettingChildData[$questionSetting->id]))--}}
 {{--        @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])--}}
 {{--    @endif--}}
-    <script>
-        $(".select-chosen").chosen({no_results_text: "Oops, nothing found!"});
-    </script>
+
+        <script src="{{asset('assets/js/select.js')}}"></script>
+
 </div>
 <script>
     $('#registry').find('.select-branch-question-{{$questionSetting->id}}').each(function (){

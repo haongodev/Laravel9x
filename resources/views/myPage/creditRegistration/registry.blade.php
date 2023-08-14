@@ -52,6 +52,7 @@
     <script src="{{asset('assets/js-lib/toastr.min.js')}}"></script>
     <script src="{{asset('assets/js-lib/chosen.jquery.js')}}"></script>
     <script src="{{asset('assets/js/registry.js')}}"></script>
+    <script src="{{asset('assets/js/select.js')}}"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
     <script type="text/javascript"
