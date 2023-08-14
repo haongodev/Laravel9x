@@ -1,5 +1,5 @@
 <div class="popup-wrapper hidden popup_filter_scoring_board">
-    <div class="layout-popup" style="width: 30%">
+    <div class="layout-popup" style="width: 45%">
         <div class="popup-header">
             <div class="title"></div>
             <div class="close-side">
