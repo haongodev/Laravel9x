@@ -44,6 +44,14 @@ return [
             'throw' => false,
         ],
 
+        'sakura' => [
+            'driver' => 'local',
+            'root' => public_path('storage/upload'),
+            'url' => env('APP_URL').'/upload',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

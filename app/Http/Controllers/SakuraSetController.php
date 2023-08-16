@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\GuidanceSettingService;
 use App\Services\SakurasetService;
 use App\Services\UserAddInfoService;
+use App\Services\FacesheetManageService;
 use App\Repositories\FacesheetManageRepository;
 use App\Repositories\InitiativetableManageRepository;
 use App\Repositories\ReflectionsheetManageRepository;
@@ -42,6 +43,9 @@ class SakuraSetController extends Controller
      */
     protected $reflectionsheetManageRepository;
 
+
+    protected $facesheetManageService;
+
     /**
      * SakuraSet constructor.
      * @param GuidanceSettingService $guidanceSettingService
@@ -57,13 +61,16 @@ class SakuraSetController extends Controller
         UserAddInfoService $userAddInfoService,
         FacesheetManageRepository $facesheetManageRepository,
         InitiativetableManageRepository $initiativetableManageRepository,
-        ReflectionsheetManageRepository $reflectionsheetManageRepository){
+        ReflectionsheetManageRepository $reflectionsheetManageRepository,
+        FacesheetManageService $facesheetManageService
+    ){
         $this->guidanceSettingService = $guidanceSettingService;
         $this->sakurasetService = $sakurasetService;
         $this->userAddInfoService = $userAddInfoService;
         $this->facesheetManageRepository = $facesheetManageRepository;
         $this->initiativetableManageRepository = $initiativetableManageRepository;
         $this->reflectionsheetManageRepository = $reflectionsheetManageRepository;
+        $this->facesheetManageService = $facesheetManageService;
     }
     public function index()
     {
@@ -79,7 +86,7 @@ class SakuraSetController extends Controller
         $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],$with);
         return view('myPage/sakuraSet/index',[
             'guidance' => $guidanceData,
-            'sakuraManage' => $sakuraManage, 
+            'sakuraManage' => $sakuraManage,
         ]);
     }
     public function update(Request $request){
@@ -139,7 +146,10 @@ class SakuraSetController extends Controller
         return response()->json(['success' => true, 'message' => $msg,'data' => []]);
     }
     public function yourTry(){
-        return view('myPage/sakuraSet/yourTry');
+        $faceSheetManagerData = $this->facesheetManageService->getByUserId(auth()->user()->id);
+        return view('myPage/sakuraSet/yourTry',[
+            'faceSheetManagerData' => $faceSheetManagerData
+        ]);
     }
     public function getSheet(Request $request){
         $reviewer = $this->sakurasetService->getReviewerbyMember(auth()->user()->id);
@@ -203,7 +213,7 @@ class SakuraSetController extends Controller
                     rename($location . '/' . $instance->file_name, $location . '/' . $namebk);
                     // insert file backup to db
                     $this->sakurasetService->createBackupData($repo,$namebk,$instance->display_name,$request->member_id,$class);
-                    
+
                     $file->move($location,$newFilename);
                     // update new name for file
                     $instance->file_name = $newFilename;
@@ -221,10 +231,20 @@ class SakuraSetController extends Controller
                         }
                     }
                 }
-                
+
                 $data['success'] = true;
                 $data['message'] = $msg;
             }
+        }
+        return response()->json($data);
+    }
+
+    public function upload(Request $request)
+    {
+        $upload = $this->facesheetManageService->upload($request);
+        $data['success'] = false;
+        if($upload){
+            $data['success'] = true;
         }
         return response()->json($data);
     }

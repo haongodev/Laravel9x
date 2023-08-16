@@ -14,4 +14,13 @@ class FacesheetManageRepository
     {
         $this->model = $model;
     }
+
+    public function store($data){
+        return $this->model->create($data);
+    }
+
+    public function getByUserId($userId)
+    {
+        return $this->model->where('member_id',$userId)->get();
+    }
 }
