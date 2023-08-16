@@ -40,7 +40,7 @@
                     label: '# of Votes',
                     data: [22, 22, 22],
                     borderWidth: 1,
-                    backgroundColor: ['#FFBA00', '#009A51','#006AC7'],
+                    backgroundColor: ['#006AC7', '#009A51','#FF8000'],
                 }]
             },
             options: {

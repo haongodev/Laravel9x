@@ -3,10 +3,10 @@ body{
     margin: 0 auto;
 }
 .bg-primary{
-    background: #006AC7;
+    background: #FF8000;
 }
 .bg-yellow{
-    background: #FFBA00;
+    background: #006AC7;
 }
 .bg-green{
     background: #009A51;
@@ -269,11 +269,11 @@ body{
     justify-content: space-around;
 }
 .color_score0{
-    color: #006AC7;
+    color: #FF8000;
     font-weight: bolder;
 }
 .color_score1{
-    color: #FFBA00;
+    color: #006AC7;
     font-weight: bolder;
 }
 .color_score2{
