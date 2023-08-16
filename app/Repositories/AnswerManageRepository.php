@@ -62,7 +62,7 @@ class AnswerManageRepository
         ->join('answer_info', function ($q){
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
         })
-        ->select('answer_manage.registration_year', \DB::raw('SUM(answer_info.score) as total_score'))
+        ->select('answer_manage.registration_year','answer_manage.type_native_id', \DB::raw('SUM(answer_info.score) as total_score'))
         ->where('answer_manage.member_id', $memberId)
         ->whereIn('answer_manage.type_native_id', [0,1,2])
         ->whereBetween('answer_manage.registration_date',[Carbon::parse($from)->format('Y-m-d h:i:s'),Carbon::parse($to)->format('Y-m-d h:i:s')])
