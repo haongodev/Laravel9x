@@ -48,6 +48,12 @@ class LoginRequest extends FormRequest
             'password' => $this->input('password'),
             'active_flg' => true
         ];
+        if(!$userInfo){
+            throw ValidationException::withMessages([
+                'id' => trans('auth.failed'),
+            ]);
+        }
+
         if (! Auth::attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 

@@ -134,13 +134,6 @@ class CreditRegistrationController extends Controller
         $questionSettingChildData = $this->questionSettingService->getChildByQuestionId($questionId);
         $questionSettingChildData = $this->questionSettingService->convertKeyToParentQuestionKey($questionSettingChildData);
         Session::put('question_child_data', $questionSettingChildData);
-        $arrTest = [
-            '1'=>[2,3],
-            '3' => [4,5],
-            '5'=> [6,7],
-            '8'=> [9,10]
-        ];
-        Session::put('arrTest', $arrTest);
         $answerInfoData = [];
         if(Session::get('popup_confirm')){
             $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
@@ -154,7 +147,6 @@ class CreditRegistrationController extends Controller
             'questionManagerId' => $questionId,
             'answerInfoData' => $answerInfoData,
             'isHasQuestion' => $questionSettingData->isEmpty() ? 0 : 1,
-            'arrTest' => $arrTest
         ]);
     }
 
@@ -214,6 +206,7 @@ class CreditRegistrationController extends Controller
                 Session::forget('popup_confirm');
                 Session::forget('question_confirm');
                 Session::forget('question_option_confirm');
+                Session::forget('answer_info_data');
                 return response()->json(['message' => 'successfully']);
             }
         }
