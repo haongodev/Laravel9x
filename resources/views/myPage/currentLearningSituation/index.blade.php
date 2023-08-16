@@ -348,6 +348,7 @@
                 success: function(response) {
                     $('.popup_filter_scoring_board').addClass('hidden');
                     $('.popup_study_scoring_board').removeClass('hidden');
+                    $('.value_study_score_board').val(JSON.stringify(response.data));
                     runRenderChart();
                 },
                 error: function(xhr) {
