@@ -188,6 +188,12 @@
     background-color: #A9A9A9 !important;
 }
 
-.test .button-td {
+.title-popup{
+    position: relative;
+}
 
+.title-popup img{
+    position: absolute;
+    width: 48px;
+    right: 90px;
 }

@@ -23,4 +23,14 @@ class FacesheetManageRepository
     {
         return $this->model->where('member_id',$userId)->get();
     }
+
+    public function update($id, $data)
+    {
+        return $this->model->where('id',$id)->update($data);
+    }
+
+    public function updateByMemberId($memberId, $data)
+    {
+        return $this->model->where('member_id',$memberId)->update($data);
+    }
 }

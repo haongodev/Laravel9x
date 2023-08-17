@@ -248,4 +248,27 @@ class SakuraSetController extends Controller
         }
         return response()->json($data);
     }
+
+    public function updateShareFaceSheet(Request $request)
+    {
+        try {
+            $id = $request->get('id');
+            $shareFlg = $request->get('share_flg');
+            $memberId = auth()->user()->id;
+            $dataUpdate = [
+                'share_flg' => $shareFlg
+            ];
+
+            //Update all share flag off when share = true
+            if($shareFlg){
+                $this->facesheetManageService->updateByMemberId($memberId,['share_flg' => 0]);
+            }
+            $data['update'] = $this->facesheetManageService->update($id, $dataUpdate);
+            $data['success'] = true;
+        } catch (Exception $e) {
+            $data['success'] = false;
+        }
+
+        return response()->json($data);
+    }
 }

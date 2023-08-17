@@ -42,4 +42,14 @@ class FacesheetManageService
     {
         return $this->facesheetManageRepository->getByUserId($userId);
     }
+
+    public function update($id, $data)
+    {
+        return $this->facesheetManageRepository->update($id, $data);
+    }
+
+    public function updateByMemberId($memberId, $data)
+    {
+        return $this->facesheetManageRepository->updateByMemberId($memberId, $data);
+    }
 }
