@@ -3,23 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
- * @property int      $id
- * @property int      $id
- * @property int      $share_flg
- * @property int      $share_flg
- * @property DateTime $delete_date
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property DateTime $delete_date
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property string   $file_name
- * @property string   $file_name
+ * Class FacesheetManage
+ * @package App\Models
  */
 class FacesheetManage extends Model
 {
+    use SoftDeletes;// add soft delete
+    const DELETED_AT = 'delete_date';
     /**
      * The database table used by the model.
      *
@@ -54,7 +46,7 @@ class FacesheetManage extends Model
      * @var array
      */
     protected $fillable = [
-        'delete_date', 'file_name', 'registration_date', 'share_flg', 'update_date', 'delete_date', 'file_name', 'registration_date', 'share_flg', 'update_date', 'member_id', 'display_name'
+        'id','file_name', 'share_flg','delete_date','update_date','registration_date','member_id','display_name'
     ];
 
     /**
@@ -63,17 +55,10 @@ class FacesheetManage extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
-    /**
-     * The attributes that should be casted to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'id' => 'int', 'id' => 'int', 'delete_date' => 'datetime', 'file_name' => 'string', 'registration_date' => 'datetime', 'share_flg' => 'int', 'update_date' => 'datetime', 'delete_date' => 'datetime', 'file_name' => 'string', 'registration_date' => 'datetime', 'share_flg' => 'int', 'update_date' => 'datetime'
-    ];
+
 
     /**
      * The attributes that should be mutated to dates.
@@ -81,7 +66,7 @@ class FacesheetManage extends Model
      * @var array
      */
     protected $dates = [
-        'delete_date', 'registration_date', 'update_date', 'delete_date', 'registration_date', 'update_date'
+        'delete_date', 'registration_date', 'update_date',
     ];
 
     /**

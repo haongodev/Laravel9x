@@ -30,7 +30,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::get('/',[CurrentLearningSituationController::class, 'index'])->name('cls');
         Route::get('/getSumCoreByYear/{year}',[CurrentLearningSituationController::class, 'getSumCoreByYear'])->name('getSumCoreByYear');
         Route::get('/getStudyScoreBwMonth/{date}',[CurrentLearningSituationController::class, 'getStudyScoreBwMonth'])->name('getStudyScoreBwMonth');
-        
+
     });
     Route::group(['prefix' => 'credit-registration'],function() {
         Route::get('/',[CreditRegistrationController::class, 'index'])->name('creditRegistration');
@@ -54,6 +54,9 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/sakuraDelete',[SakuraSetController::class, 'delete'])->name('sakuraDelete');
         Route::get('/getSheet',[SakuraSetController::class, 'getSheet'])->name('sakuraSheet');
         Route::post('/sakuraBackup',[SakuraSetController::class, 'backup'])->name('sakuraBackup');
+        Route::post('/sakuraUpload',[SakuraSetController::class, 'upload'])->name('sakuraUpload');
+        Route::post('/updateShareFaceSheet',[SakuraSetController::class, 'updateShareFaceSheet'])->name('sakuraUpdateShareFaceSheet');
+        Route::post('/removeShareFaceSheet',[SakuraSetController::class, 'removeShareFaceSheet'])->name('sakuraRemoveShareFaceSheet');
     });
 });
 
