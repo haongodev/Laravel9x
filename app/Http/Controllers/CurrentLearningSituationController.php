@@ -6,6 +6,7 @@ use App\Services\AnswerManageService;
 use App\Services\AnswerInfoService;
 use App\Services\GuidanceSettingService;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CurrentLearningSituationController extends Controller
 {
@@ -69,6 +70,10 @@ class CurrentLearningSituationController extends Controller
         $date = explode('_',$date);
         $from = $date[0];
         $to = $date[1];
+        $firstDayOfMonth = Carbon::createFromFormat('Y-m', $from);
+        $from = $firstDayOfMonth->startOfMonth()->format('Y-m-d H:i:s');
+        $endDayOfMonth = Carbon::createFromFormat('Y-m', $to);
+        $to = $endDayOfMonth->endOfMonth()->format('Y-m-d H:i:s');
         $getScoreBwYear = $this->answerManageService->getSumScoreBwYear($from,$to);
         $getScoreBwYearGoalStudy = $this->answerManageService->getSumScoreBwYearGoalStudy($from,$to);
         $getScoreBwYearForPattern = $this->answerManageService->getSumScoreBwYearForPattern($from,$to);
