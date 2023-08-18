@@ -241,10 +241,18 @@ class SakuraSetController extends Controller
 
     public function upload(Request $request)
     {
-        $upload = $this->facesheetManageService->upload($request);
-        $data['success'] = false;
-        if($upload){
+        $faceSheetId = $this->facesheetManageService->upload($request);
+        $data= [
+          'success'=>false,
+          'html' => ''
+        ];
+        if($faceSheetId){
+            $faceSheetManager = $this->facesheetManageService->getById($faceSheetId);
+            $returnHTML = view('components/sub_popup_A013/data_upload',[
+               'faceSheetManager'=>$faceSheetManager
+            ])->render();
             $data['success'] = true;
+            $data['html'] = $returnHTML;
         }
         return response()->json($data);
     }

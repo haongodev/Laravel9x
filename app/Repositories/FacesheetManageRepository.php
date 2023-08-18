@@ -15,8 +15,8 @@ class FacesheetManageRepository
         $this->model = $model;
     }
 
-    public function store($data){
-        return $this->model->create($data);
+    public function insertGetId($data){
+        return $this->model->insertGetId($data);
     }
 
     public function getByUserId($userId)
@@ -37,5 +37,10 @@ class FacesheetManageRepository
     public function destroy($id = 0)
     {
         return $this->model->where('id',$id)->delete();
+    }
+
+    public function getById($id = 0)
+    {
+        return $this->model->where('id',$id)->get()->first();
     }
 }

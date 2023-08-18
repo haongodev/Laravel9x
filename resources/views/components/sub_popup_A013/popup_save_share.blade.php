@@ -74,11 +74,11 @@
                 dataType: 'json',
                 success: function(response) {
                     if(response.success){
-
+                        $('.table-manager').append(response.html)
                     }
                 },
                 error: function(xhr) {
-                  //  console.log(xhr.responseText);
+                  alert('error')
                 }
             });
         })
@@ -117,7 +117,7 @@
 
         })
 
-        $('.remove').click(function (){
+        $('.popup-A013-save-share').on('click','.remove',function (){
             var id = $(this).data('id');
             var display_name = $(this).attr('data-display-name');
             var url = '{{route('sakuraRemoveShareFaceSheet')}}';
