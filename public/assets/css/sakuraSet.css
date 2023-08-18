@@ -197,3 +197,35 @@
     width: 48px;
     right: 90px;
 }
+
+
+.table-manager{
+    width: 540px;
+}
+.table-manager th, td {
+    border-style: none;
+    padding: 10px 0px 0px 7px;
+}
+
+.table-manager .manager{
+    border: 1px;
+    border-radius: 50px;
+    background-color: #FFB366;
+    text-align: center;
+    padding: 7px 5px;
+    font-size: 26px;
+    color: #fff;
+}
+
+.table-manager .share-facesheet.share{
+    background-color: #3399FF;
+}
+
+.table-manager img{
+    width: 32px;
+}
+
+.table-manager .download{
+    text-decoration: none;
+    color: #fff;
+}

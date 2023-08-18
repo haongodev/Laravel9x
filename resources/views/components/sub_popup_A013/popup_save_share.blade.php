@@ -4,30 +4,7 @@
  * */
 ?>
 <style>
-    .table-manager{
-        width: 540px;
-    }
-    .table-manager th, td {
-        border-style: none;
-        padding: 10px 0px 0px 7px;
-    }
 
-    .table-manager .manager{
-        border: 1px;
-        border-radius: 50px;
-        background-color: #FFB366;
-        text-align: center;
-        padding: 7px 5px;
-        font-size: 26px;
-    }
-
-    .table-manager .share-facesheet.share{
-        background-color: #3399FF;
-    }
-
-    .table-manager img{
-        width: 32px;
-    }
 </style>
 <div class="popup-wrapper hidden a012-popup-child popup-A013-save-share">
     <div class="layout-popup">
@@ -53,12 +30,14 @@
                                 >共有</div>
                             </td>
                             <td>
-                                <div class="manager">{{$faceSheetManager->display_name}}</div>
+                                <div class="manager"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->id.'/facesheet/'.$faceSheetManager->file_name}}">{{$faceSheetManager->display_name}}</a></div>
                             </td>
-                            <td style="width: 100px" class="remove">
-                                @if(!$faceSheetManager->share_flg)
-                                    <div><img class="close-icon" src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon"></div>
-                                @endif
+                            <td style="width: 100px">
+                                    <div class="remove" data-id="{{$faceSheetManager->id}}"
+                                         data-display-name="{{$faceSheetManager->display_name}}"
+                                    >
+                                        @if(!$faceSheetManager->share_flg)<img src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">@endif
+                                    </div>
                             </td>
                         </tr>
                     @endforeach
@@ -108,35 +87,54 @@
             var id = $(this).data('id');
             var current_share = $(this).attr('data-current-share');
             var display_name = $(this).attr('data-display-name');
-            var url = '{{route('sakuraUpdateShareFaceSheet')}}'
+            var url = '{{route('sakuraUpdateShareFaceSheet')}}';
+            var is_exist_share = isExistsShare();
             //Check exist file share
-            if (isExistsShare()) {
-
+            if(current_share == 1){
+                //show popup 34
+                var html = 'フェイスシート（'+display_name+'）を共有を解除しますか？';
             }else{
-                //show popup 30
-                if(current_share == 0){
-                    var html = 'フェイスシート（'+display_name+'）を共有しますか？';
+                if (isExistsShare()) {
+                    //Show popup 43
+                    var html = 'フェイスシート（'+display_name+'）に共有を変更しますか？';
                 }else{
-                    var html = 'フェイスシート（'+display_name+'）を共有を解除しますか？';
-
+                    //Show popup 30
+                    var html = 'フェイスシート（'+display_name+'）を共有しますか？';
                 }
-
-                $('.popup-A013-confirm').find('input[name="id"]').val(id);
-                $('.popup-A013-confirm').find('input[name="share_flg"]').val(current_share == 1 ? 0 : 1);
-                $('.popup-A013-confirm').find('input[name="url"]').val(url);
-                //if turn off share use last confirm
-                $('.popup-A013-confirm').find('input[name="last_confirm"]').val(current_share);
-
-                $('.popup-A013-confirm').find('.header-content').html(html)
-                $('.popup-A013-confirm').removeClass('hidden');
-                $('.popup-A013-save-share').addClass('hidden');
             }
 
+            $('.popup-A013-confirm').find('input[name="id"]').val(id);
+            $('.popup-A013-confirm').find('input[name="share_flg"]').val(current_share == 1 ? 0 : 1);
+            $('.popup-A013-confirm').find('input[name="url"]').val(url);
+            //if turn off share use last confirm
+            $('.popup-A013-confirm').find('input[name="last_confirm"]').val(current_share);
+            // if exsits file share
+            $('.popup-A013-confirm').find('input[name="is_exist_share"]').val(is_exist_share ? 1 : 0);
+            $('.popup-A013-confirm').find('input[name="is_remove"]').val(0);
+            $('.popup-A013-confirm').find('.header-content').html(html)
+            $('.popup-A013-confirm').removeClass('hidden');
+            $('.popup-A013-save-share').addClass('hidden');
+
+        })
+
+        $('.remove').click(function (){
+            var id = $(this).data('id');
+            var display_name = $(this).attr('data-display-name');
+            var url = '{{route('sakuraRemoveShareFaceSheet')}}';
+            var html = 'フェイスシート（'+display_name+'）を削除しますか？';
+
+            $('.popup-A013-confirm').find('input[name="id"]').val(id);
+            $('.popup-A013-confirm').find('input[name="url"]').val(url);
+            $('.popup-A013-confirm').find('input[name="is_remove"]').val(1);
+            $('.popup-A013-confirm').find('.header-content').html(html)
+            //Show popup 22
+            $('.popup-A013-confirm').removeClass('hidden');
+            $('.popup-A013-save-share').addClass('hidden');
         })
 
         function isExistsShare(){
             var isShare = false;
-            $('.facesheet-manage').find('button').each(function (){
+            $('.table-manager').find('.manager').each(function (){
                 if($(this).hasClass('share')){
                     isShare = true
                 }

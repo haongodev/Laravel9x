@@ -33,4 +33,9 @@ class FacesheetManageRepository
     {
         return $this->model->where('member_id',$memberId)->update($data);
     }
+
+    public function destroy($id = 0)
+    {
+        return $this->model->where('id',$id)->delete();
+    }
 }

@@ -14,8 +14,8 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">ダウンロードする</button>
-                <button class="title-popup">Excel</button>
-                <button class="title-popup">PDF</button>
+                <button class="title-popup button-link"><a download href="/templates/facesheet/facesheet.xlsx">Excel</a></button>
+                <button class="title-popup button-link"><a download href="/templates/facesheet/facesheet.pdf">PDF</a></button>
             </div>
         </div>
         <div class="popup-footer">
@@ -29,11 +29,6 @@
             $('.popup-A013-create').removeClass('hidden');
             $('.popup-A013-download').addClass('hidden');
         })
-
-        // $('.open-A013-download').click(function () {
-        //     $('.popup-A013-download').removeClass('hidden');
-        //     $('.popup-A013-create').addClass('hidden');
-        // })
 
     </script>
 @endpush

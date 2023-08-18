@@ -271,4 +271,16 @@ class SakuraSetController extends Controller
 
         return response()->json($data);
     }
+
+    public function removeShareFaceSheet(Request $request)
+    {
+        try{
+            $id = $request->get('id');
+            $data['remove'] = $this->facesheetManageService->destroy($id);
+            $data['success'] = true;
+        }catch (Exception $e) {
+            $data['success'] = false;
+        }
+        return response()->json($data);
+    }
 }
