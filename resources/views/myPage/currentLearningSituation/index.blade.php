@@ -344,7 +344,8 @@
             var to = $(timeInput[1]).datepicker('getDate');
             from = new Date(from);
             to = new Date(to);
-
+            // 2023年 7月 ～ 2028年 1月　
+            var titleBoard = from.getFullYear()+'年 '+(from.getMonth()+1)+'月 ~ '+to.getFullYear()+'年 '+(to.getMonth()+1)+'月 '+'研鑽スコアリングボード';
             toastr.options.timeOut = 3000;
             if (from > to) {
                 toastr.info('範囲指定に誤りがあります');
@@ -366,6 +367,8 @@
                     $('.popup_filter_scoring_board').addClass('hidden');
                     $('.popup_study_scoring_board').removeClass('hidden');
                     $('.value_study_score_board').val(JSON.stringify(response.data));
+                    $('.popup_study_scoring_board .layout-popup .popup-top .btn-title button').html(titleBoard);
+                    $('.scoring_board_content .table-show-credit table tr:gt(0)').remove();
                     runRenderChart();
                 },
                 error: function(xhr) {
