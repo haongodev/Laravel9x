@@ -1,0 +1,20 @@
+<tr class="facesheet-id-{{$faceSheetManager->id}}">
+    <td style="width: 100px">
+        <div class="share-facesheet manager {{$faceSheetManager->share_flg ? 'share' : ''}}"
+             data-current-share="{{$faceSheetManager->share_flg}}"
+             data-id="{{$faceSheetManager->id}}"
+             data-display-name="{{$faceSheetManager->display_name}}"
+             style=""
+        >共有</div>
+    </td>
+    <td>
+        <div class="manager"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->id.'/facesheet/'.$faceSheetManager->file_name}}">{{$faceSheetManager->display_name}}</a></div>
+    </td>
+    <td style="width: 100px">
+        <div class="remove" data-id="{{$faceSheetManager->id}}"
+             data-display-name="{{$faceSheetManager->display_name}}"
+        >
+            @if(!$faceSheetManager->share_flg)<img src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">@endif
+        </div>
+    </td>
+</tr>

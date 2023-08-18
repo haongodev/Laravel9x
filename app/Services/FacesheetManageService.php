@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\FacesheetManageRepository;
+use Carbon\Carbon;
 
 class FacesheetManageService
 {
@@ -36,10 +37,12 @@ class FacesheetManageService
                 'file_name' => $name,
                 'display_name' => date('Y年 m月 d日'),
                 'share_flg' => 0,
-                'delete_date' => null
+                'delete_date' => null,
+                'registration_date' => Carbon::now(),
+                'update_date' => Carbon::now()
             ];
-            $data = $this->facesheetManageRepository->store($data);
-            return $data;
+            $id = $this->facesheetManageRepository->insertGetId($data);
+            return $id;
         }
     }
 
@@ -79,5 +82,10 @@ class FacesheetManageService
     public function destroy($id = 0)
     {
         return $this->facesheetManageRepository->destroy($id);
+    }
+
+    public function getById($id = 0)
+    {
+        return $this->facesheetManageRepository->getById($id);
     }
 }
