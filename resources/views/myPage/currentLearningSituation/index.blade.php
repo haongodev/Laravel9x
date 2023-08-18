@@ -134,9 +134,10 @@
                 ],
                 font: {
                     weight: 'bold',
-                    size: 16,
+                    size: 20,
                 },
-                borderWidth: 1,
+                borderWidth: 2,
+                borderColor: '#000'
             }]
         };
         const data2 = {
@@ -152,9 +153,10 @@
                 ],
                 font: {
                     weight: 'bold',
-                    size: 16,
+                    size: 20,
                 },
-                borderWidth: 1,
+                borderWidth: 2,
+                borderColor: '#000'
             }]
         };
         const data3 = {
@@ -168,10 +170,12 @@
                     stack: 'Stack 0',
                     font: {
                         weight: 'bold',
-                        size: 16,
+                        size: 20,
                     },
                     categoryPercentage: 0.5,
                     barPercentage: 0.5,
+                    borderWidth: 2,
+                    borderColor: '#000'
                 },
                 {
                     axis: 'y',
@@ -181,10 +185,12 @@
                     stack: 'Stack 0',
                     font: {
                         weight: 'bold',
-                        size: 16,
+                        size: 20,
                     },
                     categoryPercentage: 0.5,
                     barPercentage: 0.5,
+                    borderWidth: 2,
+                    borderColor: '#000'
                 },
                 {
                     axis: 'y',
@@ -194,10 +200,12 @@
                     stack: 'Stack 0',
                     font: {
                         weight: 'bold',
-                        size: 16,
+                        size: 20,
                     },
                     categoryPercentage: 0.5,
                     barPercentage: 0.5,
+                    borderWidth: 2,
+                    borderColor: '#000'
                 }
             ]
         };
@@ -205,7 +213,7 @@
             type: 'bar',
             data: data1,
             options: {
-                barThickness: 80,
+                barThickness: 50,
                 scales: {
                     y: {
                         ticks: {
@@ -230,6 +238,9 @@
                         color: 'white',
                         formatter: function(value) {
                             return value;
+                        },
+                        font: {
+                            size: 20,
                         }
                     }
                 },
@@ -242,7 +253,7 @@
                 type: 'bar',
                 data: data2,
                 options: {
-                    barThickness: 80,
+                    barThickness: 50,
                     scales: {
                         y: {
                             ticks: {
@@ -267,6 +278,9 @@
                             color: 'white',
                             formatter: function (value) {
                                 return value;
+                            },
+                            font: {
+                                size: 20,
                             }
                         }
                     },
@@ -308,6 +322,9 @@
                         color: 'white',
                         formatter: function(value) {
                             return value;
+                        },
+                        font: {
+                            size: 20,
                         }
                     }
                 },
@@ -327,7 +344,8 @@
             var to = $(timeInput[1]).datepicker('getDate');
             from = new Date(from);
             to = new Date(to);
-
+            // 2023年 7月 ～ 2028年 1月　
+            var titleBoard = from.getFullYear()+'年 '+(from.getMonth()+1)+'月 ~ '+to.getFullYear()+'年 '+(to.getMonth()+1)+'月 '+'研鑽スコアリングボード';
             toastr.options.timeOut = 3000;
             if (from > to) {
                 toastr.info('範囲指定に誤りがあります');
@@ -348,6 +366,9 @@
                 success: function(response) {
                     $('.popup_filter_scoring_board').addClass('hidden');
                     $('.popup_study_scoring_board').removeClass('hidden');
+                    $('.value_study_score_board').val(JSON.stringify(response.data));
+                    $('.popup_study_scoring_board .layout-popup .popup-top .btn-title button').html(titleBoard);
+                    $('.scoring_board_content .table-show-credit table tr:gt(0)').remove();
                     runRenderChart();
                 },
                 error: function(xhr) {

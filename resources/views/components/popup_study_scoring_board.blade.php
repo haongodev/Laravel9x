@@ -1,4 +1,5 @@
 <div class="popup-wrapper hidden popup_study_scoring_board">
+    <input type="hidden" class="value_study_score_board"/>
     <div class="layout-popup" style="width: 97%;max-height: 94%;height:100%;">
         <div class="popup-header">
             <div class="title"></div>
@@ -28,7 +29,7 @@
                             <th>研修・学会等</th>
                             <th>社会的活動</th>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td rowspan="3" class="col1" align="center">
                                 2024 <br>
                                 年度
@@ -46,98 +47,11 @@
                             <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
                             <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
                             <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3" class="col1" align="center">
-                                2023 <br>
-                                年度
-                            </td>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3" class="col1" align="center">
-                                2022 <br>
-                                年度
-                            </td>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="3" class="col1" align="center">
-                                2021 <br>
-                                年度
-                            </td>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
-                        <tr>
-                            <td class="col2">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col3">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                            <td class="col4">YYYY年M月D日<br>[内容]AAAAAAAAAAAAAAAAAAAA</td>
-                        </tr>
+                        </tr> --}}
                     </table>
                 </div>
                 <div class="graph-show-credit">
                     <div class="table-graph">
-                        <div>
-                            <canvas id="column_chart_2024_stack" width="1211" height="100">
-
-                            </canvas>
-                        </div>
-                        <div>
-                            <canvas id="column_chart_2024" width="1211" height="200">
-
-                            </canvas>
-                        </div>
-                        <div>
-                            <canvas id="column_chart_2023_stack" width="1211" height="100">
-
-                            </canvas>
-                        </div>
-                        <div>
-                            <canvas id="column_chart_2023" width="1211" height="200">
-
-                            </canvas>
-                        </div>
-                        <div>
-                            <canvas id="column_chart_2022_stack" width="1211" height="100">
-
-                            </canvas>
-                        </div>
-                        <div>
-                            <canvas id="column_chart_2022" width="1211" height="200">
-
-                            </canvas>
-                        </div>
                     </div>
                     <div class="radar-graph">
                         <button class="title-radar">研鑽目的</button>
@@ -158,21 +72,44 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    var year = ['2022','2023','2024'];
     var chartList = [];
     var chartStackList = [];
     var radarChart = null;
     function runRenderChart(){
+        var value_study_scoring_board = JSON.parse($('.value_study_score_board').val());
+        var tableData = value_study_scoring_board.scoreBwYearForPattern;
+        renderTableData(tableData)
+        var chartData = value_study_scoring_board.scoreBwYear;
+        var radarData = value_study_scoring_board.scoreBwYearGoalStudy;
+
+        
+        const groupedDataChart = {};
+        chartData.forEach(item => {
+            const registrationYear = item.registration_year;
+            if (!groupedDataChart[registrationYear]) {
+                groupedDataChart[registrationYear] = [];
+            }
+            groupedDataChart[registrationYear].push(item);
+        });
+        var year = Object.keys(groupedDataChart);
         var widthChart = $('.table-graph').width();
         $('#rardar_chart').css('width',widthChart+'px');
+        $('.table-graph').html('');
         year.forEach(function(val,index){
+            $('.table-graph').append('<div>'+
+                    '<canvas id="column_chart_'+val+'_stack" width="1211" height="100"></canvas>'+
+                '</div>'+
+                '<div>'+
+                    '<canvas id="column_chart_'+val+'" width="1211" height="200"></canvas>'+
+                '</div>');
             $('#'+'column_chart_'+val).css('width',widthChart+'px');
             $('#'+'column_chart_'+val+'_stack').css('width',widthChart+'px');
             const ctx = document.getElementById('column_chart_'+val);
             const ctxStack = document.getElementById('column_chart_'+val+'_stack');
             const labels = ['SV','研修・学会等','社会的活動'];
             const labelsStack = [val+'年度'];
-            var dataInitCore1 = ['5','10','12'];
+            var dataInitCore1 = groupedDataChart[val].map(item => item.total_score);
+            const maxRange = dataInitCore1.reduce((partialSum, a) => parseInt(partialSum) + parseInt(a), 0);
             const data = {
                 labels: labels,
                 datasets: [{
@@ -193,40 +130,14 @@
                     categoryPercentage:1
                 }]
             };
-            const dataStack = {
-                labels: labelsStack,
-                datasets: [
+            const dataStackSets = [];
+            groupedDataChart[val].forEach(function (item,nth) {
+                dataStackSets.push(
                     {
                         axis: 'y',
-                        label: 'SV',
-                        data: ['5'],
-                        backgroundColor: '#006AC7',
-                        stack: 'Stack 0',
-                        font: {
-                            weight: 'bold',
-                            size: 16,
-                        },
-                        categoryPercentage: 0.5,
-                        barPercentage: 0.6,
-                    },
-                    {
-                        axis: 'y',
-                        label: '研修・学会等',
-                        data: ['10'],
-                        backgroundColor: '#FFBA00',
-                        stack: 'Stack 0',
-                        font: {
-                            weight: 'bold',
-                            size: 16,
-                        },
-                        categoryPercentage: 0.5,
-                        barPercentage: 0.6,
-                    },
-                    {
-                        axis: 'y',
-                        label: '社会的活動',
-                        data: ['12'],
-                        backgroundColor: '#009A51',
+                        label: labels[item.type_native_id],
+                        data: [dataInitCore1[nth]],
+                        backgroundColor: data.datasets[0].backgroundColor[item.type_native_id],
                         stack: 'Stack 0',
                         font: {
                             weight: 'bold',
@@ -235,14 +146,18 @@
                         categoryPercentage: 0.5,
                         barPercentage: 0.6,
                     }
-                ]
+                )
+            })
+            const dataStack = {
+                labels: labelsStack,
+                datasets: dataStackSets
             };
-            initColumnChart(index,ctx,data);
-            initColumnChartStack(index,ctxStack,dataStack);
+            initColumnChart(index,ctx,data,maxRange);
+            initColumnChartStack(index,ctxStack,dataStack,maxRange);
         })
-        initRardarChart();
+        initRardarChart(radarData);
     }
-    function initColumnChart(index,ctx,data){
+    function initColumnChart(index,ctx,data,maxRange){
         chartList[index] = new Chart(ctx, {
             type: 'bar',
             data: data,
@@ -263,7 +178,7 @@
                         },
                     },
                     x: {
-                        max: 100,
+                        max: parseInt(maxRange),
                         ticks: {
                             stepSize: 10
                         }
@@ -285,7 +200,7 @@
             plugins: [ChartDataLabels]
         });
     }
-    function initColumnChartStack(index,ctx,data){
+    function initColumnChartStack(index,ctx,data,maxRange){
         chartStackList[index] = new Chart(ctx, {
             type: 'bar',
             data: data,
@@ -306,7 +221,7 @@
                         stacked: true,
                     },
                     x: {
-                        max: 100,
+                        max: parseInt(maxRange),
                     }
                 },
                 plugins: {
@@ -325,51 +240,59 @@
             plugins: [ChartDataLabels]
         });
     }
-    function initRardarChart(){
+    function initRardarChart(data){
+        const dataSets = [];
+        const dataGroup = {};
+        const titleList = data.map(item => item.title);
+        const colorList = ['#B3FF66','#66FFFF','#9999FF','#FF99FF','#FFB366',]
+        data.forEach(item => {
+            const registrationYear = item.registration_year;
+            if (!dataGroup[registrationYear]) {
+                dataGroup[registrationYear] = [];
+            }
+            dataGroup[registrationYear].push(item);
+        });
+        let index = 0;
+        for (const year in dataGroup) {
+            dataSets.push({
+                key: year,
+                label: year+"年度",
+                backgroundColor: colorList[index],
+                data: [],
+            });
+            index++;
+        }
+        data.forEach((item1,index) => {
+            const indexDts = dataSets.findIndex((item2) => parseInt(item2.key) === item1.registration_year);
+            if(indexDts >= 0){
+                if(indexDts > 0){
+                    const lengthfront = dataSets[indexDts - 1].data.length;
+                    for (let hk = 0; hk < lengthfront; hk++) {
+                        dataSets[indexDts].data.push("0");
+                    }
+                }
+                dataSets[indexDts].data.push(item1.total_score);
+            }
+        });
         var marksCanvas = document.getElementById("rardar_chart");
         var marksData = {
-            labels: [
-                "健康状態の自己管理",
-                "仕事と家庭のバランス",
-                "基本施設やマナー",
-                "組織人としての役割遂行",
-                ["専門的支援関係形成力","（個人、小集団、地域等）"],
-                "アセスメント力",
-                "支援・介入・調整力",
-                "連携・協働・チーム形成力",
-                "ソーシャルワーカーを育てる力",
-                "専門性を養うために学び続ける力",
-                ["コミュニティへのアプローチ・","ソーシャルアクションの力"],
-                "研究、実践成果を示す力",
-                ["ソーシャルワーカーアイデンティティ・","モチベーションを維持する力"],
-            ],
-            datasets: [
-                {
-                    label: "2023年度",
-                    backgroundColor: "#B3FF66",
-                    data: [15, 37, 43, 53, 61, 64, 69, 73, 78, 82, 90, 93, 100],
-                },
-                {
-                    label: "2024年度",
-                    backgroundColor: "#66FFFF",
-                    data: [25, 50, 55, 59, 63, 66, 72, 74, 85, 88, 89, 97, 100]
-                },
-                {
-                    label: "2025年度",
-                    backgroundColor: "#9999FF",
-                    data: [40, 41, 47, 50, 61, 70, 76, 79, 73, 87, 91, 94, 100]
-                },
-                {
-                    label: "2026年度",
-                    backgroundColor: "#FF99FF",
-                    data: [10, 15, 50, 60, 65, 72, 77, 81, 90, 92, 95, 96, 99]
-                },
-                {
-                    label: "2027年度",
-                    backgroundColor: "#FFB366",
-                    data: [65, 75, 70, 80, 60, 80, 82, 91, 75, 89, 95, 99, 100]
-                },
-            ]
+            labels: titleList,
+            //        [
+            //     "健康状態の自己管理",
+            //     "仕事と家庭のバランス",
+            //     "基本施設やマナー",
+            //     "組織人としての役割遂行",
+            //     ["専門的支援関係形成力","（個人、小集団、地域等）"],
+            //     "アセスメント力",
+            //     "支援・介入・調整力",
+            //     "連携・協働・チーム形成力",
+            //     "ソーシャルワーカーを育てる力",
+            //     "専門性を養うために学び続ける力",
+            //     ["コミュニティへのアプローチ・","ソーシャルアクションの力"],
+            //     "研究、実践成果を示す力",
+            //     ["ソーシャルワーカーアイデンティティ・","モチベーションを維持する力"],
+            // ],
+            datasets:dataSets
         };
         radarChart = new Chart(marksCanvas, {
             type: 'radar',
@@ -377,6 +300,9 @@
             options: {
                 scales: {
                     r: {
+                        ticks:{
+                            max: 60,
+                        },
                         pointLabels: {
                             font: {
                                 size: 15,
@@ -480,6 +406,98 @@
                 content:objChart
             };
             pdfMake.createPdf(docDefinition).download(file_name);
+        }
+    })
+    function renderTableData(data){
+        var html = '';
+        const groupedData = {};
+        data.forEach(item => {
+            const registrationYear = item.registration_year;
+            if (!groupedData[registrationYear]) {
+                groupedData[registrationYear] = [];
+            }
+            groupedData[registrationYear].push(item);
+        });
+        for(const year in groupedData) {
+            groupedData[year].forEach((item,index) => {
+                html += '<tr>';
+                if(index === 0){
+                    html += '<td rowspan="'+lengHighest(groupedData[year])+'" class="col1" align="center">'+year+' <br> 年度</td>';
+                    html += getTdByNativeId(groupedData[year],'col2',0);
+                    html += getTdByNativeId(groupedData[year],'col3',1);
+                    html += getTdByNativeId(groupedData[year],'col4',2);
+                }else{
+                    html += getTdByNativeId(groupedData[year],'col2',0);
+                    html += getTdByNativeId(groupedData[year],'col3',1);
+                    html += getTdByNativeId(groupedData[year],'col4',2);
+                }
+                html += '</tr>';
+            });
+        }
+        $('.scoring_board_content .table-show-credit table').append(html);
+        clearnupTable();
+    }
+    function getTdByNativeId(items,className,value){
+        var htmlItem = items.findIndex((item) => item.type_native_id === value && !item.hasOwnProperty('map'));
+        if(htmlItem >= 0){
+            items[htmlItem]['map'] = true;
+            return '<td class="'+className+'">'+items[htmlItem].title+'<br>[内容]<br>'+items[htmlItem].answer+'</td>';
+        }else{
+            return '<td class="'+className+'"></td>';
+        }
+    }
+    function clearnupTable(){
+        $('.table-show-credit table tr:gt(0)').each(function(i,e){
+            var td = $(e).find('td');
+            let found = 0;
+            $(td).each(function(i1,e1){
+                if($(e1).text() !== ''){
+                    found++;
+                }
+            });
+            if(found === 0){
+                $(e).remove();
+            }
+        })
+    }
+    function lengHighest(data){
+        var firstLength = 0;
+        const countMap = {};
+
+        // Đếm số lượng đối tượng cho từng type_native_id
+        for (const item of data) {
+            if (countMap[item.type_native_id]) {
+                countMap[item.type_native_id]++;
+            } else {
+                countMap[item.type_native_id] = 1;
+            }
+        }
+        // Tìm ra type_native_id có số lượng đối tượng lớn nhất
+        let maxCount = 0;
+        let maxCountType = null;
+        for (const type in countMap) {
+            if (countMap[type] > maxCount) {
+                maxCount = countMap[type];
+                maxCountType = type;
+            }
+        }
+        return maxCount;
+    }
+    function destroyAllChart(){
+        chartList.forEach(element => {
+            element.destroy()
+        });
+        chartStackList.forEach(element => {
+            element.destroy()
+        });
+        radarChart.destroy();
+    }
+    $('.close-icon').click(function (e){
+        destroyAllChart();
+    })
+    $('.popup-wrapper').click(function (e){
+        if(e.target.className.includes('popup-wrapper')){
+            destroyAllChart();
         }
     })
 </script>

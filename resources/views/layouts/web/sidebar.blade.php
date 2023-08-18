@@ -56,7 +56,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="{{route('cls')}}">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-3.svg">
                             <span>現在の研鑽状況 (単位登録状況)</span>
                         </a>
