@@ -71,7 +71,7 @@
     // Show year before month on the datepicker header
     yearFirst: false,
     // A string suffix to the year number.
-    yearSuffix: '',
+    yearSuffix: '年',
     // Days' name of the week.
     days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     // Shorter days' name
@@ -81,7 +81,7 @@
     // Months' name
     months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     // Shorter months' name
-    monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    monthsShort: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
     // A element tag for each item of years, months and days
     itemTag: 'li',
     // A class (CSS) for muted date item

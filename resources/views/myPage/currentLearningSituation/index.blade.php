@@ -134,9 +134,10 @@
                 ],
                 font: {
                     weight: 'bold',
-                    size: 16,
+                    size: 20,
                 },
-                borderWidth: 1,
+                borderWidth: 2,
+                borderColor: '#000'
             }]
         };
         const data2 = {
@@ -152,9 +153,10 @@
                 ],
                 font: {
                     weight: 'bold',
-                    size: 16,
+                    size: 20,
                 },
-                borderWidth: 1,
+                borderWidth: 2,
+                borderColor: '#000'
             }]
         };
         const data3 = {
@@ -168,10 +170,12 @@
                     stack: 'Stack 0',
                     font: {
                         weight: 'bold',
-                        size: 16,
+                        size: 20,
                     },
                     categoryPercentage: 0.5,
                     barPercentage: 0.5,
+                    borderWidth: 2,
+                    borderColor: '#000'
                 },
                 {
                     axis: 'y',
@@ -181,10 +185,12 @@
                     stack: 'Stack 0',
                     font: {
                         weight: 'bold',
-                        size: 16,
+                        size: 20,
                     },
                     categoryPercentage: 0.5,
                     barPercentage: 0.5,
+                    borderWidth: 2,
+                    borderColor: '#000'
                 },
                 {
                     axis: 'y',
@@ -194,10 +200,12 @@
                     stack: 'Stack 0',
                     font: {
                         weight: 'bold',
-                        size: 16,
+                        size: 20,
                     },
                     categoryPercentage: 0.5,
                     barPercentage: 0.5,
+                    borderWidth: 2,
+                    borderColor: '#000'
                 }
             ]
         };
@@ -205,7 +213,7 @@
             type: 'bar',
             data: data1,
             options: {
-                barThickness: 80,
+                barThickness: 50,
                 scales: {
                     y: {
                         ticks: {
@@ -230,6 +238,9 @@
                         color: 'white',
                         formatter: function(value) {
                             return value;
+                        },
+                        font: {
+                            size: 20,
                         }
                     }
                 },
@@ -242,7 +253,7 @@
                 type: 'bar',
                 data: data2,
                 options: {
-                    barThickness: 80,
+                    barThickness: 50,
                     scales: {
                         y: {
                             ticks: {
@@ -267,6 +278,9 @@
                             color: 'white',
                             formatter: function (value) {
                                 return value;
+                            },
+                            font: {
+                                size: 20,
                             }
                         }
                     },
@@ -308,6 +322,9 @@
                         color: 'white',
                         formatter: function(value) {
                             return value;
+                        },
+                        font: {
+                            size: 20,
                         }
                     }
                 },

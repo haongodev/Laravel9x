@@ -262,9 +262,15 @@
             });
             index++;
         }
-        data.forEach((item1) => {
+        data.forEach((item1,index) => {
             const indexDts = dataSets.findIndex((item2) => parseInt(item2.key) === item1.registration_year);
             if(indexDts >= 0){
+                if(indexDts > 0){
+                    const lengthfront = dataSets[indexDts - 1].data.length;
+                    for (let hk = 0; hk < lengthfront; hk++) {
+                        dataSets[indexDts].data.push("0");
+                    }
+                }
                 dataSets[indexDts].data.push(item1.total_score);
             }
         });
@@ -414,30 +420,45 @@
         });
         for(const year in groupedData) {
             groupedData[year].forEach((item,index) => {
+                html += '<tr>';
                 if(index === 0){
-                    html += '<tr>'+
-                                '<td rowspan="'+groupedData[year].length+'" class="col1" align="center">'+year+' <br> 年度</td>';
-                                html += getTdByNativeId(item,'col2',0);
-                                html += getTdByNativeId(item,'col3',1);
-                                html += getTdByNativeId(item,'col4',2);
-                            '</tr>';
+                    html += '<td rowspan="'+groupedData[year].length+'" class="col1" align="center">'+year+' <br> 年度</td>';
+                    html += getTdByNativeId(groupedData[year],'col2',0);
+                    html += getTdByNativeId(groupedData[year],'col3',1);
+                    html += getTdByNativeId(groupedData[year],'col4',2);
                 }else{
-                    html += '<tr>';
-                    html += getTdByNativeId(item,'col2',0);
-                    html += getTdByNativeId(item,'col3',1);
-                    html += getTdByNativeId(item,'col4',2);
-                    html += '</tr>';
+                    html += getTdByNativeId(groupedData[year],'col2',0);
+                    html += getTdByNativeId(groupedData[year],'col3',1);
+                    html += getTdByNativeId(groupedData[year],'col4',2);
                 }
+                html += '</tr>';
             });
         }
         $('.scoring_board_content .table-show-credit table').append(html);
+        clearnupTable();
     }
-    function getTdByNativeId(item,className,value){
-        if(item.type_native_id === value){
-            return '<td class="'+className+'">'+item.title+'<br>[内容]<br>'+item.answer+'</td>';
+    function getTdByNativeId(items,className,value){
+        var htmlItem = items.findIndex((item) => item.type_native_id === value && !item.hasOwnProperty('map'));
+        if(htmlItem >= 0){
+            items[htmlItem]['map'] = true;
+            return '<td class="'+className+'">'+items[htmlItem].title+'<br>[内容]<br>'+items[htmlItem].answer+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }
+    }
+    function clearnupTable(){
+        $('.table-show-credit table tr:gt(0)').each(function(i,e){
+            var td = $(e).find('td');
+            let found = 0;
+            $(td).each(function(i1,e1){
+                if($(e1).text() !== ''){
+                    found++;
+                }
+            });
+            if(found === 0){
+                $(e).remove();
+            }
+        })
     }
 </script>
 @endpush
