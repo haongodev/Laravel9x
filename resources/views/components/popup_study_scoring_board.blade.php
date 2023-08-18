@@ -422,7 +422,7 @@
             groupedData[year].forEach((item,index) => {
                 html += '<tr>';
                 if(index === 0){
-                    html += '<td rowspan="'+groupedData[year].length+'" class="col1" align="center">'+year+' <br> 年度</td>';
+                    html += '<td rowspan="'+lengHighest(groupedData[year])+'" class="col1" align="center">'+year+' <br> 年度</td>';
                     html += getTdByNativeId(groupedData[year],'col2',0);
                     html += getTdByNativeId(groupedData[year],'col3',1);
                     html += getTdByNativeId(groupedData[year],'col4',2);
@@ -460,5 +460,45 @@
             }
         })
     }
+    function lengHighest(data){
+        var firstLength = 0;
+        const countMap = {};
+
+        // Đếm số lượng đối tượng cho từng type_native_id
+        for (const item of data) {
+            if (countMap[item.type_native_id]) {
+                countMap[item.type_native_id]++;
+            } else {
+                countMap[item.type_native_id] = 1;
+            }
+        }
+        // Tìm ra type_native_id có số lượng đối tượng lớn nhất
+        let maxCount = 0;
+        let maxCountType = null;
+        for (const type in countMap) {
+            if (countMap[type] > maxCount) {
+                maxCount = countMap[type];
+                maxCountType = type;
+            }
+        }
+        return maxCount;
+    }
+    function destroyAllChart(){
+        chartList.forEach(element => {
+            element.destroy()
+        });
+        chartStackList.forEach(element => {
+            element.destroy()
+        });
+        radarChart.destroy();
+    }
+    $('.close-icon').click(function (e){
+        destroyAllChart();
+    })
+    $('.popup-wrapper').click(function (e){
+        if(e.target.className.includes('popup-wrapper')){
+            destroyAllChart();
+        }
+    })
 </script>
 @endpush
