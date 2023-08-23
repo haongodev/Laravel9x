@@ -7,6 +7,7 @@ use App\Services\GuidanceSettingService;
 use App\Services\SakurasetService;
 use App\Services\UserAddInfoService;
 use App\Services\FacesheetManageService;
+use App\Services\ReflectionsheetManageService;
 use App\Repositories\FacesheetManageRepository;
 use App\Repositories\InitiativetableManageRepository;
 use App\Repositories\ReflectionsheetManageRepository;
@@ -43,16 +44,25 @@ class SakuraSetController extends Controller
      */
     protected $reflectionsheetManageRepository;
 
-
+    /**
+     * @var FacesheetManageService
+     */
     protected $facesheetManageService;
 
     /**
-     * SakuraSet constructor.
+     * @var ReflectionsheetManageService
+     */
+    protected $reflectionsheetManageService;
+
+    /**
+     * SakuraSetController constructor.
      * @param GuidanceSettingService $guidanceSettingService
      * @param SakurasetService $sakurasetService
      * @param UserAddInfoService $userAddInfoService
+     * @param FacesheetManageRepository $facesheetManageRepository
+     * @param InitiativetableManageRepository $initiativetableManageRepository
+     * @param ReflectionsheetManageRepository $reflectionsheetManageRepository
      * @param FacesheetManageService $facesheetManageService
-     * @param InitiativetableManageService $initiativetableManageService
      * @param ReflectionsheetManageService $reflectionsheetManageService
      */
     public function __construct(
@@ -62,7 +72,8 @@ class SakuraSetController extends Controller
         FacesheetManageRepository $facesheetManageRepository,
         InitiativetableManageRepository $initiativetableManageRepository,
         ReflectionsheetManageRepository $reflectionsheetManageRepository,
-        FacesheetManageService $facesheetManageService
+        FacesheetManageService $facesheetManageService,
+        ReflectionsheetManageService $reflectionsheetManageService
     ){
         $this->guidanceSettingService = $guidanceSettingService;
         $this->sakurasetService = $sakurasetService;
@@ -71,6 +82,7 @@ class SakuraSetController extends Controller
         $this->initiativetableManageRepository = $initiativetableManageRepository;
         $this->reflectionsheetManageRepository = $reflectionsheetManageRepository;
         $this->facesheetManageService = $facesheetManageService;
+        $this->reflectionsheetManageService = $reflectionsheetManageService;
     }
     public function index()
     {
@@ -147,8 +159,11 @@ class SakuraSetController extends Controller
     }
     public function yourTry(){
         $faceSheetManagerData = $this->facesheetManageService->getByUserId(auth()->user()->id);
+        $reflectionSheetManagerData = $this->reflectionsheetManageService->getByUserId(auth()->user()->id);
+
         return view('myPage/sakuraSet/yourTry',[
-            'faceSheetManagerData' => $faceSheetManagerData
+            'faceSheetManagerData' => $faceSheetManagerData,
+            'reflectionSheetManagerData' => $reflectionSheetManagerData,
         ]);
     }
     public function getSheet(Request $request){
@@ -241,15 +256,28 @@ class SakuraSetController extends Controller
 
     public function upload(Request $request)
     {
-        $faceSheetId = $this->facesheetManageService->upload($request);
+        if($request->get('type') == 'reflectionsheet'){
+            $reflectionSheetId = $this->reflectionsheetManageService->upload($request);
+        }else{
+            $faceSheetId = $this->facesheetManageService->upload($request);
+        }
+
         $data= [
           'success'=>false,
           'html' => ''
         ];
-        if($faceSheetId){
+
+        if(!empty($faceSheetId)){
             $faceSheetManager = $this->facesheetManageService->getById($faceSheetId);
             $returnHTML = view('components/sub_popup_A013/data_upload',[
                'faceSheetManager'=>$faceSheetManager
+            ])->render();
+            $data['success'] = true;
+            $data['html'] = $returnHTML;
+        }elseif(!empty($reflectionSheetId)){
+            $reflectionSheetManager = $this->reflectionsheetManageService->getById($reflectionSheetId);
+            $returnHTML = view('components/sub_popup_A014/data_upload',[
+                'reflectionSheetManager'=>$reflectionSheetManager
             ])->render();
             $data['success'] = true;
             $data['html'] = $returnHTML;
@@ -280,11 +308,45 @@ class SakuraSetController extends Controller
         return response()->json($data);
     }
 
+    public function updateShareReflectionSheet(Request $request)
+    {
+        try {
+            $id = $request->get('id');
+            $shareFlg = $request->get('share_flg');
+            $memberId = auth()->user()->id;
+            $dataUpdate = [
+                'share_flg' => $shareFlg
+            ];
+
+            //Update all share flag off when share = true
+            if($shareFlg){
+                $this->reflectionsheetManageService->updateByMemberId($memberId,['share_flg' => 0]);
+            }
+            $data['update'] = $this->reflectionsheetManageService->update($id, $dataUpdate);
+            $data['success'] = true;
+        } catch (Exception $e) {
+            $data['success'] = false;
+        }
+        return response()->json($data);
+    }
+
     public function removeShareFaceSheet(Request $request)
     {
         try{
             $id = $request->get('id');
             $data['remove'] = $this->facesheetManageService->destroy($id);
+            $data['success'] = true;
+        }catch (Exception $e) {
+            $data['success'] = false;
+        }
+        return response()->json($data);
+    }
+
+    public function sakuraRemoveReflectionSheet(Request $request)
+    {
+        try{
+            $id = $request->get('id');
+            $data['remove'] = $this->reflectionsheetManageService->destroy($id);
             $data['success'] = true;
         }catch (Exception $e) {
             $data['success'] = false;
