@@ -9,9 +9,23 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">作成・保存・共有する</button>
-                <button class="title-popup">作成する</button>
-                <button class="title-popup">保存・共有する（アップロード）</button>
+                <button class="title-popup open-A014-create">作成する</button>
+                <button class="title-popup open-A014-save-share">保存・共有する（アップロード）</button>
             </div>
         </div>
     </div>
 </div>
+@include('components.sub_popup_A014.popup_create')
+@include('components.sub_popup_A014.popup_save_share')
+@push('js')
+    <script>
+        $('.open-A014-create').click(function () {
+            $('.popup-A014-create').removeClass('hidden');
+            $('.popup-a014').addClass('hidden');
+        })
+        $('.open-A014-save-share').click(function () {
+            $('.popup-A014-save-share').removeClass('hidden');
+            $('.popup-a014').addClass('hidden');
+        })
+    </script>
+@endpush

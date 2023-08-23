@@ -3,25 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 /**
- * @property int      $id
- * @property int      $id
- * @property int      $class
- * @property int      $share_flg
- * @property int      $class
- * @property int      $share_flg
- * @property DateTime $delete_date
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property DateTime $delete_date
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property string   $file_name
- * @property string   $file_name
+ * Class ReflectionsheetManage
+ * @package App\Models
  */
 class ReflectionsheetManage extends Model
 {
+    use SoftDeletes;// add soft delete
+    const DELETED_AT = 'delete_date';
     /**
      * The database table used by the model.
      *
@@ -56,7 +46,7 @@ class ReflectionsheetManage extends Model
      * @var array
      */
     protected $fillable = [
-        'class', 'delete_date', 'file_name', 'registration_date', 'share_flg', 'update_date', 'class', 'delete_date', 'file_name', 'registration_date', 'share_flg', 'update_date', 'member_id', 'display_name'
+        'id','class','file_name','share_flg','delete_date','update_date','registration_date','member_id','display_name',
     ];
 
     /**
@@ -65,7 +55,7 @@ class ReflectionsheetManage extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**
@@ -83,7 +73,7 @@ class ReflectionsheetManage extends Model
      * @var array
      */
     protected $dates = [
-        'delete_date', 'registration_date', 'update_date', 'delete_date', 'registration_date', 'update_date'
+        'delete_date', 'registration_date', 'update_date',
     ];
 
     /**

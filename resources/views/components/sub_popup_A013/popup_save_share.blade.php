@@ -3,9 +3,7 @@
  * Popup 15 of A013
  * */
 ?>
-<style>
 
-</style>
 <div class="popup-wrapper hidden a012-popup-child popup-A013-save-share">
     <div class="layout-popup">
         <div class="popup-header">
@@ -16,23 +14,23 @@
         </div>
         <div class="popup-content">
             <div class="header-content not-remove">
-                <button class="title-popup upload">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
+                <button class="title-popup upload" data-popup="A013">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 <input type="file" class="hidden" name="a013_upload" id="a013_upload">
-                <table class="table-manager" style="width: 500px">
+                <table class="table-manager w-500px">
                     @foreach($faceSheetManagerData as $faceSheetManager)
                         <tr class="facesheet-id-{{$faceSheetManager->id}}">
-                            <td style="width: 100px">
+                            <td class="w-100px">
                                 <div class="share-facesheet manager {{$faceSheetManager->share_flg ? 'share' : ''}}"
                                         data-current-share="{{$faceSheetManager->share_flg}}"
                                         data-id="{{$faceSheetManager->id}}"
                                         data-display-name="{{$faceSheetManager->display_name}}"
-                                     style=""
+
                                 >共有</div>
                             </td>
                             <td>
                                 <div class="manager"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->id.'/facesheet/'.$faceSheetManager->file_name}}">{{$faceSheetManager->display_name}}</a></div>
                             </td>
-                            <td style="width: 100px">
+                            <td class="w-100px">
                                     <div class="remove" data-id="{{$faceSheetManager->id}}"
                                          data-display-name="{{$faceSheetManager->display_name}}"
                                     >
@@ -57,13 +55,18 @@
             $('.popup-A013-save-share').addClass('hidden');
         })
         $('.upload').click(function () {
-            $('#a013_upload').trigger('click');
+            var data_popup = $(this).attr('data-popup');
+            if(data_popup=='A013'){
+                $('#a013_upload').trigger('click');
+            }
+
         })
         $('#a013_upload').on('change', function () {
             var url = '{{ route("sakuraUpload") }}';
             var files = $(this)[0].files;
             var fd = new FormData();
             fd.append('file', files[0]);
+            fd.append('type', 'facesheet');
             $.ajax({
                 url,
                 data:fd,
@@ -75,6 +78,7 @@
                 success: function(response) {
                     if(response.success){
                         $('.table-manager').append(response.html)
+                        $('#a013_upload').val('');
                     }
                 },
                 error: function(xhr) {

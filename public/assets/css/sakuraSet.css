@@ -217,7 +217,7 @@
     color: #fff;
 }
 
-.table-manager .share-facesheet.share{
+.table-manager .share{
     background-color: #3399FF;
 }
 
@@ -228,4 +228,25 @@
 .table-manager .download{
     text-decoration: none;
     color: #fff;
+}
+
+.btn-primary{
+    background: #3399FF!important;
+}
+
+.btn-success{
+    background: #28a745 !important;
+}
+
+
+.w-100px{
+    width: 100px;
+}
+
+.w-500px{
+    width: 500px;
+}
+
+.popup-wrapper .layout-popup .popup-content .header-content button.btn-list {
+    margin: 15px 0px 10px 0px;
 }
