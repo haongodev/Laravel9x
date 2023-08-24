@@ -99,11 +99,12 @@ class CreditRegistrationController extends Controller
         return view('myPage/creditRegistration/index', ['guidanceData' => $guidanceData]);
     }
 
-    public function typeSelected()
+    public function typeSelected(Request $request)
     {
+        $typeNativeId = $request->get('type_native_id',0);
         $guidanceData = $this->guidanceSettingService->getByScreenId('A002');
-        $registrationYearData = $this->answerManageService->getRegistrationYearByTypeNativeId(0);
-        $titleData = $this->answerInfoService->getTitleByTypeNativeId(0);
+        $registrationYearData = $this->answerManageService->getRegistrationYearByTypeNativeId($typeNativeId);
+        $titleData = $this->answerInfoService->getTitleByTypeNativeId($typeNativeId);
         return view('myPage/creditRegistration/typeSelected', [
             'guidanceData' => $guidanceData,
             'registrationYearData' => $registrationYearData,
@@ -220,6 +221,8 @@ class CreditRegistrationController extends Controller
             // Set session question + answer from form
             Session::put('popup_confirm', $request->except(['_token', 'confirm']));
             Session::put('show_popup_confirm', true);
+            $answerManageId = $request->get('answer_manage_id');
+            $originalQuestionId = $request->get('original_question_id');
             $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
             $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
             $questionSettingRegistryData = $this->historyQuestionSettingService->getByIds($questionSettingIds);
@@ -228,7 +231,7 @@ class CreditRegistrationController extends Controller
             Session::put('question_confirm', $questionSettingRegistryData);
             //Get data question option setting from form
             Session::put('question_option_confirm', $questionOptionSettingRegistryData);
-            return redirect()->route('creditEdit',['answer_manage_id'=>1,'original_question_id'=>1]);
+            return redirect()->route('creditEdit',['answer_manage_id'=>$answerManageId,'original_question_id'=>$originalQuestionId]);
         } else {
             if (Session::get('popup_confirm')) {
                 /* handle with database here */
