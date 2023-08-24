@@ -94,7 +94,9 @@ class AnswerInfoRepository
             })
             ->when(!empty($title), function ($query) use ($title) {
                 return $query->where('title', $title);
-            });
+            })
+            ->orderBy(DB::raw("STR_TO_DATE(`answer2`,'%Y-%m-%d')"),'DESC')
+        ;
 
         return $answerInfo1->get();
     }
