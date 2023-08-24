@@ -107,7 +107,6 @@
             groupedDataChart[val].sort(function(a, b) {
                 return a.type_native_id - b.type_native_id;
             });
-            console.log(groupedDataChart[val]);
 
 
             $('.table-graph').append('<div>'+

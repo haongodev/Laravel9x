@@ -3,6 +3,7 @@
 use App\Models\AnswerInfo;
 use App\Models\UsersAddInfo;
 use App\Models\SakurasetManage;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 if (!function_exists('answerInfoPattern')) {
@@ -33,12 +34,12 @@ if (!function_exists('answerInfoPattern')) {
 if (!function_exists('getCertificationYear')) {
     function getCertificationYear()
     {
-        $memberId = auth()->user()->id;
-        $certificationYearData = UsersAddInfo::where('member_id', $memberId)->pluck('certification_year')->first();
-        $getCertificationYear = date('m', strtotime($certificationYearData)) > 3
-            ? date('Y', strtotime($certificationYearData)) + 4
-            : date('Y', strtotime($certificationYearData)) + 3;
-        return $getCertificationYear;
+        $cer_year = auth()->user()->user_add_info->certification_year;
+        $certificationYearData = Carbon::now()->format('Y');
+        if($cer_year && auth()->user()->user_add_info->membership_type === '認定保健福祉士'){
+            $certificationYearData = (int) $cer_year + 3;
+        }
+        return $certificationYearData;
     }
 
 }
