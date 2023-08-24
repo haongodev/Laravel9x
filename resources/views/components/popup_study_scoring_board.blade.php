@@ -82,7 +82,6 @@
         var chartData = value_study_scoring_board.scoreBwYear;
         var radarData = value_study_scoring_board.scoreBwYearGoalStudy;
 
-        
         const groupedDataChart = {};
         chartData.forEach(item => {
             const registrationYear = item.registration_year;
@@ -96,6 +95,21 @@
         $('#rardar_chart').css('width',widthChart+'px');
         $('.table-graph').html('');
         year.forEach(function(val,index){
+            // xử lý với trường hợp data sv trả về vói type_native_id [0,2] vì 1 không có data
+            const existingIds = groupedDataChart[val].map(item => item.type_native_id);
+            const defaultIds = [0, 1, 2].filter(id => !existingIds.includes(id)).map(id => ({
+                type_native_id: id,
+                total_score: "0",
+                registration_year: year
+            }));
+            groupedDataChart[val] = groupedDataChart[val].concat(defaultIds);
+            /// sắp xếp lại
+            groupedDataChart[val].sort(function(a, b) {
+                return a.type_native_id - b.type_native_id;
+            });
+            console.log(groupedDataChart[val]);
+
+
             $('.table-graph').append('<div>'+
                     '<canvas id="column_chart_'+val+'_stack" width="1211" height="100"></canvas>'+
                 '</div>'+
@@ -117,8 +131,8 @@
                     data: dataInitCore1,
                     fill: false,
                     backgroundColor: [
+                        '#FF8000',
                         '#006AC7',
-                        '#FFBA00',
                         '#009A51',
                     ],
                     font: {
@@ -243,8 +257,8 @@
     function initRardarChart(data){
         const dataSets = [];
         const dataGroup = {};
-        const titleList = data.map(item => item.title);
-        const colorList = ['#B3FF66','#66FFFF','#9999FF','#FF99FF','#FFB366',]
+        // const titleList = data.map(item => item.title);
+        const colorList = ['#b3ff6673','#66ffff80','#9999ff7a','#ff99ff82','#ffb36680']
         data.forEach(item => {
             const registrationYear = item.registration_year;
             if (!dataGroup[registrationYear]) {
@@ -276,22 +290,21 @@
         });
         var marksCanvas = document.getElementById("rardar_chart");
         var marksData = {
-            labels: titleList,
-            //        [
-            //     "健康状態の自己管理",
-            //     "仕事と家庭のバランス",
-            //     "基本施設やマナー",
-            //     "組織人としての役割遂行",
-            //     ["専門的支援関係形成力","（個人、小集団、地域等）"],
-            //     "アセスメント力",
-            //     "支援・介入・調整力",
-            //     "連携・協働・チーム形成力",
-            //     "ソーシャルワーカーを育てる力",
-            //     "専門性を養うために学び続ける力",
-            //     ["コミュニティへのアプローチ・","ソーシャルアクションの力"],
-            //     "研究、実践成果を示す力",
-            //     ["ソーシャルワーカーアイデンティティ・","モチベーションを維持する力"],
-            // ],
+            labels: [
+                "健康状態の自己管理",
+                "仕事と家庭のバランス",
+                "基本施設やマナー",
+                "組織人としての役割遂行",
+                ["専門的支援関係形成力","（個人、小集団、地域等）"],
+                "アセスメント力",
+                "支援・介入・調整力",
+                "連携・協働・チーム形成力",
+                "ソーシャルワーカーを育てる力",
+                "専門性を養うために学び続ける力",
+                ["コミュニティへのアプローチ・","ソーシャルアクションの力"],
+                "研究、実践成果を示す力",
+                ["ソーシャルワーカーアイデンティティ・","モチベーションを維持する力"],
+            ],
             datasets:dataSets
         };
         radarChart = new Chart(marksCanvas, {
@@ -441,7 +454,7 @@
         var htmlItem = items.findIndex((item) => item.type_native_id === value && !item.hasOwnProperty('map'));
         if(htmlItem >= 0){
             items[htmlItem]['map'] = true;
-            return '<td class="'+className+'">'+items[htmlItem].title+'<br>[内容]<br>'+items[htmlItem].answer+'</td>';
+            return '<td class="'+className+'">'+(items[htmlItem].effective_date_flg !== null ? items[htmlItem].effective_date_flg : '')+'<br>[内容]<br>'+items[htmlItem].answer+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }

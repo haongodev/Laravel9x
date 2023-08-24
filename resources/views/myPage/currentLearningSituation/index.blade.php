@@ -35,7 +35,7 @@
             <canvas id="myChart1" style="width: 100%;"></canvas>
         </div>
 
-        @if(auth()->user()->membership_type == '認定保健福祉士')
+        @if(auth()->user()->user_add_info->membership_type == '認定保健福祉士')
             <div class="head-chart flex-between">
                 <div class="side-left">
                     <span>{{getCertificationYear()}}年度 認定期限までの研鑽状況</span>
@@ -60,8 +60,8 @@
             <div class="head-chart flex-between">
 
             </div>
-            <div class="row" style="height: 500px; width:100%;margin: 0 auto;display: flex;align-items: center;position: relative;">
-                <canvas id="myChart3"></canvas>
+            <div class="row" style="margin: 0 auto;display: flex;align-items: center;position: relative;">
+                <canvas id="myChart3" width="1211" height="300"></canvas>
                 <div class="flags" style="justify-content: center;">
                     <h2>現在 <span style="color:#FF0000" class="total-score">300</span>単位</h2>
                     <div class="flags-goal">
@@ -95,10 +95,27 @@
         var textInfoScore3 = [];
         var maxScales2 = 0;
         var dataInitCore2 = [];
-        /// sort init score
+
+        // xử lý với trường hợp data sv trả về vói type_native_id [0,2] vì 1 không có data
+        const existingIds1 = initCoreChart1Data.map(item => item.type_native_id);
+        const defaultIds1 = [0, 1, 2].filter(id => !existingIds1.includes(id)).map(id => ({
+            type_native_id: id,
+            total_score: "0"
+        }));
+        initCoreChart1Data = initCoreChart1Data.concat(defaultIds1);
+        /// sắp xếp lại
         initCoreChart1Data.sort(function(a, b) {
             return a.type_native_id - b.type_native_id;
         });
+
+        // xử lý với trường hợp data sv trả về vói type_native_id [0,2] vì 1 không có data
+        const existingIds2 = initCoreChart2Data.map(item => item.type_native_id);
+        const defaultIds2 = [0, 1, 2].filter(id => !existingIds2.includes(id)).map(id => ({
+            type_native_id: id,
+            total_score: "0"
+        }));
+        initCoreChart2Data = initCoreChart2Data.concat(defaultIds2);
+        /// sắp xếp lại
         initCoreChart2Data.sort(function(a, b) {
             return a.type_native_id - b.type_native_id;
         });
@@ -119,7 +136,7 @@
         const ctx1 = document.getElementById('myChart1');
         const ctx2 = document.getElementById('myChart2');
         const ctx3 = document.getElementById('myChart3');
-        const labels = ['SV','研修・学会等','社会的活動'];
+        const labels = ['スーパービジョン','研修・学会等','社会的活動'];
         const labels3 = ['合計'];
         const data1 = {
             labels: labels,
@@ -128,8 +145,8 @@
                 data: dataInitCore1,
                 fill: false,
                 backgroundColor: [
+                    '#FF8000',
                     '#006AC7',
-                    '#FFBA00',
                     '#009A51',
                 ],
                 font: {
@@ -147,8 +164,8 @@
                 data: dataInitCore2,
                 fill: false,
                 backgroundColor: [
+                    '#FF8000',
                     '#006AC7',
-                    '#FFBA00',
                     '#009A51',
                 ],
                 font: {
@@ -164,9 +181,9 @@
             datasets: [
                 {
                     axis: 'y',
-                    label: 'SV',
+                    label: 'スーパービジョン',
                     data: [dataInitCore2[0]],
-                    backgroundColor: '#006AC7',
+                    backgroundColor: '#FF8000',
                     stack: 'Stack 0',
                     font: {
                         weight: 'bold',
@@ -181,7 +198,7 @@
                     axis: 'y',
                     label: '研修・学会等',
                     data: [dataInitCore2[1]],
-                    backgroundColor: '#FFBA00',
+                    backgroundColor: '#006AC7',
                     stack: 'Stack 0',
                     font: {
                         weight: 'bold',
@@ -224,7 +241,7 @@
                             crossAlign: "far",
                         },
                         afterFit: function(scaleInstance) {
-                            scaleInstance.width = 120; // sets the width to 100px
+                            scaleInstance.width = 150; // sets the width to 100px
                         },
                     },
                     x: {
@@ -264,7 +281,7 @@
                                 crossAlign: "far",
                             },
                             afterFit: function (scaleInstance) {
-                                scaleInstance.width = 120; // sets the width to 100px
+                                scaleInstance.width = 150; // sets the width to 100px
                             }
                         },
                         x: {
@@ -304,7 +321,7 @@
                             crossAlign: "far",
                         },
                         afterFit: function(scaleInstance) {
-                            scaleInstance.width = 120; // sets the width to 100px
+                            scaleInstance.width = 150; // sets the width to 100px
                         },
                         stacked: true
                     },
@@ -329,7 +346,6 @@
                     }
                 },
                 indexAxis: 'y',
-                responsive: true
             },
             plugins: [ChartDataLabels]
         });

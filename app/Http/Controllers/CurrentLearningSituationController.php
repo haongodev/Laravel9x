@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class CurrentLearningSituationController extends Controller
 {
-    
+
     /**
      * @var GuidanceSettingService
      */
@@ -45,7 +45,6 @@ class CurrentLearningSituationController extends Controller
     {
         $registrationYearData = $this->answerManageService->getRegistrationYearByTypeNativeId([0,1,2]);
         $year_list = $registrationYearData->toArray();
-        
         $year_now = intval(date("Y"));
         if(!in_array($year_now,$year_list)){
             array_push($year_list,$year_now);
@@ -56,7 +55,7 @@ class CurrentLearningSituationController extends Controller
         $sumCoreByInitYearRange = $this->answerManageService->getSumCoreByTypeNativeId($year_range);
         return view('myPage/currentLearningSituation/index',[
                                                                 'year_list' => array_reverse($year_list),
-                                                                'guidance' => $guidanceData, 
+                                                                'guidance' => $guidanceData,
                                                                 'sumCoreByInitYear' => $sumCoreByInitYear,
                                                                 'sumCoreByInitYearRange' => $sumCoreByInitYearRange,
                                                             ]);

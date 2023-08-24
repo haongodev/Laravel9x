@@ -67,6 +67,7 @@ body{
 .wrapper-container .left-side{
     width: 25%;
     margin-right: 15px;
+    min-width: 310px;
 }
 .wrapper-container .main-content > .container{
     margin-top: 50px;
@@ -269,11 +270,11 @@ body{
     justify-content: space-around;
 }
 .color_score0{
-    color: #FF8000;
+    color: #006AC7;
     font-weight: bolder;
 }
 .color_score1{
-    color: #006AC7;
+    color: #FFBA00;
     font-weight: bolder;
 }
 .color_score2{
