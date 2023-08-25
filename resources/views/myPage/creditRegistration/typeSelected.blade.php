@@ -42,10 +42,10 @@
                         </select>
                     </div>
                     <div class="w-50 group-control">
-                        <label for="title">項目</label>
-                        <select id="title" name="title" style="width:75%;">
+                        <label for="answer">項目</label>
+                        <select id="answer" name="answer" style="width:75%;">
                             <option value="0">（項目）</option>
-                            @foreach($titleData as $value)
+                            @foreach($answerData as $value)
                                 <option value="{{$value}}">{{$value}}</option>
                             @endforeach
                         </select>

@@ -104,11 +104,12 @@ class CreditRegistrationController extends Controller
         $typeNativeId = $request->get('type_native_id',0);
         $guidanceData = $this->guidanceSettingService->getByScreenId('A002');
         $registrationYearData = $this->answerManageService->getRegistrationYearByTypeNativeId($typeNativeId);
-        $titleData = $this->answerInfoService->getTitleByTypeNativeId($typeNativeId);
+        $answerData = $this->answerInfoService->getAnswerByTypeNativeId($typeNativeId);
+
         return view('myPage/creditRegistration/typeSelected', [
             'guidanceData' => $guidanceData,
             'registrationYearData' => $registrationYearData,
-            'titleData' => $titleData
+            'answerData' => $answerData,
         ]);
     }
 
