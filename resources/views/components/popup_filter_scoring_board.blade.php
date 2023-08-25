@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept" style="background: #007FFF;">スコアシートを表示</button>
+            <button type="button" class="btn-popup-accept btn-eff-ora btn-hov">スコアシートを表示</button>
         </div>
     </div>
 </div>

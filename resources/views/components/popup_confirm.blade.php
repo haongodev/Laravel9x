@@ -27,7 +27,7 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
             <input type="hidden" name="file_name" value="{{$fileName}}">
             <div class="header-content">
                 <span>{{$patternName}}</span>
-                <button class="btn-export-pdf">PDF</button>
+                <button class="btn-export-pdf btn-eff-ora btn-hov">PDF</button>
             </div>
             <div class="content scroll">
                 <table>
@@ -66,8 +66,8 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
             </div>
         </div>
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept" register="true">単位登録を実行する</button>
-            <button type="button" class="btn-popup-decline">戻って修正する</button>
+            <button type="button" class="btn-popup-accept btn-eff-pri btn-hov" register="true">単位登録を実行する</button>
+            <button type="button" class="btn-popup-decline btn-eff-ora btn-hov">戻って修正する</button>
         </div>
     </div>
 </div>

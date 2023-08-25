@@ -9,9 +9,9 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">作成・保存・共有する</button>
-                <button class="title-popup">ダウンロードする</button>
-                <button class="title-popup">保存・共有する</button>
-                <button class="title-popup">次回の振り返り予定日を選択する</button>
+                <button class="title-popup btn-eff-ora btn-hov">ダウンロードする</button>
+                <button class="title-popup btn-eff-ora btn-hov">保存・共有する</button>
+                <button class="title-popup btn-eff-ora btn-hov">次回の振り返り予定日を選択する</button>
             </div>
         </div>
     </div>

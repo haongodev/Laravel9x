@@ -9,8 +9,8 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">作成・保存・共有する</button>
-                <button class="title-popup open-A013-create">作成する</button>
-                <button class="title-popup open-A013-save-share">保存・共有する（アップロード）</button>
+                <button class="title-popup open-A013-create btn-eff-ora btn-hov">作成する</button>
+                <button class="title-popup open-A013-save-share btn-eff-ora btn-hov">保存・共有する（アップロード）</button>
             </div>
         </div>
     </div>

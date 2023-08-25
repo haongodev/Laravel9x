@@ -11,7 +11,7 @@
             <div class="btn-title">
                 <button type="button">2023年 7月 ～ 2028年 1月　研鑽スコアリングボード</button>
             </div>
-            <button type="button" class="btn-export-pdf">PDF</button>
+            <button type="button" class="btn-export-pdf btn-eff-ora btn-hov">PDF</button>
             <div class="hidden btn-title-chart1">
                 <button type="button">登録単位</button>
             </div>

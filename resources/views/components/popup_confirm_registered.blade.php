@@ -27,7 +27,7 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
             <input type="hidden" name="file_name" value="{{$fileName}}">
             <div class="header-content">
                 <span>{{$patternName}}</span>
-                <button class="btn-export-pdf">PDF</button>
+                <button class="btn-export-pdf btn-eff-ora btn-hov">PDF</button>
             </div>
             <div class="content">
                 <table>
@@ -60,7 +60,7 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
             </div>
         </div>
         <div class="popup-footer">
-            <button type="button" class="btn-next" register="true"
+            <button type="button" class="btn-next btn-eff-ora btn-hov" register="true"
                     onclick="window.location='{{Route('creditEdit',['answer_manage_id'=>$answerManageId, 'original_question_id' => $originalQuestionId])}}'">
                 修正する</button>
         </div>
