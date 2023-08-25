@@ -53,6 +53,7 @@ class AnswerInfoRepository
     {
         $registrationYear = $data['registration_year'] ?? '';
         $title = $data['title'] ?? '';
+        $answer = $data['answer'] ?? '';
         $typeNativeId = $data['type_native_id'] ?? 0;
         $memberId = auth()->user()->id;
 
@@ -95,6 +96,9 @@ class AnswerInfoRepository
             ->when(!empty($title), function ($query) use ($title) {
                 return $query->where('title', $title);
             })
+            ->when(!empty($answer), function ($query) use ($answer) {
+                return $query->where('answer_info.answer', $answer);
+            })
             ->orderBy(DB::raw("STR_TO_DATE(`answer2`,'%Y-%m-%d')"),'DESC')
         ;
 
@@ -114,5 +118,20 @@ class AnswerInfoRepository
     public function deleteAnswerManagerById($answerManageId)
     {
         return $this->model->where('answer_manage_id',$answerManageId)->delete();
+    }
+
+    public function getAnswerByTypeNativeId($typeNativeId = 0)
+    {
+        $memberId = auth()->user()->id;
+        return $this->model
+            ->join('answer_manage', function ($q) {
+                $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+            })
+            ->where('member_id', $memberId)
+            ->where('answer_info.type_native_id', $typeNativeId)
+            ->where('level', 1)
+            ->where('registration_year', date('Y'))
+            ->groupBy('answer')
+            ->pluck('answer');
     }
 }

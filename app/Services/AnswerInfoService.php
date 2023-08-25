@@ -31,6 +31,11 @@ class AnswerInfoService
         return $this->answerInfoRepository->getTitleByTypeNativeId($typeNativeId);
     }
 
+    public function getAnswerByTypeNativeId($typeNativeId = 0)
+    {
+        return $this->answerInfoRepository->getAnswerByTypeNativeId($typeNativeId);
+    }
+
     public function searchCredits(array $data = [])
     {
         return $this->answerInfoRepository->searchCredits($data);
