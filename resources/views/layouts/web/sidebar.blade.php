@@ -8,7 +8,7 @@
                 </div>
                 <form action="/logout" method="post">
                     @csrf
-                    <button class="close-btn">閉じる</button>
+                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>
                 </form>
                 <button class="registed-btn">現在の単位登録数</button>
                 @php

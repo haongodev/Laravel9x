@@ -20,13 +20,13 @@
                 <input type="hidden" name="type_native_id" value="{{request('type_native_id')}}">
                 <div class="vertical-button">
                     <div class="redirect">
-                        <button type="button" class="redirect-btn"
+                        <button type="button" class="redirect-btn btn-eff-ora btn-hov"
                                 onclick="window.location.href='{{route('creditRegistry',['type_native_id'=>request('type_native_id')])}}'">
                             単位登録する
                         </button>
                     </div>
                     <div class="credited">
-                        <button type="button" class="credited-btn">
+                        <button type="button" class="credited-btn btn-eff-gre btn-hov">
                             単位登録済み
                         </button>
                     </div>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div class="action">
-                    <button type="button" class="action-btn">確認</button>
+                    <button type="button" class="action-btn btn-eff-ora btn-hov">確認</button>
                 </div>
                 <div class="area-input">
                     {{--                    <textarea id="w3review" name="w3review" rows="10">--}}
