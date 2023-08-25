@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="title-sign">
-                    <span class="member_num">構成員番号：{{auth()->user()->user_add_info->member_id ?? auth()->user()->id}}</span>
+                    <span class="member_num">構成員番号：{{auth()->user()->user_add_info->login_id ?? auth()->user()->id}}</span>
                     <span class="welcom">ようこそ、{{auth()->user()->name}}さん</span>
                 </div>
                 <form action="/logout" method="post">
