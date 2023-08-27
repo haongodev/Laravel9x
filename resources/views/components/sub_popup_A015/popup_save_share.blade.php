@@ -8,25 +8,12 @@
         </div>
         <div class="popup-content">
             <div class="header-content not-remove">
-                <button class="title-popup">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
+                <button class="title-popup">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" class="upload" data-popup="A015" alt=""></button>
+                <input type="file" class="hidden" name="a013_upload" id="a015_upload">
                 <div class="a015-initive-list">
-                    <div>
-                        <button class="title-popup btn-success btn-list upload" data-popup="A015" data-click="2">共有</button>
-                        <button class="title-popup btn-success btn-list upload" data-popup="A015" data-click="2">2028年 5月 1日</button>
-                        <img src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">
-                    </div>
-                        
-                    <div>
-                        <button class="title-popup btn-success btn-list upload" data-popup="A015" data-click="2">共有</button>
-                        <button class="title-popup btn-success btn-list upload" data-popup="A015" data-click="2">2028年 5月 1日</button>
-                        <img src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">
-                    </div>
-
-                    <div>
-                        <button class="title-popup btn-success btn-list upload" data-popup="A015" data-click="2">共有</button>
-                        <button class="title-popup btn-success btn-list upload" data-popup="A015" data-click="2">2028年 5月 1日</button>
-                        <img src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">
-                    </div>
+                    @foreach($initiativetableManagerData as $initiativetableData)
+                        @include('components.sub_popup_A015.data_upload',['initiativetableManager' => $initiativetableData])
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -43,24 +30,19 @@
             $('.popup-A015-save-share').addClass('hidden');
         })
         $('.upload').click(function () {
-            var data_click = $(this).attr('data-click');
             var data_popup = $(this).attr('data-popup');
             if (data_popup == 'A015') {
-                $('#A015_upload').attr('upload-class', data_click)
-                $('#A015_upload').trigger('click');
-
+                $('#a015_upload').trigger('click');
             }
 
         })
-        $('#A015_upload').on('change', function () {
+        $('#a015_upload').on('change', function () {
             var url = '{{ route("sakuraUpload") }}';
             var files = $(this)[0].files;
             var fd = new FormData();
-            var upload_class = $(this).attr('upload-class');
 
             fd.append('file', files[0]);
-            fd.append('class', upload_class);
-            fd.append('type', 'reflectionsheet');
+            fd.append('type', 'initiative');
             $.ajax({
                 url,
                 data: fd,
@@ -71,7 +53,7 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
-                        $('.table-manager-class-'+upload_class).append(response.html)
+                        $('.a015-initive-list').append(response.html);
                     }
                 },
                 error: function (xhr) {

@@ -14,4 +14,16 @@ class InitiativetableManageRepository
     {
         $this->model = $model;
     }
+
+    public function insertGetId($data){
+        return $this->model->insertGetId($data);
+    }
+    public function getById($id = 0)
+    {
+        return $this->model->where('id',$id)->get()->first();
+    }
+    public function getByUserId($userId)
+    {
+        return $this->model->where('member_id',$userId)->get();
+    }
 }

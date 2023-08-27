@@ -1,0 +1,5 @@
+<div class="initiativetable-id-{{$initiativetableManager->id}}">
+    <button class="title-popup btn-list upload {{$initiativetableManager->share_flg ? 'share' : 'none-share'}}" data-current-share="{{$initiativetableManager->share_flg}}" data-id="{{$initiativetableManager->id}}" data-display-name="{{$initiativetableManager->display_name}}" data-popup="A015">共有</button>
+    <button class="title-popup btn-list upload" data-popup="A015"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->id.'/initiativetable/'.$initiativetableManager->file_name}}">{{$initiativetableManager->display_name}}</a></button>
+    @if(!$initiativetableManager->share_flg)<img src="{{ asset('assets') }}/images/icon/delete.png" class="remove" data-id="{{$initiativetableManager->id}}" data-display-name="{{$initiativetableManager->display_name}}" alt="close icon">@endif
+</div>
