@@ -59,6 +59,8 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/removeShareFaceSheet',[SakuraSetController::class, 'removeShareFaceSheet'])->name('sakuraRemoveShareFaceSheet');
         Route::post('/updateShareReflectionSheet',[SakuraSetController::class, 'updateShareReflectionSheet'])->name('updateShareReflectionSheet');
         Route::post('/sakuraRemoveReflectionSheet',[SakuraSetController::class, 'sakuraRemoveReflectionSheet'])->name('sakuraRemoveReflectionSheet');
+        // A015
+        Route::post('/sakuraUpdateScheduled',[SakuraSetController::class, 'updateScheduled'])->name('sakuraUpdateScheduled');
     });
 });
 

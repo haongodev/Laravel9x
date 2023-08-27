@@ -19,5 +19,4 @@ class InitiativetableManageService
     {
         $this->initiativetableManageRepository = $initiativetableManageRepository;
     }
-
 }

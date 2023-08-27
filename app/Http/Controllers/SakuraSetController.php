@@ -8,6 +8,7 @@ use App\Services\SakurasetService;
 use App\Services\UserAddInfoService;
 use App\Services\FacesheetManageService;
 use App\Services\ReflectionsheetManageService;
+use App\Services\InitiativetableManageService;
 use App\Repositories\FacesheetManageRepository;
 use App\Repositories\InitiativetableManageRepository;
 use App\Repositories\ReflectionsheetManageRepository;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendMail;
+use Carbon\Carbon;
 
 
 class SakuraSetController extends Controller
@@ -55,6 +57,11 @@ class SakuraSetController extends Controller
     protected $reflectionsheetManageService;
 
     /**
+     * @var InitiativetableManageService
+     */
+    protected $initiativetableManageService;
+
+    /**
      * SakuraSetController constructor.
      * @param GuidanceSettingService $guidanceSettingService
      * @param SakurasetService $sakurasetService
@@ -64,6 +71,7 @@ class SakuraSetController extends Controller
      * @param ReflectionsheetManageRepository $reflectionsheetManageRepository
      * @param FacesheetManageService $facesheetManageService
      * @param ReflectionsheetManageService $reflectionsheetManageService
+     * @param InitiativetableManageService $initiativetableManageService
      */
     public function __construct(
         GuidanceSettingService $guidanceSettingService,
@@ -73,7 +81,8 @@ class SakuraSetController extends Controller
         InitiativetableManageRepository $initiativetableManageRepository,
         ReflectionsheetManageRepository $reflectionsheetManageRepository,
         FacesheetManageService $facesheetManageService,
-        ReflectionsheetManageService $reflectionsheetManageService
+        ReflectionsheetManageService $reflectionsheetManageService,
+        InitiativetableManageService $initiativetableManageService
     ){
         $this->guidanceSettingService = $guidanceSettingService;
         $this->sakurasetService = $sakurasetService;
@@ -83,6 +92,7 @@ class SakuraSetController extends Controller
         $this->reflectionsheetManageRepository = $reflectionsheetManageRepository;
         $this->facesheetManageService = $facesheetManageService;
         $this->reflectionsheetManageService = $reflectionsheetManageService;
+        $this->initiativetableManageService = $initiativetableManageService;
     }
     public function index()
     {
@@ -347,6 +357,21 @@ class SakuraSetController extends Controller
         try{
             $id = $request->get('id');
             $data['remove'] = $this->reflectionsheetManageService->destroy($id);
+            $data['success'] = true;
+        }catch (Exception $e) {
+            $data['success'] = false;
+        }
+        return response()->json($data);
+    }
+
+    public function updateScheduled(Request $request)
+    {
+        if(!$request->has('scheduled')){
+            return response()->json(['success' => false, 'data' => []]);
+        }
+        try{
+            $date = Carbon::parse($request->scheduled)->format('Y-m-d H:i:s');
+            $this->sakurasetService->updateSchedule($date);
             $data['success'] = true;
         }catch (Exception $e) {
             $data['success'] = false;
