@@ -98,6 +98,7 @@
         $('.initiative-accept').click(function(){
             var url = '{{ route("sakuraUpdateScheduled") }}';
             var date = new Date($('.datepicker-a015').datepicker('getDate'));
+            var scheduledDate = date.getFullYear()+'年 '+((date.getMonth() + 1) < 10 ? '0'+(date.getMonth()+1): (date.getMonth()+1))+'月 '+(date.getDate() < 10 ? '0'+date.getDate(): date.getDate())+'日';
             date = date.getFullYear()+'-'+(date.getMonth() + 1)+'-'+date.getDate();
             $.ajax({
                 url,
@@ -109,6 +110,8 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
+                        $('.popup-A015-choose_date').addClass('hidden');
+                        $('.current-time').html(scheduledDate);
                         console.log(response);
                     }
                 },

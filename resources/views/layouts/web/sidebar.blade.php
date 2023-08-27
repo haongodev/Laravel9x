@@ -34,7 +34,7 @@
                 @php $scheduledDate = scheduledDate() @endphp
                 @if($scheduledDate)
                     <button class="scheduled-btn">次回のさくらセット取り組み予定</button>
-                    <p class="current-time">{{date('Y年 m月 d日')}}</p>
+                    <p class="current-time">{{$scheduledDate}}</p>
                 @endif
             </div>
         </div>

@@ -48,7 +48,8 @@ if (!function_exists('scheduledDate')) {
     function scheduledDate()
     {
         $memberId = auth()->user()->id;
-        return SakurasetManage::where('member_id', $memberId)->pluck('scheduled_date')->first();
+        $scheduled_date = SakurasetManage::where('member_id', $memberId)->pluck('scheduled_date')->first();
+        return Carbon::parse($scheduled_date)->format('Y年 m月 d日');
     }
 
 }
