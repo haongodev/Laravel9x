@@ -69,4 +69,9 @@ class SakurasetRepository
         }
         $inst->model->create($arrData);
     }
+    public function updateSchedule($date,$memberid){
+        return $this->model->where([['member_id',$memberid],['confirmation_flg', 'false']])->update([
+            'scheduled_date' => $date
+        ]);
+    }
 }
