@@ -113,6 +113,8 @@
                         $('.popup-A015-choose_date').addClass('hidden');
                         $('.current-time').html(scheduledDate);
                         console.log(response);
+                    }else{
+                        alert(response.message);
                     }
                 },
                 error: function (xhr) {

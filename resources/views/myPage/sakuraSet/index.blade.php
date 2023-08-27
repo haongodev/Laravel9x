@@ -111,10 +111,17 @@
                     if(response.success){
                         for (const key in response.data) {
                             $('.'+key).removeClass('hidden');
-                            var link = '/storage/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
+                            var link = '';
+                            if(response.data[key] !== null && response.data[key].hasOwnProperty('member_id')){
+                                link = '/storage/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
+                            }
                             var base_url = $('.base_url').attr('value');
-                            $('.'+key+' .confirmation').attr('link',base_url+link);
-                            $('.'+key+' .'+key+'-upload').attr('member_id',response.data[key].member_id);
+                            if(link !== ''){
+                                $('.'+key+' .confirmation').attr('link',base_url+link);
+                                $('.'+key+' .'+key+'-upload').attr('member_id',response.data[key].member_id);
+                            }else{
+                                $('.'+key+' .confirmation').addClass('disabled');
+                            }
                             if(key === 'freflectionsheet'){
                                 var html = '';
                                 response.data.freflectionsheet.forEach((element,i) => {
@@ -127,13 +134,15 @@
                                         name = '随時';
                                         name_folder = 'at';
                                     }
-                                    link = '/storage/'+element.member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+element.file_name;
+                                    if(element !== null){
+                                        link = '/storage/'+element.member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+element.file_name;
+                                    }
                                     html += '<div class="flex-column">'+
                                                 '<div class="sub-title">'+
                                                     '<button>'+name+'</button>'+
                                                     '</div>'+
                                                 '<div class="flex-between">'+
-                                                    '<button class="confirmation" link="'+base_url+link+'">確認</button>'+
+                                                    '<button class="confirmation '+(link === '' ? 'disabled' : '')+'" link="'+base_url+link+'">確認</button>'+
                                                     '<button class="swp">実施者と共有</button>'+
                                                     '<input class="hidden freflectionsheet-upload" type="file" at="'+name_folder+'" member_id="'+element.member_id+'">'+
                                                 '</div>'+

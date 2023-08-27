@@ -170,10 +170,12 @@ class SakuraSetController extends Controller
     public function yourTry(){
         $faceSheetManagerData = $this->facesheetManageService->getByUserId(auth()->user()->id);
         $reflectionSheetManagerData = $this->reflectionsheetManageService->getByUserId(auth()->user()->id);
-
+        $initiativetableManagerData = $this->initiativetableManageService->getByUserId(auth()->user()->id);
+        
         return view('myPage/sakuraSet/yourTry',[
             'faceSheetManagerData' => $faceSheetManagerData,
             'reflectionSheetManagerData' => $reflectionSheetManagerData,
+            'initiativetableManagerData' => $initiativetableManagerData,
         ]);
     }
     public function getSheet(Request $request){
@@ -204,7 +206,7 @@ class SakuraSetController extends Controller
             $class = null;
             if($request->file('file')) {
                 $file = $request->file('file');
-                $location = 'storage/'.$request->member_id.'/'.$request->backup_type;
+                $location = 'storage/upload/'.$request->member_id.'/'.$request->backup_type;
                 if($request->at){
                     $location .= '/'.$request->at;
                     if($request->at === 'at'){
@@ -231,32 +233,37 @@ class SakuraSetController extends Controller
                 }
                 $newFilename = $file->getClientOriginalName();
                 // check old file exist
-                if (file_exists($location . '/' . $instance->file_name)) {
-                    $extension = pathinfo($instance->file_name, PATHINFO_EXTENSION);
-                    $newFilenameWithoutExtension = pathinfo($instance->file_name, PATHINFO_FILENAME);
-                    $namebk = $newFilenameWithoutExtension.'_bk.'.$extension;
-                    rename($location . '/' . $instance->file_name, $location . '/' . $namebk);
-                    // insert file backup to db
-                    $this->sakurasetService->createBackupData($repo,$namebk,$instance->display_name,$request->member_id,$class);
-
-                    $file->move($location,$newFilename);
-                    // update new name for file
-                    $instance->file_name = $newFilename;
-                    $instance->save();
-                    $msg = 'Change success';
-                    $reviewer = $this->sakurasetService->getByLoggedId(['reviewer_id',$request->member_id],['reviewer_member','made_member']);
-                    $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer->made_member];
-                    $view = 'email.sakuraSet.backup_'.$request->backup_type;
-                    if(!view()->exists($view)){
-                        $msg = 'Template Email do not exist';
-                    }else{
-                        $status = Mail::send(new SendMail($view, $emailConfig));
-                        if(!$status){
-                            $msg = 'Send email failed';
-                        }
+                if($instance){
+                    if (file_exists($location . '/' . $instance->file_name)) {
+                        $extension = pathinfo($instance->file_name, PATHINFO_EXTENSION);
+                        $newFilenameWithoutExtension = pathinfo($instance->file_name, PATHINFO_FILENAME);
+                        $namebk = $newFilenameWithoutExtension.'_bk.'.$extension;
+                        rename($location . '/' . $instance->file_name, $location . '/' . $namebk);
+                        // insert file backup to db
+                        $this->sakurasetService->createBackupData($repo,$namebk,$instance->display_name,$request->member_id,$class);
+                        // update new name for file
+                        $instance->file_name = $newFilename;
+                        $instance->save();
+                        $msg = 'Change success';
+                    }
+                }else{
+                    $msg = 'Upload success';
+                    $this->sakurasetService->createBackupData($repo,$newFilename,$newFilename,$request->member_id,$class);
+                }
+                // start upload file
+                $file->move($location,$newFilename);
+                // send email func
+                $reviewer = $this->sakurasetService->getByLoggedId(['reviewer_id',$request->member_id],['reviewer_member','made_member']);
+                $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer->made_member];
+                $view = 'email.sakuraSet.backup_'.$request->backup_type;
+                if(!view()->exists($view)){
+                    $msg = 'Template Email do not exist';
+                }else{
+                    $status = Mail::send(new SendMail($view, $emailConfig));
+                    if(!$status){
+                        $msg = 'Send email failed';
                     }
                 }
-
                 $data['success'] = true;
                 $data['message'] = $msg;
             }
@@ -266,31 +273,40 @@ class SakuraSetController extends Controller
 
     public function upload(Request $request)
     {
-        if($request->get('type') == 'reflectionsheet'){
-            $reflectionSheetId = $this->reflectionsheetManageService->upload($request);
-        }else{
-            $faceSheetId = $this->facesheetManageService->upload($request);
-        }
-
         $data= [
           'success'=>false,
           'html' => ''
         ];
-
-        if(!empty($faceSheetId)){
-            $faceSheetManager = $this->facesheetManageService->getById($faceSheetId);
-            $returnHTML = view('components/sub_popup_A013/data_upload',[
-               'faceSheetManager'=>$faceSheetManager
-            ])->render();
-            $data['success'] = true;
-            $data['html'] = $returnHTML;
-        }elseif(!empty($reflectionSheetId)){
-            $reflectionSheetManager = $this->reflectionsheetManageService->getById($reflectionSheetId);
-            $returnHTML = view('components/sub_popup_A014/data_upload',[
-                'reflectionSheetManager'=>$reflectionSheetManager
-            ])->render();
-            $data['success'] = true;
-            $data['html'] = $returnHTML;
+        if($request->get('type') == 'reflectionsheet'){
+            $reflectionSheetId = $this->reflectionsheetManageService->upload($request);
+            if($reflectionSheetId){
+                $reflectionSheetManager = $this->reflectionsheetManageService->getById($reflectionSheetId);
+                $returnHTML = view('components/sub_popup_A014/data_upload',[
+                    'reflectionSheetManager'=>$reflectionSheetManager
+                ])->render();
+                $data['success'] = true;
+                $data['html'] = $returnHTML;
+            }
+        }elseif($request->get('type') == 'initiative'){
+            $initiativetableId = $this->initiativetableManageService->upload($request);
+            if($initiativetableId){
+                $initiativetableManager = $this->initiativetableManageService->getById($initiativetableId);
+                $returnHTML = view('components/sub_popup_A015/data_upload',[
+                   'initiativetableManager'=>$initiativetableManager
+                ])->render();
+                $data['success'] = true;
+                $data['html'] = $returnHTML;
+            }
+        }else{
+            $faceSheetId = $this->facesheetManageService->upload($request);
+            if($faceSheetId){
+                $faceSheetManager = $this->facesheetManageService->getById($faceSheetId);
+                $returnHTML = view('components/sub_popup_A013/data_upload',[
+                   'faceSheetManager'=>$faceSheetManager
+                ])->render();
+                $data['success'] = true;
+                $data['html'] = $returnHTML;
+            }
         }
         return response()->json($data);
     }
@@ -366,13 +382,16 @@ class SakuraSetController extends Controller
 
     public function updateScheduled(Request $request)
     {
+        $data['success'] = false;
+        $data['message'] = 'Sakuraset do not exist';
         if(!$request->has('scheduled')){
-            return response()->json(['success' => false, 'data' => []]);
+            return response()->json($data);
         }
         try{
             $date = Carbon::parse($request->scheduled)->format('Y-m-d H:i:s');
-            $this->sakurasetService->updateSchedule($date);
-            $data['success'] = true;
+            if($this->sakurasetService->updateSchedule($date)){
+                $data['success'] = true;
+            }
         }catch (Exception $e) {
             $data['success'] = false;
         }

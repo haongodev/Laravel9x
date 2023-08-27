@@ -32,6 +32,10 @@ body{
 .ovf-hidden{
     overflow: hidden!important;
 }
+.disabled{
+    background: #CCCCCC !important;
+    pointer-events: none !important;
+}
 .flex-between{
     display: flex;
     justify-content: space-between;
