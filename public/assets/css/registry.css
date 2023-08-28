@@ -146,3 +146,6 @@ textarea {
 .chosen-container .chosen-default{
     color: transparent !important;
 }
+.text-danger{
+    color: #a52834 !important;
+}

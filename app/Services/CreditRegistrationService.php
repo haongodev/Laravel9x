@@ -231,6 +231,9 @@ class CreditRegistrationService
         $formData = Session::get('popup_confirm');
         $questionSettingData = session('question_confirm');
         $questionOptionSettingData = session('question_option_confirm');
+        if(empty($formData['question'])){
+            return  $data;
+        }
         foreach ($formData['question'] as $questionSettingId => $answer) {
             if(!$answer){continue;}
             $questionSetting = $questionSettingData[$questionSettingId];

@@ -5,7 +5,7 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
 <div class="first-child-question-id-{{$questionSetting->id}} first-div">
 <div class="input-group">
     <div class="w-100 group-control">
-        <label for="email" class="w-25">{{$questionSetting->title}}</label>
+        <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
         <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
                placeholder="本協会の認定SVR"
                value="{{$answerData->answer ?? ''}}"/>
@@ -19,7 +19,6 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
     $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function (){
         var this_choose = $(this);
         var current_id = this_choose.data('current-question-id')
-        console.log(current_id,'aa');
         getQuestionLink(current_id)
     })
 </script>

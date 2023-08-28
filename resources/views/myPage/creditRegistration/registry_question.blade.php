@@ -5,7 +5,7 @@
     @if($questionSetting->input_method ==0)
         <div class="input-group">
             <div class="w-100 group-control">
-                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
                        placeholder="本協会の認定SVR"
                        value="{{$answerData->answer ?? ''}}"/>
@@ -19,7 +19,7 @@
     @if($questionSetting->input_method ==1)
         <div class="input-group">
             <div class="w-100 group-control">
-                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
                 {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
                 <textarea class="w-75" name="question[{{$questionSetting->id}}]"
@@ -34,7 +34,7 @@
     @if($questionSetting->input_method ==7)
         <div class="input-group">
             <div class="w-100 group-control">
-                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group second">
                     <input type="date" name="question[{{$questionSetting->id}}]"
                            value="{{!empty($answerData->answer) ? date('Y-m-d',$answerData->answer) : ''}}"/>
@@ -52,7 +52,7 @@
         @endphp
         <div class="input-group">
             <div class="w-100 group-control">
-                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group">
                     <input type="date" name="question[{{$questionSetting->id}}][start]"
                            value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}"/>
@@ -80,7 +80,7 @@
                  data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <div class="w-75 table-group">
                         <table>
                             <tr>
@@ -117,7 +117,7 @@
                 data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}" >{{$questionSetting->title}}ffffff</label>
                     <div class="w-75 table-group">
                         <table>
 
@@ -155,7 +155,7 @@
                  {{--                             data-before-question-id="0"--}}
                  data-current-question-id="{{$questionSetting->id}}">
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <div class="w-75 table-group">
                         <table>
                             <tr>
@@ -185,7 +185,7 @@
                  data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <select class="w-75 select-branch-question select-chosen"
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}]">
@@ -207,7 +207,7 @@
             <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0"
                  data-current-question-id="{{$questionSetting->id}}">
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <select class="w-75 select-branch-question select-chosen" multiple
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}][]">

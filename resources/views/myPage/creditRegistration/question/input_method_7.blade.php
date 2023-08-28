@@ -5,7 +5,7 @@ $answerData = $answerInfoData[$questionSetting->id] ?? [];
     <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
          data-current-question-id="{{$questionSetting->id}}">
         <div class="w-100 group-control">
-            <label for="email" class="w-25">{{$questionSetting->title}}</label>
+            <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <div class="w-75 date-group second">
                 <input type="date" name="question[{{$questionSetting->id}}]"
                        value="{{!empty($answerData->answer) ? date('Y-m-d', strtotime($answerData->answer)) : ''}}"/>
@@ -20,7 +20,6 @@ $answerData = $answerInfoData[$questionSetting->id] ?? [];
     $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function (){
         var this_choose = $(this);
         var current_id = this_choose.data('current-question-id')
-        console.log(current_id,'aa');
         getQuestionLink(current_id)
     })
 </script>

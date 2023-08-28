@@ -6,7 +6,6 @@
     $('#registry').find('.question-link-id-{{$questionSettingId}}').each(function (){
         var this_choose = $(this);
         var current_id = this_choose.data('current-question-id')
-        console.log(current_id,'aa');
         getQuestionLink(current_id)
     })
 </script>
