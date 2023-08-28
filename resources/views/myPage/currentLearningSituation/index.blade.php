@@ -28,7 +28,7 @@
                 <span>の研鑽状況</span>
             </div>
             <div class="side-right">
-                <button class="decline-btn show-scoring-board">研鑽スコア</button>
+                <button class="decline-btn show-scoring-board btn-eff-ora btn-hov">研鑽スコア</button>
             </div>
         </div>
         <div class="row" style="height: 500px; width:100%;margin: 0 auto;">
@@ -41,7 +41,7 @@
                     <span>{{getCertificationYear()}}年度 認定期限までの研鑽状況</span>
                 </div>
                 <div class="side-right">
-                    <button class="decline-btn"><a href="{{ route('creditRegistration') }}">単位登録</a></button>
+                    <button class="decline-btn btn-eff-ora btn-hov"><a href="{{ route('creditRegistration') }}">単位登録</a></button>
                 </div>
             </div>
             <div class="row" style="height: 500px; width:100%;margin: 0 auto;display: flex;align-items: center;position: relative;">

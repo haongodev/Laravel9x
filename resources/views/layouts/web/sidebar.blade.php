@@ -8,7 +8,7 @@
                 </div>
                 <form action="/logout" method="post">
                     @csrf
-                    <button class="close-btn">閉じる</button>
+                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>
                 </form>
                 <button class="registed-btn">現在の単位登録数</button>
                 @php
@@ -34,7 +34,7 @@
                 @php $scheduledDate = scheduledDate() @endphp
                 @if($scheduledDate)
                     <button class="scheduled-btn">次回のさくらセット取り組み予定</button>
-                    <p class="current-time">{{date('Y年 m月 d日')}}</p>
+                    <p class="current-time">{{$scheduledDate}}</p>
                 @endif
             </div>
         </div>

@@ -1,7 +1,7 @@
 @extends('layouts.web.main',
     [
         'pageSlug' => 'らセットに取り組む',
-        'header_button' => '<button type="button" class="header-buttom" style="background:#FFFF00;color:#000;">さくらセットについて</button>',
+        'header_button' => '<button type="button" class="header-buttom btn-eff-yel btn-hov" style="background:#FFFF00;color:#000;">さくらセットについて</button>',
         'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraManage'=>$sakuraManage])
     ])
 @push('styles')
@@ -20,16 +20,16 @@
             </div>
         @endforeach
         <div class="button-list">
-            <button type="button"><a href="https://www.jamhsw.or.jp/ugoki/kensyu/sakura-set.html" target="_blank">さくらセットを理解する</a></button>
-            <button type="button"><a href="{{ route('yourTry') }}">あなたの取り組み状況</a></button>
-            <button type="button" class="btn">振返り担当者の申請</button>
+            <button type="button" class="btn-eff-ora btn-hov"><a href="https://www.jamhsw.or.jp/ugoki/kensyu/sakura-set.html" target="_blank">さくらセットを理解する</a></button>
+            <button type="button" class="btn-eff-ora btn-hov"><a href="{{ route('yourTry') }}">あなたの取り組み状況</a></button>
+            <button type="button" class="btn btn-eff-ora btn-hov">振返り担当者の申請</button>
         </div>
         <div class="botton-navigate">
             <div class="pull-left">
                 <ul>
                     <li>
                         @if($sakuraManage !== null)
-                        <button class="{{ $sakuraManage->reviewer_member !== null ? 'in-active' : 'active' }}">担当者</button>
+                        <button class="{{ $sakuraManage->reviewer_member !== null ? 'in-active btn-eff-bla btn-hov' : 'active btn-eff-pri btn-hov' }}">担当者</button>
                         @endif
                     </li>
                     <li>
@@ -43,7 +43,7 @@
             </div>
             <div class="pull-right">
                 @if($sakuraManage && $sakuraManage->reviewer_member !== null)
-                    <button class="cancal-sharing {{ $sakuraManage->reviewer_status === 3 ? 'had-change' : ''}}"> {{ $sakuraManage->reviewer_status === 3 ? '解除依頼中' : '共有解除'}}</button>
+                    <button class="cancal-sharing {{ $sakuraManage->reviewer_status === 3 ? 'had-change btn-eff-ora btn-hov' : 'btn-eff-red btn-hov'}}"> {{ $sakuraManage->reviewer_status === 3 ? '解除依頼中' : '共有解除'}}</button>
                 @endif
             </div>
         </div>
@@ -111,10 +111,17 @@
                     if(response.success){
                         for (const key in response.data) {
                             $('.'+key).removeClass('hidden');
-                            var link = '/storage/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
+                            var link = '';
+                            if(response.data[key] !== null && response.data[key].hasOwnProperty('member_id')){
+                                link = '/storage/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
+                            }
                             var base_url = $('.base_url').attr('value');
-                            $('.'+key+' .confirmation').attr('link',base_url+link);
-                            $('.'+key+' .'+key+'-upload').attr('member_id',response.data[key].member_id);
+                            if(link !== ''){
+                                $('.'+key+' .confirmation').attr('link',base_url+link);
+                                $('.'+key+' .'+key+'-upload').attr('member_id',response.data[key].member_id);
+                            }else{
+                                $('.'+key+' .confirmation').addClass('disabled');
+                            }
                             if(key === 'freflectionsheet'){
                                 var html = '';
                                 response.data.freflectionsheet.forEach((element,i) => {
@@ -127,13 +134,15 @@
                                         name = '随時';
                                         name_folder = 'at';
                                     }
-                                    link = '/storage/'+element.member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+element.file_name;
+                                    if(element !== null){
+                                        link = '/storage/'+element.member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+element.file_name;
+                                    }
                                     html += '<div class="flex-column">'+
                                                 '<div class="sub-title">'+
                                                     '<button>'+name+'</button>'+
                                                     '</div>'+
                                                 '<div class="flex-between">'+
-                                                    '<button class="confirmation" link="'+base_url+link+'">確認</button>'+
+                                                    '<button class="confirmation '+(link === '' ? 'disabled' : '')+'" link="'+base_url+link+'">確認</button>'+
                                                     '<button class="swp">実施者と共有</button>'+
                                                     '<input class="hidden freflectionsheet-upload" type="file" at="'+name_folder+'" member_id="'+element.member_id+'">'+
                                                 '</div>'+

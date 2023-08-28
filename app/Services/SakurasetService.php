@@ -34,4 +34,9 @@ class SakurasetService
     public function createBackupData($repoInst,$namebk,$namedis,$memberId,$class){
         return $this->sakurasetRepository->createBackupData($repoInst,$namebk,$namedis,$memberId,$class);
     }
+    public function updateSchedule($date)
+    {
+        $memberId = auth()->user()->id;
+        return $this->sakurasetRepository->updateSchedule($date,$memberId);
+    }
 }

@@ -15,10 +15,12 @@
 .form-registry .vertical-button .redirect-btn{
     border-radius: 35px;
     background: #FFB366;
+    cursor: pointer;
 }
 .form-registry .vertical-button .credited-btn{
     border-radius: 15px;
     background: #60C659;
+    cursor: pointer;
 }
 .form-registry .vertical-button .credited{
     border-top: 1px solid #cbd5e1;

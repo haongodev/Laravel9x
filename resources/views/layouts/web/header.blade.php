@@ -10,7 +10,7 @@
             @if (isset($header_button))
                 {!! $header_button !!}
             @endif
-            <button type="button" class="header-buttom" onclick="window.location.href='{{route('mypage')}}'">私の研鑽データ</button>
+            <button type="button" class="header-buttom btn-hov btn-eff-gre" onclick="window.location.href='{{route('mypage')}}'">私の研鑽データ</button>
         </div>
     </div>
     @endif
