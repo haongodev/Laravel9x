@@ -9,7 +9,7 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
 {{--        data-before-question-id="{{$questionSetting->parent_question_option_id}}"--}}
         data-current-question-id="{{$questionSetting->id}}">
         <div class="w-100 group-control">
-            <label for="email" class="w-25">{{$questionSetting->title}}</label>
+            <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <div class="w-75 table-group">
                 <table>
                     <tr>
@@ -60,7 +60,6 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
         $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function (){
             var this_choose = $(this);
             var current_id = this_choose.data('current-question-id')
-            console.log(current_id,'aa');
             getQuestionLink(current_id)
         })
     })

@@ -59,6 +59,9 @@ class QuestionSettingService
 
     public function getByIds(array $ids = [])
     {
+        if(!$ids){
+            $ids = [-1];
+        }
         return $this->questionSettingRepository->getByIds($ids);
     }
 

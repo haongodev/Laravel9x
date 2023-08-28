@@ -103,3 +103,57 @@ function getQuestionLink(current_id) {
         },
     });
 }
+
+$('.submit-btn').click(function () {
+    var form = $(this).closest('form');
+    var form_id = form.attr('id');
+    var validate = true;
+    form.find('.title-required-1').each(function () {
+        $(this).removeClass('text-danger');
+        validate_required = true;
+        var question_id = $(this).data('question-id');
+        var this_input = $('input[name="question[' + question_id + ']"]');
+        var this_checkbox = $('input[name="question[' + question_id + '][]"]');
+        var this_textarea = $('textarea[name="question[' + question_id + ']"]');
+        var this_select = $('select[name="question[' + question_id + ']"]');
+
+        if (this_input.html() != undefined) {
+            var this_type = this_input.attr('type');
+            if (
+                (this_type == 'input' && this_input.val().trim() == '') ||
+                (this_type == 'radio' && !this_input.is(':checked'))
+            ) {
+                validate_required = false;
+                validate = false;
+            }
+        } else if (this_checkbox.html() != undefined) {
+            if (!this_checkbox.is(':checked')) {
+                validate_required = false;
+                validate = false;
+            }
+        } else if (this_textarea.html() != undefined) {
+            if (this_textarea.val().trim() == '') {
+                validate_required = false;
+                validate = false;
+            }
+        } else if (this_select.html() != undefined) {
+            if (this_select.val() == '') {
+                validate_required = false;
+                validate = false;
+            }
+
+        }
+        if(!validate_required){
+            $(this).addClass('text-danger');
+        }
+
+        console.log(question_id, validate_required);
+    });
+
+    if(validate){
+        $('#'+form_id).submit();
+    }else{
+        toastr.options.timeOut = 3000;
+        toastr.info('未回答の項目があります。')
+    }
+})
