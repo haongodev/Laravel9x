@@ -62,65 +62,58 @@
             });
         })
 
-        $('.popup-A015-save-share').on('click', '.share-reflectionsheet', function () {
+        $('.popup-A015-save-share').on('click', '.share-initiativetable', function () {
             var id = $(this).data('id');
             var current_share = $(this).attr('data-current-share');
             var display_name = $(this).attr('data-display-name');
-            var url = '{{route('updateShareReflectionSheet')}}';
-            var reflection_class = $(this).closest('.table-manager').attr('data-class');
-            var is_exist_share = isExistsShareReflection(reflection_class);
-
+            var url = '{{route('updateShareInitiativeTable')}}';
             //Check exist file share
             if (current_share == 1) {
-                //show popup 36
-                var html = '振り返りシート（' + display_name + '）の共有を解除しますか？';
+                //show popup 25
+                var html = 'さくらセット取り組み表（' + display_name + '）の共有を解除しますか？';
             } else {
                 if (isExistsShare()) {
-                    //Show popup 44
-                    var html = '振り返りシート（' + display_name + '）に共有を変更しますか？';
+                    //Show popup 33
+                    var html = 'さくらセット取り組み表（' + display_name + '）に共有を変更しますか？';
                 } else {
-                    //Show popup 32
-                    var html = '振り返りシート（' + display_name + '）を共有しますか？';
-
+                    //Show popup 21
+                    var html = 'さくらセット取り組み表（' + display_name + '）を共有しますか？';
                 }
             }
 
             $('.popup-A015-confirm').find('input[name="id"]').val(id);
             $('.popup-A015-confirm').find('input[name="share_flg"]').val(current_share == 1 ? 0 : 1);
             $('.popup-A015-confirm').find('input[name="url"]').val(url);
-            {{--            //if turn off share use last confirm--}}
+            //if turn off share use last confirm
             $('.popup-A015-confirm').find('input[name="last_confirm"]').val(current_share);
-            {{--            // if exsits file share--}}
-            $('.popup-A015-confirm').find('input[name="is_exist_share"]').val(is_exist_share ? 1 : 0);
+            // if exsits file share
             $('.popup-A015-confirm').find('input[name="is_remove"]').val(0);
-            $('.popup-A015-confirm').find('input[name="reflection_class"]').val(reflection_class);
+            $('.popup-A015-confirm').find('input[name="is_exist_share"]').val(isExistsShare() ? 1 : 0);
             $('.popup-A015-confirm').find('.header-content').html(html)
             $('.popup-A015-confirm').removeClass('hidden');
             $('.popup-A015-save-share').addClass('hidden');
-
         })
 
-                $('.popup-A015-save-share').on('click','.remove',function (){
-                    var id = $(this).data('id');
-                    var display_name = $(this).attr('data-display-name');
-                    var url = '{{route('sakuraRemoveReflectionSheet')}}';
-                    var html = '振り返りシート（'+display_name+'）を削除します？';
+        $('.popup-A015-save-share').on('click','.remove',function (){
+            var id = $(this).data('id');
+            var display_name = $(this).attr('data-display-name');
+            var url = '{{route('sakuraRemoveInitiativeTable')}}';
+            var html = 'さくらセット取り組み表（'+display_name+'）を削除しますか？';
 
-                    $('.popup-A015-confirm').find('input[name="id"]').val(id);
-                    $('.popup-A015-confirm').find('input[name="url"]').val(url);
-                    $('.popup-A015-confirm').find('input[name="is_remove"]').val(1);
-                    $('.popup-A015-confirm').find('.header-content').html(html)
-                    //Show popup 24
-                    $('.popup-A015-confirm').removeClass('hidden');
-                    $('.popup-A015-save-share').addClass('hidden');
-                })
+            $('.popup-A015-confirm').find('input[name="id"]').val(id);
+            $('.popup-A015-confirm').find('input[name="url"]').val(url);
+            $('.popup-A015-confirm').find('input[name="is_remove"]').val(1);
+            $('.popup-A015-confirm').find('.header-content').html(html)
+            //Show popup 24
+            $('.popup-A015-confirm').removeClass('hidden');
+            $('.popup-A015-save-share').addClass('hidden');
+        })
 
-        function isExistsShareReflection(reflection_class) {
+        function isExistsShare() {
             var isShare = false;
-            console.log(reflection_class);
-            $('.table-manager-class-' + reflection_class).find('.manager').each(function () {
-                if ($(this).hasClass('share')) {
-                    isShare = true
+            $('.a015-initive-list').children('div').each(function () {
+                if ($(this).children('button').hasClass('sharing')) {
+                    isShare = true;
                 }
             });
             return isShare;
