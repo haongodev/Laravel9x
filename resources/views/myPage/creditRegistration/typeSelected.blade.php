@@ -26,7 +26,7 @@
                         </button>
                     </div>
                     <div class="credited">
-                        <button type="button" class="credited-btn btn-eff-gre btn-hov">
+                        <button type="button" class="credited-btn">
                             単位登録済み
                         </button>
                     </div>

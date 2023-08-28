@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="popup-content">
-            <div class="header-content not-remove">
+            <div class="header-content not-remove fz-24">
 
             </div>
         </div>

@@ -380,6 +380,37 @@ class SakuraSetController extends Controller
         return response()->json($data);
     }
 
+    public function sakuraRemoveInitiativeTable(Request $request){
+        try{
+            $id = $request->get('id');
+            $data['remove'] = $this->initiativetableManageService->destroy($id);
+            $data['success'] = true;
+        }catch (Exception $e) {
+            $data['success'] = false;
+        }
+        return response()->json($data);
+    }
+    public function updateShareInitiativeTable(Request $request){
+        try {
+            $id = $request->get('id');
+            $shareFlg = $request->get('share_flg');
+            $memberId = auth()->user()->id;
+            $dataUpdate = [
+                'share_flg' => $shareFlg
+            ];
+
+            //Update all share flag off when share = true
+            if($shareFlg){
+                $this->initiativetableManageService->updateByMemberId($memberId,['share_flg' => 0]);
+            }
+            $data['update'] = $this->initiativetableManageService->update($id, $dataUpdate);
+            $data['success'] = true;
+        } catch (Exception $e) {
+            $data['success'] = false;
+        }
+
+        return response()->json($data);
+    }
     public function updateScheduled(Request $request)
     {
         $data['success'] = false;

@@ -1,5 +1,5 @@
 
-<div class="popup-wrapper hidden a012-popup-child popup-A015-confirm">
+<div class="popup-wrapper hidden a015-popup-child popup-A015-confirm">
     <div class="layout-popup">
         <div class="popup-header">
             <div class="title"></div>
@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="popup-content">
-            <div class="header-content not-remove">
+            <div class="header-content not-remove fz-24">
 
             </div>
         </div>
@@ -18,9 +18,8 @@
         <input type="hidden" name="last_confirm">
         <input type="hidden" name="is_exist_share">
         <input type="hidden" name="is_remove">
-        <input type="hidden" name="reflection_class">
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept reflectionsheet-accept">はい</button>
+            <button type="button" class="btn-popup-accept initiativetable-accept">はい</button>
             <button type="button" class="btn-popup-decline close-A015-confirm">いいえ</button>
         </div>
     </div>
@@ -28,55 +27,29 @@
 @push('js')
     <script>
         $('.close-A015-confirm').click(function (){
-            //Remove class delete reflectionsheet
-            $('.popup-A015-confirm').find('.reflectionsheet-accept').removeClass('reflectionsheet-accept-remove');
+            //Remove class delete initiativetable
+            $('.popup-A015-confirm').find('.initiativetable-accept').removeClass('initiativetable-accept-remove');
             $('.popup-A015-confirm').addClass('hidden');
             $('.popup-A015-save-share').removeClass('hidden');
         })
 
-
-        $('.popup-A015-confirm').on('click','.reflectionsheet-accept-remove',function (){
-            var id = $('.popup-A015-confirm').find('input[name="id"]').val();
-            var url = $('.popup-A015-confirm').find('input[name="url"]').val();
-            var data = {id:id}
-            $.ajax({
-                url: url,
-                data: data,
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                type: 'POST',
-                success: function (response) {
-                    if (response.success) {
-                        $('.reflectionsheet-id-'+id).remove();
-                        $('.popup-A015-confirm').find('.reflectionsheet-accept').removeClass('reflectionsheet-accept-remove');
-                        $('.popup-A015-confirm').addClass('hidden');
-                        $('.popup-A015-save-share').removeClass('hidden');
-                    }
-                },
-                error: function (xhr) {
-                    alert('error');
-                }
-            });
-        })
-
-        $('.popup-A015-confirm').on('click','.reflectionsheet-accept',function (){
+        $('.popup-A015-confirm').on('click','.initiativetable-accept',function (){
             var id = $('.popup-A015-confirm').find('input[name="id"]').val();
             var share_flg = $('.popup-A015-confirm').find('input[name="share_flg"]').val();
             var url = $('.popup-A015-confirm').find('input[name="url"]').val();
             var last_confirm = $('.popup-A015-confirm').find('input[name="last_confirm"]').val();
             var is_exist_share = $('.popup-A015-confirm').find('input[name="is_exist_share"]').val();
             var is_remove = $('.popup-A015-confirm').find('input[name="is_remove"]').val();
-            var reflection_class = $('.popup-A015-confirm').find('input[name="reflection_class"]').val();
 
             if(is_remove == 1){
                 //Popup 26
                 $('.popup-A015-confirm').find('.header-content').html('本当に削除しますか？');
-                $('.popup-A015-confirm').find('.reflectionsheet-accept').addClass('reflectionsheet-accept-remove');
+                $('.popup-A015-confirm').find('.initiativetable-accept').addClass('initiativetable-accept-remove');
                 return false;
             }else{
                 // If change not share confirm final
                 if(last_confirm == 1){
-
-                    //Show popup 34
+                    //Show popup 37
                     $('.popup-A015-confirm').find('.header-content').html('本当に共有を解除しますか？');
                     $('.popup-A015-confirm').find('input[name="last_confirm"]').val(0);
                     $('.popup-A015-confirm').find('input[name="is_exist_share"]').val(0);
@@ -102,23 +75,23 @@
                         if (response.success) {
                             // Update giao dien
                             if(share_flg == 1){
-                                console.log('ok1ok1')
-                                $('.popup-A015-save-share').find('.table-manager-class-'+reflection_class).find('.share-reflectionsheet').each(function(){
-                                    console.log('okok')
-                                    $(this).attr('data-current-share',0)
-                                    $(this).removeClass('share');
+                                $('.a015-initive-list').children('div').each(function(){
+                                    $(this).find('.sharing').attr('data-current-share',0).removeClass('sharing').addClass('none-share');
+                                    if(!$(this).find('img').length){
+                                        $(this).find('div').remove();
+                                        $(this).append('<img class="remove" src="/assets/images/icon/delete.png" alt="close icon">');
+                                    }
                                 })
-                                $('.popup-A015-save-share').find('.table-manager-class-'+reflection_class).find('.remove').each(function(){
-                                    $(this).html('<img src="/assets/images/icon/delete.png" alt="close icon">')
-                                })
-                                $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').addClass('share');
-                                $('.reflectionsheet-id-'+id).find('.remove').html('');
 
+                                $('.initiativetable-id-'+id).find('.share-initiativetable').addClass('sharing').removeClass('none-share');
+                                $('.initiativetable-id-'+id).find('img').remove('');
+                                $('.initiativetable-id-'+id).append('<div style="width:50px"></div>');
                             }else{
-                                $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').removeClass('share');
-                                $('.reflectionsheet-id-'+id).find('.remove').html('<img src="/assets/images/icon/delete.png" alt="close icon">');
+                                $('.initiativetable-id-'+id).find('.share-initiativetable').removeClass('sharing');
+                                $('.initiativetable-id-'+id).find('div').remove();
+                                $('.initiativetable-id-'+id).append('<img class="remove" src="/assets/images/icon/delete.png" alt="close icon">');
                             }
-                            $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').attr('data-current-share',share_flg);
+                            $('.initiativetable-id-'+id).find('.share-initiativetable').attr('data-current-share',share_flg);
                             $('.popup-A015-confirm').addClass('hidden');
                             $('.popup-A015-save-share').removeClass('hidden');
                         }
@@ -130,7 +103,27 @@
             }
         })
 
-
-
+        $('.popup-A015-confirm').on('click','.initiativetable-accept-remove',function (){
+            var id = $('.popup-A015-confirm').find('input[name="id"]').val();
+            var url = $('.popup-A015-confirm').find('input[name="url"]').val();
+            var data = {id:id}
+            $.ajax({
+                url: url,
+                data: data,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: 'POST',
+                success: function (response) {
+                    if (response.success) {
+                        $('.initiativetable-id-'+id).remove();
+                        $('.popup-A015-confirm').find('.initiativetable-accept').removeClass('initiativetable-accept-remove');
+                        $('.popup-A015-confirm').addClass('hidden');
+                        $('.popup-A015-save-share').removeClass('hidden');
+                    }
+                },
+                error: function (xhr) {
+                    alert('error');
+                }
+            });
+        })
     </script>
 @endpush

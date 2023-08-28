@@ -63,6 +63,10 @@ class InitiativetableManageService
         }
         return $fileName;
     }
+    public function update($id =0 , $data = [])
+    {
+        return $this->initiativetableManageRepository->update($id, $data);
+    }
     public function getById($id = 0)
     {
         return $this->initiativetableManageRepository->getById($id);
@@ -71,5 +75,12 @@ class InitiativetableManageService
     {
         return $this->initiativetableManageRepository->getByUserId($userId);
     }
-
+    public function updateByMemberId($memberId = 0, $data = [])
+    {
+        return $this->initiativetableManageRepository->updateByMemberId($memberId, $data);
+    }
+    public function destroy($id = 0)
+    {
+        return $this->initiativetableManageRepository->destroy($id);
+    }
 }
