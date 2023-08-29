@@ -68,7 +68,7 @@ class AnswerInfoRepository
             })
             ->where('member_id', $memberId)
             ->where('answer_info.type_native_id', $typeNativeId)
-            ->where('title','like', '%実施日%')
+            ->where('effective_date_flg', '1')
             ->when(!empty($registrationYear), function ($query) use ($registrationYear) {
                 return $query->where('registration_year', $registrationYear);
             });
