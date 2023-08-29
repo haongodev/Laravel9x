@@ -15,9 +15,9 @@ class HistoryQuestionOptionsSettingRepository
         $this->model = $model;
     }
 
-    public function store($data)
+    public function store($condition,$data)
     {
-        return $this->model->updateOrCreate($data);
+        return $this->model->updateOrCreate($condition,$data);
     }
 
     public function getByIds($ids = [])
