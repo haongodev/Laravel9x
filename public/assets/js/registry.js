@@ -77,10 +77,26 @@ function removeQuestion(this_choose) {
 
 }
 
-function auto_grow(element) {
-    element.style.height = "5px";
-    element.style.height = (element.scrollHeight) + "px";
-}
+$('#registry').on('keyup','.auto_grow', function (){
+    var lineCount = this.value.split("\n").length;
+    if (lineCount > 10) {
+        this.rows = lineCount;
+    }else{
+        this.rows = 10;
+    }
+})
+
+$('#registry').on('change','.date-register', function (){
+    var question_setting_id = $(this).closest('div.input-group').data('current-question-id');
+    var date_start = $('input[name="question['+question_setting_id+'][start]"]').val();
+    var date_end = $('input[name="question['+question_setting_id+'][end]"]').val();
+    if(date_start == ''){
+        $('input[name="question['+question_setting_id+'][start]"]').val(date_end);
+    }
+    if(date_end == ''){
+        $('input[name="question['+question_setting_id+'][end]"]').val(date_start);
+    }
+})
 
 $(".select-chosen").chosen({
     no_results_text: "Oops, nothing found!",

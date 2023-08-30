@@ -7,7 +7,7 @@
             <div class="w-100 group-control">
                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                 <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
-                       placeholder="本協会の認定SVR"
+                       placeholder=""
                        value="{{$answerData->answer ?? ''}}"/>
             </div>
         </div>
@@ -46,10 +46,10 @@
             <div class="w-100 group-control">
                 <label for="email" class="w-25">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group">
-                    <input type="date" name="question[{{$questionSetting->id}}][start]"
+                    <input class="date-register" type="date" name="question[{{$questionSetting->id}}][start]"
                            value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}"/>
                     <span>~</span>
-                    <input type="date" name="question[{{$questionSetting->id}}][end]"
+                    <input class="date-register" type="date" name="question[{{$questionSetting->id}}][end]"
                            value="{{!empty($arrAnswer[1]) ? date('Y-m-d',strtotime($arrAnswer[1])) : ''}}"/>
                 </div>
             </div>

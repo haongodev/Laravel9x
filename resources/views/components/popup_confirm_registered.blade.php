@@ -3,13 +3,14 @@
 $questionSettingRegistry = session('popup_confirm')['question'] ?? [];
 $questionSettingData = session('question_confirm');
 $questionOptionSettingData = session('question_option_confirm');
-if (!empty(session('popup_confirm')['type_native_id'])) {
-    if (session('popup_confirm')['type_native_id'] == 1) {
+if (!empty($typeNativeId)) {
+    if ($typeNativeId == 1) {
         $patternName = '研修・学会等';
     } else {
         $patternName = '社会的活動';
     }
 } else {
+    $typeNativeId = 0;
     $patternName = 'スーパービジョン（SV）';
 }
 $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
@@ -61,7 +62,7 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
         </div>
         <div class="popup-footer">
             <button type="button" class="btn-next btn-eff-ora btn-hov" register="true"
-                    onclick="window.location='{{Route('creditEdit',['answer_manage_id'=>$answerManageId, 'original_question_id' => $originalQuestionId])}}'">
+                    onclick="window.location='{{Route('creditEdit',['answer_manage_id'=>$answerManageId, 'type_native_id' => $typeNativeId])}}'">
                 修正する</button>
         </div>
     </div>

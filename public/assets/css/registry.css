@@ -135,7 +135,7 @@ textarea {
     resize: none;
     overflow: hidden;
     min-height: 50px;
-    max-height: 100px;
+    /*max-height: 100px;*/
 }
 
 .form-registry .question-input{
@@ -150,4 +150,44 @@ textarea {
 }
 .text-danger{
     color: #a52834 !important;
+}
+
+
+.chosen-container-single .chosen-single {
+    height: 36px;
+    padding: 7px ;
+    font-size: 19px;
+    border: 1px solid #5c5c5c;
+    color: #080808;
+}
+
+
+.chosen-container-single .chosen-single div {
+    width: 21px;
+    height: 100%;
+    padding: 7px 0px 0px 0px;
+}
+
+.chosen-container-multi .chosen-choices {
+    height: 36px;
+    padding: 4px ;
+    font-size: 19px;
+    border: 1px solid #5c5c5c;
+    color: #080808;
+}
+
+/*.chosen-container-multi.chosen-container::after{*/
+
+/*    background: url(https://cms-plative.local/assets/css-lib/chosen/chosen-sprite.png) center center no-repeat !important;*/
+/*    width: 33px;*/
+/*    height: 100%;*/
+/*    content: " ";*/
+/*    position: absolute;*/
+/*    !*position: fixed; *!*/
+/*    right: 14px;*/
+/*    top: 0px;*/
+
+/*}*/
+.line-height-10{
+    line-height: 10px;
 }
