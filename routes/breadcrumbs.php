@@ -32,7 +32,7 @@ Breadcrumbs::for('cls', function (BreadcrumbTrail $trail) {
 
 // creditRegistration
 Breadcrumbs::for('creditRegistration', function (BreadcrumbTrail $trail) {
-    $trail->push('研鑽を積み上げる(単位登録)', route('creditRegistration'));
+    $trail->push('研鑽を記録する(単位登録)', route('creditRegistration'));
 });
 
 

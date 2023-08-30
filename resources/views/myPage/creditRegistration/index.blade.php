@@ -1,4 +1,4 @@
-@extends('layouts.web.main', ['pageSlug' => '研鑽を積み上げる (単位登録)'])
+@extends('layouts.web.main', ['pageSlug' => '研鑽を記録する (単位登録)'])
 
 @section('content')
     {{ Breadcrumbs::render('creditRegistration') }}
