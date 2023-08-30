@@ -7,7 +7,7 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
     <div class="w-100 group-control">
         <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
         <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
-               placeholder="本協会の認定SVR"
+               placeholder=""
                value="{{$answerData->answer ?? ''}}"/>
     </div>
 </div>

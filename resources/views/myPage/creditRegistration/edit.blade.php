@@ -1,7 +1,7 @@
 @extends('layouts.web.main', ['pageSlug' => '修正'])
 @push('styles')
-    <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
+    <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css" rel="stylesheet" />
 @endpush
 @section('content')

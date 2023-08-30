@@ -8,8 +8,8 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
             <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
             {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
-            <textarea class="w-75" name="question[{{$questionSetting->id}}]"
-                      oninput="auto_grow(this)">{{$answerData->answer ?? ''}}</textarea>
+            <textarea class="w-75 auto_grow" rows="10" name="question[{{$questionSetting->id}}]"
+                      >{{$answerData->answer ?? ''}}</textarea>
         </div>
     </div>
     <div class="question-link question-link-id-{{$questionSetting->id}}" data-current-question-id="{{$questionSetting->id}}">
