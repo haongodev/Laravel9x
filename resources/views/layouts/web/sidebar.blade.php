@@ -67,12 +67,12 @@
                             <span>自己研鑽支援ツール「さくらセット」に取り組む</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="javascript:void(0)" style="color: #808080">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-5.svg">
                             <span>認定更新手続き</span>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
