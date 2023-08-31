@@ -192,6 +192,7 @@
                         <option value=""></option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
+                                id="checkbox{{$questionOption->id}}"
                                 value="{{$questionOption->id}}"
                                 {{in_array($questionOption->option_name, $arrAnswer) ? 'selected' : ''}}
                                 data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
@@ -214,6 +215,7 @@
                         <option value=""></option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
+                                id="checkbox{{$questionOption->id}}"
                                 value="{{$questionOption->id}}"
                                 {{in_array($questionOption->option_name, $arrAnswer) ? 'selected' : ''}}
                                 data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
