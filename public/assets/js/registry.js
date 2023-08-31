@@ -5,6 +5,7 @@ $('#registry').on('click', '.branch-question', function (e) {
     var parent_question_id = this_choose.data('parent-question-id');
     if (this_choose.attr('type') == 'checkbox') {
         if (this_choose.is(':checked') == false) {
+            removeAlertInputMethod9(question_option_setting_id);
             removeQuestion(this_choose)
             isGetQuestion = false;
         }
@@ -14,6 +15,7 @@ $('#registry').on('click', '.branch-question', function (e) {
         var parent_div = this_choose.closest('div.input-group');
         $(parent_div).find('input[type="radio"]').each(function () {
             if ($(this).is(':checked') == false) {
+                removeAlertInputMethod9(question_option_setting_id);
                 removeQuestion($(this))
             }
         })
@@ -31,6 +33,7 @@ $('#registry').on('change', '.select-branch-question', function (e) {
         var current_id = $(this).data('question-option-setting-id');
 
         if (!$(this).is(':selected')) {
+            removeAlertInputMethod9(current_id);
             removeQuestion($(this))
         } else {
             if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
@@ -132,12 +135,14 @@ $('.submit-btn').click(function () {
         var this_checkbox = $('input[name="question[' + question_id + '][]"]');
         var this_textarea = $('textarea[name="question[' + question_id + ']"]');
         var this_select = $('select[name="question[' + question_id + ']"]');
-
+        var this_date_start =  $('input[name="question[' + question_id + '][start]"]');
+        var this_date_end =  $('input[name="question[' + question_id + '][end]"]');
         if (this_input.html() != undefined) {
             var this_type = this_input.attr('type');
             if (
                 (this_type == 'input' && this_input.val().trim() == '') ||
-                (this_type == 'radio' && !this_input.is(':checked'))
+                (this_type == 'radio' && !this_input.is(':checked')) ||
+                (this_type == 'date' && this_input.val().trim() == '')
             ) {
                 validate_required = false;
                 validate = false;
@@ -158,6 +163,11 @@ $('.submit-btn').click(function () {
                 validate = false;
             }
 
+        }else if(this_date_start.html() != undefined){
+            if(this_date_start.val() == '' || this_date_end.val() == ''){
+                validate_required = false;
+                validate = false;
+            }
         }
         if(!validate_required){
             $(this).addClass('text-danger');
@@ -173,3 +183,8 @@ $('.submit-btn').click(function () {
         toastr.info('未回答の項目があります。')
     }
 })
+
+function removeAlertInputMethod9(option_id){
+    $('#checkbox'+option_id).removeClass('alert-input-method-9');
+    $('#checkbox'+option_id).attr('alert-title','');
+}
