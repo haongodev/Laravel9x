@@ -27,7 +27,7 @@
                     </div>
                     <div class="credited">
                         <button type="button" class="credited-btn">
-                            単位登録済み
+                            登録済み単位を確認・修正する
                         </button>
                     </div>
                 </div>

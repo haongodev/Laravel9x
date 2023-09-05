@@ -428,4 +428,17 @@ class SakuraSetController extends Controller
         }
         return response()->json($data);
     }
+    public function registerReviewer(){$with = [
+        'made_member' => function ($query) {
+                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+            },
+            'reviewer_member' => function ($query) {
+                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+            },
+        ];
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],$with);
+        return view('myPage/sakuraSet/registerReviewer',[
+            'sakuraManage' => $sakuraManage,
+        ]);
+    }
 }
