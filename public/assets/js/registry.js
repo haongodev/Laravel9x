@@ -73,9 +73,10 @@ function removeQuestion(this_choose) {
     var current_id = this_choose.data('question-option-setting-id');
     //if checkbox exist child when remove
     if ($('.first-child-question-id-' + current_question_id).find('.before-question-id-' + current_id).html()) {
-        $('.first-child-question-id-' + current_question_id).find('.first-div').each(function (index, obj) {
-            $(this).remove();
-        });
+        $('.first-child-question-id-' + current_question_id).find('.before-question-id-' + current_id).closest('.first-div').remove();
+       //  $('.first-child-question-id-' + current_question_id).find('.first-div').each(function (index, obj) {
+       //      $(this).remove();
+       //  });
     }
 
 }
