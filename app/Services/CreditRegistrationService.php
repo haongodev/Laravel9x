@@ -86,8 +86,10 @@ class CreditRegistrationService
             $dataInsertManager['question_id']  = $questionManagerId;
             $dataInsertManager['type_native_id']  = $formData['type_native_id'];
             $dataInsertManager['member_id']  = auth()->user()->id;
-            $currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
-            $dataInsertManager['registration_year'] = $currentYear;
+         //   $currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
+
+            $registrationYear = $this->getRegistrationYear();
+            $dataInsertManager['registration_year'] = $registrationYear;
             $answerManager = $this->answerManageRepository->store($dataInsertManager);
 
             /* Insert data answer info */
@@ -130,6 +132,7 @@ class CreditRegistrationService
             $dataInsertInfo[$index]['level'] = $index;
             $dataInsertInfo[$index]['input_method'] = $questionSetting->input_method;
             $dataInsertInfo[$index]['terminal_flg'] = $questionSetting->terminal_flg ? 1: 0;
+            $dataInsertInfo[$index]['effective_date_flg'] = $questionSetting->effective_date_flg;
             $tempAnswer = '';
             $score = 0;
 
@@ -171,7 +174,8 @@ class CreditRegistrationService
     {
         $questionSettingData = $this->questionSettingRepository->getByQuestionId($questionId,true)->toArray();
         foreach ($questionSettingData as $questionSetting){
-            $his = $this->historyQuestionSettingRepository->store($questionSetting);
+            $condition = ['id'=>$questionSetting['id']];
+            $his = $this->historyQuestionSettingRepository->store($condition,$questionSetting);
         }
         return $his;
     }
@@ -180,7 +184,8 @@ class CreditRegistrationService
     {
         $questionOptionSettingData = $this->questionOptionSettingRepository->getByQuestionId($questionId)->toArray();
         foreach ($questionOptionSettingData as $questionOptionSetting){
-            $his = $this->historyQuestionOptionsSettingRepository->store($questionOptionSetting);
+            $condition = ['id'=>$questionOptionSetting['id']];
+            $his = $this->historyQuestionOptionsSettingRepository->store($condition,$questionOptionSetting);
         }
         return $his;
     }
@@ -198,8 +203,9 @@ class CreditRegistrationService
             $dataUpdateManager['question_id']  = $questionManageId;
             $dataUpdateManager['type_native_id']  = $formData['type_native_id'];
             $dataUpdateManager['member_id']  = auth()->user()->id;
-            $currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
-            $dataUpdateManager['registration_year'] = $currentYear;
+            //$currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
+            $registrationYear = $this->getRegistrationYear();
+            $dataUpdateManager['registration_year'] = $registrationYear;
             $answerManager = $this->answerManageRepository->update($answerManageId,$dataUpdateManager);
 
             /*Delete old data before insert*/
@@ -231,6 +237,9 @@ class CreditRegistrationService
         $formData = Session::get('popup_confirm');
         $questionSettingData = session('question_confirm');
         $questionOptionSettingData = session('question_option_confirm');
+        if(empty($formData['question'])){
+            return  $data;
+        }
         foreach ($formData['question'] as $questionSettingId => $answer) {
             if(!$answer){continue;}
             $questionSetting = $questionSettingData[$questionSettingId];
@@ -270,6 +279,30 @@ class CreditRegistrationService
 
     }
 
+    public function getRegistrationYear()
+    {
+        $formData = Session::get('popup_confirm');
+        $questionSettingData = session('question_confirm');
+        $questionOptionSettingData = session('question_option_confirm');
+        $date = '';
+        if(!empty($formData['question'])){
+            foreach ($formData['question'] as $questionSettingId => $answer){
+                if($date){
+                    break;
+                }
+                if($questionSettingData[$questionSettingId]['effective_date_flg'] == 1){
+                    if($questionSettingData[$questionSettingId]['input_method'] == 7) {
+                        $date = $answer;
+                    }elseif($questionSettingData[$questionSettingId]['input_method'] == 8){
+                        $date = $answer['start'];
+                    }
+                }
+            }
+        }
+
+        return date('m',strtotime($date)) > 3 ? date('Y',strtotime($date)) : date('Y',strtotime('-1 year', strtotime($date))) ;
+
+    }
 
 }
 

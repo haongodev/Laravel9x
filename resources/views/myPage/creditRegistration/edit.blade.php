@@ -1,7 +1,7 @@
 @extends('layouts.web.main', ['pageSlug' => '修正'])
 @push('styles')
-    <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
+    <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css" rel="stylesheet" />
 @endpush
 @section('content')
@@ -27,8 +27,8 @@
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
                 @include('myPage.creditRegistration.registry_question_edit')
                 <div class="action">
-                    <button type="submit" class="accept-btn">確認</button>
-                    <button type="button" class="decline-btn">戻る</button>
+                    <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov">確認</button>
+                    <button type="button" class="decline-btn btn-eff-ora btn-hov">戻る</button>
                 </div>
             </form>
         </div>

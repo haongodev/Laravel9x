@@ -38,6 +38,8 @@ class QuestionSettings extends Model
         'level',
         'registration_date',
         'score',
+        'effective_date_flg',
+        'required_flg',
         'title',
         'update_date',
     ];

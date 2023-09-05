@@ -119,9 +119,13 @@ class CreditRegistrationController extends Controller
         //Current pattern
         $data['type_native_id'] = $data['type_native_id'] ?? 0;
         $creditsData = $this->answerInfoService->searchCredits($data);
+
         $returnHTML = '';
         if ($creditsData) {
-            $returnHTML = view('myPage/creditRegistration/search_type_selected')->with('creditsData', $creditsData)->render();
+            $returnHTML = view('myPage/creditRegistration/search_type_selected',[
+                'creditsData' => $creditsData,
+                'typeNativeId' => $data['type_native_id']
+            ])->render();
         }
         return response()->json(['data' => $returnHTML]);
     }
@@ -220,6 +224,7 @@ class CreditRegistrationController extends Controller
         /* show confirm */
         if ($request->has('confirm')) {
             // Set session question + answer from form
+            $typeNativeId = $request->get('type_native_id');
             Session::put('popup_confirm', $request->except(['_token', 'confirm']));
             Session::put('show_popup_confirm', true);
             $answerManageId = $request->get('answer_manage_id');
@@ -232,7 +237,7 @@ class CreditRegistrationController extends Controller
             Session::put('question_confirm', $questionSettingRegistryData);
             //Get data question option setting from form
             Session::put('question_option_confirm', $questionOptionSettingRegistryData);
-            return redirect()->route('creditEdit',['answer_manage_id'=>$answerManageId,'original_question_id'=>$originalQuestionId]);
+            return redirect()->route('creditEdit',['answer_manage_id'=>$answerManageId,'type_native_id'=>$typeNativeId]);
         } else {
             if (Session::get('popup_confirm')) {
                 /* handle with database here */
@@ -318,6 +323,7 @@ class CreditRegistrationController extends Controller
     {
         $answerManageId = $request->get('answer_manage_id');
         $originalQuestionId = $request->get('original_question_id');
+        $typeNativeId = $request->get('type_native_id');
         $answerData = $this->answerInfoService->getByAnswerManageId($answerManageId);
         $returnHTML = '';
         if ($answerData) {
@@ -325,6 +331,7 @@ class CreditRegistrationController extends Controller
                 'answerData' => $answerData,
                 'answerManageId' => $answerManageId,
                 'originalQuestionId' => $originalQuestionId,
+                'typeNativeId' => $typeNativeId
             ])->render();
         }
         return $returnHTML;

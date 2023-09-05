@@ -10,9 +10,9 @@
     @if($questionSetting->input_method ==0)
         <div class="input-group">
             <div class="w-100 group-control">
-                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
-                       placeholder="本協会の認定SVR"
+                       placeholder=""
                        value="{{$answerData->answer}}"/>
             </div>
         </div>
@@ -24,11 +24,11 @@
     @if($questionSetting->input_method ==1)
         <div class="input-group">
             <div class="w-100 group-control">
-                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
                 {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
-                <textarea class="w-75" name="question[{{$questionSetting->id}}]"
-                          oninput="auto_grow(this)">{{$answerData->answer}}</textarea>
+                <textarea class="w-75 auto_grow" name="question[{{$questionSetting->id}}]"
+                          >{{$answerData->answer}}</textarea>
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
@@ -39,7 +39,7 @@
     @if($questionSetting->input_method ==7)
         <div class="input-group">
             <div class="w-100 group-control">
-                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group second">
                     <input type="date" name="question[{{$questionSetting->id}}]"
                            value="{{$answerData->answer}}"/>
@@ -57,12 +57,12 @@
         @endphp
         <div class="input-group">
             <div class="w-100 group-control">
-                <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group">
-                    <input type="date" name="question[{{$questionSetting->id}}][start]"
+                    <input class="date-register" type="date" name="question[{{$questionSetting->id}}][start]"
                            value="{{date('Y-m-d H:i:s',strtotime($arrAnswer[0]))}}"/>
                     <span>~</span>
-                    <input type="date" name="question[{{$questionSetting->id}}][end]"
+                    <input class="date-register" type="date" name="question[{{$questionSetting->id}}][end]"
                            value="{{date('Y-m-d H:i:s',strtotime($arrAnswer[1]))}}"/>
                 </div>
             </div>
@@ -90,7 +90,7 @@ $arrAnswer = explode(',',$answerData->answer);
                  data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <div class="w-75 table-group">
                         <table>
                             <tr>
@@ -127,7 +127,7 @@ $arrAnswer = explode(',',$answerData->answer);
                 data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <div class="w-75 table-group">
                         <table>
 
@@ -165,7 +165,7 @@ $arrAnswer = explode(',',$answerData->answer);
                  {{--                             data-before-question-id="0"--}}
                  data-current-question-id="{{$questionSetting->id}}">
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <div class="w-75 table-group">
                         <table>
                             <tr>
@@ -196,13 +196,14 @@ $arrAnswer = explode(',',$answerData->answer);
                  data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <select class="w-75 select-branch-question select-chosen"
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}]">
                         <option value=""></option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
+                                id="checkbox{{$questionOption->id}}"
                                 value="{{$questionOption->id}}"
                                 {{in_array($questionOption->option_name, $arrAnswer) ? 'selected' : ''}}
                                 data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
@@ -218,13 +219,14 @@ $arrAnswer = explode(',',$answerData->answer);
             <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0"
                  data-current-question-id="{{$questionSetting->id}}">
                 <div class="w-100 group-control">
-                    <label for="email" class="w-25">{{$questionSetting->title}}</label>
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                     <select class="w-75 select-branch-question select-chosen" multiple
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}][]">
                         <option value=""></option>
                         @foreach($questionSetting->question_option_setting as $questionOption)
                             <option
+                                id="checkbox{{$questionOption->id}}"
                                 value="{{$questionOption->id}}"
                                 {{in_array($questionOption->option_name, $arrAnswer) ? 'selected' : ''}}
                                 data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>

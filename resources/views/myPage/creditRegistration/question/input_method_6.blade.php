@@ -8,12 +8,13 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
         class="input-group  before-question-id-{{$questionSetting->parent_question_option_id}}"
         data-current-question-id="{{$questionSetting->id}}">
         <div class="w-100 group-control">
-            <label for="email" class="w-25">{{$questionSetting->title}}</label>
+            <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <select class="w-75 select-branch-question select-branch-question-{{$questionSetting->id}} select-chosen" multiple id="question_select_{{$questionSetting->id}}"
                     name="question[{{$questionSetting->id}}][]">
                 <option value=""></option>
                 @foreach($questionSetting->question_option_setting as $questionOption)
                     <option
+                        id="checkbox{{$questionOption->id}}"
                         value="{{$questionOption->id}}"
                         {{in_array($questionOption->option_name, $arrAnswer) ? 'selected' : ''}}
                         data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
@@ -51,7 +52,6 @@ $arrAnswer = $answerData ? explode(',',$answerData->answer) : [];
         $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function (){
             var this_choose = $(this);
             var current_id = this_choose.data('current-question-id')
-            console.log(current_id,'aa');
             getQuestionLink(current_id)
         })
     });

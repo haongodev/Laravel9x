@@ -1,7 +1,7 @@
 @extends('layouts.web.main', ['pageSlug' => '単位登録'])
 @push('styles')
-    <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
+    <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css"
           rel="stylesheet"/>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
@@ -30,7 +30,7 @@
                 @include('myPage.creditRegistration.registry_question')
                 @if($isHasQuestion)
                     <div class="action">
-                        <button type="submit" class="accept-btn btn-eff-pri btn-hov">確認</button>
+                        <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov">確認</button>
                         <button type="button" class="decline-btn btn-eff-ora btn-hov">戻る</button>
                     </div>
                 @endif
