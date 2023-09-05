@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property DateTime $registration_date
  * @property DateTime $scheduled_date
  * @property DateTime $update_date
- * @property DateTime $registration_date
  * @property DateTime $scheduled_date
  * @property DateTime $update_date
  */
@@ -36,6 +35,8 @@ class SakurasetManage extends Model
      */
 
     const UPDATED_AT = 'update_date';
+
+    const CREATED_AT = 'registration_date';
     /**
      * The primary key for the model.
      *
@@ -49,7 +50,7 @@ class SakurasetManage extends Model
      * @var array
      */
     protected $fillable = [
-        'member_id', 'member_id', 'registration_date', 'reviewer_id', 'reviewer_status', 'scheduled_date', 'update_date', 'registration_date', 'reviewer_id', 'reviewer_status', 'scheduled_date', 'update_date'
+        'member_id', 'member_id', 'reviewer_id', 'reviewer_status', 'scheduled_date', 'update_date', 'registration_date', 'reviewer_id', 'reviewer_status', 'scheduled_date', 'update_date'
     ];
 
     /**
@@ -67,7 +68,19 @@ class SakurasetManage extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'member_id' => 'string', 'id' => 'int', 'member_id' => 'string', 'registration_date' => 'datetime', 'reviewer_id' => 'string', 'reviewer_status' => 'int', 'scheduled_date' => 'datetime', 'update_date' => 'datetime', 'registration_date' => 'datetime', 'reviewer_id' => 'string', 'reviewer_status' => 'int', 'scheduled_date' => 'datetime', 'update_date' => 'datetime'
+        'id' => 'int', 
+        'member_id' => 'string', 
+        'id' => 'int', 
+        'member_id' => 'string', 
+        'reviewer_id' => 'string', 
+        'reviewer_status' => 'int', 
+        'scheduled_date' => 'datetime', 
+        'update_date' => 'datetime', 
+        'registration_date' => 'datetime', 
+        'reviewer_id' => 'string', 
+        'reviewer_status' => 'int', 
+        'scheduled_date' => 'datetime', 
+        'update_date' => 'datetime'
     ];
 
     /**
@@ -76,7 +89,7 @@ class SakurasetManage extends Model
      * @var array
      */
     protected $dates = [
-        'registration_date', 'scheduled_date', 'update_date', 'registration_date', 'scheduled_date', 'update_date'
+        'registration_date', 'scheduled_date', 'update_date', 'scheduled_date', 'update_date'
     ];
 
     /**

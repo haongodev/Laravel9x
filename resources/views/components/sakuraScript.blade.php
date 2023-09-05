@@ -279,5 +279,61 @@
                 }
             });
         }
+        $('.registerReviewerForm form').submit(function(e){
+            e.preventDefault();
+            var form = $(this).parents('.registerReviewerForm').find('form');
+            var member_id = form.find('.memeber').val();
+            var first_name = form.find('.first_name').val();
+            var last_name = form.find('.last_name').val();
+            var url = form.attr('action');
+            $.ajax({
+                url, 
+                data: {
+                    member_id,
+                    first_name,
+                    last_name
+                },
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: 'POST',
+                success: function(response) {
+                    if(response.success){
+                        var res = response.data[0];
+                        var fullName = res.name1+' '+res.name2;
+                        $('.result_search').val(fullName).attr('member_id',res.member_id).attr('email',res.email);
+                        $('.resultReviewerInfo .apply').removeClass('disabled');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        })
+        $('.resultReviewerInfo .apply').click(function(e){
+            var valueMember = $('.result_search').val();
+            var member_id = $('.result_search').attr('member_id');
+            var email = $('.result_search').attr('email');
+            var url = '{{ route("addMemberToReview") }}';
+            $.ajax({
+                url, 
+                data: {
+                    member_id,
+                    email
+                },
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: 'POST',
+                success: function(response) {
+                    if(response.success){
+                        alert('success');
+                        $('.result_search').val();
+                        $('.result_search').removeAttr('member_id');
+                        $('.result_search').removeAttr('email');
+                        $('.resultReviewerInfo .apply').addClass('disabled');
+                    }
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                }
+            });
+        })
     </script>
 @endpush

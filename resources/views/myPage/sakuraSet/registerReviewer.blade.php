@@ -10,27 +10,27 @@
 @section('content')
     {{ Breadcrumbs::render('registerReviewer') }}
     <div class="container registerReviewerForm">
-        <form>
+        <form action="{{ route('searchMemberToReview') }}">
             <span class="form-title">振り返り担当者検索</span>
             <div class="form-group">
                 <span>構成員番号</span>
-                <input type="text" name="member_id" class="memeber" placeholder="（完全一致）"/>
+                <input type="text" name="member_id" required class="memeber" placeholder="（完全一致）"/>
             </div>
             <div class="form-group">
                 <span>姓</span>
-                <input type="text" name="last_name" class="last_name" placeholder="（完全一致）"/>
+                <input type="text" name="last_name" required class="last_name" placeholder="（完全一致）"/>
             </div>
             <div class="form-group">
                 <span>名</span>
-                <input type="text" name="first_name" class="first_name" placeholder="（完全一致）"/>
+                <input type="text" name="first_name" required class="first_name" placeholder="（完全一致）"/>
             </div>
-            <button type="button" class="btn-eff-ora btn-hov action">検索</button>
+            <button type="submit" class="btn-eff-ora btn-hov action {{ $sakuraManage !== null && $sakuraManage->reviewer_id ? 'disabled' : '' }}">検索</button>
         </form>
     </div>
     <div class="resultReviewerInfo">
         <span class="result-title">検索結果</span>
         <input type="text" name="result" class="result_search" placeholder="（検索結果を表示）"/>
-        <button type="button" class="btn-eff-ora btn-hov apply">申請</button>
+        <button type="button" class="btn-eff-ora btn-hov apply disabled">申請</button>
     </div>
 @endsection
 @include('components.sakuraScript')

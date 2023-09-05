@@ -25,6 +25,9 @@ class SakurasetService
     public function updateSakura($dataUpdate,$where){
         return $this->sakurasetRepository->updateSakura($dataUpdate,$where);
     }
+    public function updateOrInsertSakura($dataUpdate,$where){
+        return $this->sakurasetRepository->updateOrInsertSakura($dataUpdate,$where);
+    }
     public function getReviewerbyMember($member){
         return $this->sakurasetRepository->getReviewer($member);
     }
@@ -38,5 +41,8 @@ class SakurasetService
     {
         $memberId = auth()->user()->id;
         return $this->sakurasetRepository->updateSchedule($date,$memberId);
+    }
+    public function createSakura($data){
+        return $this->sakurasetRepository->createSakura($data);
     }
 }

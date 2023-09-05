@@ -25,9 +25,9 @@
                     <table>
                         <tr>
                             <th></th>
-                            <th>スーパービジョン</th>
-                            <th>研修・学会等</th>
-                            <th>社会的活動</th>
+                            <th width="31%">スーパービジョン</th>
+                            <th width="31%">研修・学会等</th>
+                            <th width="31%">社会的活動</th>
                         </tr>
                         {{-- <tr>
                             <td rowspan="3" class="col1" align="center">

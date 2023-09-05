@@ -24,4 +24,7 @@ class UserAddInfoService
     {
         return $this->userAddInfoRepository->getByUserId($userId,$select);
     }
+    public function getMemberToReview($data){
+        return $this->userAddInfoRepository->getMemberToReview($data);
+    }
 }
