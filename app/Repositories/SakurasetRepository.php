@@ -35,6 +35,29 @@ class SakurasetRepository
             return null;
         }
     }
+    public function createSakura($data){
+        try {
+            return $this->model->create($data);
+        } catch (QueryException $exc) {
+            Log::error($exc->getMessage(), $exc->getTrace());
+            return null;
+        }
+    }
+    
+    public function updateOrInsertSakura($data,$where){
+        try {
+            $model = $this->model->where($where)->first();
+            if ($model) {
+                $model->update($data);
+                return $model;
+            } else {
+                return $this->model->create($data);
+            }
+        } catch (QueryException $exc) {
+            Log::error($exc->getMessage(), $exc->getTrace());
+            return null;
+        }
+    }
     public function getReviewer($member){
         return $this->model->with('reviewer_member:users_id,member_id,email,name1,name2')->where('member_id',$member)->first()->toArray()['reviewer_member'];
     }

@@ -65,6 +65,9 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/sakuraUpdateScheduled',[SakuraSetController::class, 'updateScheduled'])->name('sakuraUpdateScheduled');
         // A017
         Route::get('/registerReviewer',[SakuraSetController::class, 'registerReviewer'])->name('registerReviewer');
+        Route::post('/searchMemberToReview',[SakuraSetController::class, 'searchMemberToReview'])->name('searchMemberToReview');
+        Route::post('/addMemberToReview',[SakuraSetController::class, 'addMemberToReview'])->name('addMemberToReview');
+        
     });
 });
 

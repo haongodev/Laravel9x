@@ -428,8 +428,9 @@ class SakuraSetController extends Controller
         }
         return response()->json($data);
     }
-    public function registerReviewer(){$with = [
-        'made_member' => function ($query) {
+    public function registerReviewer(){
+        $with = [
+            'made_member' => function ($query) {
                 $query->select('id', 'users_id', 'name1', 'name2', 'email');
             },
             'reviewer_member' => function ($query) {
@@ -440,5 +441,57 @@ class SakuraSetController extends Controller
         return view('myPage/sakuraSet/registerReviewer',[
             'sakuraManage' => $sakuraManage,
         ]);
+    }
+    public function searchMemberToReview(Request $request){
+        $dataAll = $request->all();
+        $member = $this->userAddInfoService->getMemberToReview($dataAll);
+        $result = [];
+        $data['success'] = false;
+        if(count($member) > 1){
+            $member = $member->toArray();
+            $filteredData = array_filter($member, function ($item) use ($dataAll) {
+                return strpos($item['name1'], $dataAll['last_name']) !== false;
+            });
+            $result = array_values($filteredData);
+            if(count($result) > 1){
+                $result = $result[0];
+            }
+            $data['data'] = $result;
+            $data['success'] = true;
+        }else{
+            $data['data'] = $member->toArray();
+            $data['success'] = true;
+        }
+        return response()->json($data);
+    }
+    public function addMemberToReview(Request $request){
+        $dataAll = $request->all();
+        $data['success'] = false;
+        $checkSakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id]);
+        if($checkSakuraManage){
+            $checkSakuraManage->update([
+                'reviewer_id' => $dataAll['member_id'],
+                'reviewer_status' => 1,
+            ]);        
+            $data['success'] = true;
+        }else{
+            $data['success'] = true;
+            $reviewer = $this->sakurasetService->createSakura([
+                'member_id' => auth()->user()->id,
+                'reviewer_id' => $dataAll['member_id'],
+                'reviewer_status' => 1,
+            ]);
+        }
+        $emailConfig = ['to' => $dataAll['email'],'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer];
+        $view = 'email.sakuraSet.registerReviewer';
+        if(!view()->exists($view)){
+            $data['message'] = 'Template Email do not exist';
+        }else{
+            $status = Mail::send(new SendMail($view, $emailConfig));
+            if(!$status){
+                $data['message'] = 'send email failed';
+            }
+        }
+        return response()->json($data);
     }
 }
