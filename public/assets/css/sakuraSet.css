@@ -168,9 +168,9 @@
     min-width: 590pt;
     cursor: pointer;
 }
-.yourTry .button-list button:nth-last-child(1){
+/* .yourTry .button-list button:nth-last-child(1){
     background: #FF6666 !important;
-}
+} */
 .yourTry .button-list button a{
     text-decoration: none;
     color: #fff;
@@ -278,4 +278,89 @@
     width: 50px;
     height: 50px;
     cursor: pointer;
+}
+.registerReviewerForm {
+    border: 1px solid #000000;
+    border-radius: 10px;
+}
+.registerReviewerForm form{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.registerReviewerForm form .form-group{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+.registerReviewerForm form .form-title{
+    color:#fff;
+    font-size: 24pt;
+    text-align: center;
+    background-color: #3399FF;
+    width: fit-content;
+    padding: 10px 50px;
+    border-radius: 40px;
+    align-self: center;
+    margin-bottom: 40px;
+}
+.registerReviewerForm form .form-group span{
+    color:#fff;
+    font-size: 24pt;
+    text-align: center;
+    background-color: #3399FF;
+    padding: 10px 50px;
+    border-radius: 40px;
+    width: 25%;
+}
+.registerReviewerForm form .form-group input{
+    width: 55%;
+    border-radius: 6px;
+    font-size: 18pt;
+}
+.registerReviewerForm form .action{
+    width: fit-content;
+    align-self: center;
+    font-size: 22pt;
+    color: #fff;
+    background: #FFB366;
+    border: unset;
+    border-radius: 40px;
+    padding: 6px 40px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.resultReviewerInfo{
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+.resultReviewerInfo .result-title{
+    color: #fff;
+    font-size: 24pt;
+    text-align: center;
+    background-color: #3399FF;
+    padding: 10px 50px;
+    border-radius: 40px;
+    margin-bottom: 40px;
+    width: 50%;
+    align-self: center;
+}
+.resultReviewerInfo input{
+    font-size: 24pt;
+    width: 100%;
+    height: 51pt;
+    border-radius: 5px;
+}
+.resultReviewerInfo .apply{
+    width: fit-content;
+    align-self: center;
+    font-size: 22pt;
+    color: #fff;
+    background: #FFB366;
+    border: unset;
+    border-radius: 40px;
+    padding: 6px 40px;
+    cursor: pointer;
+    margin-top: 100px;
 }

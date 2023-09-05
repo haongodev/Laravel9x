@@ -63,6 +63,8 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/updateShareInitiativeTable',[SakuraSetController::class, 'updateShareInitiativeTable'])->name('updateShareInitiativeTable');
         Route::post('/sakuraRemoveInitiativeTable',[SakuraSetController::class, 'sakuraRemoveInitiativeTable'])->name('sakuraRemoveInitiativeTable');
         Route::post('/sakuraUpdateScheduled',[SakuraSetController::class, 'updateScheduled'])->name('sakuraUpdateScheduled');
+        // A017
+        Route::get('/registerReviewer',[SakuraSetController::class, 'registerReviewer'])->name('registerReviewer');
     });
 });
 

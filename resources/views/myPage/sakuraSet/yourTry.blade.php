@@ -15,7 +15,7 @@
             <button type="button" class="open-A013 btn-eff-ora btn-hov">フェイスシート（研鑽計画）を作成・保存・共有する</button>
             <button type="button" class="open-A014 btn-eff-ora btn-hov">振り返りシートを作成・保存・共有する</button>
             <button type="button" class="open-A015 btn-eff-ora btn-hov">さくらセット取り組み表を作成・保存・共有する</button>
-            <button type="button" class="open-A016 btn-eff-red btn-hov">更新研修フェイスシート（研鑽計画）を作成・提出する</button>
+            {{-- <button type="button" class="open-A016 btn-eff-red btn-hov">更新研修フェイスシート（研鑽計画）を作成・提出する</button> --}}
         </div>
     </div>
 

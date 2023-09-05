@@ -86,7 +86,7 @@ class AnswerManageRepository
         ->join('answer_info', function ($q){
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
         })
-        ->select('answer_info.effective_flg','answer_info.title','answer_info.answer','answer_manage.registration_year','answer_manage.type_native_id')
+        ->select('answer_info.effective_date_flg','answer_info.title','answer_info.answer','answer_manage.registration_year','answer_manage.type_native_id')
         ->where('answer_manage.member_id', $memberId)
         ->whereIn('answer_manage.type_native_id', [0,1,2])
         ->whereBetween('answer_manage.registration_date',[$from,$to])
