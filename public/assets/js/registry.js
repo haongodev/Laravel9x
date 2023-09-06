@@ -204,19 +204,16 @@ function validate_required(form)
 function validate_view_video(form)
 {
     var form_id = form.attr('id');
-    $('#'+form_id).serialize();
+    var data = $('#'+form_id).serialize();
     $.ajax({
         type: "post",
-        url: $('#urlGetLinkQuestion').val(),
+        url: $('#urlValidateViewVideo').val(),
         cache: false,
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        data: {question_setting_id: current_id},
+        data: data,
         success: function (data) {
+            console.log(data);
 
-            if(data.isQuestionInput){
-                $('.question-link-id-'+current_id).closest('.input-group').addClass('question-input')
-            }
-            $('.question-link-id-'+current_id).append(data.html)
         },
     });
     return true;

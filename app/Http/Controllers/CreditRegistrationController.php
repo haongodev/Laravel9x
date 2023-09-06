@@ -336,4 +336,11 @@ class CreditRegistrationController extends Controller
         }
         return $returnHTML;
     }
+
+    public function validateViewVideo(Request $request)
+    {
+        $formData = $request->get('question',[]);
+        $questionSettingIds = array_keys($formData);
+        $questionSettingData = $this->questionSettingService->getByQuestionId();
+    }
 }
