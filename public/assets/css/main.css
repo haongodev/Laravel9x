@@ -36,6 +36,9 @@ body{
     background: #CCCCCC !important;
     pointer-events: none !important;
 }
+button.disabled{
+    box-shadow: 0 5px 0 #191b1e;
+}
 .flex-between{
     display: flex;
     justify-content: space-between;
