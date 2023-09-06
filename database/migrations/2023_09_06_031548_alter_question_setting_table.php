@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('question_settings', function (Blueprint $table) {
-            $table->tinyInteger('viewing_check_flg')->default(0);
-            $table->tinyInteger('disp_flg');
+            $table->tinyInteger('viewing_check_flg')->default(0)->after('terminal_flg');
+            $table->tinyInteger('disp_flg')->after('terminal_flg');
         });
     }
 

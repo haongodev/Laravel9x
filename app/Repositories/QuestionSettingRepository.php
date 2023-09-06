@@ -49,7 +49,7 @@ class QuestionSettingRepository
 
     public function getViewCheckFlagTrueByIds(array $ids = [])
     {
-        return $this->model->whereIn('id',$ids)->where('viewing_check_flg',1)->get;
+        return $this->model->whereIn('id',$ids)->where('viewing_check_flg',1)->get();
     }
 
 }

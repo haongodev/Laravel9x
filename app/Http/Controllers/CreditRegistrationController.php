@@ -342,5 +342,6 @@ class CreditRegistrationController extends Controller
         $formData = $request->get('question',[]);
         $questionSettingIds = array_keys($formData);
         $questionSettingData = $this->questionSettingService->getViewCheckFlagTrueByIds($questionSettingIds);
+        dd($questionSettingData);
     }
 }
