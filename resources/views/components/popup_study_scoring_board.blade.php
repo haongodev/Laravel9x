@@ -453,7 +453,12 @@
         var htmlItem = items.findIndex((item) => item.type_native_id === value && !item.hasOwnProperty('map'));
         if(htmlItem >= 0){
             items[htmlItem]['map'] = true;
-            return '<td class="'+className+'">'+(parseInt(items[htmlItem].effective_date_flg) === 1 ? items[htmlItem].answer : '' )+'<br>[内容]<br>'+items[htmlItem].answer+'</td>';
+            var titleAnswer = '';
+            if(parseInt(items[htmlItem].effective_date_flg) === 1){
+                titleAnswer = new Date(items[htmlItem].answer);
+                titleAnswer = titleAnswer.getFullYear()+'年 '+(titleAnswer.getMonth() + 1)+'月 '+titleAnswer.getDate()+'日'
+            }
+            return '<td class="'+className+'">'+titleAnswer+'<br>[内容]<br>'+items[htmlItem].answer+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }
