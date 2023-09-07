@@ -56,6 +56,7 @@ class AnswerManageRepository
         return $result;
     }
     public function sumCoreBwYear($from,$to){
+        $date = [$from,$to];
         $memberId = auth()->user()->id;
         return $this->model
         ->join('answer_info', function ($q){
@@ -63,12 +64,16 @@ class AnswerManageRepository
         })
         ->select('answer_manage.registration_year','answer_manage.type_native_id', \DB::raw('SUM(answer_info.score) as total_score'))
         ->where('answer_manage.member_id', $memberId)
+        ->where(function ($q) use($date) {
+            $q->where('answer_info.effective_date_flg', 1)
+              ->whereBetween('answer_info.answer', [$date[0],$date[1]]);
+        })
         ->whereIn('answer_manage.type_native_id', [0,1,2])
-        ->whereBetween('answer_manage.registration_date',[$from,$to])
         ->groupBy('answer_manage.registration_year','answer_manage.type_native_id')->get();
     }
     public function sumCoreBwYearGoalStudy($from,$to){
         $memberId = auth()->user()->id;
+        $date = [$from,$to];
         return $this->model
         ->join('answer_info', function ($q){
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
@@ -77,23 +82,30 @@ class AnswerManageRepository
         ->where('answer_manage.member_id', $memberId)
         ->whereIn('answer_manage.type_native_id', [0,1,2])
         ->where('answer_info.title', 'like', '%研鑽目的%')
+        ->where(function ($q) use($date) {
+            $q->where('answer_info.effective_date_flg', 1)
+              ->whereBetween('answer_info.answer', [$date[0],$date[1]]);
+        })
         ->whereBetween('answer_manage.registration_date',[$from,$to])
         ->groupBy('answer_manage.registration_year','answer_info.answer','answer_info.title')->get();
     }
     public function sumScoreBwYearForPattern($from,$to){
         $memberId = auth()->user()->id;
+        $date = [$from,$to];
         return $this->model
         ->join('answer_info', function ($q){
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
         })
-        ->select('answer_info.effective_date_flg','answer_info.title','answer_info.answer','answer_manage.registration_year','answer_manage.type_native_id')
+        ->select('answer_info.effective_date_flg','answer_info.disp_flg','answer_info.title','answer_info.answer','answer_manage.registration_year','answer_manage.type_native_id')
         ->where('answer_manage.member_id', $memberId)
         ->whereIn('answer_manage.type_native_id', [0,1,2])
-        ->whereBetween('answer_manage.registration_date',[$from,$to])
         ->where(function ($q) {
-            $q->where('answer_info.title', 'like', '%実施日%')
-              ->orWhere('answer_info.title', 'like', '%修了日%')
-              ->orWhere('answer_info.title', 'like', '%内容%');
+            $q->where('answer_info.effective_date_flg', 1)
+              ->orWhere('answer_info.disp_flg', 1);
+        })
+        ->where(function ($q) use($date) {
+            $q->where('answer_info.effective_date_flg', 1)
+              ->whereBetween('answer_info.answer', [$date[0],$date[1]]);
         })
         ->orderBy('answer_manage.type_native_id', 'ASC')->orderBy('answer_manage.registration_year', 'ASC')->get();
     }
