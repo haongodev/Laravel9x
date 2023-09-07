@@ -454,11 +454,15 @@
         if(htmlItem >= 0){
             items[htmlItem]['map'] = true;
             var titleAnswer = '';
+            var answerWdispl = '';
             if(parseInt(items[htmlItem].effective_date_flg) === 1){
                 titleAnswer = new Date(items[htmlItem].answer);
                 titleAnswer = titleAnswer.getFullYear()+'年 '+(titleAnswer.getMonth() + 1)+'月 '+titleAnswer.getDate()+'日'
             }
-            return '<td class="'+className+'">'+titleAnswer+'<br>[内容]<br>'+items[htmlItem].answer+'</td>';
+            if(parseInt(items[htmlItem].disp_flg) === 1){
+                answerWdispl = items[htmlItem].answer
+            }
+            return '<td class="'+className+'">'+titleAnswer+'<br>[内容]<br>'+answerWdispl+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }
