@@ -47,4 +47,9 @@ class QuestionSettingRepository
         return $this->model->whereIn('id',$ids)->orderByRaw(DB::raw("FIELD(id, " . implode(',', $ids) . ")"))->get()->keyBy('id');
     }
 
+    public function getViewCheckFlagTrueByIds(array $ids = [])
+    {
+        return $this->model->whereIn('id',$ids)->where('viewing_check_flg',1)->get();
+    }
+
 }

@@ -336,4 +336,20 @@ class CreditRegistrationController extends Controller
         }
         return $returnHTML;
     }
+
+    public function validateViewVideo(Request $request)
+    {
+        $formData = $request->get('question',[]);
+        $typeNativeId = $request->get('type_native_id',0);
+        $videoName = '';
+        $isViewCheck = false;
+        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($formData);
+        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$answerVideo);
+        if($answerInfoData){
+            $videoName = $answerInfoData->answer;
+            $isViewCheck = true;
+        }
+
+        return response()->json(array('success' => true, 'isViewCheck' => $isViewCheck,'videoName'=>$videoName));
+    }
 }
