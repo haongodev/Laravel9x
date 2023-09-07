@@ -127,18 +127,16 @@ function getQuestionLink(current_id) {
 $('.submit-btn').click(function () {
     var form = $(this).closest('form');
     var form_id = form.attr('id');
-    var required = validate_required(form);
-    var view_video = validate_view_video(form)
-
-    if(!required){
-        toastr.options.timeOut = 3000;
-        toastr.info('未回答の項目があります。')
-    }else if(!view_video){
-        toastr.options.timeOut = 3000;
-        toastr.info('（video name※）は既に視聴している動画です。')
+   // var required = validate_required(form);
+   // var not_view_video = validate_view_video(form)
+    if(!validate_required(form)){
+        return false;
+    }else if(!validate_view_video(form)){
+        return  false;
     }else{
         $('#'+form_id).submit();
     }
+
 
 })
 
@@ -198,6 +196,10 @@ function validate_required(form)
 
         console.log(question_id, required);
     });
+    if(!validate){
+        toastr.options.timeOut = 3000;
+        toastr.info('未回答の項目があります。')
+    }
     return validate
 }
 
@@ -205,16 +207,26 @@ function validate_view_video(form)
 {
     var form_id = form.attr('id');
     var data = $('#'+form_id).serialize();
+
     $.ajax({
+        'async': false,
         type: "post",
         url: $('#urlValidateViewVideo').val(),
         cache: false,
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data: data,
         success: function (data) {
-            console.log(data);
+            if(data.isViewCheck){
+                toastr.options.timeOut = 3000;
+                toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
+                validate =  false;
+            }else{
+                validate = true;
+
+            }
 
         },
     });
-    return true;
+    return validate
+
 }

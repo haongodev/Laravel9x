@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::table('question_settings', function (Blueprint $table) {
             $table->tinyInteger('viewing_check_flg')->default(0)->after('terminal_flg');
-            $table->tinyInteger('disp_flg')->after('terminal_flg');
         });
     }
 
@@ -28,7 +27,6 @@ return new class extends Migration
     {
         Schema::table('question_settings', function (Blueprint $table) {
             $table->dropColumn('viewing_check_flg');
-            $table->dropColumn('disp_flg');
         });
     }
 };
