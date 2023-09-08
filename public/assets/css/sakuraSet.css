@@ -143,7 +143,7 @@
 }
 .popup-wrapper .layout-popup .popup-content .header-content button{
     color: #fff;
-    border-radius: 50px;
+    border-radius: 15px;
     border: unset;
     padding: 10px 50px;
     cursor: pointer;
@@ -180,6 +180,7 @@
 }
 .popup-a013 .header-content > button:nth-child(1),.popup-a014 .header-content > button:nth-child(1),.popup-a015 .header-content > button:nth-child(1),.a012-popup-child .header-content > button:nth-child(1),.a015-popup-child .header-content > button:nth-child(1){
     background: #3399FF!important;
+    border-radius: 15px !important;
 }
 
 .button-link a{
@@ -300,7 +301,7 @@
     background-color: #3399FF;
     width: fit-content;
     padding: 10px 50px;
-    border-radius: 40px;
+    border-radius: 15px;
     align-self: center;
     margin-bottom: 40px;
 }
@@ -310,7 +311,7 @@
     text-align: center;
     background-color: #3399FF;
     padding: 10px 50px;
-    border-radius: 40px;
+    border-radius: 15px;
     width: 25%;
 }
 .registerReviewerForm form .form-group input{
@@ -341,7 +342,7 @@
     text-align: center;
     background-color: #3399FF;
     padding: 10px 50px;
-    border-radius: 40px;
+    border-radius: 15px;
     margin-bottom: 40px;
     width: 50%;
     align-self: center;
