@@ -73,5 +73,10 @@ class QuestionSettingService
         }
         return $data;
     }
+
+    public function getViewCheckFlagTrueByIds( array $ids = [])
+    {
+        return $this->questionSettingRepository->getViewCheckFlagTrueByIds($ids);
+    }
 }
 

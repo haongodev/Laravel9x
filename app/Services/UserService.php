@@ -24,4 +24,9 @@ class UserService
     {
         return $this->userRepository->getByMemberId($memberId);
     }
+
+    public function getByLoginId($loginId = 0)
+    {
+        return $this->userRepository->getByLoginId($loginId);
+    }
 }

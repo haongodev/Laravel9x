@@ -127,10 +127,30 @@ function getQuestionLink(current_id) {
 $('.submit-btn').click(function () {
     var form = $(this).closest('form');
     var form_id = form.attr('id');
+   // var required = validate_required(form);
+   // var not_view_video = validate_view_video(form)
+    if(!validate_required(form)){
+        return false;
+    }else if(!validate_view_video(form)){
+        return  false;
+    }else{
+        $('#'+form_id).submit();
+    }
+
+
+})
+
+function removeAlertInputMethod9(option_id){
+    $('#checkbox'+option_id).removeClass('alert-input-method-9');
+    $('#checkbox'+option_id).attr('alert-title','');
+}
+
+function validate_required(form)
+{
     var validate = true;
     form.find('.title-required-1').each(function () {
         $(this).removeClass('text-danger');
-        validate_required = true;
+        var required = true;
         var question_id = $(this).data('question-id');
         var this_input = $('input[name="question[' + question_id + ']"]');
         var this_checkbox = $('input[name="question[' + question_id + '][]"]');
@@ -145,47 +165,68 @@ $('.submit-btn').click(function () {
                 (this_type == 'radio' && !this_input.is(':checked')) ||
                 (this_type == 'date' && this_input.val().trim() == '')
             ) {
-                validate_required = false;
+                required = false;
                 validate = false;
             }
         } else if (this_checkbox.html() != undefined) {
             if (!this_checkbox.is(':checked')) {
-                validate_required = false;
+                required = false;
                 validate = false;
             }
         } else if (this_textarea.html() != undefined) {
             if (this_textarea.val().trim() == '') {
-                validate_required = false;
+                required = false;
                 validate = false;
             }
         } else if (this_select.html() != undefined) {
             if (this_select.val() == '') {
-                validate_required = false;
+                required = false;
                 validate = false;
             }
 
         }else if(this_date_start.html() != undefined){
             if(this_date_start.val() == '' || this_date_end.val() == ''){
-                validate_required = false;
+                required = false;
                 validate = false;
             }
         }
-        if(!validate_required){
+        if(!required){
             $(this).addClass('text-danger');
         }
 
-        console.log(question_id, validate_required);
+        console.log(question_id, required);
     });
-
-    if(validate){
-        $('#'+form_id).submit();
-    }else{
+    if(!validate){
         toastr.options.timeOut = 3000;
         toastr.info('未回答の項目があります。')
     }
-})
+    return validate
+}
 
-function removeAlertInputMethod9(option_id){
-    $('#checkbox'+option_id).removeClass('alert-input-method-9');
-    $('#checkbox'+option_id).attr('alert-title','');
+function validate_view_video(form)
+{
+    var form_id = form.attr('id');
+    var data = $('#'+form_id).serialize();
+
+    $.ajax({
+        'async': false,
+        type: "post",
+        url: $('#urlValidateViewVideo').val(),
+        cache: false,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data: data,
+        success: function (data) {
+            if(data.isViewCheck){
+                toastr.options.timeOut = 3000;
+                toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
+                validate =  false;
+            }else{
+                validate = true;
+
+            }
+
+        },
+    });
+    return validate
+
 }

@@ -7,22 +7,31 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
     <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
          data-current-question-id="{{$questionSetting->id}}">
         <div class="w-100 group-control">
-            <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
+            <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}"
+                   data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <div class="w-75 date-group">
-                <input class="date-register" type="date" name="question[{{$questionSetting->id}}][start]"
-                       value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}"/>
+                <div class="date-container">
+                    <input class="date-register datepicker" type="text" name="question[{{$questionSetting->id}}][start]"
+                           value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}"/>
+                    <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
+                </div>
                 <span>~</span>
-                <input class="date-register" type="date" name="question[{{$questionSetting->id}}][end]"
-                       value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[1])) : ''}}"/>
+                <div class="date-container">
+                    <input class="date-register datepicker" type="text" name="question[{{$questionSetting->id}}][end]"
+                           value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[1])) : ''}}"/>
+                    <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div class="question-link question-link-id-{{$questionSetting->id}}" data-current-question-id="{{$questionSetting->id}}">
+    <div class="question-link question-link-id-{{$questionSetting->id}}"
+         data-current-question-id="{{$questionSetting->id}}">
 
     </div>
 </div>
+<script src="{{asset('assets/js/date.js')}}"></script>
 <script>
-    $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function (){
+    $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function () {
         var this_choose = $(this);
         var current_id = this_choose.data('current-question-id')
         getQuestionLink(current_id)

@@ -133,6 +133,8 @@ class CreditRegistrationService
             $dataInsertInfo[$index]['input_method'] = $questionSetting->input_method;
             $dataInsertInfo[$index]['terminal_flg'] = $questionSetting->terminal_flg ? 1: 0;
             $dataInsertInfo[$index]['effective_date_flg'] = $questionSetting->effective_date_flg;
+            $dataInsertInfo[$index]['disp_flg'] = $questionSetting->disp_flg;
+            $dataInsertInfo[$index]['viewing_check_flg'] = $questionSetting->viewing_check_flg;
             $tempAnswer = '';
             $score = 0;
 
@@ -302,6 +304,52 @@ class CreditRegistrationService
 
         return date('m',strtotime($date)) > 3 ? date('Y',strtotime($date)) : date('Y',strtotime('-1 year', strtotime($date))) ;
 
+    }
+
+    public function filterAnswerQuestionViewVideo($formData)
+    {
+        $answerArr = [];
+        $questionSettingIds = array_keys($formData);
+        $questionFlagVideo = $this->questionSettingRepository->getViewCheckFlagTrueByIds($questionSettingIds)->keyBy('id');
+
+        //$questionFlagVideoId = $this->questionSettingRepository->getViewCheckFlagTrueByIds($questionSettingIds)->pluck('id')->toArray();
+        foreach ($questionFlagVideo as $id => $questionSetting){
+            $tempAnswer = '';
+            if (!in_array($questionSetting->input_method, config('constants.questionBranching'))) {
+                $answer = $formData[$id];
+                if (in_array($questionSetting->input_method, [0, 1])) {
+                    $answerArr[] = $answer;
+                } elseif ($questionSetting->input_method == 7) {
+                    $answerArr[] = date('Y-m-d H:i:s',strtotime($answer));
+                } elseif ($questionSetting->input_method == 8) {
+                    $answerArr[] = date('Y-m-d H:i:s',strtotime($answer['start'])).' , '.date('Y-m-d H:i:s',strtotime($answer['end']));
+                }
+            }else{
+                $answer = $formData[$id];
+                if (in_array($questionSetting->input_method, [2, 3, 6])) {
+                    foreach ($questionSetting->question_option_setting as  $questionOption) {
+                        if(in_array($questionOption->id,$answer)){
+                            $comma = $tempAnswer ? ',' : '';
+                            $tempAnswer .= $comma.$questionOption->option_name;
+                        }
+                    }
+                } else {
+                    foreach ($questionSetting->question_option_setting as  $questionOption) {
+                        if ($questionOption->id == $answer) {
+
+                            $tempAnswer = $questionOption->option_name;
+                        }
+                    }
+                }
+                $answerArr[] = $tempAnswer;
+            }
+        }
+
+        return $answerArr;
+    }
+    public function checkViewVideo($typeNativeId = 0, $answerVideo = [])
+    {
+        return $this->answerManageRepository->checkViewVideo($typeNativeId,$answerVideo);
     }
 
 }

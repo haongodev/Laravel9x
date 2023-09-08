@@ -24,5 +24,14 @@ class UserRepository
             ->get()->first();
     }
 
+    public function getByLoginId($loginId =0)
+    {
+        return $this->model
+            ->join('users_add_info', function ($q) {
+                $q->on('users_add_info.users_id', '=', 'users.id');
+            })->where('login_id', $loginId)->where('active_flg', true)
+            ->get()->first();
+    }
+
 
 }
