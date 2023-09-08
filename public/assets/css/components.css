@@ -125,7 +125,7 @@
     font-size: 24pt;
     border: unset;
     color: #fff;
-    border-radius: 30px;
+    border-radius: 15px;
     padding: 5px 50px;
 }
 .popup_filter_scoring_board .layout-popup .popup-content .scoring_board_content .input-group{
@@ -182,7 +182,7 @@
     border: unset;
     background: #FF9933;
     color: #fff;
-    border-radius: 50px;
+    border-radius: 15px;
     padding: 7px 80px;
     margin-top: 5px;
     margin-bottom: 10px;
@@ -232,7 +232,7 @@
     font-size: 24pt;
     border: unset;
     color: #fff;
-    border-radius: 30px;
+    border-radius: 15px;
     padding: 5px 50px;
 }
 .popup_study_scoring_board .layout-popup .popup-top .btn-title-chart1,.btn-title-chart2{
