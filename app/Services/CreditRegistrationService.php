@@ -133,6 +133,8 @@ class CreditRegistrationService
             $dataInsertInfo[$index]['input_method'] = $questionSetting->input_method;
             $dataInsertInfo[$index]['terminal_flg'] = $questionSetting->terminal_flg ? 1: 0;
             $dataInsertInfo[$index]['effective_date_flg'] = $questionSetting->effective_date_flg;
+            $dataInsertInfo[$index]['disp_flg'] = $questionSetting->disp_flg;
+            $dataInsertInfo[$index]['viewing_check_flg'] = $questionSetting->viewing_check_flg;
             $tempAnswer = '';
             $score = 0;
 
