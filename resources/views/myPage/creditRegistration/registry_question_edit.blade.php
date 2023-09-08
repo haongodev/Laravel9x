@@ -41,8 +41,11 @@
             <div class="w-100 group-control">
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group second">
-                    <input type="date" name="question[{{$questionSetting->id}}]"
-                           value="{{$answerData->answer}}"/>
+                    <div class="date-container">
+                        <input type="text" class="datepicker" name="question[{{$questionSetting->id}}]"
+                               value="{{$answerData->answer}}"/>
+                        <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
         </div>
