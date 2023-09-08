@@ -42,7 +42,7 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-        $userInfo = UsersAddInfo::where('member_id',$this->input('id'))->first();
+        $userInfo = UsersAddInfo::where('login_id',$this->input('id'))->first();
         $credentials = [
             'id'=>$userInfo->users_id ?? '',
             'password' => $this->input('password'),

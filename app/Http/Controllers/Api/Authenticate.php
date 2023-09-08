@@ -33,7 +33,7 @@ class Authenticate
         $memberId = $request->get('membership_no');
         $token = $request->bearerToken();
 
-        $user = $this->userService->getByMemberId($memberId);
+        $user = $this->userService->getByLoginId($memberId);
         $tokenUser = md5($user->member_id ?? '');
         if ($token == $tokenUser) {
             $url =  route('api_login',['id'=>$user->users_id, 'token'=>$user->password]);
