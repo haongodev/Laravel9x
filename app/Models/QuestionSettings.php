@@ -93,6 +93,6 @@ class QuestionSettings extends Model
 
     public function question_option_setting()
     {
-        return $this->hasMany(QuestionOptionsSettings::class,'question_settings_id','id');
+        return $this->hasMany(QuestionOptionsSettings::class,'question_settings_id','id')->orderBy('sort_order');
     }
 }
