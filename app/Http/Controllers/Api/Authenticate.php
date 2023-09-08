@@ -34,7 +34,7 @@ class Authenticate
         $token = $request->bearerToken();
 
         $user = $this->userService->getByLoginId($memberId);
-        $tokenUser = md5($user->member_id ?? '');
+        $tokenUser = md5($user->login_id ?? '');
         if ($token == $tokenUser) {
             $url =  route('api_login',['id'=>$user->users_id, 'token'=>$user->password]);
             return response()->json(['url' => $url]);
