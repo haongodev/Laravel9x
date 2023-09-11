@@ -117,8 +117,10 @@ class AnswerManageRepository
         return $this->model->where('id',$id)->get()->first();
     }
 
-    public function checkViewVideo($typeNativeId = 0, $answerVideo = [])
+    public function checkViewVideo($typeNativeId = 0, $condition = [])
     {
+        $answerVideo = $condition['answerVideo'] ?? [];
+        $registerYear = $condition['registerYear'] ?? 0;
         $memberId = auth()->user()->id;
         return  $this->model->join('answer_info', function ($q) {
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
@@ -126,23 +128,8 @@ class AnswerManageRepository
             ->where('answer_manage.type_native_id',$typeNativeId)
             ->where('answer_manage.member_id',$memberId)
             ->where('answer_info.viewing_check_flg',1)
-            ->whereRaw('
-            (CASE
-	                    WHEN effective_date_flg = 1 AND input_method =8  THEN
-                            if(MONTH(STR_TO_DATE(SUBSTRING_INDEX (answer,",",1),"%Y-%m-%d")) > 3,
-                            YEAR(STR_TO_DATE(SUBSTRING_INDEX (answer,",",1),"%Y-%m-%d")),
-                            YEAR(DATE_SUB(STR_TO_DATE(SUBSTRING_INDEX (answer,",",1),"%Y-%m-%d"),INTERVAL 1 YEAR)))
-	                    WHEN effective_date_flg = 1 AND input_method =7  THEN
-		                    if(MONTH(STR_TO_DATE(`answer`,"%Y-%m-%d"))>3 ,
-		                    YEAR(STR_TO_DATE(`answer`,"%Y-%m-%d")),
-		                    YEAR(DATE_SUB(STR_TO_DATE(`answer`,"%Y-%m-%d"),INTERVAL 1 YEAR))
-		                    )
-
-                        END ) = answer_manage.registration_year
-            ')
+            ->where('answer_manage.registration_year',$registerYear)
             ->whereIn('answer_info.answer',$answerVideo)->get()->first();
         ;
-
-
     }
 }
