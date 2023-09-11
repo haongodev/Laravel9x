@@ -309,7 +309,7 @@
             });
         })
         $('.resultReviewerInfo .apply').click(function(e){
-            var valueMember = $('.result_search').val();
+            var name_reviewer = $('.result_search').val();
             var member_id = $('.result_search').attr('member_id');
             var email = $('.result_search').attr('email');
             var url = '{{ route("addMemberToReview") }}';
@@ -328,6 +328,8 @@
                         $('.result_search').removeAttr('member_id');
                         $('.result_search').removeAttr('email');
                         $('.resultReviewerInfo .apply').addClass('disabled');
+                        toastr.options.timeOut = 3000000;
+                        toastr.info('('+name_reviewer+') に振り返り担当を申請しました。');
                     }
                 },
                 error: function(xhr) {

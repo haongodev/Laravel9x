@@ -16,14 +16,3 @@ $('.close-icon,.btn-popup-decline').click(function (e){
     $('.btn-popup-accept').removeAttr('last-confirm');
     $('body').removeClass('ovf-hidden');
 })
-
-$('.logoutForm').submit(function (e) { 
-    if (window.opener && !window.opener.closed) {
-        var event = new Event('logoutMemberNow');
-        window.opener.dispatchEvent(event);
-        window.close();
-    }
-});
-window.addEventListener('logoutMemberNow', function (event) {
-    $('.logoutForm').submit();
-});
