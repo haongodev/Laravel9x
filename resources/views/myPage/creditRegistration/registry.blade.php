@@ -31,7 +31,7 @@
                 @include('myPage.creditRegistration.registry_question')
                 @if($isHasQuestion)
                     <div class="action">
-                        <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov">確認</button>
+                        <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov hidden">確認</button>
                         <button type="button" class="decline-btn btn-eff-ora btn-hov">戻る</button>
                     </div>
                 @endif

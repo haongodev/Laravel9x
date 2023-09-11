@@ -28,7 +28,7 @@
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
                 @include('myPage.creditRegistration.registry_question_edit')
                 <div class="action">
-                    <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov">確認</button>
+                    <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov hidden">確認</button>
                     <button type="button" class="decline-btn btn-eff-ora btn-hov">戻る</button>
                 </div>
             </form>
