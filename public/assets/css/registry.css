@@ -220,4 +220,6 @@ textarea {
 
 .form-registry .date-container input{
     width:100% !important;
+    margin-left: 0px !important;
 }
+
