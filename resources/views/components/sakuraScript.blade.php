@@ -139,7 +139,7 @@
                             type: 'POST',
                             success: function(response) {
                                 if(response.success){
-                                    
+
                                 }
                             },
                             error: function(xhr) {
@@ -149,7 +149,7 @@
                     }
                     if(isload){
                         $.ajax({
-                            url: '{{ route("sakuraUpdate") }}', 
+                            url: '{{ route("sakuraUpdate") }}',
                             data: data,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             type: 'POST',
@@ -175,7 +175,7 @@
         }
         $('body').on('click','.btn-popup-agree_to_register_pic',function(){
             $.ajax({
-                url: '{{ route("sakuraUpdate") }}', 
+                url: '{{ route("sakuraUpdate") }}',
                 data: {
                     reviewer_status : 2,
                     view:'agree_to_register_pic'
@@ -184,7 +184,7 @@
                 type: 'POST',
                 success: function(response) {
                     if(response.success){
-                        
+
                     }
                 },
                 error: function(xhr) {
@@ -262,7 +262,7 @@
         }
         function backupWithNewSWP(url,data){
             $.ajax({
-                url, 
+                url,
                 data,
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: 'POST',
@@ -271,7 +271,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if(response.success){
-                        
+
                     }
                 },
                 error: function(xhr) {
@@ -282,14 +282,14 @@
         $('.registerReviewerForm form').submit(function(e){
             e.preventDefault();
             var form = $(this).parents('.registerReviewerForm').find('form');
-            var member_id = form.find('.memeber').val();
+            var login_id = form.find('.login_id').val();
             var first_name = form.find('.first_name').val();
             var last_name = form.find('.last_name').val();
             var url = form.attr('action');
             $.ajax({
-                url, 
+                url,
                 data: {
-                    member_id,
+                    login_id,
                     first_name,
                     last_name
                 },
@@ -297,10 +297,12 @@
                 type: 'POST',
                 success: function(response) {
                     if(response.success){
-                        var res = response.data[0];
-                        var fullName = res.name1+' '+res.name2;
-                        $('.result_search').val(fullName).attr('member_id',res.member_id).attr('email',res.email);
-                        $('.resultReviewerInfo .apply').removeClass('disabled');
+                        if (response.data[0]){
+                            var res = response.data[0];
+                            var fullName = res.name1+' '+res.name2;
+                            $('.result_search').val(fullName).attr('login_id',res.login_id).attr('email',res.email);
+                            $('.resultReviewerInfo .apply').removeClass('disabled');
+                        }
                     }
                 },
                 error: function(xhr) {
@@ -314,7 +316,7 @@
             var email = $('.result_search').attr('email');
             var url = '{{ route("addMemberToReview") }}';
             $.ajax({
-                url, 
+                url,
                 data: {
                     member_id,
                     email
