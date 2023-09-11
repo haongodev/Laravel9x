@@ -339,12 +339,21 @@ class CreditRegistrationController extends Controller
 
     public function validateViewVideo(Request $request)
     {
-        $formData = $request->get('question',[]);
+        $questionFormData = $request->get('question',[]);
         $typeNativeId = $request->get('type_native_id',0);
         $videoName = '';
         $isViewCheck = false;
-        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($formData);
-        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$answerVideo);
+        $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+        $questionSettingRegistryData = $this->historyQuestionSettingService->getByIds($questionSettingIds);
+        $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
+
+        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);
+        $condition = [
+            'answerVideo' => $answerVideo,
+            'registerYear' => $registerYear
+        ];
+        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$condition);
+
         if($answerInfoData){
             $videoName = $answerInfoData->answer;
             $isViewCheck = true;

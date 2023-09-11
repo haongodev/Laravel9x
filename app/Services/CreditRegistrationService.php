@@ -88,7 +88,7 @@ class CreditRegistrationService
             $dataInsertManager['member_id']  = auth()->user()->id;
          //   $currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
 
-            $registrationYear = $this->getRegistrationYear();
+            $registrationYear = $this->getRegistrationYear($formData['question'],session('question_confirm'));
             $dataInsertManager['registration_year'] = $registrationYear;
             $answerManager = $this->answerManageRepository->store($dataInsertManager);
 
@@ -206,7 +206,7 @@ class CreditRegistrationService
             $dataUpdateManager['type_native_id']  = $formData['type_native_id'];
             $dataUpdateManager['member_id']  = auth()->user()->id;
             //$currentYear = date('m') > 3 ? date('Y') : date('Y', strtotime('-1 year'));
-            $registrationYear = $this->getRegistrationYear();
+            $registrationYear = $this->getRegistrationYear($formData['question'],session('question_confirm'));
             $dataUpdateManager['registration_year'] = $registrationYear;
             $answerManager = $this->answerManageRepository->update($answerManageId,$dataUpdateManager);
 
@@ -281,14 +281,11 @@ class CreditRegistrationService
 
     }
 
-    public function getRegistrationYear()
+    public function getRegistrationYear($questionFormData = [], $questionSettingData = [])
     {
-        $formData = Session::get('popup_confirm');
-        $questionSettingData = session('question_confirm');
-        $questionOptionSettingData = session('question_option_confirm');
         $date = '';
-        if(!empty($formData['question'])){
-            foreach ($formData['question'] as $questionSettingId => $answer){
+        if(!empty($questionFormData)){
+            foreach ($questionFormData as $questionSettingId => $answer){
                 if($date){
                     break;
                 }
@@ -347,9 +344,10 @@ class CreditRegistrationService
 
         return $answerArr;
     }
-    public function checkViewVideo($typeNativeId = 0, $answerVideo = [])
+    public function checkViewVideo($typeNativeId = 0, $condition = [])
     {
-        return $this->answerManageRepository->checkViewVideo($typeNativeId,$answerVideo);
+
+        return $this->answerManageRepository->checkViewVideo($typeNativeId,$condition);
     }
 
 }
