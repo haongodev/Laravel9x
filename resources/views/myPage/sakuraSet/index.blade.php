@@ -29,7 +29,7 @@
                 <ul>
                     <li>
                         @if($sakuraManage !== null)
-                        <button class="{{ $sakuraManage->reviewer_member !== null ? 'in-active btn-eff-bla btn-hov' : 'active btn-eff-pri btn-hov' }}">担当者</button>
+                        <button class="{{ $sakuraManage->reviewer_member !== null ? 'in-active' : 'active' }}">担当者</button>
                         @endif
                     </li>
                     <li>

@@ -9,7 +9,7 @@
                 <div class="text-center">
                     <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
                 </div>
-                <form class="loginForm" action="/login" method="post">
+                <form class="" action="/login" method="post">
                     @csrf
                     <div class="row no-gutters mt-4">
                         <label class="col-md-3 col-lg-2 col-sm-12 text-center" for="username">ID</label>
@@ -55,38 +55,6 @@
             $(this).removeClass('open')
         }
     })
-    $('.loginForm').submit(function (e) { 
-        e.preventDefault();
-        var id = $('#id').val();
-        var password = $('#password').val();
-        var url = $(this).attr('action');
-        $.ajax({
-            url, 
-            data: {
-                id,
-                password,
-            },
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            type: 'POST',
-            success: function(response) {
-                if(response.success){
-                    if (window.opener && !window.opener.closed) {
-                        console.log("Trang hiện tại đang hoạt động trên một cửa sổ popup.");
-                    } else {
-                        var currentUrl = response.data.url;
-                        var popupWidth = window.screen.width;
-                        var popupHeight = window.screen.height;
-                        var popupWindow = window.open(currentUrl, '_blank', 'width=' + popupWidth + ', height=' + popupHeight);
-                        window.location.href = currentUrl;
-                    }
-                }
-            },
-            error: function(xhr) {
-                $('.loginError div span').html(xhr.responseJSON.message);
-                $('.loginError').removeClass('hidden');
-            }
-        });
-    });
 </script>
 </body>
 </html>
