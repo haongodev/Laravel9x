@@ -1,7 +1,6 @@
 @extends('layouts.web.main', ['pageSlug' => '修正'])
 @push('styles')
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
-    <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css" rel="stylesheet" />
 @endpush
@@ -50,7 +49,6 @@
     <script src="{{asset('assets/js-lib/chosen.jquery.js')}}"></script>
     <script src="{{asset('assets/js/registry.js')}}"></script>
     <script src="{{asset('assets/js/select.js')}}"></script>
-    <script src="{{ asset('assets/js-lib/jquery-ui.js') }}"></script>
     <script src="{{asset('assets/js/date.js')}}"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
