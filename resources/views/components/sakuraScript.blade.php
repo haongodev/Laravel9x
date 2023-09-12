@@ -282,14 +282,14 @@
         $('.registerReviewerForm form').submit(function(e){
             e.preventDefault();
             var form = $(this).parents('.registerReviewerForm').find('form');
-            var login_id = form.find('.login_id').val();
+            var member_id = form.find('.memeber').val();
             var first_name = form.find('.first_name').val();
             var last_name = form.find('.last_name').val();
             var url = form.attr('action');
             $.ajax({
-                url,
+                url, 
                 data: {
-                    login_id,
+                    member_id,
                     first_name,
                     last_name
                 },
@@ -297,12 +297,15 @@
                 type: 'POST',
                 success: function(response) {
                     if(response.success){
-                        if (response.data[0]){
-                            var res = response.data[0];
-                            var fullName = res.name1+' '+res.name2;
-                            $('.result_search').val(fullName).attr('login_id',res.login_id).attr('email',res.email);
-                            $('.resultReviewerInfo .apply').removeClass('disabled');
-                        }
+                        var res = response.data[0];
+                        var fullName = res.name1+' '+res.name2;
+                        $('.result_search').val(fullName).attr('member_id',res.login_id).attr('email',res.email);
+                        $('.resultReviewerInfo .apply').removeClass('disabled');
+                    }else{
+                        toastr.options.timeOut = 3000;
+                        toastr.info('振り返り担当者が見つかりません。');
+                        $('.result_search').val('').removeAttr('member_id').removeAttr('email');
+                        $('.resultReviewerInfo .apply').addClass('disabled');
                     }
                 },
                 error: function(xhr) {
@@ -325,12 +328,11 @@
                 type: 'POST',
                 success: function(response) {
                     if(response.success){
-                        alert('success');
                         $('.result_search').val();
                         $('.result_search').removeAttr('member_id');
                         $('.result_search').removeAttr('email');
                         $('.resultReviewerInfo .apply').addClass('disabled');
-                        toastr.options.timeOut = 3000000;
+                        toastr.options.timeOut = 3000;
                         toastr.info('('+name_reviewer+') に振り返り担当を申請しました。');
                     }
                 },
