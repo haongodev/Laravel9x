@@ -22,11 +22,17 @@ $answerData = $answerInfoData[$questionSetting->id] ?? [];
     </div>
 </div>
 <script src="{{asset('assets/js/date.js')}}"></script>
-<script>
-    $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function () {
-        var this_choose = $(this);
-        var current_id = this_choose.data('current-question-id')
-        getQuestionLink(current_id)
-    })
+@if($questionSetting->terminal_flg==1)
+    <script>
+        showButton()
+    </script>
+@else
+    <script>
+        $('#registry').find('.question-link-id-{{$questionSetting->id}}').each(function () {
+            var this_choose = $(this);
+            var current_id = this_choose.data('current-question-id')
+            getQuestionLink(current_id)
+        })
 
-</script>
+    </script>
+@endif

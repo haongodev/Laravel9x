@@ -139,7 +139,7 @@
                             type: 'POST',
                             success: function(response) {
                                 if(response.success){
-                                    
+
                                 }
                             },
                             error: function(xhr) {
@@ -149,7 +149,7 @@
                     }
                     if(isload){
                         $.ajax({
-                            url: '{{ route("sakuraUpdate") }}', 
+                            url: '{{ route("sakuraUpdate") }}',
                             data: data,
                             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                             type: 'POST',
@@ -175,7 +175,7 @@
         }
         $('body').on('click','.btn-popup-agree_to_register_pic',function(){
             $.ajax({
-                url: '{{ route("sakuraUpdate") }}', 
+                url: '{{ route("sakuraUpdate") }}',
                 data: {
                     reviewer_status : 2,
                     view:'agree_to_register_pic'
@@ -184,7 +184,7 @@
                 type: 'POST',
                 success: function(response) {
                     if(response.success){
-                        
+
                     }
                 },
                 error: function(xhr) {
@@ -262,7 +262,7 @@
         }
         function backupWithNewSWP(url,data){
             $.ajax({
-                url, 
+                url,
                 data,
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: 'POST',
@@ -271,7 +271,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if(response.success){
-                        
+
                     }
                 },
                 error: function(xhr) {
@@ -319,7 +319,7 @@
             var email = $('.result_search').attr('email');
             var url = '{{ route("addMemberToReview") }}';
             $.ajax({
-                url, 
+                url,
                 data: {
                     member_id,
                     email

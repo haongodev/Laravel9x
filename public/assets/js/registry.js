@@ -48,6 +48,7 @@ $('#registry').on('change', '.select-branch-question', function (e) {
 })
 
 function getQuestionBranch(this_choose, question_option_setting_id) {
+    hiddenButton();
     $.ajax({
         type: "post",
         url: $('#urlGetQuestion').val(),
@@ -108,6 +109,7 @@ $(".select-chosen").chosen({
 });
 
 function getQuestionLink(current_id) {
+    hiddenButton();
     $.ajax({
         type: "post",
         url: $('#urlGetLinkQuestion').val(),
@@ -229,4 +231,12 @@ function validate_view_video(form)
     });
     return validate
 
+}
+
+function showButton(){
+    $('#registry').find('.submit-btn').removeClass('hidden');
+}
+
+function hiddenButton(){
+    $('#registry').find('.submit-btn').addClass('hidden');
 }
