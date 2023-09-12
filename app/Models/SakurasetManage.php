@@ -107,11 +107,11 @@ class SakurasetManage extends Model
     
     public function made_member()
     {
-        return $this->hasOne(UsersAddInfo::class,'users_id','member_id');
+        return $this->hasOne(UsersAddInfo::class,'login_id','member_id');
     }
     
     public function reviewer_member()
     {
-        return $this->hasOne(UsersAddInfo::class,'users_id','reviewer_id');
+        return $this->hasOne(UsersAddInfo::class,'login_id','reviewer_id');
     }
 }

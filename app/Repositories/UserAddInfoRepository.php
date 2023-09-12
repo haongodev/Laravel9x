@@ -22,10 +22,10 @@ class UserAddInfoRepository
     public function getMemberToReview($data){
         return $this->model
         ->leftJoin('users', 'users.id', '=', 'users_add_info.users_id')
-        ->select('users_add_info.users_id','users_add_info.member_id','users_add_info.email','users_add_info.name1','users_add_info.name2')
+        ->select('users_add_info.users_id','users_add_info.member_id','users_add_info.login_id','users_add_info.email','users_add_info.name1','users_add_info.name2')
         ->where(function ($query) use($data) {
-            $query->where('users_add_info.member_id', $data['member_id'])
-                  ->orWhere('users_add_info.name2', $data['first_name']);
+            $query->Where('users_add_info.login_id', $data['member_id'])
+                  ->Where('users_add_info.name2', $data['first_name']);
         })
         ->where([['users.active_flg',1],['users.class',0]])
         ->get();

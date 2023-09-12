@@ -299,8 +299,13 @@
                     if(response.success){
                         var res = response.data[0];
                         var fullName = res.name1+' '+res.name2;
-                        $('.result_search').val(fullName).attr('member_id',res.member_id).attr('email',res.email);
+                        $('.result_search').val(fullName).attr('member_id',res.login_id).attr('email',res.email);
                         $('.resultReviewerInfo .apply').removeClass('disabled');
+                    }else{
+                        toastr.options.timeOut = 3000;
+                        toastr.info('振り返り担当者が見つかりません。');
+                        $('.result_search').val('').removeAttr('member_id').removeAttr('email');
+                        $('.resultReviewerInfo .apply').addClass('disabled');
                     }
                 },
                 error: function(xhr) {
@@ -323,12 +328,11 @@
                 type: 'POST',
                 success: function(response) {
                     if(response.success){
-                        alert('success');
                         $('.result_search').val();
                         $('.result_search').removeAttr('member_id');
                         $('.result_search').removeAttr('email');
                         $('.resultReviewerInfo .apply').addClass('disabled');
-                        toastr.options.timeOut = 3000000;
+                        toastr.options.timeOut = 3000;
                         toastr.info('('+name_reviewer+') に振り返り担当を申請しました。');
                     }
                 },

@@ -459,17 +459,22 @@ class SakuraSetController extends Controller
             $data['data'] = $result;
             $data['success'] = true;
         }else{
+            if(count($member) === 0){
+                $data['success'] = false;
+            }else{
+                $data['success'] = true;
+            }
             $data['data'] = $member->toArray();
-            $data['success'] = true;
         }
         return response()->json($data);
     }
     public function addMemberToReview(Request $request){
         $dataAll = $request->all();
+        $loggedId = auth()->user()->user_add_info->login_id;
         $data['success'] = false;
-        $checkSakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id]);
-        if($checkSakuraManage){
-            $checkSakuraManage->update([
+        $reviewer = $this->sakurasetService->getByLoggedId(['member_id',$loggedId],'made_member');
+        if($reviewer){
+            $reviewer->update([
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
             ]);        
@@ -477,7 +482,7 @@ class SakuraSetController extends Controller
         }else{
             $data['success'] = true;
             $reviewer = $this->sakurasetService->createSakura([
-                'member_id' => auth()->user()->id,
+                'member_id' => $loggedId,
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
             ]);
