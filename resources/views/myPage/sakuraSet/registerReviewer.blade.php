@@ -14,7 +14,7 @@
             <span class="form-title">振り返り担当者検索</span>
             <div class="form-group">
                 <span>構成員番号</span>
-                <input type="text" name="member_id" required class="memeber" placeholder="（完全一致）"/>
+                <input type="text" name="login_id" required class="login_id" placeholder="（完全一致）"/>
             </div>
             <div class="form-group">
                 <span>姓</span>

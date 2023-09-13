@@ -11,6 +11,7 @@
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />
     <meta class="base_url" value="{{url('/')}}" />
@@ -34,6 +35,9 @@
 <script src="{{asset('assets/js/jquery.min.js')}}"></script>
 <script src="{{asset('assets/js/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('assets/js/common.js')}}"></script>
+<script src="{{ asset('assets/js-lib/jquery-ui.js') }}"></script>
+<script src="{{ asset('assets/js-lib/jquery-ui-jp.js') }}"></script>
+<script src="{{ asset('assets/js-lib/jquery-ui-vi.js') }}"></script>
 @stack('js')
 @stack('sub_js')
 

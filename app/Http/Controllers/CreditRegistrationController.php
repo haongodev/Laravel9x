@@ -101,6 +101,9 @@ class CreditRegistrationController extends Controller
 
     public function typeSelected(Request $request)
     {
+        // Clear session form register
+        forgetSessionCreditRegistry();
+        //
         $typeNativeId = $request->get('type_native_id',0);
         $guidanceData = $this->guidanceSettingService->getByScreenId('A002');
         $registrationYearData = $this->answerManageService->getRegistrationYearByTypeNativeId($typeNativeId);
@@ -209,10 +212,7 @@ class CreditRegistrationController extends Controller
                     return redirect()->route('creditRegistry');
                 }
                 /**/
-                Session::forget('popup_confirm');
-                Session::forget('question_confirm');
-                Session::forget('question_option_confirm');
-                Session::forget('answer_info_data');
+                forgetSessionCreditRegistry();
                 return response()->json(['message' => 'successfully']);
             }
         }
@@ -246,10 +246,7 @@ class CreditRegistrationController extends Controller
                     return redirect()->route('creditRegistry');
                 }
                 /**/
-                Session::forget('popup_confirm');
-                Session::forget('question_confirm');
-                Session::forget('question_option_confirm');
-                Session::forget('answer_info_data');
+                forgetSessionCreditRegistry();
                 return response()->json(['message' => 'successfully']);
             }
         }
@@ -339,12 +336,21 @@ class CreditRegistrationController extends Controller
 
     public function validateViewVideo(Request $request)
     {
-        $formData = $request->get('question',[]);
+        $questionFormData = $request->get('question',[]);
         $typeNativeId = $request->get('type_native_id',0);
         $videoName = '';
         $isViewCheck = false;
-        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($formData);
-        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$answerVideo);
+        $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+        $questionSettingRegistryData = $this->historyQuestionSettingService->getByIds($questionSettingIds);
+        $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
+
+        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);
+        $condition = [
+            'answerVideo' => $answerVideo,
+            'registerYear' => $registerYear
+        ];
+        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$condition);
+
         if($answerInfoData){
             $videoName = $answerInfoData->answer;
             $isViewCheck = true;

@@ -11,9 +11,12 @@
         <div class="input-group">
             <div class="w-100 group-control">
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
-                <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
-                       placeholder=""
-                       value="{{$answerData->answer}}"/>
+                <div class="w-75">
+                    <input class="count-length" type="text" name="question[{{$questionSetting->id}}]"
+                           placeholder=""
+                           value="{{$answerData->answer ?? ''}}"/>
+                    <p class="input-length"><span class="number">0</span>文字</p>
+                </div>
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
@@ -25,10 +28,12 @@
         <div class="input-group">
             <div class="w-100 group-control">
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
-                {{--                                <input class="w-75" type="text" name="SVR_attributes" placeholder="本協会の認定SVR"--}}
-                {{--                                       value="{{ session('popup_confirm')['SVR_attributes'] ?? ''}}"/>--}}
-                <textarea class="w-75 auto_grow" name="question[{{$questionSetting->id}}]"
-                          >{{$answerData->answer}}</textarea>
+                <div class="w-75">
+                    <textarea class="auto_grow count-length" rows="10" name="question[{{$questionSetting->id}}]">
+                        {{$answerData->answer ?? ''}}
+                    </textarea>
+                        <p class="input-length"><span class="number">0</span>文字</p>
+                </div>
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
@@ -287,6 +292,10 @@ $(document).ready(function(){
             }
 
         });
+        $('#registry').find('.count-length').each(function(){
+            var value = $(this).val();
+            $(this).closest('div').find('.input-length').find('.number').html(value.length);
+        })
     })
 })
 </script>

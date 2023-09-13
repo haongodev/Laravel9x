@@ -175,7 +175,7 @@ class SakuraSetController extends Controller
         $faceSheetManagerData = $this->facesheetManageService->getByUserId(auth()->user()->id);
         $reflectionSheetManagerData = $this->reflectionsheetManageService->getByUserId(auth()->user()->id);
         $initiativetableManagerData = $this->initiativetableManageService->getByUserId(auth()->user()->id);
-        
+
         return view('myPage/sakuraSet/yourTry',[
             'faceSheetManagerData' => $faceSheetManagerData,
             'reflectionSheetManagerData' => $reflectionSheetManagerData,
@@ -480,7 +480,7 @@ class SakuraSetController extends Controller
             $reviewer->update([
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
-            ]);        
+            ]);
             $data['success'] = true;
         }else{
             $data['success'] = true;

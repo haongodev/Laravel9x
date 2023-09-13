@@ -1,7 +1,6 @@
 @extends('layouts.web.main', ['pageSlug' => '単位登録'])
 @push('styles')
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
-    <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css"
           rel="stylesheet"/>
@@ -32,7 +31,7 @@
                 @include('myPage.creditRegistration.registry_question')
                 @if($isHasQuestion)
                     <div class="action">
-                        <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov">確認</button>
+                        <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov hidden">確認</button>
                         <button type="button" class="decline-btn btn-eff-ora btn-hov">戻る</button>
                     </div>
                 @endif
@@ -55,7 +54,6 @@
     <script src="{{asset('assets/js-lib/chosen.jquery.js')}}"></script>
     <script src="{{asset('assets/js/registry.js')}}"></script>
     <script src="{{asset('assets/js/select.js')}}"></script>
-    <script src="{{ asset('assets/js-lib/jquery-ui.js') }}"></script>
     <script src="{{asset('assets/js/date.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
     <script type="text/javascript"
@@ -78,8 +76,8 @@
                 }
             });
             if (!isValid) {
-                $('.popup-wrapper .popup-content .content').html('入力途中のデータが破棄されますがよろしいですか？');
-                $('.popup-wrapper').removeClass('hidden');
+                $('#popup_confirm_back_register .popup-content .content').html('入力途中のデータが破棄されますがよろしいですか？');
+                $('#popup_confirm_back_register').removeClass('hidden');
                 window.scrollTo(0, 0)
             } else {
                 window.location.href = "{{ route('typeSelected',['type_native_id'=>request('type_native_id')])}}";

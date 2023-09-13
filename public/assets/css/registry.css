@@ -220,4 +220,16 @@ textarea {
 
 .form-registry .date-container input{
     width:100% !important;
+    margin-left: 0px !important;
+}
+
+.form-registry .input-group input[type="text"].count-length ,.form-registry .input-group textarea.count-length {
+    display: block;
+    width: calc(100% - 14px);
+    margin-left: 0;
+}
+
+.input-length{
+    margin-left: 5px;
+    margin-top: 5px;
 }

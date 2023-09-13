@@ -5,6 +5,7 @@ use App\Models\UsersAddInfo;
 use App\Models\SakurasetManage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 if (!function_exists('answerInfoPattern')) {
     function answerInfoPattern()
@@ -62,6 +63,18 @@ if (!function_exists('groupClassQuestionOption')) {
             $data[$questionOption->class_name][] = $questionOption;
         }
         return $data;
+    }
+}
+
+if (!function_exists('forgetSessionCreditRegistry')) {
+    function forgetSessionCreditRegistry()
+    {
+        Session::forget('show_popup_confirm');
+        Session::forget('popup_confirm');
+        Session::forget('question_confirm');
+        Session::forget('question_option_confirm');
+        Session::forget('answer_info_data');
+
     }
 }
 
