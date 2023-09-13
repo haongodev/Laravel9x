@@ -64,8 +64,8 @@
                 }
             });
             if(!isValid){
-                $('.popup-wrapper .popup-content .content').html('入力途中のデータが破棄されますがよろしいですか？');
-                $('.popup-wrapper').removeClass('hidden');
+                $('#popup_confirm_back_register .popup-content .content').html('入力途中のデータが破棄されますがよろしいですか？');
+                $('#popup_confirm_back_register').removeClass('hidden');
             }else{
                 window.location.href = "{{ route('typeSelected',['type_native_id'=>$typeNativeId])}}";
             }
