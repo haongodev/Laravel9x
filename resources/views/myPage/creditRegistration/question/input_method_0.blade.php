@@ -9,9 +9,12 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
         <div class="w-100 group-control">
             <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}"
                    data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
-            <input class="w-75" type="text" name="question[{{$questionSetting->id}}]"
-                   placeholder=""
-                   value="{{$answerData->answer ?? ''}}"/>
+            <div class="w-75">
+                <input class="count-length" type="text" name="question[{{$questionSetting->id}}]"
+                       placeholder=""
+                       value="{{$answerData->answer ?? ''}}"/>
+                <p class="input-length"><span class="number">0</span>文字</p>
+            </div>
         </div>
     </div>
     <div class="question-link question-link-id-{{$questionSetting->id}}"
@@ -32,3 +35,9 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
         })
     </script>
 @endif
+<script>
+    $('#registry').find('.count-length').each(function(){
+        var value = $(this).val();
+        $(this).closest('div').find('.input-length').find('.number').html(value.length);
+    })
+</script>

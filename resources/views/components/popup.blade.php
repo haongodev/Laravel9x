@@ -1,4 +1,4 @@
-<div class="popup-wrapper hidden">
+<div class="popup-wrapper hidden" id="popup_confirm_back_register">
     <div class="layout-popup">
         <div class="popup-header">
             <div class="title"></div>

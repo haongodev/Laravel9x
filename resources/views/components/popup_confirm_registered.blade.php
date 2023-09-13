@@ -1,8 +1,5 @@
 <?php
-//dd(session('popup_confirm'),session('question_confirm'),session('question_option_confirm'));
-$questionSettingRegistry = session('popup_confirm')['question'] ?? [];
-$questionSettingData = session('question_confirm');
-$questionOptionSettingData = session('question_option_confirm');
+
 if (!empty($typeNativeId)) {
     if ($typeNativeId == 1) {
         $patternName = '研修・学会等';
@@ -54,7 +51,7 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
                         @endforeach
                     <tr>
                         <th>登録できる単位数</th>
-                        <td>{{$score}}</td>
+                        <td>{{$score}}単位</td>
 
                     </tr>
                 </table>
