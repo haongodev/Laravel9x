@@ -67,7 +67,7 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
                         </tr>
                     @endforeach
                         <tr>
-                            <th>登録できる単位数</th>
+                            <th>単位数</th>
                             <td>{{$score}}単位</td>
 
                         </tr>
