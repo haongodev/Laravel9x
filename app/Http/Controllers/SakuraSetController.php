@@ -94,18 +94,22 @@ class SakuraSetController extends Controller
         $this->reflectionsheetManageService = $reflectionsheetManageService;
         $this->initiativetableManageService = $initiativetableManageService;
     }
+    public function loginId(){
+        return auth()->user()->user_add_info->login_id;
+    }
+
     public function index()
     {
         $guidanceData = $this->guidanceSettingService->getByScreenId('A011',['location_id' => 1]);
         $with = [
             'made_member' => function ($query) {
-                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+                $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
             'reviewer_member' => function ($query) {
-                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+                $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],$with);
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['reviewer_id',$this->loginId()],$with);
         return view('myPage/sakuraSet/index',[
             'guidance' => $guidanceData,
             'sakuraManage' => $sakuraManage,
@@ -117,13 +121,13 @@ class SakuraSetController extends Controller
         }
         $with = [
             'made_member' => function ($query) {
-                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+                $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
             'reviewer_member' => function ($query) {
-                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+                $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],$with);
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
         $where = [
             'reviewer_id' => $sakuraManage->reviewer_member->users_id
         ];
@@ -149,7 +153,7 @@ class SakuraSetController extends Controller
         if(!$request->all()){
             return response()->json(['success' => false, 'data' => []]);
         }
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],['reviewer_member','made_member']);
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],['reviewer_member','made_member']);
         if($sakuraManage->reviewer_member){
             $emailConfig = ['to' => $sakuraManage->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $sakuraManage->made_member];
             if($sakuraManage->delete()){
@@ -431,13 +435,13 @@ class SakuraSetController extends Controller
     public function registerReviewer(){
         $with = [
             'made_member' => function ($query) {
-                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+                $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
             'reviewer_member' => function ($query) {
-                $query->select('id', 'users_id', 'name1', 'name2', 'email');
+                $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',auth()->user()->id],$with);
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
         return view('myPage/sakuraSet/registerReviewer',[
             'sakuraManage' => $sakuraManage,
         ]);
@@ -470,9 +474,8 @@ class SakuraSetController extends Controller
     }
     public function addMemberToReview(Request $request){
         $dataAll = $request->all();
-        $loggedId = auth()->user()->user_add_info->login_id;
         $data['success'] = false;
-        $reviewer = $this->sakurasetService->getByLoggedId(['member_id',$loggedId],'made_member');
+        $reviewer = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],'made_member');
         if($reviewer){
             $reviewer->update([
                 'reviewer_id' => $dataAll['member_id'],
