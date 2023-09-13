@@ -48,7 +48,6 @@ $('#registry').on('change', '.select-branch-question', function (e) {
 })
 
 function getQuestionBranch(this_choose, question_option_setting_id) {
-    hiddenButton();
     $.ajax({
         type: "post",
         url: $('#urlGetQuestion').val(),
@@ -56,7 +55,6 @@ function getQuestionBranch(this_choose, question_option_setting_id) {
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data: {question_option_setting_id: question_option_setting_id},
         success: function (data) {
-            console.log(data);
             nextQuestion(this_choose, data)
         },
     });
@@ -64,8 +62,11 @@ function getQuestionBranch(this_choose, question_option_setting_id) {
 
 function nextQuestion(this_choose, data) {
     var current_question_id = this_choose.closest('div.input-group').data('current-question-id');
+    if(data.html != ''){
+        hiddenButton();
+        $('.first-child-question-id-' + current_question_id).append(data.html)
+    }
 
-    $('.first-child-question-id-' + current_question_id).append(data.html)
     //  this_choose.closest('div.input-group').after(data.html)
 }
 
@@ -121,7 +122,11 @@ function getQuestionLink(current_id) {
             if(data.isQuestionInput){
                 $('.question-link-id-'+current_id).closest('.input-group').addClass('question-input')
             }
-            $('.question-link-id-'+current_id).append(data.html)
+            if(data.html != ''){
+                hiddenButton();
+                $('.question-link-id-'+current_id).append(data.html)
+            }
+
         },
     });
 }

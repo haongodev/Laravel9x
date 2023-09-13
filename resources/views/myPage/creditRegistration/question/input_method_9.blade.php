@@ -1,5 +1,6 @@
 
 <script>
+    showButton()
     var question_option_id = '{{$questionSetting->parent_question_option_id}}';
     var title = '{{$questionSetting->title}}';
 
