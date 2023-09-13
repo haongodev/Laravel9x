@@ -245,3 +245,10 @@ function showButton(){
 function hiddenButton(){
     $('#registry').find('.submit-btn').addClass('hidden');
 }
+
+
+$('#registry').on('keyup','.count-length', function (){
+    var value = $(this).val();
+    $(this).closest('div').find('.input-length').find('.number').html(value.length);
+
+})
