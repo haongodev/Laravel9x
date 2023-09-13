@@ -31,6 +31,7 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
             </div>
             <div class="content scroll">
                 <table>
+                    <?php $score = 0?>
                     @foreach($questionSettingRegistry as $questionSettingId => $answer)
                         @php $questionSetting = $questionSettingData[$questionSettingId] @endphp
                         <tr>
@@ -47,21 +48,29 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
                                         {{date('Y年 m月 d日',strtotime($answer['start']))}}
                                         ~ {{ date('Y年 m月 d日',strtotime($answer['end']))}}
                                     @endif
+                                    @php $score += $questionSetting->score @endphp
                                     {{--Answer option --}}
                                 @else
                                     {{--Answer multi option --}}
                                     @if(in_array($questionSetting->input_method,[2,3,6]))
                                         @foreach($answer as $key2 => $answer2)
                                             {{$questionOptionSettingData[$answer2]->option_name ?? ''}}<br>
+                                            @php $score += $questionOptionSettingData[$answer2]->score @endphp
                                         @endforeach
                                         {{--Answer only option --}}
                                     @else
                                         {{$questionOptionSettingData[$answer]->option_name ?? ''}}
+                                        @php $score += $questionOptionSettingData[$answer]->score @endphp
                                     @endif
                                 @endif
                             </td>
                         </tr>
                     @endforeach
+                        <tr>
+                            <th>登録できる単位数</th>
+                            <td>{{$score}}単位</td>
+
+                        </tr>
                 </table>
             </div>
         </div>

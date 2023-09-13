@@ -76,8 +76,8 @@
                 }
             });
             if (!isValid) {
-                $('.popup-wrapper .popup-content .content').html('入力途中のデータが破棄されますがよろしいですか？');
-                $('.popup-wrapper').removeClass('hidden');
+                $('#popup_confirm_back_register .popup-content .content').html('入力途中のデータが破棄されますがよろしいですか？');
+                $('#popup_confirm_back_register').removeClass('hidden');
                 window.scrollTo(0, 0)
             } else {
                 window.location.href = "{{ route('typeSelected',['type_native_id'=>request('type_native_id')])}}";
