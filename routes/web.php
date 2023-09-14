@@ -52,6 +52,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::get('/',[SakuraSetController::class, 'index'])->name('sakuraSet');
         Route::get('/yourTry',[SakuraSetController::class, 'yourTry'])->name('yourTry');
         Route::post('/sakuraUpdate',[SakuraSetController::class, 'update'])->name('sakuraUpdate');
+        Route::post('/sakuraUpdateConfirmation',[SakuraSetController::class, 'updateConfirm'])->name('sakuraUpdateConfirmation');
         Route::post('/sakuraDelete',[SakuraSetController::class, 'delete'])->name('sakuraDelete');
         Route::get('/getSheet',[SakuraSetController::class, 'getSheet'])->name('sakuraSheet');
         Route::post('/sakuraBackup',[SakuraSetController::class, 'backup'])->name('sakuraBackup');

@@ -115,6 +115,20 @@ class SakuraSetController extends Controller
             'sakuraManage' => $sakuraManage,
         ]);
     }
+    public function updateConfirm(Request $request){
+        $loginId = $this->loginId();
+        $sakuraMember = $this->sakurasetService->getByLoggedId([['member_id',$this->loginId()],['confirmation_flg','0']]);
+        $sakuraReviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['reviewer_confirmation_flg','0']]);
+        if($sakuraMember){
+            $sakuraMember->confirmation_flg = 1;
+            $sakuraMember->save();
+        }
+        if($sakuraReviewer){
+            $sakuraReviewer->reviewer_confirmation_flg = 1;
+            $sakuraReviewer->save();
+        }
+        return response()->json(['success' => true]);
+    }
     public function update(Request $request){
         if(!$request->all()){
             return response()->json(['success' => false, 'data' => []]);
