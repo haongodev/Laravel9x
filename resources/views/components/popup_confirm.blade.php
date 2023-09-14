@@ -13,6 +13,7 @@ if(!empty(session('popup_confirm')['type_native_id'])){
     $patternName = 'スーパービジョン（SV）';
 }
 $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
+
 ?>
 <div class="popup-wrapper confirm-popup">
     <div class="layout-popup">
@@ -40,8 +41,8 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
                                 {{--Answer input --}}
                                 @if(!in_array($questionSetting->input_method,config('constants.questionBranching')))
 
-                                    @if(in_array($questionSetting->input_method, [0,1]))
-                                        {{$answer}}
+                                    @if(in_array($questionSetting->input_method, [0,1,10]))
+                                        {{$answer}}{{$questionSetting->input_method == 10 ? '年度' : ''}}
                                     @elseif($questionSetting->input_method ==7)
                                         {{date('Y年 m月 d日',strtotime($answer))}}
                                     @elseif($questionSetting->input_method ==8)
@@ -69,7 +70,6 @@ $fileName = '単位申請_'.$patternName.'_'.date('Ymd').'.pdf';
                         <tr>
                             <th>単位数</th>
                             <td>{{$score}}単位</td>
-
                         </tr>
                 </table>
             </div>

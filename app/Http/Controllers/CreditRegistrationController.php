@@ -341,7 +341,7 @@ class CreditRegistrationController extends Controller
         $videoName = '';
         $isViewCheck = false;
         $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
-        $questionSettingRegistryData = $this->historyQuestionSettingService->getByIds($questionSettingIds);
+        $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
         $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
 
         $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);

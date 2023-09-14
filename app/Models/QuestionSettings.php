@@ -42,6 +42,8 @@ class QuestionSettings extends Model
         'required_flg',
         'title',
         'update_date',
+        'disp_flg',
+        'viewing_check_flg'
     ];
 
     /**

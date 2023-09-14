@@ -103,6 +103,7 @@ class CreditRegistrationService
             DB::commit();
             return $answerManager;
         } catch (QueryException $exc) {
+            dd(1);
             DB::rollBack();
             Log::error($exc->getMessage(), $exc->getTrace());
             return false;
@@ -139,7 +140,7 @@ class CreditRegistrationService
             $score = 0;
 
             if (!in_array($questionSetting->input_method, config('constants.questionBranching'))) {
-                if (in_array($questionSetting->input_method, [0, 1])) {
+                if (in_array($questionSetting->input_method, [0, 1, 10])) {
                     $tempAnswer = $answer;
                 } elseif ($questionSetting->input_method == 7) {
                     $tempAnswer = date('Y-m-d H:i:s',strtotime($answer));
@@ -248,7 +249,7 @@ class CreditRegistrationService
             $tempAnswer = '';
             $score = 0;
             if (!in_array($questionSetting->input_method, config('constants.questionBranching'))) {
-                if (in_array($questionSetting->input_method, [0, 1])) {
+                if (in_array($questionSetting->input_method, [0, 1, 10])) {
                     $tempAnswer = $answer;
                 } elseif ($questionSetting->input_method == 7) {
                     $tempAnswer = date('Y-m-d H:i:s',strtotime($answer));
@@ -294,6 +295,8 @@ class CreditRegistrationService
                         $date = $answer;
                     }elseif($questionSettingData[$questionSettingId]['input_method'] == 8){
                         $date = $answer['start'];
+                    }elseif($questionSettingData[$questionSettingId]['input_method'] == 10){
+                        return $answer;
                     }
                 }
             }
