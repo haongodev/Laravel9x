@@ -19,7 +19,11 @@ class SakurasetRepository
         if($with){
             $result = $result->with($with);
         }
-        return $result->where($where[0],$where[1])->first();
+        if(is_array($where[0])){
+            return $result->where($where)->first();
+        }else{
+            return $result->where($where[0],$where[1])->first();
+        }
     }
     public function updateSakura($data,$where){
         try {

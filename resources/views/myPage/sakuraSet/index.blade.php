@@ -59,3 +59,21 @@
     </div>
 @endsection
 @include('components.sakuraScript')
+@push('js')
+    <script>
+        var url = '{{ route("sakuraUpdateConfirmation") }}';
+        $.ajax({
+            url,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            success: function(response) {
+                if(response.success){
+                    $('.side-bot .row li').removeClass('active');
+                }
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
+        });
+    </script>
+@endpush
