@@ -282,14 +282,14 @@
         $('.registerReviewerForm form').submit(function(e){
             e.preventDefault();
             var form = $(this).parents('.registerReviewerForm').find('form');
-            var member_id = form.find('.memeber').val();
+            var login_id = form.find('.login_id').val();
             var first_name = form.find('.first_name').val();
             var last_name = form.find('.last_name').val();
             var url = form.attr('action');
             $.ajax({
                 url, 
                 data: {
-                    member_id,
+                    login_id,
                     first_name,
                     last_name
                 },

@@ -485,7 +485,7 @@ class SakuraSetController extends Controller
         }else{
             $data['success'] = true;
             $reviewer = $this->sakurasetService->createSakura([
-                'member_id' => $loggedId,
+                'member_id' => $this->loginId(),
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
             ]);
