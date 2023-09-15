@@ -109,7 +109,7 @@ class SakuraSetController extends Controller
                 $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['reviewer_id',$this->loginId()],$with);
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
         return view('myPage/sakuraSet/index',[
             'guidance' => $guidanceData,
             'sakuraManage' => $sakuraManage,
