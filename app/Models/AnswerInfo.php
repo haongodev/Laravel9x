@@ -42,8 +42,21 @@ class AnswerInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'id','answer_manage_id','original_question_id','type_native_id','title','level','input_method','score','terminal_flg','answer','update_date','registration_date','effective_date_flg',
-        'disp_flg','viewing_check_flg'
+        'id',
+        'answer_manage_id',
+        'original_question_id',
+        'type_native_id',
+        'title',
+        'level',
+        'input_method',
+        'score',
+        'terminal_flg',
+        'answer',
+        'update_date',
+        'registration_date',
+        'effective_date_flg',
+        'disp_flg',
+        'viewing_check_flg'
     ];
 
     /**

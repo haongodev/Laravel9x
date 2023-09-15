@@ -44,7 +44,7 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
                                         @endphp
                                         <td>{{date('Y年 m月 d日',strtotime($arrAnswer[0]))}}~{{date('Y年 m月 d日',strtotime($arrAnswer[1]))}}</td>
                                     @else
-                                    <td>{{$answer->answer}}</td>
+                                        <td>{{$answer->answer}}{{$answer->input_method==10 ? '年度' :''}}</td>
                                 @endif
 
                             </tr>

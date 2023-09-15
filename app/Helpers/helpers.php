@@ -78,3 +78,14 @@ if (!function_exists('forgetSessionCreditRegistry')) {
     }
 }
 
+if (!function_exists('rangeYear')) {
+    function rangeYear()
+    {
+        $data = [];
+        for ($i = date('Y'); $i>=1970; $i--){
+            $data[$i] = $i;
+        }
+        return $data;
+
+    }
+}

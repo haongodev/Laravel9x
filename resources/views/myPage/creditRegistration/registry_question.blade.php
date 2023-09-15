@@ -15,9 +15,6 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
-        @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
-        @endif
     @endif
     @if($questionSetting->input_method ==1)
         <div class="input-group">
@@ -32,9 +29,6 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
-        @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
-        @endif
     @endif
     @if($questionSetting->input_method ==7)
         <div class="input-group">
@@ -50,9 +44,6 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
-        @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
-        @endif
     @endif
     @if($questionSetting->input_method ==8)
         @php
@@ -79,9 +70,35 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
-        @if(isset($questionSettingChildData[$questionSetting->id]))
-            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
-        @endif
+    @endif
+    @if($questionSetting->input_method ==10)
+        <div class="first-child-question-id-{{$questionSetting->id}} first-div">
+            <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+                 data-current-question-id="{{$questionSetting->id}}"
+            >
+                <div class="w-100 group-control">
+
+                    <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
+                    <select class="w-75 select-branch-question select-chosen"
+                            id="question_select_{{$questionSetting->id}}"
+                            name="question[{{$questionSetting->id}}]">
+                        <option value=""></option>
+                        @foreach(rangeYear() as $year)
+                            <option
+                                id="checkbox{{$year}}"
+                                value="{{$year}}"
+                                {{!empty($answerData->answer) && $answerData->answer == $year ? 'selected' : ''}}
+                                data-question-option-setting-id="0">{{$year}}年度</option>
+                        @endforeach
+
+                    </select>
+                </div>
+            </div>
+        </div>
+        @php unset($questionSettingData[$key])@endphp
+    @endif
+    @if(isset($questionSettingChildData[$questionSetting->id]))
+        @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
     @endif
 @endforeach
 @foreach($questionSettingData as $key => $questionSetting)
