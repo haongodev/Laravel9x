@@ -28,8 +28,8 @@ class SakurasetService
     public function updateOrInsertSakura($dataUpdate,$where){
         return $this->sakurasetRepository->updateOrInsertSakura($dataUpdate,$where);
     }
-    public function getReviewerbyMember($member){
-        return $this->sakurasetRepository->getReviewer($member);
+    public function getReviewerbyMember($reviewer,$member){
+        return $this->sakurasetRepository->getReviewer($reviewer,$member);
     }
     public function getFileInfoByReviewerId($repoInst,$reviewerId,$kind,$select){
         return $this->sakurasetRepository->getSheetInfoByReviewerId($repoInst,$reviewerId,$kind,$select);

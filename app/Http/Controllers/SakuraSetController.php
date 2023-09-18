@@ -109,10 +109,12 @@ class SakuraSetController extends Controller
                 $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
+        $sakuraReviewManage = $this->sakurasetService->getByLoggedId(['reviewer_id',$this->loginId()],$with);
+        $sakuraMemberManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
         return view('myPage/sakuraSet/index',[
             'guidance' => $guidanceData,
-            'sakuraManage' => $sakuraManage,
+            'sakuraReviewManage' => $sakuraReviewManage,
+            'sakuraMemberManage' => $sakuraMemberManage,
         ]);
     }
     public function updateConfirm(Request $request){
@@ -133,6 +135,18 @@ class SakuraSetController extends Controller
         if(!$request->all()){
             return response()->json(['success' => false, 'data' => []]);
         }
+        $member_id = $request->member_id;
+        $reviewer_id = $this->loginId();
+        $condition = [
+            ['reviewer_id',$reviewer_id],
+            ['member_id',$member_id],
+        ];
+        if($request->has('reviewer_status') && $request->reviewer_status == 3){
+            $condition = [
+                ['reviewer_id',$member_id],
+                ['member_id',$reviewer_id],
+            ];
+        }
         $with = [
             'made_member' => function ($query) {
                 $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
@@ -141,12 +155,9 @@ class SakuraSetController extends Controller
                 $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
-        $where = [
-            'reviewer_id' => $sakuraManage->reviewer_member->users_id
-        ];
-        $dataUpdate = $request->except(['view']);
-        $updateSakura = $this->sakurasetService->updateSakura($dataUpdate,$where);
+        $sakuraManage = $this->sakurasetService->getByLoggedId($condition,$with);
+        $dataUpdate = $request->except(['view','member_id']);
+        $updateSakura = $this->sakurasetService->updateSakura($dataUpdate,$condition);
         $msg = '';
         if($updateSakura){
             $msg = 'Updated Successfully';
@@ -167,7 +178,8 @@ class SakuraSetController extends Controller
         if(!$request->all()){
             return response()->json(['success' => false, 'data' => []]);
         }
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],['reviewer_member','made_member']);
+        $member_id = $request->member_id;
+        $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$member_id]],['reviewer_member','made_member']);
         if($sakuraManage->reviewer_member){
             $emailConfig = ['to' => $sakuraManage->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $sakuraManage->made_member];
             if($sakuraManage->delete()){
@@ -197,13 +209,14 @@ class SakuraSetController extends Controller
         ]);
     }
     public function getSheet(Request $request){
-        $reviewer = $this->sakurasetService->getReviewerbyMember(auth()->user()->id);
+        $member_id = $request->member_id;
+        $reviewer = $this->sakurasetService->getReviewerbyMember($this->loginId(),$member_id);
         if($reviewer === null){
             return response()->json(['success' => false, 'message' => 'Reviewer do not exist','data' => []]);
         }
-        $faceSheet = $this->sakurasetService->getFileInfoByReviewerId($this->facesheetManageRepository,$reviewer['member_id'],'only',['id','file_name','display_name','member_id']);
-        $refSheet = $this->sakurasetService->getFileInfoByReviewerId($this->reflectionsheetManageRepository,$reviewer['member_id'],'list',['id','file_name','display_name','member_id','class']);
-        $initTable = $this->sakurasetService->getFileInfoByReviewerId($this->initiativetableManageRepository,$reviewer['member_id'],'only',['id','file_name','display_name','member_id']);
+        $faceSheet = $this->sakurasetService->getFileInfoByReviewerId($this->facesheetManageRepository,$member_id,'only',['id','file_name','display_name','member_id']);
+        $refSheet = $this->sakurasetService->getFileInfoByReviewerId($this->reflectionsheetManageRepository,$member_id,'list',['id','file_name','display_name','member_id','class']);
+        $initTable = $this->sakurasetService->getFileInfoByReviewerId($this->initiativetableManageRepository,$member_id,'only',['id','file_name','display_name','member_id']);
         $data = [
             'facesheet' => $faceSheet,
             'freflectionsheet' => $refSheet,
@@ -271,7 +284,7 @@ class SakuraSetController extends Controller
                 // start upload file
                 $file->move($location,$newFilename);
                 // send email func
-                $reviewer = $this->sakurasetService->getByLoggedId(['reviewer_id',$request->member_id],['reviewer_member','made_member']);
+                $reviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$request->member_id]],['reviewer_member','made_member']);
                 $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer->made_member];
                 $view = 'email.sakuraSet.backup_'.$request->backup_type;
                 if(!view()->exists($view)){
@@ -455,9 +468,11 @@ class SakuraSetController extends Controller
                 $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
+        $sakuraReviewManage = $this->sakurasetService->getByLoggedId(['reviewer_id',$this->loginId()],$with);
+        $sakuraMemberManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
         return view('myPage/sakuraSet/registerReviewer',[
-            'sakuraManage' => $sakuraManage,
+            'sakuraReviewManage' => $sakuraReviewManage,
+            'sakuraMemberManage' => $sakuraMemberManage,
         ]);
     }
     public function searchMemberToReview(Request $request){

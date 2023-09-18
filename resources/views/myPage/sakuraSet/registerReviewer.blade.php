@@ -2,7 +2,7 @@
     [
         'pageSlug' => 'らセットに取り組む',
         'header_button' => '<button type="button" class="header-buttom btn-eff-yel btn-hov" style="background:#FFFF00;color:#000;">さくらセットについて</button>',
-        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraManage'=>$sakuraManage])
+        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraManage'=>$sakuraReviewManage])
     ])
 @push('styles')
 <link href="{{ asset('assets') }}/css/sakuraSet.css" rel="stylesheet" />
@@ -24,7 +24,7 @@
                 <span>名</span>
                 <input type="text" name="first_name" required class="first_name" placeholder="（完全一致）"/>
             </div>
-            <button type="submit" class="btn-eff-ora btn-hov action {{ $sakuraManage !== null && $sakuraManage->reviewer_id ? 'disabled' : '' }}">検索</button>
+            <button type="submit" class="btn-eff-ora btn-hov action {{ $sakuraMemberManage !== null && $sakuraMemberManage->reviewer_id ? 'disabled' : '' }}">検索</button>
         </form>
     </div>
     <div class="resultReviewerInfo">

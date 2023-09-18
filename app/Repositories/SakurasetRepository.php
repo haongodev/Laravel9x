@@ -62,8 +62,9 @@ class SakurasetRepository
             return null;
         }
     }
-    public function getReviewer($member){
-        return $this->model->with('reviewer_member:users_id,member_id,email,name1,name2')->where('member_id',$member)->first()->toArray()['reviewer_member'];
+    public function getReviewer($reviewer_id,$member_id){
+        $data = $this->model->with('reviewer_member:users_id,login_id,member_id,email,name1,name2')->where([['reviewer_id',$reviewer_id],['member_id',$member_id]])->first();
+        if($data) return $data->toArray()['reviewer_member'];
     }
     public function getSheetInfoByReviewerId($inst,$reviewerId,$kind,$select){
         $where = [

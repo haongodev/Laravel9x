@@ -2,7 +2,7 @@
     [
         'pageSlug' => 'らセットに取り組む',
         'header_button' => '<button type="button" class="header-buttom btn-eff-yel btn-hov" style="background:#FFFF00;color:#000;">さくらセットについて</button>',
-        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraManage'=>$sakuraManage])
+        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraManage'=>$sakuraReviewManage])
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css/sakuraSet.css" rel="stylesheet" />
@@ -28,22 +28,28 @@
             <div class="pull-left">
                 <ul>
                     <li>
-                        @if($sakuraManage !== null)
-                        <button class="{{ $sakuraManage->reviewer_member !== null ? 'in-active' : 'active' }}">担当者</button>
+                        @if($sakuraMemberManage && $sakuraMemberManage->reviewer_member !== null && $sakuraMemberManage->reviewer_status !== 1)
+                            <button class="in-active">担当者</button>
+                        @else
+                            <a href="{{ route('registerReviewer') }}"><button class="active">担当者</button></a>
                         @endif
                     </li>
                     <li>
-                        @if(!$sakuraManage || $sakuraManage->reviewer_member === null)
-                            未申請
+                        @if($sakuraReviewManage === null && $sakuraMemberManage !== null && $sakuraMemberManage->reviewer_status !== 1)
+                            {{ $sakuraMemberManage->reviewer_member->name1.' '.$sakuraMemberManage->reviewer_member->name2 }}
                         @else
-                            {{ $sakuraManage->reviewer_member->name1.' '.$sakuraManage->reviewer_member->name2 }}
+                            未申請
                         @endif
                     </li>
                 </ul>
             </div>
             <div class="pull-right">
-                @if($sakuraManage && $sakuraManage->reviewer_member !== null)
-                    <button class="cancal-sharing {{ $sakuraManage->reviewer_status === 3 ? 'had-change btn-eff-ora btn-hov' : 'btn-eff-red btn-hov'}}"> {{ $sakuraManage->reviewer_status === 3 ? '解除依頼中' : '共有解除'}}</button>
+                @if($sakuraMemberManage && $sakuraMemberManage->reviewer_status !== 1)
+                    @if($sakuraMemberManage->reviewer_member !== null && ($sakuraMemberManage->reviewer_status !== 3 && $sakuraMemberManage->reviewer_status !== 1))
+                        <button class="cancal-sharing btn-eff-red btn-hov" data-id="{{ $sakuraMemberManage->reviewer_member->login_id}}">共有解除</button>
+                    @else
+                        <button class="had-change btn-eff-ora btn-hov">解除依頼中</button>
+                    @endif
                 @endif
             </div>
         </div>

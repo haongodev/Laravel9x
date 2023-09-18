@@ -5,47 +5,83 @@
             if($(this).hasClass('had-change')){
                 return false;
             }
+            var member_id = $(this).data('id');
             $('.popup-wrapper .popup-content .content').html('振り返り担当者との共有を解除しますか？');
             $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">確認</button>');
             $('.popup-wrapper .popup-footer').removeClass('hidden');
             $('.popup-wrapper').removeClass('hidden');
             $('.btn-popup-accept').addClass('btn-popup-confirm_delete_sharing_from_pic');
             $('body').addClass('ovf-hidden');
+            $('.btn-popup-accept').attr('data-id',member_id);
             showPopupLastConfirm('btn-popup-confirm_delete_sharing_from_pic','本当に共有を解除しますか？','<button class="title-popup">最終確認</button>')
         })
 
         $('.reviewer').click(function (){
+            var member_id = $(this).data('id');
             $('.popup-wrapper .popup-content .content').html('振り返り担当者の申請がありました。承認しますか？');
             $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">承認確認</button>')
             $('.popup-wrapper .popup-footer').removeClass('hidden');
             $('body').addClass('ovf-hidden');
             $('.popup-wrapper').removeClass('hidden');
+            $('.btn-popup-accept').attr('data-id',member_id);
             $('.btn-popup-accept').addClass('btn-popup-agree_to_register_pic');
+            $('.btn-popup-agree_to_register_pic').click(function(){
+                $.ajax({
+                    url: '{{ route("sakuraUpdate") }}',
+                    data: {
+                        reviewer_status : 2,
+                        view:'agree_to_register_pic',
+                        member_id: $(this).data('id')
+                    },
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    success: function(response) {
+                        if(response.success){
+                            $('.popup-wrapper').addClass('hidden');
+                            $('body').removeClass('ovf-hidden');
+                            toastr.options.timeOut = 3000;
+                            toastr.info('申請を承認しました。');
+                            $('.btn-popup-accept').removeClass().addClass('btn-popup-accept');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            })
         })
 
         $('.sharing').click(function (){
+            var member_id = $(this).data('id');
             $('.popup-wrapper .popup-content .content').html('振り返り担当者としての共有を解除しますか？');
             $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">確認</button>')
             $('.popup-wrapper .popup-footer').removeClass('hidden');
             $('body').addClass('ovf-hidden');
             $('.popup-wrapper').removeClass('hidden');
             $('.btn-popup-accept').addClass('btn-popup-cancel_sharing_from_pic');
+            $('.btn-popup-accept').attr('data-id',member_id);
             showPopupLastConfirm('btn-popup-cancel_sharing_from_pic','本当に共有を解除しますか？','<button class="title-popup">最終確認</button>')
         })
 
         $('.accept-cancel').click(function () {
+            var member_id = $(this).data('id');
             $('.popup-wrapper .popup-content .content').html('実施者から振り返り担当者解除の申請がありました。承認しますか？');
             $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">承認確認</button>')
             $('.popup-wrapper .popup-footer').removeClass('hidden');
             $('body').addClass('ovf-hidden');
             $('.popup-wrapper').removeClass('hidden');
             $('.btn-popup-accept').addClass('btn-popup-cancel_sharing_from_member');
+            $('.btn-popup-accept').attr('data-id',member_id);
             showPopupLastConfirm('btn-popup-cancel_sharing_from_member','本当に承認しますか？','<button class="title-popup">最終確認</button>')
         })
 
         $('.become-manager').click(function () {
+            var member_id = $(this).next().data('id');
             $.ajax({
                 url: '{{ route("sakuraSheet") }}',
+                data: {
+                    member_id
+                },
                 type: 'GET',
                 success: function(response) {
                     if(response.success){
@@ -53,7 +89,7 @@
                             $('.'+key).removeClass('hidden');
                             var link = '';
                             if(response.data[key] !== null && response.data[key].hasOwnProperty('member_id')){
-                                link = '/storage/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
+                                link = '/storage/upload/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
                             }
                             var base_url = $('.base_url').attr('value');
                             if(link !== ''){
@@ -61,6 +97,7 @@
                                 $('.'+key+' .'+key+'-upload').attr('member_id',response.data[key].member_id);
                             }else{
                                 $('.'+key+' .confirmation').addClass('disabled');
+                                $('.'+key+' .'+key+'-upload').attr('member_id',member_id);
                             }
                             if(key === 'freflectionsheet'){
                                 var html = '';
@@ -75,7 +112,7 @@
                                         name_folder = 'at';
                                     }
                                     if(element !== null){
-                                        link = '/storage/'+element.member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+element.file_name;
+                                        link = '/storage/upload/'+element.member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+element.file_name;
                                     }
                                     html += '<div class="flex-column">'+
                                                 '<div class="sub-title">'+
@@ -113,24 +150,28 @@
                     $(this).removeAttr('last-confirm');
                     $('.btn-popup-accept').removeClass(el);
                     var isload = false;
+                    var member_id = $(this).data('id');
                     var data = {};
                     if(el === 'btn-popup-confirm_delete_sharing_from_pic'){
                         data = {
                             reviewer_status : 3,
-                            view:'confirm_delete_sharing_from_pic'
+                            view:'confirm_delete_sharing_from_pic',
+                            member_id
                         }
                         isload = true;
                     }
                     if(el === 'btn-popup-cancel_sharing_from_pic'){
                         data = {
                             reviewer_status : 4,
-                            view:'cancel_sharing_from_pic'
+                            view:'cancel_sharing_from_pic',
+                            member_id
                         }
                         isload = true;
                     }
                     if(el === 'btn-popup-cancel_sharing_from_member'){
                         data = {
-                            view:'cancel_sharing_from_member'
+                            view:'cancel_sharing_from_member',
+                            member_id
                         }
                         $.ajax({
                             url: '{{ route("sakuraDelete") }}',
@@ -139,7 +180,13 @@
                             type: 'POST',
                             success: function(response) {
                                 if(response.success){
-
+                                    toastr.options.timeOut = 3000;
+                                    toastr.info('申請を承認しました。');
+                                    $('.sakuraSet-sideBar ul').remove();
+                                    $('.botton-navigate .pull-left ul li:nth-child(1)').html('')
+                                    $('.botton-navigate .pull-left ul li:nth-child(2)').html('未申請')
+                                    $('.botton-navigate .pull-right').html('')
+                                    $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
                                 }
                             },
                             error: function(xhr) {
@@ -156,8 +203,11 @@
                             success: function(response) {
                                 if(response.success){
                                     if(el === 'btn-popup-confirm_delete_sharing_from_pic'){
-                                        $('.pull-right button').addClass('had-change');
+                                        $('.pull-right button').html('解除依頼中').addClass('had-change');
                                     }
+                                    $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
+                                    toastr.options.timeOut = 3000;
+                                    toastr.info('申請を承認しました。');
                                 }
                             },
                             error: function(xhr) {
@@ -173,25 +223,6 @@
                     $(this).unbind('click');
             })
         }
-        $('body').on('click','.btn-popup-agree_to_register_pic',function(){
-            $.ajax({
-                url: '{{ route("sakuraUpdate") }}',
-                data: {
-                    reviewer_status : 2,
-                    view:'agree_to_register_pic'
-                },
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                type: 'POST',
-                success: function(response) {
-                    if(response.success){
-
-                    }
-                },
-                error: function(xhr) {
-                    console.log(xhr.responseText);
-                }
-            });
-        })
         $('body').on('click','.btn-off-popup',function (e){
             $('.popup-wrapper .popup-content .header-content').html('');
             $('.popup-wrapper .popup-content .content').html('');
