@@ -455,9 +455,21 @@
             items[htmlItem]['map'] = true;
             var titleAnswer = '';
             var answerWdispl = '';
+            var answerDate = ''
             if(parseInt(items[htmlItem].effective_date_flg) === 1){
-                titleAnswer = new Date(items[htmlItem].answer);
-                titleAnswer = titleAnswer.getFullYear()+'年 '+(titleAnswer.getMonth() + 1)+'月 '+titleAnswer.getDate()+'日'
+                answerDate = items[htmlItem].answer;
+                if(answerDate.indexOf('-')>-1){
+                    if(answerDate.indexOf(',')>-1){
+                        var arrDate = answerDate.split(',');
+                        answerDate = arrDate[0];
+                    }
+
+                    titleAnswer = new Date(answerDate);
+                    titleAnswer = titleAnswer.getFullYear()+'年 '+(titleAnswer.getMonth() + 1)+'月 '+titleAnswer.getDate()+'日'
+                }else{
+                    titleAnswer = answerDate+'年 ';
+                }
+
             }
             if(parseInt(items[htmlItem].disp_flg) === 1){
                 answerWdispl = items[htmlItem].answer
