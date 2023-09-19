@@ -407,7 +407,8 @@
             objChart.push({
                 image: headPdf,
                 width: 500,
-                alignment: "center"
+                alignment: "center",
+                pageBreak: 'before'
             })
             objChart.push({
                 image: tableHtml,
