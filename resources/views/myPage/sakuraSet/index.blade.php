@@ -2,7 +2,7 @@
     [
         'pageSlug' => 'らセットに取り組む',
         'header_button' => '<button type="button" class="header-buttom btn-eff-yel btn-hov" style="background:#FFFF00;color:#000;">さくらセットについて</button>',
-        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraManage'=>$sakuraReviewManage])
+        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraReviewManage'=>$sakuraReviewManage])
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css/sakuraSet.css" rel="stylesheet" />
@@ -74,7 +74,9 @@
             type: 'POST',
             success: function(response) {
                 if(response.success){
-                    $('.side-bot .row li').removeClass('active');
+                    if(!response.data){
+                        $('.side-bot .row li').removeClass('active');
+                    }
                 }
             },
             error: function(xhr) {

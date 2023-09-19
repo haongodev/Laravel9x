@@ -77,6 +77,7 @@
 
         $('.become-manager').click(function () {
             var member_id = $(this).next().data('id');
+            var nameMember = $(this).text();
             $.ajax({
                 url: '{{ route("sakuraSheet") }}',
                 data: {
@@ -84,6 +85,7 @@
                 },
                 type: 'GET',
                 success: function(response) {
+                    $('.become-manager-screen .title-manager .name-member').html(nameMember);
                     if(response.success){
                         for (const key in response.data) {
                             $('.'+key).removeClass('hidden');

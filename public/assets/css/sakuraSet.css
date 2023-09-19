@@ -118,18 +118,6 @@
     border-radius: 25px;
     padding: 5px 0;
 }
-.sakuraSet-sideBar ul li:nth-child(1) button{
-    background: #66CC00;
-}
-.sakuraSet-sideBar ul li:nth-child(2) button{
-    background: #3399FF;
-}
-.sakuraSet-sideBar ul li:nth-child(3) button{
-    background: #FF3333;
-}
-.sakuraSet-sideBar ul li:nth-child(4) button{
-    background: #FF8000;
-}
 .popup-wrapper .layout-popup{
     width: 45%!important;
 }
@@ -244,8 +232,17 @@
 .none-share{
     background: #FFB366 !important;
 }
-.sharing{
+.sakuraSet-sideBar ul li .sharing{
     background: #3399FF!important;
+}
+.sakuraSet-sideBar ul li .accept-cancel{
+    background: #ffb366!important;
+}
+.sakuraSet-sideBar ul li .reviewer{
+    background: #66CC00!important;
+}
+.sakuraSet-sideBar ul li .cancel{
+    background: #FF3333;
 }
 .w-100px{
     width: 100px;
