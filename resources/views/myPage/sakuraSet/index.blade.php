@@ -35,7 +35,7 @@
                         @endif
                     </li>
                     <li>
-                        @if($sakuraReviewManage === null && $sakuraMemberManage !== null && $sakuraMemberManage->reviewer_status !== 1)
+                        @if($sakuraMemberManage !== null && $sakuraMemberManage->reviewer_member !== null && $sakuraMemberManage->reviewer_status !== 1)
                             {{ $sakuraMemberManage->reviewer_member->name1.' '.$sakuraMemberManage->reviewer_member->name2 }}
                         @else
                             未申請
