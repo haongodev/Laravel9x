@@ -28,7 +28,7 @@
                 @if(auth()->user()->user_add_info->membership_type == '認定保健福祉士')
                     <div class="cert-box">
                         <button class="handle-btn">認定期限</button>
-                        <span>{{getCertificationYear()}}年度</span>
+                        <span>{{getCertificationYear()  ? getCertificationYear().'年度' : ''}}</span>
                     </div>
                 @endif
                 @php $scheduledDate = scheduledDate() @endphp

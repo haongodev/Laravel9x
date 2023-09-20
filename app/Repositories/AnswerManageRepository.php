@@ -32,14 +32,16 @@ class AnswerManageRepository
     public function sumCoreCredits($year){
         $memberId = auth()->user()->id;
         if(is_array($year)){
-            if($year[0] > $year[1]){
-                $year = [$year[1],$year[0]];
+            if($year[0] != 0 && $year[1] !==0){
+                if($year[0] > $year[1]){
+                    $year = [$year[1],$year[0]];
+                }
+                $years = [];
+                for ($i = $year[0]; $i <= $year[1]; $i++) {
+                    $years[] = $i;
+                }
+                $year = $years;
             }
-            $years = [];
-            for ($i = $year[0]; $i <= $year[1]; $i++) {
-                $years[] = $i;
-            }
-            $year = $years;
         }
         $result = $this->model
             ->join('answer_info', function ($q) use ($year){
