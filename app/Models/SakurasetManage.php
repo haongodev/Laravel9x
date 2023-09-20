@@ -50,7 +50,7 @@ class SakurasetManage extends Model
      * @var array
      */
     protected $fillable = [
-        'member_id', 'member_id', 'reviewer_id', 'reviewer_status', 'scheduled_date', 'update_date', 'registration_date', 'reviewer_id', 'reviewer_status', 'scheduled_date', 'update_date'
+        'member_id', 'member_id', 'reviewer_id', 'reviewer_status', 'scheduled_date', 'update_date', 'registration_date', 'reviewer_id', 'reviewer_status', 'scheduled_date', 'update_date','reviewer_confirmation_flg','confirmation_flg',
     ];
 
     /**
@@ -80,7 +80,9 @@ class SakurasetManage extends Model
         'reviewer_id' => 'string', 
         'reviewer_status' => 'int', 
         'scheduled_date' => 'datetime', 
-        'update_date' => 'datetime'
+        'update_date' => 'datetime',
+        'reviewer_confirmation_flg',
+        'confirmation_flg',
     ];
 
     /**

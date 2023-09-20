@@ -120,10 +120,14 @@ class SakuraSetController extends Controller
     public function updateConfirm(Request $request){
         $loginId = $this->loginId();
         $data = null;
-        $sakuraReviewer = $this->sakurasetService->getByLoggedId(['reviewer_id',$loginId]);
-        if($sakuraReviewer && $sakuraReviewer->reviewer_status === 1){
-            $data = 'show';
+        $sakuraReviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$loginId],['reviewer_confirmation_flg',0]],null,true);
+        foreach ($sakuraReviewer->toArray()  as $item) {
+            if ($item['reviewer_status'] == 1) {
+                $data = 'show';
+                break;
+            }
         }
+        
         return response()->json(['success' => true, 'data' => $data]);
     }
     public function update(Request $request){
@@ -152,9 +156,8 @@ class SakuraSetController extends Controller
         ];
         $sakuraManage = $this->sakurasetService->getByLoggedId($condition,$with);
         $dataUpdate = $request->except(['view','member_id']);
-        if($request->reviewer_status == 2){
-            $dataUpdate['confirmation_flg'] = 1;
-            $dataUpdate['reviewer_confirmation_flg'] = 1;
+        if($request->reviewer_status === '2'){
+            $dataUpdate['reviewer_confirmation_flg'] = '1';
         }
         $updateSakura = $this->sakurasetService->updateSakura($dataUpdate,$condition);
         $msg = '';
@@ -522,6 +525,7 @@ class SakuraSetController extends Controller
             $sakuraManage->update([
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
+                'confirmation_flg' => 1,
             ]);
             $data['success'] = true;
         }else{
@@ -530,6 +534,7 @@ class SakuraSetController extends Controller
                 'member_id' => $this->loginId(),
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
+                'confirmation_flg' => 1,
             ]);
         }
         $emailConfig = ['to' => $dataAll['email'],'subject' => '「振り返り担当者」の申請がありました（自動送信メール）','sakuraData' => $sakuraManage];

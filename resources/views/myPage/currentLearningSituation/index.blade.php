@@ -123,11 +123,9 @@
         updateScaleMax2(initCoreChart2Data);
         var AmountScore = dataInitCore2.reduce((accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue), 0);
         $('.total-score').html(AmountScore);
-        if(AmountScore > 100){
-            $('.flags-goal3').removeClass('hidden');
-        }
+       
         const allScoresGreaterThan20 = initCoreChart2Data.every(item => parseInt(item.total_score) > 20);
-        if(allScoresGreaterThan20){
+        if(AmountScore > 100 && allScoresGreaterThan20){
             $('.flags-goal3').removeClass('hidden');
         }
         $('.date-group input').datepicker({

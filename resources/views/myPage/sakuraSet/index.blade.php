@@ -35,7 +35,7 @@
                         @endif
                     </li>
                     <li>
-                        @if($sakuraMemberManage !== null && $sakuraMemberManage->reviewer_member !== null && $sakuraMemberManage->reviewer_status !== 1)
+                        @if($sakuraMemberManage !== null && $sakuraMemberManage->reviewer_member !== null)
                             {{ $sakuraMemberManage->reviewer_member->name1.' '.$sakuraMemberManage->reviewer_member->name2 }}
                         @else
                             未申請
@@ -44,9 +44,13 @@
                 </ul>
             </div>
             <div class="pull-right">
-                @if($sakuraMemberManage && $sakuraMemberManage->reviewer_status !== 1)
-                    @if($sakuraMemberManage->reviewer_member !== null && ($sakuraMemberManage->reviewer_status !== 3 && $sakuraMemberManage->reviewer_status !== 1))
+                @if($sakuraMemberManage)
+                    @if($sakuraMemberManage->reviewer_member !== null && ($sakuraMemberManage->reviewer_status !== 3))
+                        @if($sakuraMemberManage->reviewer_status === 1)
+                        <button class="btn-eff-red btn-hov">申請中</button>
+                        @else
                         <button class="cancal-sharing btn-eff-red btn-hov" data-id="{{ $sakuraMemberManage->reviewer_member->login_id}}">共有解除</button>
+                        @endif
                     @else
                         <button class="had-change btn-eff-ora btn-hov">解除依頼中</button>
                     @endif
