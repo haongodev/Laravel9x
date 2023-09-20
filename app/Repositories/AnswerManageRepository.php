@@ -69,7 +69,7 @@ class AnswerManageRepository
                 ->where('ai2.effective_date_flg', 1)
                     ->where(function ($q2) use($date){
                     $q2->where(function($q3) use ($date){
-                        $q3->whereIn('ai2.input_method',[5,6])
+                        $q3->whereIn('ai2.input_method',[7,8])
                             ->whereBetween('ai2.answer',[$date[0],$date[1]]);
                     })
                     ->orWhere(function ($q4) use ($date){
@@ -99,7 +99,7 @@ class AnswerManageRepository
                 ->where('ai2.effective_date_flg', 1)
                 ->where(function ($q2) use($date){
                     $q2->where(function($q3) use ($date){
-                        $q3->whereIn('ai2.input_method',[5,6])
+                        $q3->whereIn('ai2.input_method',[7,8])
                             ->whereBetween('ai2.answer',[$date[0],$date[1]]);
                     })
                         ->orWhere(function ($q4) use ($date){
@@ -129,7 +129,7 @@ class AnswerManageRepository
                 ->where('ai2.effective_date_flg', 1)
                 ->where(function ($q2) use($date){
                     $q2->where(function($q3) use ($date){
-                        $q3->whereIn('ai2.input_method',[5,6])
+                        $q3->whereIn('ai2.input_method',[7,8])
                             ->whereBetween('ai2.answer',[$date[0],$date[1]]);
                     })
                         ->orWhere(function ($q4) use ($date){
