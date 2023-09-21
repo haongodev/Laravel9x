@@ -47,7 +47,7 @@
                         $('.popup-wrapper').addClass('hidden');
                         $('body').removeClass('ovf-hidden');
                         toastr.options.timeOut = 3000;
-                        toastr.info('申請を承認しました。');
+                        toastr.info('申請を承認しました');
                         $('.btn-popup-accept').removeClass().addClass('btn-popup-accept');
                         that.removeClass('reviewer').removeClass('btn-eff-gre').addClass('btn-eff-pri').addClass('sharing');
                         that.html('共有中');
@@ -109,9 +109,9 @@
                                 $('.'+key+' .confirmation').addClass('disabled');
                                 $('.'+key+' .'+key+'-upload').attr('member_id',member_id);
                             }
-                            if(key === 'freflectionsheet'){
+                            if(key === 'reflectionsheet'){
                                 var html = '';
-                                response.data.freflectionsheet.forEach((element,i) => {
+                                response.data.reflectionsheet.forEach((element,i) => {
                                     var name = '6か月目';
                                     var name_folder = '6m';
                                     if(element.class == 1){
@@ -131,7 +131,7 @@
                                                 '<div class="flex-between">'+
                                                     '<button class="confirmation '+(link === '' ? 'disabled' : '')+'" link="'+base_url+link+'">確認</button>'+
                                                     '<button class="swp">実施者と共有</button>'+
-                                                    '<input class="hidden freflectionsheet-upload" type="file" at="'+name_folder+'" member_id="'+element.member_id+'">'+
+                                                    '<input class="hidden reflectionsheet-upload" type="file" at="'+name_folder+'" member_id="'+element.member_id+'">'+
                                                 '</div>'+
                                             '</div>';
                                 });
@@ -162,6 +162,7 @@
                     var isload = false;
                     var member_id = $(this).attr('data-id');
                     var data = {};
+                    var toarmsg = '';
                     if(el === 'btn-popup-confirm_delete_sharing_from_pic'){
                         data = {
                             reviewer_status : 3,
@@ -169,6 +170,7 @@
                             member_id
                         }
                         isload = true;
+                        toarmsg = '共有解除を申請しました';
                     }
                     if(el === 'btn-popup-cancel_sharing_from_pic'){
                         data = {
@@ -177,6 +179,7 @@
                             member_id
                         }
                         isload = true;
+                        toarmsg = '共有解除を申請しました';
                     }
                     if(el === 'btn-popup-cancel_sharing_from_member'){
                         data = {
@@ -191,7 +194,7 @@
                             success: function(response) {
                                 if(response.success){
                                     toastr.options.timeOut = 3000;
-                                    toastr.info('共有解除を申請しました。');
+                                    toastr.info('共有解除申請を承認しました');
                                     $('.sakuraSet-sideBar ul').remove();
                                     $('.botton-navigate .pull-left ul li:nth-child(1)').html('')
                                     $('.botton-navigate .pull-left ul li:nth-child(2)').html('未申請')
@@ -221,7 +224,7 @@
                                     }
                                     $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
                                     toastr.options.timeOut = 3000;
-                                    toastr.info('申請を承認しました。');
+                                    toastr.info(toarmsg);
                                 }
                             },
                             error: function(xhr) {
@@ -229,6 +232,7 @@
                             }
                         });
                     }
+                    $('body').removeClass('ovf-hidden');
                 }else{
                     $('.popup-wrapper .popup-content .content').html(content);
                     $('.popup-wrapper .popup-content .header-content').html(header);
@@ -254,7 +258,7 @@
             var name = url.substring(url.lastIndexOf('/')+1);
             downloadFile(url,name);
         })
-        $('body').on('click','.freflectionsheet .confirmation',function (e) {
+        $('body').on('click','.reflectionsheet .confirmation',function (e) {
             var url = $(this).attr('link');
             var name = url.substring(url.lastIndexOf('/')+1);
             downloadFile(url,name);
@@ -283,17 +287,17 @@
             fd.append('backup_type','initiative');
             backupWithNewSWP(url,fd);
         })
-        $('body').on('click','.freflectionsheet .swp',function (e) {
+        $('body').on('click','.reflectionsheet .swp',function (e) {
             $(this).next('input').click();
         })
-        $('body').on('change','.freflectionsheet-upload',function (e) {
+        $('body').on('change','.reflectionsheet-upload',function (e) {
             var url = '{{ route("sakuraBackup") }}';
             var files = $(this)[0].files;
             var fd = new FormData();
             fd.append('file',files[0]);
             fd.append('member_id',$(this).attr('member_id'));
             fd.append('at',$(this).attr('at'));
-            fd.append('backup_type','freflectionsheet');
+            fd.append('backup_type','reflectionsheet');
             backupWithNewSWP(url,fd);
         })
         function downloadFile(url,name){

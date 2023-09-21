@@ -24,7 +24,7 @@ class ReflectionsheetManageService
     public function upload($request)
     {
         if ($request->hasFile('file')) {
-            $memberId = auth()->user()->id;
+            $memberId = auth()->user()->user_add_info->login_id;
             $class = $request->get('class');
             $pathClass = $class == 2 ? 'at' : ($class == 1 ? '12m' : '6m');
             $name = $request->file('file')->getClientOriginalName();

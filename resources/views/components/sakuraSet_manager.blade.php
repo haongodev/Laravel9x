@@ -18,7 +18,7 @@
             <div>
                 <button>振り返りシート</button>
             </div>
-            <div class="sub-content freflectionsheet hidden">
+            <div class="sub-content reflectionsheet hidden">
                 
             </div>
         </div>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="action-manage">
-            <button class="btn-off-popup">戻る</button>
+            <button class="btn-off-popup btn-eff-bla btn-hov">戻る</button>
         </div>
     </div>
 </div>
