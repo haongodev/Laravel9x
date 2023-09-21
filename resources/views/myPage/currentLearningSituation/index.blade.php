@@ -37,7 +37,7 @@
 
 
         @if(   auth()->user()->user_add_info->training_accreditation_certification_status == '認定精神保健福祉士'
-          || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認精神定保健福祉士'
+          || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認定精神保健福祉士'
         )
             <div class="head-chart flex-between">
                 <div class="side-left">
@@ -128,7 +128,7 @@
         updateScaleMax2(initCoreChart2Data);
         var AmountScore = dataInitCore2.reduce((accumulator, currentValue) => parseInt(accumulator) + parseInt(currentValue), 0);
         $('.total-score').html(AmountScore);
-       
+
         const allScoresGreaterThan20 = initCoreChart2Data.every(item => parseInt(item.total_score) > 20);
         if(AmountScore > 100 && allScoresGreaterThan20){
             $('.flags-goal3').removeClass('hidden');

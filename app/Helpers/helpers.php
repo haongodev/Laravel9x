@@ -36,7 +36,7 @@ if (!function_exists('getCertificationYear')) {
     function getCertificationYear()
     {
         if (auth()->user()->user_add_info->training_accreditation_certification_status == '認定精神保健福祉士'
-            || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認精神定保健福祉士'
+            || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認定精神保健福祉士'
         ){
             return auth()->user()->user_add_info->training_accreditation_certification_year ?? 0;
         }
