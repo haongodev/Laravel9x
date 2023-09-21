@@ -58,56 +58,89 @@ class AnswerManageRepository
         return $result;
     }
     public function sumCoreBwYear($from,$to){
-        $date = [$from,$to];
+        $date = [$from, $to];
         $memberId = auth()->user()->id;
         return $this->model
-        ->join('answer_info', function ($q){
-            $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
-        })
-        ->select('answer_manage.registration_year','answer_manage.type_native_id', \DB::raw('SUM(answer_info.score) as total_score'))
-        ->where('answer_manage.member_id', $memberId)
-        ->where(function ($q) use($date) {
-            $q->where('answer_info.effective_date_flg', 1)
-              ->whereBetween('answer_info.answer', [$date[0],$date[1]]);
-        })
-        ->whereIn('answer_manage.type_native_id', [0,1,2])
-        ->groupBy('answer_manage.registration_year','answer_manage.type_native_id')->get();
+            ->leftJoin('answer_info', function ($q) {
+                $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+            })
+            ->select('answer_manage.registration_year', 'answer_manage.type_native_id', \DB::raw('SUM(answer_info.score) as total_score'))
+            ->where('answer_manage.member_id', $memberId)
+            ->whereIn('answer_manage.id', function ($q) use ($date){
+                $q->select('ai2.answer_manage_id')->from('answer_info as ai2')
+                ->where('ai2.effective_date_flg', 1)
+                    ->where(function ($q2) use($date){
+                    $q2->where(function($q3) use ($date){
+                        $q3->whereIn('ai2.input_method',[7,8])
+                            ->whereBetween('ai2.answer',[$date[0],$date[1]]);
+                    })
+                    ->orWhere(function ($q4) use ($date){
+                        $yearStart = date('Y',strtotime($date[0]));
+                        $yearEnd = date('Y',strtotime($date[1]));
+                        $q4->where('ai2.input_method',10)
+                            ->whereBetween('ai2.answer',[$yearStart,$yearEnd]);
+                    });
+                });
+            })
+            ->whereIn('answer_manage.type_native_id', [0, 1, 2])
+            ->groupBy('answer_manage.registration_year', 'answer_manage.type_native_id')->get();
     }
     public function sumCoreBwYearGoalStudy($from,$to){
         $memberId = auth()->user()->id;
         $date = [$from,$to];
         return $this->model
-        ->join('answer_info', function ($q){
+        ->leftJoin('answer_info', function ($q){
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
         })
-        ->select('answer_info.title','answer_info.answer','answer_manage.registration_year', \DB::raw('SUM(answer_info.score) as total_score'))
+        ->select('answer_info.answer','answer_manage.registration_year', \DB::raw('COUNT(answer_info.answer) as total_score'))
         ->where('answer_manage.member_id', $memberId)
         ->whereIn('answer_manage.type_native_id', [0,1,2])
         ->where('answer_info.title', 'like', '%研鑽目的%')
-        ->where(function ($q) use($date) {
-            $q->where('answer_info.effective_date_flg', 1)
-              ->whereBetween('answer_info.answer', [$date[0],$date[1]]);
+        ->whereIn('answer_manage.id', function ($q) use ($date){
+            $q->select('ai2.answer_manage_id')->from('answer_info as ai2')
+                ->where('ai2.effective_date_flg', 1)
+                ->where(function ($q2) use($date){
+                    $q2->where(function($q3) use ($date){
+                        $q3->whereIn('ai2.input_method',[7,8])
+                            ->whereBetween('ai2.answer',[$date[0],$date[1]]);
+                    })
+                        ->orWhere(function ($q4) use ($date){
+                            $yearStart = date('Y',strtotime($date[0]));
+                            $yearEnd = date('Y',strtotime($date[1]));
+                            $q4->where('ai2.input_method',10)
+                                ->whereBetween('ai2.answer',[$yearStart,$yearEnd]);
+                        });
+                });
         })
-        ->whereBetween('answer_manage.registration_date',[$from,$to])
-        ->groupBy('answer_manage.registration_year','answer_info.answer','answer_info.title')->get();
+
+        ->groupBy('answer_manage.registration_year','answer_info.answer')->get();
     }
     public function sumScoreBwYearForPattern($from,$to){
         $memberId = auth()->user()->id;
         $date = [$from,$to];
         return $this->model
-        ->join('answer_info', function ($q){
+        ->leftJoin('answer_info', function ($q){
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
         })
         ->select('answer_info.effective_date_flg','answer_info.disp_flg','answer_info.title','answer_info.answer','answer_manage.registration_year','answer_manage.type_native_id')
         ->where('answer_manage.member_id', $memberId)
         ->whereIn('answer_manage.type_native_id', [0,1,2])
-        ->where(function ($q) {
-            $q->where('answer_info.effective_date_flg', 1)
-              ->orWhere('answer_info.disp_flg', 1);
-        })
-        ->where(function ($q) use($date) {
-            $q->where('answer_info.effective_date_flg', 1)
-              ->whereBetween('answer_info.answer', [$date[0],$date[1]]);
+        ->where('answer_info.disp_flg', 1)
+        ->whereIn('answer_manage.id', function ($q) use ($date){
+            $q->select('ai2.answer_manage_id')->from('answer_info as ai2')
+                ->where('ai2.effective_date_flg', 1)
+                ->where(function ($q2) use($date){
+                    $q2->where(function($q3) use ($date){
+                        $q3->whereIn('ai2.input_method',[7,8])
+                            ->whereBetween('ai2.answer',[$date[0],$date[1]]);
+                    })
+                        ->orWhere(function ($q4) use ($date){
+                            $yearStart = date('Y',strtotime($date[0]));
+                            $yearEnd = date('Y',strtotime($date[1]));
+                            $q4->where('ai2.input_method',10)
+                                ->whereBetween('ai2.answer',[$yearStart,$yearEnd]);
+                        });
+                });
         })
         ->orderBy('answer_manage.type_native_id', 'ASC')->orderBy('answer_manage.registration_year', 'ASC')->get();
     }

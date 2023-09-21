@@ -1,32 +1,34 @@
 <div class="sakuraSet-sideBar">
     <p>あなたが振り返りを担当を 実施しているメンバー</p>
     <ul>
-        @if(isset($sakuraManage))
-            @switch($sakuraManage->reviewer_status)
-                @case(1)
+        @if(isset($sakuraReviewManage))
+            @forEach($sakuraReviewManage as $key => $sakuraManage)
+                @switch($sakuraManage->reviewer_status)
+                    @case(1)
+                        <li class="flex-between" status="{{$sakuraManage->made_member}}">
+                            <span>{{ $sakuraManage->made_member->name1 ?? ''}} {{ $sakuraManage->made_member->name2 ?? ''}}</span>
+                            <button data-id="{{ $sakuraManage->made_member->login_id}}" class="reviewer btn-eff-gre btn-hov nth-{{$key}}">振返り担当受付</button>
+                        </li>
+                        @break
+                    @case(2)
+                        <li class="flex-between" status="{{$sakuraManage->made_member}}">
+                            <span class="become-manager">{{ $sakuraManage->made_member->name1 ?? ''}} {{ $sakuraManage->made_member->name2 ?? ''}}</span>
+                            <button data-id="{{ $sakuraManage->made_member->login_id}}" class="sharing btn-eff-pri btn-hov nth-{{$key}}">共有中</button>
+                        </li>
+                        @break
+                    @case(3)
+                        <li class="flex-between" status="{{$sakuraManage->made_member}}">
+                            <span>{{ $sakuraManage->made_member->name1 ?? ''}} {{ $sakuraManage->made_member->name2 ?? ''}}</span>
+                            <button data-id="{{ $sakuraManage->made_member->login_id }}" class="accept-cancel btn-eff-ora btn-hov nth-{{$key}}">解除受付</button>
+                        </li>
+                        @break
+                    @default
                     <li class="flex-between" status="{{$sakuraManage->made_member}}">
                         <span>{{ $sakuraManage->made_member->name1 ?? ''}} {{ $sakuraManage->made_member->name2 ?? ''}}</span>
-                        <button data-id="{{ $sakuraManage->made_member->login_id}}" class="reviewer btn-eff-gre btn-hov">振返り担当受付</button>
+                        <button data-id="{{ $sakuraManage->made_member->login_id}}" class="cancel btn-eff-red btn-hov nth-{{$key}}">解除申請</button>
                     </li>
-                    @break
-                @case(2)
-                    <li class="flex-between" status="{{$sakuraManage->made_member}}">
-                        <span class="become-manager">{{ $sakuraManage->made_member->name1 ?? ''}} {{ $sakuraManage->made_member->name2 ?? ''}}</span>
-                        <button data-id="{{ $sakuraManage->made_member->login_id}}" class="sharing btn-eff-pri btn-hov">共有中</button>
-                    </li>
-                    @break
-                @case(3)
-                    <li class="flex-between" status="{{$sakuraManage->made_member}}">
-                        <span>{{ $sakuraManage->made_member->name1 ?? ''}} {{ $sakuraManage->made_member->name2 ?? ''}}</span>
-                        <button data-id="{{ $sakuraManage->made_member->login_id}}" class="cancel btn-eff-red btn-hov">解除申請</button>
-                    </li>
-                    @break
-                @default
-                    <li class="flex-between" status="{{$sakuraManage->made_member}}">
-                        <span>{{ $sakuraManage->made_member->name1 ?? ''}} {{ $sakuraManage->made_member->name2 ?? ''}}</span>
-                        <button data-id="{{ $sakuraManage->made_member->login_id }}" class="accept-cancel btn-eff-ora btn-hov">解除受付</button>
-                    </li>
-            @endswitch
+                @endswitch
+            @endforeach
         @endif
     </ul>
 </div>

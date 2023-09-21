@@ -19,8 +19,8 @@ class SakurasetService
     {
         $this->sakurasetRepository = $sakurasetRepository;
     }
-    public function getByLoggedId($where,$with = null){
-        return $this->sakurasetRepository->getByLoggedId($where,$with);
+    public function getByLoggedId($where,$with = null,$many = false){
+        return $this->sakurasetRepository->getByLoggedId($where,$with,$many);
     }
     public function updateSakura($dataUpdate,$where){
         return $this->sakurasetRepository->updateSakura($dataUpdate,$where);

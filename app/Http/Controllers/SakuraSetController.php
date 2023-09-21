@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendMail;
 use Carbon\Carbon;
-
+use Exception;
 
 class SakuraSetController extends Controller
 {
@@ -109,7 +109,7 @@ class SakuraSetController extends Controller
                 $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraReviewManage = $this->sakurasetService->getByLoggedId(['reviewer_id',$this->loginId()],$with);
+        $sakuraReviewManage = $this->sakurasetService->getByLoggedId(['reviewer_id',$this->loginId()],$with,true);
         $sakuraMemberManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
         return view('myPage/sakuraSet/index',[
             'guidance' => $guidanceData,
@@ -119,17 +119,16 @@ class SakuraSetController extends Controller
     }
     public function updateConfirm(Request $request){
         $loginId = $this->loginId();
-        $sakuraMember = $this->sakurasetService->getByLoggedId([['member_id',$this->loginId()],['confirmation_flg','0']]);
-        $sakuraReviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['reviewer_confirmation_flg','0']]);
-        if($sakuraMember){
-            $sakuraMember->confirmation_flg = 1;
-            $sakuraMember->save();
+        $data = null;
+        $sakuraReviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$loginId],['reviewer_confirmation_flg',0]],null,true);
+        foreach ($sakuraReviewer->toArray()  as $item) {
+            if ($item['reviewer_status'] == 1) {
+                $data = 'show';
+                break;
+            }
         }
-        if($sakuraReviewer){
-            $sakuraReviewer->reviewer_confirmation_flg = 1;
-            $sakuraReviewer->save();
-        }
-        return response()->json(['success' => true]);
+        
+        return response()->json(['success' => true, 'data' => $data]);
     }
     public function update(Request $request){
         if(!$request->all()){
@@ -157,11 +156,28 @@ class SakuraSetController extends Controller
         ];
         $sakuraManage = $this->sakurasetService->getByLoggedId($condition,$with);
         $dataUpdate = $request->except(['view','member_id']);
+        if($request->reviewer_status === '2'){
+            $dataUpdate['reviewer_confirmation_flg'] = '1';
+        }
         $updateSakura = $this->sakurasetService->updateSakura($dataUpdate,$condition);
         $msg = '';
         if($updateSakura){
+            $emailTo = $sakuraManage->reviewer_member->email;
+            $subject = '生涯研修制度「研鑽管理システム」よりお知らせです。';
+            switch ($request->reviewer_status) {
+                case 1:
+                    $subject = '「振り返り担当者」の申請がありました（自動送信メール）';
+                    break;
+                case 2:
+                    $subject = '「振り返り担当者」の申請が承認されました（自動送信メール）';
+                    $emailTo = $sakuraManage->made_member->email;
+                    break;
+                case 3:
+                    $subject = '「振り返り担当者」の解除申請がありました（自動送信メール）';
+                    break;
+            }
             $msg = 'Updated Successfully';
-            $emailConfig = ['to' => $sakuraManage->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $sakuraManage->made_member];
+            $emailConfig = ['to' => $emailTo,'subject' => $subject,'sakuraData' => $sakuraManage];
             $view = 'email.sakuraSet.'.$request->view;
             if(!view()->exists($view)){
                 $msg = 'Template Email do not exist';
@@ -181,7 +197,7 @@ class SakuraSetController extends Controller
         $member_id = $request->member_id;
         $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$member_id]],['reviewer_member','made_member']);
         if($sakuraManage->reviewer_member){
-            $emailConfig = ['to' => $sakuraManage->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $sakuraManage->made_member];
+            $emailConfig = ['to' => $sakuraManage->made_member->email,'subject' => '「振り返り担当者」の解除申請が承認されました（自動送信メール）','sakuraData' => $sakuraManage];
             if($sakuraManage->delete()){
                 $msg = 'Delete Successfully';
                 $view = 'email.sakuraSet.'.$request->view;
@@ -468,7 +484,7 @@ class SakuraSetController extends Controller
                 $query->select('id', 'users_id', 'login_id', 'name1', 'name2', 'email');
             },
         ];
-        $sakuraReviewManage = $this->sakurasetService->getByLoggedId(['reviewer_id',$this->loginId()],$with);
+        $sakuraReviewManage = $this->sakurasetService->getByLoggedId(['reviewer_id',$this->loginId()],$with,true);
         $sakuraMemberManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],$with);
         return view('myPage/sakuraSet/registerReviewer',[
             'sakuraReviewManage' => $sakuraReviewManage,
@@ -504,22 +520,24 @@ class SakuraSetController extends Controller
     public function addMemberToReview(Request $request){
         $dataAll = $request->all();
         $data['success'] = false;
-        $reviewer = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],'made_member');
-        if($reviewer){
-            $reviewer->update([
+        $sakuraManage = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],'made_member');
+        if($sakuraManage){
+            $sakuraManage->update([
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
+                'confirmation_flg' => 1,
             ]);
             $data['success'] = true;
         }else{
             $data['success'] = true;
-            $reviewer = $this->sakurasetService->createSakura([
+            $sakuraManage = $this->sakurasetService->createSakura([
                 'member_id' => $this->loginId(),
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
+                'confirmation_flg' => 1,
             ]);
         }
-        $emailConfig = ['to' => $dataAll['email'],'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer];
+        $emailConfig = ['to' => $dataAll['email'],'subject' => '「振り返り担当者」の申請がありました（自動送信メール）','sakuraData' => $sakuraManage];
         $view = 'email.sakuraSet.registerReviewer';
         if(!view()->exists($view)){
             $data['message'] = 'Template Email do not exist';

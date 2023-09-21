@@ -20,6 +20,9 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
+        @if(isset($questionSettingChildData[$questionSetting->id]))
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
+        @endif
     @endif
     @if($questionSetting->input_method ==1)
         <div class="input-group">
@@ -34,6 +37,9 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
+        @if(isset($questionSettingChildData[$questionSetting->id]))
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
+        @endif
     @endif
     @if($questionSetting->input_method ==7)
         <div class="input-group">
@@ -49,6 +55,9 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
+        @if(isset($questionSettingChildData[$questionSetting->id]))
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
+        @endif
     @endif
     @if($questionSetting->input_method ==8)
         @php
@@ -67,6 +76,9 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
+        @if(isset($questionSettingChildData[$questionSetting->id]))
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
+        @endif
     @endif
     @if($questionSetting->input_method ==10)
         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
@@ -93,9 +105,9 @@
             </div>
         </div>
         @php unset($questionSettingData[$key])@endphp
-    @endif
-    @if(isset($questionSettingChildData[$questionSetting->id]))
-        @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
+        @if(isset($questionSettingChildData[$questionSetting->id]))
+            @include('myPage.creditRegistration.question.input_method_link',['questionSettingId'=>$questionSetting->id])
+        @endif
     @endif
 @endforeach
 @foreach($questionSettingData as $key => $questionSetting)

@@ -14,14 +14,20 @@ class SakurasetRepository
     {
         $this->model = $model;
     }
-    public function getByLoggedId($where,$with){
+    public function getByLoggedId($where,$with,$many){
         $result = $this->model;
         if($with){
             $result = $result->with($with);
         }
         if(is_array($where[0])){
+            if($many){
+                return $result->where($where)->get();
+            }
             return $result->where($where)->first();
         }else{
+            if($many){
+                return $result->where($where[0],$where[1])->get();
+            }
             return $result->where($where[0],$where[1])->first();
         }
     }
