@@ -35,13 +35,12 @@ if (!function_exists('answerInfoPattern')) {
 if (!function_exists('getCertificationYear')) {
     function getCertificationYear()
     {
-//        $cer_year = auth()->user()->user_add_info->certification_year;
-//        $certificationYearData = Carbon::now()->format('Y');
-//        if($cer_year && auth()->user()->user_add_info->membership_type === '認定保健福祉士'){
-//            $certificationYearData = (int) $cer_year + 3;
-//        }
-//        return $certificationYearData;
-        return auth()->user()->user_add_info->training_accreditation_certification_year ?? 0;
+        if (auth()->user()->user_add_info->training_accreditation_certification_status == '認定精神保健福祉士'
+            || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認精神定保健福祉士'
+        ){
+            return auth()->user()->user_add_info->training_accreditation_certification_year ?? 0;
+        }
+        return 0;
     }
 
 }
