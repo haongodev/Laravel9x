@@ -35,16 +35,21 @@
             <canvas id="myChart1" style="width: 100%;"></canvas>
         </div>
 
-        @if(auth()->user()->user_add_info->membership_type == '認定保健福祉士')
+
+        @if(   auth()->user()->user_add_info->training_accreditation_certification_status == '認定精神保健福祉士'
+          || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認精神定保健福祉士'
+        )
             <div class="head-chart flex-between">
                 <div class="side-left">
                     <span>{{getCertificationYear()}}年度 認定期限までの研鑽状況</span>
                 </div>
                 <div class="side-right">
-                    <button class="decline-btn btn-eff-ora btn-hov"><a href="{{ route('creditRegistration') }}">単位登録</a></button>
+                    <button class="decline-btn btn-eff-ora btn-hov"><a href="{{ route('creditRegistration') }}">単位登録</a>
+                    </button>
                 </div>
             </div>
-            <div class="row" style="height: 500px; width:100%;margin: 0 auto;display: flex;align-items: center;position: relative;">
+            <div class="row"
+                 style="height: 500px; width:100%;margin: 0 auto;display: flex;align-items: center;position: relative;">
                 <canvas id="myChart2"></canvas>
                 <div class="flags">
                     <div class="blue-flag flag_0">
