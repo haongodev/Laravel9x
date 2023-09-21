@@ -117,23 +117,46 @@ class SakuraSetController extends Controller
             'sakuraMemberManage' => $sakuraMemberManage,
         ]);
     }
-    public function updateConfirm(Request $request){
+    public function checkMark(Request $request){
         $loginId = $this->loginId();
-        $data = null;
-        $sakuraReviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$loginId],['reviewer_confirmation_flg',0]],null,true);
-        foreach ($sakuraReviewer->toArray()  as $item) {
-            if ($item['reviewer_status'] == 1) {
-                $data = 'show';
-                break;
+        $status = true;
+        
+        $checkWithReviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$loginId],['reviewer_confirmation_flg',0]],null,true);
+        if(count($checkWithReviewer->toArray()) > 0){
+            $status = false;
+        }
+        $checkWithMember = $this->sakurasetService->getByLoggedId([['member_id',$loginId],['confirmation_flg',0]]);
+        if($checkWithMember){
+            $status = false;
+        }
+
+        return response()->json(['success' => true, 'status' => $status]);
+    }
+    public function unCheckMark(Request $request){
+        $loginId = $this->loginId();
+        
+        $checkWithMember = $this->sakurasetService->getByLoggedId([['member_id',$loginId],['confirmation_flg',0]]);
+        if($checkWithMember){
+            $checkWithMember->confirmation_flg = 1;
+            $checkWithMember->save();
+        }
+
+        $checkWithReviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$loginId],['reviewer_confirmation_flg',0]],null,true);
+        if($checkWithReviewer){
+            foreach($checkWithReviewer as $sakuraReviewer){
+                $sakuraReviewer->reviewer_confirmation_flg = 1;
+                $sakuraReviewer->save();
             }
         }
-        
-        return response()->json(['success' => true, 'data' => $data]);
+        return response()->json(['success' => true]);
     }
     public function update(Request $request){
         if(!$request->all()){
             return response()->json(['success' => false, 'data' => []]);
         }
+        $dataUpdate = $request->except(['view','member_id']);
+        $dataUpdate['confirmation_flg'] = 0;
+        $dataUpdate['reviewer_confirmation_flg'] = 1;
         $member_id = $request->member_id;
         $reviewer_id = $this->loginId();
         $condition = [
@@ -141,6 +164,8 @@ class SakuraSetController extends Controller
             ['member_id',$member_id],
         ];
         if($request->has('reviewer_status') && $request->reviewer_status == 3){
+            $dataUpdate['reviewer_confirmation_flg'] = 0;
+            $dataUpdate['confirmation_flg'] = 1;
             $condition = [
                 ['reviewer_id',$member_id],
                 ['member_id',$reviewer_id],
@@ -155,10 +180,6 @@ class SakuraSetController extends Controller
             },
         ];
         $sakuraManage = $this->sakurasetService->getByLoggedId($condition,$with);
-        $dataUpdate = $request->except(['view','member_id']);
-        if($request->reviewer_status === '2'){
-            $dataUpdate['reviewer_confirmation_flg'] = '1';
-        }
         $updateSakura = $this->sakurasetService->updateSakura($dataUpdate,$condition);
         $msg = '';
         if($updateSakura){
@@ -214,9 +235,9 @@ class SakuraSetController extends Controller
         return response()->json(['success' => true, 'message' => $msg,'data' => []]);
     }
     public function yourTry(){
-        $faceSheetManagerData = $this->facesheetManageService->getByUserId(auth()->user()->id);
-        $reflectionSheetManagerData = $this->reflectionsheetManageService->getByUserId(auth()->user()->id);
-        $initiativetableManagerData = $this->initiativetableManageService->getByUserId(auth()->user()->id);
+        $faceSheetManagerData = $this->facesheetManageService->getByUserId($this->loginId());
+        $reflectionSheetManagerData = $this->reflectionsheetManageService->getByUserId($this->loginId());
+        $initiativetableManagerData = $this->initiativetableManageService->getByUserId($this->loginId());
 
         return view('myPage/sakuraSet/yourTry',[
             'faceSheetManagerData' => $faceSheetManagerData,
@@ -235,7 +256,7 @@ class SakuraSetController extends Controller
         $initTable = $this->sakurasetService->getFileInfoByReviewerId($this->initiativetableManageRepository,$member_id,'only',['id','file_name','display_name','member_id']);
         $data = [
             'facesheet' => $faceSheet,
-            'freflectionsheet' => $refSheet,
+            'reflectionsheet' => $refSheet,
             'initiative' => $initTable,
         ];
         return response()->json(['success' => true, 'message' => 'success','data' => $data]);
@@ -363,14 +384,13 @@ class SakuraSetController extends Controller
         try {
             $id = $request->get('id');
             $shareFlg = $request->get('share_flg');
-            $memberId = auth()->user()->id;
             $dataUpdate = [
                 'share_flg' => $shareFlg
             ];
 
             //Update all share flag off when share = true
             if($shareFlg){
-                $this->facesheetManageService->updateByMemberId($memberId,['share_flg' => 0]);
+                $this->facesheetManageService->updateByMemberId($this->loginId(),['share_flg' => 0]);
             }
             $data['update'] = $this->facesheetManageService->update($id, $dataUpdate);
             $data['success'] = true;
@@ -386,14 +406,13 @@ class SakuraSetController extends Controller
         try {
             $id = $request->get('id');
             $shareFlg = $request->get('share_flg');
-            $memberId = auth()->user()->id;
             $dataUpdate = [
                 'share_flg' => $shareFlg
             ];
 
             //Update all share flag off when share = true
             if($shareFlg){
-                $this->reflectionsheetManageService->updateByMemberId($memberId,['share_flg' => 0]);
+                $this->reflectionsheetManageService->updateByMemberId($this->loginId(),['share_flg' => 0]);
             }
             $data['update'] = $this->reflectionsheetManageService->update($id, $dataUpdate);
             $data['success'] = true;
@@ -441,14 +460,13 @@ class SakuraSetController extends Controller
         try {
             $id = $request->get('id');
             $shareFlg = $request->get('share_flg');
-            $memberId = auth()->user()->id;
             $dataUpdate = [
                 'share_flg' => $shareFlg
             ];
 
             //Update all share flag off when share = true
             if($shareFlg){
-                $this->initiativetableManageService->updateByMemberId($memberId,['share_flg' => 0]);
+                $this->initiativetableManageService->updateByMemberId($this->loginId(),['share_flg' => 0]);
             }
             $data['update'] = $this->initiativetableManageService->update($id, $dataUpdate);
             $data['success'] = true;
@@ -526,6 +544,7 @@ class SakuraSetController extends Controller
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
                 'confirmation_flg' => 1,
+                'reviewer_confirmation_flg' => 0
             ]);
             $data['success'] = true;
         }else{
@@ -535,6 +554,7 @@ class SakuraSetController extends Controller
                 'reviewer_id' => $dataAll['member_id'],
                 'reviewer_status' => 1,
                 'confirmation_flg' => 1,
+                'reviewer_confirmation_flg' => 0
             ]);
         }
         $emailConfig = ['to' => $dataAll['email'],'subject' => '「振り返り担当者」の申請がありました（自動送信メール）','sakuraData' => $sakuraManage];

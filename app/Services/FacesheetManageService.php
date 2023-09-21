@@ -24,7 +24,7 @@ class FacesheetManageService
     public function upload($request)
     {
         if ($request->hasFile('file')) {
-            $memberId = auth()->user()->id;
+            $memberId = auth()->user()->user_add_info->login_id;
             $name = $request->file('file')->getClientOriginalName();
             $file = explode('.',$name);
             $fileName = $file[0];

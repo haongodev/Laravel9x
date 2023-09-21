@@ -61,7 +61,7 @@
                             <span>現在の研鑽状況 (単位登録状況)</span>
                         </a>
                     </li>
-                    <li class="{{ (request()->is('mypage/sakuraSet')) ? 'active' : '' }}">
+                    <li class="active">
                         <a href="{{ route('sakuraSet') }}">
                             <img class="icon" src="{{ asset('assets') }}/images/menu-icon/menu-4.svg">
                             <span>自己研鑽支援ツール「さくらセット」に取り組む</span>

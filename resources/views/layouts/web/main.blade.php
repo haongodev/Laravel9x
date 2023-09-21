@@ -39,6 +39,22 @@
 <script src="{{ asset('assets/js-lib/jquery-ui-jp.js') }}"></script>
 <script src="{{ asset('assets/js-lib/jquery-ui-vi.js') }}"></script>
 @stack('js')
+<script>
+    var url = '{{ route("sakuraCheckMark") }}';
+    $.ajax({
+        url,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        type: 'POST',
+        success: function(response) {
+            if(response.status){
+                $('.side-bot .row li').removeClass('active');
+            }
+        },
+        error: function(xhr) {
+            console.log(xhr.responseText);
+        }
+    });
+</script>
 @stack('sub_js')
 
 </body>
