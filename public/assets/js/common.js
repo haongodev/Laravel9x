@@ -3,7 +3,6 @@ $('.popup-wrapper').click(function (e){
         $('.popup-wrapper .popup-content .content').html('');
         $('.popup-wrapper').addClass('hidden');
         $('.btn-popup-accept').removeAttr('last-confirm');
-        $('.btn-popup-accept').removeClass().addClass('btn-popup-accept');
         $('body').removeClass('ovf-hidden');
     }
 })
@@ -15,6 +14,5 @@ $('.close-icon,.btn-popup-decline').click(function (e){
     $('.popup-wrapper .popup-content .content').html('');
     $('.popup-wrapper').addClass('hidden');
     $('.btn-popup-accept').removeAttr('last-confirm');
-    $('.btn-popup-accept').removeClass().addClass('btn-popup-accept');
     $('body').removeClass('ovf-hidden');
 })

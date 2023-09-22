@@ -1,6 +1,7 @@
 @push('js')
     <script>
         var manager_scre = `@include('components.sakuraSet_manager')`;
+        var globalBtn = '';
         $('.cancal-sharing').click(function (){
             if($(this).hasClass('had-change')){
                 return false;
@@ -13,7 +14,6 @@
             $('.btn-popup-accept').addClass('btn-popup-confirm_delete_sharing_from_pic');
             $('body').addClass('ovf-hidden');
             $('.btn-popup-accept').attr('data-id',member_id);
-            showPopupLastConfirm('btn-popup-confirm_delete_sharing_from_pic','本当に共有を解除しますか？','<button class="title-popup">最終確認</button>')
         })
 
         $('body').on('click','.reviewer',function (){
@@ -50,6 +50,7 @@
                         toastr.info('申請を承認しました');
                         $('.btn-popup-accept').removeClass().addClass('btn-popup-accept');
                         that.removeClass('reviewer').removeClass('btn-eff-gre').addClass('btn-eff-pri').addClass('sharing');
+                        that.prev('span').addClass('become-manager');
                         that.html('共有中');
                     }
                 },
@@ -60,7 +61,7 @@
         })
         $('body').on('click','.sharing',function (){
             var member_id = $(this).data('id');
-            var that = $(this);
+            globalBtn = $(this);
             $('.popup-wrapper .popup-content .content').html('振り返り担当者としての共有を解除しますか？');
             $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">確認</button>')
             $('.popup-wrapper .popup-footer').removeClass('hidden');
@@ -68,7 +69,6 @@
             $('.popup-wrapper').removeClass('hidden');
             $('.btn-popup-accept').addClass('btn-popup-cancel_sharing_from_pic');
             $('.btn-popup-accept').attr('data-id',member_id);
-            showPopupLastConfirm('btn-popup-cancel_sharing_from_pic','本当に共有を解除しますか？','<button class="title-popup">最終確認</button>',that)
         })
 
         $('body').on('click','.accept-cancel',function () {
@@ -80,10 +80,9 @@
             $('.popup-wrapper').removeClass('hidden');
             $('.btn-popup-accept').addClass('btn-popup-cancel_sharing_from_member');
             $('.btn-popup-accept').attr('data-id',member_id);
-            showPopupLastConfirm('btn-popup-cancel_sharing_from_member','本当に承認しますか？','<button class="title-popup">最終確認</button>')
         })
 
-        $('.become-manager').click(function () {
+        $('body').on('click','.become-manager',function () {
             var member_id = $(this).next().data('id');
             var nameMember = $(this).text();
             $.ajax({
@@ -150,97 +149,126 @@
             $('.popup-wrapper').removeClass('hidden');
             $('body').addClass('ovf-hidden');
         })
-        function showPopupLastConfirm(el,content,header,btnHtml){
-            $('body').on('click','.'+el,function (){
-                const checkLast = $(this).attr('last-confirm');
-                if(checkLast && checkLast === 'true'){
-                    $('.popup-wrapper .popup-content .content').html('');
-                    $('.popup-wrapper .popup-content .header-content').html('');
-                    $('.popup-wrapper').addClass('hidden');
-                    $(this).removeAttr('last-confirm');
-                    $('.btn-popup-accept').removeClass(el);
-                    var isload = false;
-                    var member_id = $(this).attr('data-id');
-                    var data = {};
-                    var toarmsg = '';
-                    if(el === 'btn-popup-confirm_delete_sharing_from_pic'){
-                        data = {
-                            reviewer_status : 3,
-                            view:'confirm_delete_sharing_from_pic',
-                            member_id
-                        }
-                        isload = true;
-                        toarmsg = '共有解除を申請しました';
-                    }
-                    if(el === 'btn-popup-cancel_sharing_from_pic'){
-                        data = {
-                            reviewer_status : 4,
-                            view:'cancel_sharing_from_pic',
-                            member_id
-                        }
-                        isload = true;
-                        toarmsg = '共有解除を申請しました';
-                    }
-                    if(el === 'btn-popup-cancel_sharing_from_member'){
-                        data = {
-                            view:'cancel_sharing_from_member',
-                            member_id
-                        }
-                        $.ajax({
-                            url: '{{ route("sakuraDelete") }}',
-                            data: data,
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            type: 'POST',
-                            success: function(response) {
-                                if(response.success){
-                                    toastr.options.timeOut = 3000;
-                                    toastr.info('共有解除申請を承認しました');
-                                    $('.sakuraSet-sideBar ul').remove();
-                                    $('.botton-navigate .pull-left ul li:nth-child(1)').html('')
-                                    $('.botton-navigate .pull-left ul li:nth-child(2)').html('未申請')
-                                    $('.botton-navigate .pull-right').html('')
-                                    $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
-                                }
-                            },
-                            error: function(xhr) {
-                                console.log(xhr.responseText);
-                            }
-                        });
-                    }
-                    if(isload){
-                        $.ajax({
-                            url: '{{ route("sakuraUpdate") }}',
-                            data: data,
-                            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                            type: 'POST',
-                            success: function(response) {
-                                if(response.success){
-                                    if(el === 'btn-popup-confirm_delete_sharing_from_pic'){
-                                        $('.pull-right button').html('解除依頼中').addClass('had-change');
-                                    }
-                                    if(el === 'btn-popup-cancel_sharing_from_pic'){
-                                        btnHtml.removeClass('sharing').removeClass('btn-eff-pri').addClass('btn-eff-red').addClass('cancel');
-                                        btnHtml.html('解除申請');
-                                    }
-                                    $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
-                                    toastr.options.timeOut = 3000;
-                                    toastr.info(toarmsg);
-                                }
-                            },
-                            error: function(xhr) {
-                                console.log(xhr.responseText);
-                            }
-                        });
-                    }
-                    $('body').removeClass('ovf-hidden');
-                }else{
-                    $('.popup-wrapper .popup-content .content').html(content);
-                    $('.popup-wrapper .popup-content .header-content').html(header);
-                    $(this).attr('last-confirm',true);
+        
+        $('body').on('click','.btn-popup-confirm_delete_sharing_from_pic',function (){
+            const checkLast = $(this).attr('last-confirm');
+            if(checkLast && checkLast === 'true'){
+                $('.popup-wrapper .popup-content .content').html('');
+                $('.popup-wrapper .popup-content .header-content').html('');
+                $('.popup-wrapper').addClass('hidden');
+                $(this).removeAttr('last-confirm');
+                $('.btn-popup-accept').removeClass('btn-popup-confirm_delete_sharing_from_pic');
+                var member_id = $(this).attr('data-id');
+                var data = {
+                    reviewer_status : 3,
+                    view:'confirm_delete_sharing_from_pic',
+                    member_id
                 }
-                    $(this).unbind('click');
-            })
-        }
+                $.ajax({
+                    url: '{{ route("sakuraUpdate") }}',
+                    data: data,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    success: function(response) {
+                        if(response.success){
+                            $('.pull-right button').html('解除依頼中').addClass('had-change');
+                            $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
+                            toastr.options.timeOut = 3000;
+                            toastr.info('共有解除を申請しました');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+                $('body').removeClass('ovf-hidden');
+            }else{
+                $('.popup-wrapper .popup-content .content').html('本当に共有を解除しますか？');
+                $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">最終確認</button>');
+                $(this).attr('last-confirm',true);
+            }
+        })
+        $('body').on('click','.btn-popup-cancel_sharing_from_member',function (){
+            const checkLast = $(this).attr('last-confirm');
+            if(checkLast && checkLast === 'true'){
+                $('.popup-wrapper .popup-content .content').html('');
+                $('.popup-wrapper .popup-content .header-content').html('');
+                $('.popup-wrapper').addClass('hidden');
+                $(this).removeAttr('last-confirm');
+                $('.btn-popup-accept').removeClass('btn-popup-cancel_sharing_from_member');
+                var isload = false;
+                var member_id = $(this).attr('data-id');
+                var data = {
+                    view:'cancel_sharing_from_member',
+                    member_id
+                }
+                $.ajax({
+                    url: '{{ route("sakuraDelete") }}',
+                    data: data,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    success: function(response) {
+                        if(response.success){
+                            toastr.options.timeOut = 3000;
+                            toastr.info('共有解除申請を承認しました');
+                            $('.sakuraSet-sideBar ul').remove();
+                            $('.botton-navigate .pull-left ul li:nth-child(1)').html('')
+                            $('.botton-navigate .pull-left ul li:nth-child(2)').html('未申請')
+                            $('.botton-navigate .pull-right').html('')
+                            $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+                $('body').removeClass('ovf-hidden');
+            }else{
+                $('.popup-wrapper .popup-content .content').html('本当に承認しますか？');
+                $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">最終確認</button>');
+                $(this).attr('last-confirm',true);
+            }
+        })
+        $('body').on('click','.btn-popup-cancel_sharing_from_pic',function (){
+            const checkLast = $(this).attr('last-confirm');
+            if(checkLast && checkLast === 'true'){
+                $('.popup-wrapper .popup-content .content').html('');
+                $('.popup-wrapper .popup-content .header-content').html('');
+                $('.popup-wrapper').addClass('hidden');
+                $(this).removeAttr('last-confirm');
+                $('.btn-popup-accept').removeClass('btn-popup-cancel_sharing_from_pic');
+                var isload = false;
+                var member_id = $(this).attr('data-id');
+                var data = {
+                    reviewer_status : 4,
+                    view:'cancel_sharing_from_pic',
+                    member_id
+                }
+                $.ajax({
+                    url: '{{ route("sakuraUpdate") }}',
+                    data: data,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    success: function(response) {
+                        if(response.success){
+                            globalBtn.removeClass('sharing').removeClass('btn-eff-pri').addClass('btn-eff-red').addClass('cancel');
+                            globalBtn.html('解除申請');
+                            $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
+                            toastr.options.timeOut = 3000;
+                            toastr.info('共有解除を申請しました');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+                $('body').removeClass('ovf-hidden');
+            }else{
+                $('.popup-wrapper .popup-content .content').html('本当に共有を解除しますか？');
+                $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">最終確認</button>');
+                $(this).attr('last-confirm',true);
+            }
+        })
         $('body').on('click','.btn-off-popup',function (e){
             $('.popup-wrapper .popup-content .header-content').html('');
             $('.popup-wrapper .popup-content .content').html('');
