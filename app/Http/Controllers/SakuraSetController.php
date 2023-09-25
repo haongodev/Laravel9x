@@ -98,8 +98,16 @@ class SakuraSetController extends Controller
         return auth()->user()->user_add_info->login_id;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $num_of_visit = 0;
+        $session = $request->session();
+        if($session->has('num_visit')){
+            $session->remove('num_visit');
+            $num_of_visit = 1;
+        }else{
+            $session->put('num_visit', 0);
+        }
         $guidanceData = $this->guidanceSettingService->getByScreenId('A011',['location_id' => 1]);
         $with = [
             'made_member' => function ($query) {
@@ -115,6 +123,7 @@ class SakuraSetController extends Controller
             'guidance' => $guidanceData,
             'sakuraReviewManage' => $sakuraReviewManage,
             'sakuraMemberManage' => $sakuraMemberManage,
+            'num_of_visit' => $num_of_visit
         ]);
     }
     public function checkMark(Request $request){
@@ -186,15 +195,16 @@ class SakuraSetController extends Controller
             $emailTo = $sakuraManage->reviewer_member->email;
             $subject = '生涯研修制度「研鑽管理システム」よりお知らせです。';
             switch ($request->reviewer_status) {
-                case 1:
-                    $subject = '「振り返り担当者」の申請がありました（自動送信メール）';
-                    break;
                 case 2:
                     $subject = '「振り返り担当者」の申請が承認されました（自動送信メール）';
                     $emailTo = $sakuraManage->made_member->email;
                     break;
                 case 3:
                     $subject = '「振り返り担当者」の解除申請がありました（自動送信メール）';
+                    break;
+                case 4:
+                    $emailTo = $sakuraManage->made_member->email;
+                    $subject = '生涯研修制度「研鑽管理システム」よりお知らせです。';
                     break;
             }
             $msg = 'Updated Successfully';

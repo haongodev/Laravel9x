@@ -49,7 +49,7 @@
                         @if($sakuraMemberManage->reviewer_status === 1)
                         <button class="btn-eff-red btn-hov">申請中</button>
                         @else
-                        <button class="cancal-sharing btn-eff-red btn-hov" data-id="{{ $sakuraMemberManage->reviewer_member->login_id}}">共有解除</button>
+                        <button class="cancal-sharing btn-eff-red btn-hov" data-id="{{ $sakuraMemberManage->reviewer_member->login_id}}">解除受付</button>
                         @endif
                     @else
                         <button class="had-change btn-eff-ora btn-hov">解除依頼中</button>
@@ -71,7 +71,9 @@
 @include('components.sakuraScript')
 @push('js')
     <script>
-        if($('.side-bot .row li').hasClass('active')){
+        var num_of_visit = '{{ $num_of_visit }}';
+        console.log(num_of_visit);
+        if(num_of_visit == 1 && $('.side-bot .row li').hasClass('active')){
             var url = '{{ route("sakuraUnCheckMark") }}';
             $.ajax({
                 url,
