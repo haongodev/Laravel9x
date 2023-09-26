@@ -254,6 +254,7 @@
         });
     }
     function initRardarChart(data){
+
         const dataSets = [];
         const dataGroup = {};
         // const titleList = data.map(item => item.title);
@@ -284,7 +285,7 @@
                         dataSets[indexDts].data.push("0");
                     }
                 }
-                dataSets[indexDts].data.push(item1.total_score);
+                dataSets[indexDts].data.push(item1.answer.split(',').length);
             }
         });
         var marksCanvas = document.getElementById("rardar_chart");
@@ -457,8 +458,6 @@
             var titleDate = '';
             var answerWdispl = '';
             var answerDate = ''
-            console.log(items[htmlItem]);
-
                 answerDate = items[htmlItem].date;
                 if(answerDate.indexOf('-')>-1){
                     if(answerDate.indexOf(',')>-1){
