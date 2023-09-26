@@ -1,5 +1,6 @@
 @push('js')
     <script>
+        var base_url = $('.base_url').attr('value');
         var manager_scre = `@include('components.sakuraSet_manager')`;
         var globalBtn = '';
         $('.cancal-sharing').click(function (){
@@ -100,7 +101,6 @@
                             if(response.data[key] !== null && response.data[key].hasOwnProperty('member_id')){
                                 link = '/storage/upload/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
                             }
-                            var base_url = $('.base_url').attr('value');
                             if(link !== ''){
                                 $('.'+key+' .confirmation').attr('link',base_url+link);
                                 $('.'+key+' .'+key+'-upload').attr('member_id',response.data[key].member_id);
@@ -304,7 +304,7 @@
             fd.append('file',files[0]);
             fd.append('member_id',$(this).attr('member_id'));
             fd.append('backup_type','facesheet');
-            backupWithNewSWP(url,fd);
+            backupWithNewSWP(url,fd,'facesheet');
         })
         $('body').on('change','.initiative-upload',function (e) {
             var url = '{{ route("sakuraBackup") }}';
@@ -313,7 +313,7 @@
             fd.append('file',files[0]);
             fd.append('member_id',$(this).attr('member_id'));
             fd.append('backup_type','initiative');
-            backupWithNewSWP(url,fd);
+            backupWithNewSWP(url,fd,'initiative');
         })
         $('body').on('click','.reflectionsheet .swp',function (e) {
             $(this).next('input').click();
@@ -326,7 +326,7 @@
             fd.append('member_id',$(this).attr('member_id'));
             fd.append('at',$(this).attr('at'));
             fd.append('backup_type','reflectionsheet');
-            backupWithNewSWP(url,fd);
+            backupWithNewSWP(url,fd,'reflectionsheet');
         })
         function downloadFile(url,name){
             var link = document.createElement("a");
@@ -337,7 +337,8 @@
             document.body.removeChild(link);
             delete link;
         }
-        function backupWithNewSWP(url,data){
+        function backupWithNewSWP(url,data,kind){
+            $('.become-manager-screen').addClass('in-process');
             $.ajax({
                 url,
                 data,
@@ -348,11 +349,15 @@
                 dataType: 'json',
                 success: function(response) {
                     if(response.success){
-
+                        $('.'+kind).find('.confirmation').attr('link', base_url+'/'+response.url);
                     }
                 },
-                error: function(xhr) {
-                    console.log(xhr.responseText);
+                error: function(xhr, textStatus, errorThrown) {
+                    console.log("Lỗi trong quá trình yêu cầu AJAX: " + errorThrown);
+                },
+                complete: function() {
+                    // Hàm này sẽ luôn được gọi sau khi yêu cầu AJAX hoàn thành, bất kể thành công hay thất bại
+                    $('.become-manager-screen').removeClass('in-process');
                 }
             });
         }

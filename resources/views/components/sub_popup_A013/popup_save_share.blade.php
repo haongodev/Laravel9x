@@ -18,26 +18,7 @@
                 <input type="file" class="hidden" name="a013_upload" id="a013_upload">
                 <table class="table-manager w-500px">
                     @foreach($faceSheetManagerData as $faceSheetManager)
-                        <tr class="facesheet-id-{{$faceSheetManager->id}}">
-                            <td class="w-100px">
-                                <div class="share-facesheet manager {{$faceSheetManager->share_flg ? 'share' : ''}}"
-                                        data-current-share="{{$faceSheetManager->share_flg}}"
-                                        data-id="{{$faceSheetManager->id}}"
-                                        data-display-name="{{$faceSheetManager->display_name}}"
-
-                                >共有</div>
-                            </td>
-                            <td>
-                                <div class="manager"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->id.'/facesheet/'.$faceSheetManager->file_name}}">{{$faceSheetManager->display_name}}</a></div>
-                            </td>
-                            <td class="w-100px">
-                                    <div class="remove" data-id="{{$faceSheetManager->id}}"
-                                         data-display-name="{{$faceSheetManager->display_name}}"
-                                    >
-                                        @if(!$faceSheetManager->share_flg)<img src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">@endif
-                                    </div>
-                            </td>
-                        </tr>
+                        @include('components.sub_popup_A013.data_upload',['faceSheetManager' => $faceSheetManager])
                     @endforeach
                 </table>
             </div>

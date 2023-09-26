@@ -23,31 +23,7 @@
                 <table class="table-manager w-500px table-manager-class-0" data-class="0">
                     @foreach($reflectionSheetManagerData as $reflectionSheetManager)
                         @if($reflectionSheetManager->class == 0)
-                            <tr class="reflectionsheet-id-{{$reflectionSheetManager->id}}">
-                                <td style="width: 100px">
-                                    <div
-                                        class="share-reflectionsheet manager {{$reflectionSheetManager->share_flg ? 'share' : ''}}"
-                                        data-current-share="{{$reflectionSheetManager->share_flg}}"
-                                        data-id="{{$reflectionSheetManager->id}}"
-                                        data-display-name="{{$reflectionSheetManager->display_name}}"
-                                        style=""
-                                    >共有
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="manager"><a download class="download"
-                                                            href="{{config('constants.path_upload').'/'.auth()->user()->id.'/reflectionsheet/6m/'.$reflectionSheetManager->file_name}}">{{$reflectionSheetManager->display_name}}</a>
-                                    </div>
-                                </td>
-                                <td style="width: 100px">
-                                    <div class="remove" data-id="{{$reflectionSheetManager->id}}"
-                                         data-display-name="{{$reflectionSheetManager->display_name}}"
-                                    >
-                                        @if(!$reflectionSheetManager->share_flg)<img
-                                            src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">@endif
-                                    </div>
-                                </td>
-                            </tr>
+                            @include('components.sub_popup_A014.data_upload',['reflectionSheetManager' => $reflectionSheetManager])
                         @endif
                     @endforeach
                 </table>
@@ -58,31 +34,7 @@
                 <table class="table-manager w-500px table-manager-class-1" data-class="1">
                     @foreach($reflectionSheetManagerData as $reflectionSheetManager)
                         @if($reflectionSheetManager->class == 1)
-                            <tr class="reflectionsheet-id-{{$reflectionSheetManager->id}}">
-                                <td style="width: 100px">
-                                    <div
-                                        class="share-reflectionsheet manager {{$reflectionSheetManager->share_flg ? 'share' : ''}}"
-                                        data-current-share="{{$reflectionSheetManager->share_flg}}"
-                                        data-id="{{$reflectionSheetManager->id}}"
-                                        data-display-name="{{$reflectionSheetManager->display_name}}"
-                                        style=""
-                                    >共有
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="manager"><a download class="download"
-                                                            href="{{config('constants.path_upload').'/'.auth()->user()->id.'/reflectionsheet/12m/'.$reflectionSheetManager->file_name}}">{{$reflectionSheetManager->display_name}}</a>
-                                    </div>
-                                </td>
-                                <td style="width: 100px">
-                                    <div class="remove" data-id="{{$reflectionSheetManager->id}}"
-                                         data-display-name="{{$reflectionSheetManager->display_name}}"
-                                    >
-                                        @if(!$reflectionSheetManager->share_flg)<img
-                                            src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">@endif
-                                    </div>
-                                </td>
-                            </tr>
+                            @include('components.sub_popup_A014.data_upload',['reflectionSheetManager' => $reflectionSheetManager])
                         @endif
                     @endforeach
                 </table>
@@ -93,30 +45,7 @@
                 <table class="table-manager w-500px table-manager-class-2" data-class="2">
                     @foreach($reflectionSheetManagerData as $reflectionSheetManager)
                         @if($reflectionSheetManager->class == 2)
-                            <tr class="reflectionsheet-id-{{$reflectionSheetManager->id}}">
-                                <td style="width: 100px">
-                                    <div
-                                        class="share-reflectionsheet manager {{$reflectionSheetManager->share_flg ? 'share' : ''}}"
-                                        data-current-share="{{$reflectionSheetManager->share_flg}}"
-                                        data-id="{{$reflectionSheetManager->id}}"
-                                        data-display-name="{{$reflectionSheetManager->display_name}}"
-                                    >共有
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="manager"><a download class="download"
-                                                            href="{{config('constants.path_upload').'/'.auth()->user()->id.'/reflectionsheet/at/'.$reflectionSheetManager->file_name}}">{{$reflectionSheetManager->display_name}}</a>
-                                    </div>
-                                </td>
-                                <td style="width: 100px">
-                                    <div class="remove" data-id="{{$reflectionSheetManager->id}}"
-                                         data-display-name="{{$reflectionSheetManager->display_name}}"
-                                    >
-                                        @if(!$reflectionSheetManager->share_flg)<img
-                                            src="{{ asset('assets') }}/images/icon/delete.png" alt="close icon">@endif
-                                    </div>
-                                </td>
-                            </tr>
+                            @include('components.sub_popup_A014.data_upload',['reflectionSheetManager' => $reflectionSheetManager])
                         @endif
                     @endforeach
                 </table>
