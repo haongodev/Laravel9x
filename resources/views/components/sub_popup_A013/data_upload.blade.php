@@ -8,7 +8,7 @@
         >共有</div>
     </td>
     <td>
-        <div class="manager"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->id.'/facesheet/'.$faceSheetManager->file_name}}">{{$faceSheetManager->display_name}}</a></div>
+        <div class="manager"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->user_add_info->login_id.'/facesheet/'.$faceSheetManager->file_name}}">{{$faceSheetManager->display_name}}</a></div>
     </td>
     <td class="w-100px">
         <div class="remove" data-id="{{$faceSheetManager->id}}"

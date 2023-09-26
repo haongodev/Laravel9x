@@ -342,6 +342,7 @@ class SakuraSetController extends Controller
                         $msg = 'Send email failed';
                     }
                 }
+                $data['url'] = $location.'/'.$newFilename;
                 $data['success'] = true;
                 $data['message'] = $msg;
             }
