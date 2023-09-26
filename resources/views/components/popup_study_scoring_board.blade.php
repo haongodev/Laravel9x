@@ -454,28 +454,27 @@
         var htmlItem = items.findIndex((item) => item.type_native_id === value && !item.hasOwnProperty('map'));
         if(htmlItem >= 0){
             items[htmlItem]['map'] = true;
-            var titleAnswer = '';
+            var titleDate = '';
             var answerWdispl = '';
             var answerDate = ''
-            if(parseInt(items[htmlItem].effective_date_flg) === 1){
-                answerDate = items[htmlItem].answer;
+            console.log(items[htmlItem]);
+
+                answerDate = items[htmlItem].date;
                 if(answerDate.indexOf('-')>-1){
                     if(answerDate.indexOf(',')>-1){
                         var arrDate = answerDate.split(',');
                         answerDate = arrDate[0];
                     }
 
-                    titleAnswer = new Date(answerDate);
-                    titleAnswer = titleAnswer.getFullYear()+'年 '+(titleAnswer.getMonth() + 1)+'月 '+titleAnswer.getDate()+'日'
+                    titleDate = new Date(answerDate);
+                    titleDate = titleDate.getFullYear()+'年 '+(titleDate.getMonth() + 1)+'月 '+titleDate.getDate()+'日'
                 }else{
-                    titleAnswer = answerDate+'年 ';
+                    titleDate = answerDate+'年度';
                 }
 
-            }
-            if(parseInt(items[htmlItem].disp_flg) === 1){
                 answerWdispl = items[htmlItem].answer
-            }
-            return '<td class="'+className+'">'+titleAnswer+'<br>[内容]<br>'+answerWdispl+'</td>';
+
+            return '<td class="'+className+'">'+titleDate+'<br>[内容]<br>'+answerWdispl+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }
