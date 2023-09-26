@@ -457,8 +457,6 @@
             var titleDate = '';
             var answerWdispl = '';
             var answerDate = ''
-            console.log(items[htmlItem]);
-
                 answerDate = items[htmlItem].date;
                 if(answerDate.indexOf('-')>-1){
                     if(answerDate.indexOf(',')>-1){
