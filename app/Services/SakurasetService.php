@@ -39,7 +39,7 @@ class SakurasetService
     }
     public function updateSchedule($date)
     {
-        $memberId = auth()->user()->id;
+        $memberId = auth()->user()->user_add_info->login_id;
         return $this->sakurasetRepository->updateSchedule($date,$memberId);
     }
     public function createSakura($data){
