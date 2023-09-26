@@ -254,6 +254,15 @@
         });
     }
     function initRardarChart(data){
+
+        data.push({answer: '健康状態の自己管理', registration_year: 2022});
+        data.push({answer: '状態の,aff,AFAS', registration_year: 2022});
+        data.push({answer: 'a,v,v', registration_year: 2022});
+        data.push({answer: 'a,v,v', registration_year: 2021});
+        data.push({answer: 'a,v,v,d', registration_year: 2021});
+        data.push({answer: 'a,v,v,j,f,f', registration_year: 2021});
+        data.push({answer: '健康状態の自己管理', registration_year: 2021});
+
         const dataSets = [];
         const dataGroup = {};
         // const titleList = data.map(item => item.title);
@@ -284,7 +293,7 @@
                         dataSets[indexDts].data.push("0");
                     }
                 }
-                dataSets[indexDts].data.push(item1.total_score);
+                dataSets[indexDts].data.push(item1.answer.split(',').length);
             }
         });
         var marksCanvas = document.getElementById("rardar_chart");
