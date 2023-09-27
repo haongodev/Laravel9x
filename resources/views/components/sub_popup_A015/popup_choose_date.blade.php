@@ -88,7 +88,7 @@
     <script src="{{asset('assets/js/datepicker.js')}}"></script>
     <script>
         $('.close-A015-choose_date').click(function () {
-            $('.popup-A015-save-share').removeClass('hidden');
+            $('.popup-a015').removeClass('hidden');
             $('.popup-A015-choose_date').addClass('hidden');
         })
         $('.datepicker-a015').datepicker({

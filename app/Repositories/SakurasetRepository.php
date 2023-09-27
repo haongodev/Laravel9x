@@ -105,10 +105,6 @@ class SakurasetRepository
     }
     public function updateSchedule($date,$memberid){
         return $this->model->where('member_id',$memberid)
-        ->where(function ($query) {
-            $query->where('confirmation_flg','0')
-            ->orWhereNull('confirmation_flg');
-        })
         ->update([
             'scheduled_date' => $date
         ]);
