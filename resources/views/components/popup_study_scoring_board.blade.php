@@ -254,12 +254,6 @@
         });
     }
     function initRardarChart(data){
-        data.push({answer:'健康状態の自己管理', registration_year:2022})
-        data.push({answer:'健康状態の自己管理,仕事と家庭のバランス', registration_year:2022})
-        data.push({answer:'健康状態の自己管理,仕事と家庭のバランス', registration_year:2021})
-        data.push({answer:'健康状態の自己管理,健康状態の自己管理,健康状態の自己管理,健康状態の自己管理', registration_year:2021})
-        data.push({answer:'健康状態の自己管理', registration_year:2023})
-        data.push({answer:'健康状態の自己管理', registration_year:2023})
 
         const dataSets = [];
         const dataCount = [];
@@ -282,7 +276,6 @@
         ];
         // const titleList = data.map(item => item.title);
         const colorList = ['#b3ff6673','#66ffff80','#9999ff7a','#ff99ff82','#ffb36680']
-        let loop = 0;
 
         data.forEach(item => {
             const registrationYear = item.registration_year;
@@ -292,11 +285,10 @@
             dataGroup[registrationYear].push(item);
         });
 
-
         for (const year in dataGroup) {
             answerGroup.forEach(answer => {
                 let index = 0;
-                data.forEach((item1) => {
+                dataGroup[year].forEach((item1) => {
                     if (item1.answer.indexOf(',') > -1) {
                         var arrAnswer = item1.answer.split(',');
                         arrAnswer.forEach((item2) => {
@@ -307,7 +299,7 @@
                     } else {
 
                         if (item1.answer == answer) {
-                            index = index++;
+                            index++;
                         }
                     }
                 })
@@ -319,7 +311,7 @@
             })
 
         }
-        console.log(dataCount);
+
         let index = 0;
         for (const year in dataGroup) {
             dataSets.push({
@@ -330,21 +322,6 @@
             });
             index++;
         }
-
-        // data.forEach((item1,index) => {
-        //     const indexDts = dataSets.findIndex((item2) => parseInt(item2.key) === item1.registration_year);
-        //     if(indexDts >= 0){
-        //         if(indexDts > 0){
-        //             const lengthfront = dataSets[indexDts - 1].data.length;
-        //             for (let hk = 0; hk < lengthfront; hk++) {
-        //                 dataSets[indexDts].data.push("0");
-        //             }
-        //         }
-        //         dataSets[indexDts].data.push(item1.answer.split(',').length);
-        //     }
-        // });
-        // console.log(dataSets);
-
 
         var marksCanvas = document.getElementById("rardar_chart");
         var marksData = {
