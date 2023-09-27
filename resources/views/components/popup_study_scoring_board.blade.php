@@ -256,9 +256,27 @@
     function initRardarChart(data){
 
         const dataSets = [];
+        const dataCount = [];
         const dataGroup = {};
+
+        const answerGroup = [
+            '健康状態の自己管理',
+            '仕事と家庭のバランス',
+            '基本姿勢やマナー',
+            '組織人としての役割遂行',
+            '専門的支援関係形成力（個人、小集団、地域等）',
+            'アセスメント力',
+            '支援・介入・調整力',
+            '連携・協働・チーム形成力',
+            'コミュニティへのアプローチ・ソーシャルアクションの力',
+            '専門性を養うために学び続ける力',
+            'ソーシャルワーカーを育てる力',
+            '研究・実践成果を示す力',
+            'ソーシャルワーカーアイデンティティ・モチベーションを維持する力'
+        ];
         // const titleList = data.map(item => item.title);
         const colorList = ['#b3ff6673','#66ffff80','#9999ff7a','#ff99ff82','#ffb36680']
+
         data.forEach(item => {
             const registrationYear = item.registration_year;
             if (!dataGroup[registrationYear]) {
@@ -266,28 +284,45 @@
             }
             dataGroup[registrationYear].push(item);
         });
+
+        for (const year in dataGroup) {
+            answerGroup.forEach(answer => {
+                let index = 0;
+                dataGroup[year].forEach((item1) => {
+                    if (item1.answer.indexOf(',') > -1) {
+                        var arrAnswer = item1.answer.split(',');
+                        arrAnswer.forEach((item2) => {
+                            if (item2 == answer) {
+                                index++;
+                            }
+                        });
+                    } else {
+
+                        if (item1.answer == answer) {
+                            index++;
+                        }
+                    }
+                })
+
+                if (!dataCount[year]) {
+                    dataCount[year] = [];
+                }
+                dataCount[year].push(index);
+            })
+
+        }
+
         let index = 0;
         for (const year in dataGroup) {
             dataSets.push({
                 key: year,
                 label: year+"年度",
                 backgroundColor: colorList[index],
-                data: [],
+                data: dataCount[year],
             });
             index++;
         }
-        data.forEach((item1,index) => {
-            const indexDts = dataSets.findIndex((item2) => parseInt(item2.key) === item1.registration_year);
-            if(indexDts >= 0){
-                if(indexDts > 0){
-                    const lengthfront = dataSets[indexDts - 1].data.length;
-                    for (let hk = 0; hk < lengthfront; hk++) {
-                        dataSets[indexDts].data.push("0");
-                    }
-                }
-                dataSets[indexDts].data.push(item1.answer.split(',').length);
-            }
-        });
+
         var marksCanvas = document.getElementById("rardar_chart");
         var marksData = {
             labels: [
@@ -304,6 +339,7 @@
                 ["コミュニティへのアプローチ・","ソーシャルアクションの力"],
                 "研究、実践成果を示す力",
                 ["ソーシャルワーカーアイデンティティ・","モチベーションを維持する力"],
+
             ],
             datasets:dataSets
         };
