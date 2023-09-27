@@ -1,6 +1,6 @@
 <div class="become-manager-screen">
     <div class="title-manager">
-        <button>（<span class="name-member"></span>）さんのワークシート</button>
+        <button><span class="name-member"></span> さんのワークシート</button>
     </div>
     <div class="content-manager">
         <div class="flex-column">

@@ -29,7 +29,7 @@
                 <ul>
                     <li>
                         @if($sakuraMemberManage && $sakuraMemberManage->reviewer_member !== null && $sakuraMemberManage->reviewer_status !== 1)
-                            <button class="in-active">担当者</button>
+                            <a class="disabled" style="background: unset !important;" href="{{ route('registerReviewer') }}"><button class="in-active">担当者</button></a>
                         @else
                             <a href="{{ route('registerReviewer') }}"><button class="active">担当者</button></a>
                         @endif
@@ -49,7 +49,7 @@
                         @if($sakuraMemberManage->reviewer_status === 1)
                         <button class="btn-eff-red btn-hov">申請中</button>
                         @else
-                    		<button class="cancal-sharing btn-eff-red btn-hov" data-id="{{ $sakuraMemberManage->reviewer_member->login_id}}">{{ $sakuraMemberManage->reviewer_status === 4 ? '解除受付' : '共有解除' }}</button>
+                    		<button class="cancal-sharing btn-eff-red btn-hov" data-status="{{ $sakuraMemberManage->reviewer_status }}" data-id="{{ $sakuraMemberManage->reviewer_member->login_id}}">{{ $sakuraMemberManage->reviewer_status === 4 ? '解除受付' : '共有解除' }}</button>
                         @endif
                     @else
                         <button class="had-change btn-eff-ora btn-hov">解除依頼中</button>

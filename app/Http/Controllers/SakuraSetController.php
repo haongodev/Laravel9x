@@ -226,7 +226,13 @@ class SakuraSetController extends Controller
             return response()->json(['success' => false, 'data' => []]);
         }
         $member_id = $request->member_id;
-        $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$member_id]],['reviewer_member','made_member']);
+        $status = $request->status;
+        $sakuraManage = null;
+        if($status == 4){
+            $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$member_id],['member_id',$this->loginId()]],['reviewer_member','made_member']);
+        }else{
+            $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$member_id]],['reviewer_member','made_member']);
+        }
         if($sakuraManage->reviewer_member){
             $emailConfig = ['to' => $sakuraManage->made_member->email,'subject' => '「振り返り担当者」の解除申請が承認されました（自動送信メール）','sakuraData' => $sakuraManage];
             if($sakuraManage->delete()){
