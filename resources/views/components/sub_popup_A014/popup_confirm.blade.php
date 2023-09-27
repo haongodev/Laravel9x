@@ -95,8 +95,8 @@
                 }
                 var data = {
                     id : id,
-                    share_flg: share_flg
-
+                    share_flg: share_flg,
+                    class : reflection_class
                 }
                 $.ajax({
                     url: url,
@@ -107,9 +107,7 @@
                         if (response.success) {
                             // Update giao dien
                             if(share_flg == 1){
-                                console.log('ok1ok1')
                                 $('.popup-A014-save-share').find('.table-manager-class-'+reflection_class).find('.share-reflectionsheet').each(function(){
-                                    console.log('okok')
                                     $(this).attr('data-current-share',0)
                                     $(this).removeClass('share');
                                 })

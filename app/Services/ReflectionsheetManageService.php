@@ -78,9 +78,9 @@ class ReflectionsheetManageService
         return $this->reflectionsheetManageRepository->getByUserId($userId);
     }
 
-    public function updateByMemberId($memberId = 0, $data = [])
+    public function updateByMemberId($memberId = 0, $class =0, $data = [])
     {
-        return $this->reflectionsheetManageRepository->updateByMemberId($memberId, $data);
+        return $this->reflectionsheetManageRepository->updateByMemberId($memberId, $class, $data);
     }
 
     public function update($id = 0, $data=[])

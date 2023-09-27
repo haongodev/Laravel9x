@@ -30,9 +30,9 @@ class ReflectionsheetManageRepository
         return $this->model->where('member_id',$userId)->get();
     }
 
-    public function updateByMemberId($memberId = 0, $data = [])
+    public function updateByMemberId($memberId = 0, $class=0, $data = [])
     {
-        return $this->model->where('member_id',$memberId)->update($data);
+        return $this->model->where('member_id',$memberId)->where('class',$class)->update($data);
     }
 
     public function update($id = 0, $data = [])
