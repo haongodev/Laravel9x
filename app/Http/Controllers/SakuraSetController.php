@@ -129,7 +129,7 @@ class SakuraSetController extends Controller
     public function checkMark(Request $request){
         $loginId = $this->loginId();
         $status = true;
-        
+
         $checkWithReviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$loginId],['reviewer_confirmation_flg',0]],null,true);
         if(count($checkWithReviewer->toArray()) > 0){
             $status = false;
@@ -143,7 +143,7 @@ class SakuraSetController extends Controller
     }
     public function unCheckMark(Request $request){
         $loginId = $this->loginId();
-        
+
         $checkWithMember = $this->sakurasetService->getByLoggedId([['member_id',$loginId],['confirmation_flg',0]]);
         if($checkWithMember){
             $checkWithMember->confirmation_flg = 1;
@@ -416,6 +416,7 @@ class SakuraSetController extends Controller
     {
         try {
             $id = $request->get('id');
+            $class = $request->get('class');
             $shareFlg = $request->get('share_flg');
             $dataUpdate = [
                 'share_flg' => $shareFlg
@@ -423,7 +424,7 @@ class SakuraSetController extends Controller
 
             //Update all share flag off when share = true
             if($shareFlg){
-                $this->reflectionsheetManageService->updateByMemberId($this->loginId(),['share_flg' => 0]);
+                $this->reflectionsheetManageService->updateByMemberId($this->loginId(),$class,['share_flg' => 0]);
             }
             $data['update'] = $this->reflectionsheetManageService->update($id, $dataUpdate);
             $data['success'] = true;
