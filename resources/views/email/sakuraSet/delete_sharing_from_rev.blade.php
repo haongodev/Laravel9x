@@ -1,3 +1,4 @@
+{{-- reviewer has been deleted => member  --}}
 <div>
     <p>構成員番号: {{ $config['sakuraData']->made_member->login_id }}</p>
     <p>{{ $config['sakuraData']->made_member->name1.' '.$config['sakuraData']->made_member->name2 }} 様</p>

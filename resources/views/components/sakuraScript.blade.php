@@ -13,7 +13,7 @@
             $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">確認</button>');
             $('.popup-wrapper .popup-footer').removeClass('hidden');
             $('.popup-wrapper').removeClass('hidden');
-            $('.btn-popup-accept').addClass('btn-popup-confirm_delete_sharing_from_pic');
+            $('.btn-popup-accept').addClass('btn-popup-confirm_delete_sharing_from_mem');
             $('body').addClass('ovf-hidden');
             $('.btn-popup-accept').attr('data-id',member_id).attr('data-status',status);
         })
@@ -69,7 +69,7 @@
             $('.popup-wrapper .popup-footer').removeClass('hidden');
             $('body').addClass('ovf-hidden');
             $('.popup-wrapper').removeClass('hidden');
-            $('.btn-popup-accept').addClass('btn-popup-cancel_sharing_from_pic');
+            $('.btn-popup-accept').addClass('btn-popup-confirm_delete_sharing_from_rev');
             $('.btn-popup-accept').attr('data-id',member_id);
         })
 
@@ -81,7 +81,7 @@
             $('.popup-wrapper .popup-footer').removeClass('hidden');
             $('body').addClass('ovf-hidden');
             $('.popup-wrapper').removeClass('hidden');
-            $('.btn-popup-accept').addClass('btn-popup-cancel_sharing_from_member');
+            $('.btn-popup-accept').addClass('btn-popup-delete_sharing_from_rev');
             $('.btn-popup-accept').attr('data-id',member_id).attr('data-nth',nth);
         })
 
@@ -152,20 +152,20 @@
             $('body').addClass('ovf-hidden');
         })
         
-        $('body').on('click','.btn-popup-confirm_delete_sharing_from_pic',function (){
+        $('body').on('click','.btn-popup-confirm_delete_sharing_from_mem',function (){
             const checkLast = $(this).attr('last-confirm');
             if(checkLast && checkLast === 'true'){
                 $('.popup-wrapper .popup-content .content').html('');
                 $('.popup-wrapper .popup-content .header-content').html('');
                 $('.popup-wrapper').addClass('hidden');
                 $(this).removeAttr('last-confirm');
-                $('.btn-popup-accept').removeClass('btn-popup-confirm_delete_sharing_from_pic');
+                $('.btn-popup-accept').removeClass('btn-popup-confirm_delete_sharing_from_mem');
                 var member_id = $(this).attr('data-id');
                 var status = $(this).attr('data-status');
                 var data = null;
                 if(status == 4){
                     data = {
-                        view:'confirm_delete_sharing_from_pic',
+                        view:'delete_sharing_from_mem',
                         member_id,
                         status
                     }
@@ -192,7 +192,7 @@
                 }else{
                     data = {
                         reviewer_status : 3,
-                        view:'confirm_delete_sharing_from_pic',
+                        view:'confirm_delete_sharing_from_mem',
                         member_id
                     }
                     $.ajax({
@@ -220,20 +220,20 @@
                 $(this).attr('last-confirm',true);
             }
         })
-        $('body').on('click','.btn-popup-cancel_sharing_from_member',function (){
+        $('body').on('click','.btn-popup-delete_sharing_from_rev',function (){
             const checkLast = $(this).attr('last-confirm');
             if(checkLast && checkLast === 'true'){
                 $('.popup-wrapper .popup-content .content').html('');
                 $('.popup-wrapper .popup-content .header-content').html('');
                 $('.popup-wrapper').addClass('hidden');
                 $(this).removeAttr('last-confirm');
-                $('.btn-popup-accept').removeClass('btn-popup-cancel_sharing_from_member');
+                $('.btn-popup-accept').removeClass('btn-popup-delete_sharing_from_rev');
                 var isload = false;
                 var member_id = $(this).attr('data-id');
                 var status = $(this).attr('data-status');
                 var nth = $(this).attr('data-nth');
                 var data = {
-                    view:'cancel_sharing_from_member',
+                    view:'delete_sharing_from_rev',
                     member_id,
                     status
                 }
@@ -263,19 +263,19 @@
                 $(this).attr('last-confirm',true);
             }
         })
-        $('body').on('click','.btn-popup-cancel_sharing_from_pic',function (){
+        $('body').on('click','.btn-popup-confirm_delete_sharing_from_rev',function (){
             const checkLast = $(this).attr('last-confirm');
             if(checkLast && checkLast === 'true'){
                 $('.popup-wrapper .popup-content .content').html('');
                 $('.popup-wrapper .popup-content .header-content').html('');
                 $('.popup-wrapper').addClass('hidden');
                 $(this).removeAttr('last-confirm');
-                $('.btn-popup-accept').removeClass('btn-popup-cancel_sharing_from_pic');
+                $('.btn-popup-accept').removeClass('btn-popup-confirm_delete_sharing_from_rev');
                 var isload = false;
                 var member_id = $(this).attr('data-id');
                 var data = {
                     reviewer_status : 4,
-                    view:'cancel_sharing_from_pic',
+                    view:'confirm_delete_sharing_from_rev',
                     member_id
                 }
                 $.ajax({
