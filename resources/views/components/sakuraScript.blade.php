@@ -125,14 +125,14 @@
                                     if(element !== null){
                                         link = '/storage/upload/'+element.member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+element.file_name;
                                     }
-                                    html += '<div class="flex-column">'+
+                                    html += '<div class="flex-column reflec_'+i+'">'+
                                                 '<div class="sub-title">'+
                                                     '<button>'+name+'</button>'+
                                                     '</div>'+
                                                 '<div class="flex-between">'+
                                                     '<button class="confirmation '+(link === '' ? 'disabled' : '')+'" link="'+base_url+link+'">確認</button>'+
                                                     '<button class="swp">実施者と共有</button>'+
-                                                    '<input class="hidden reflectionsheet-upload" type="file" at="'+name_folder+'" member_id="'+element.member_id+'">'+
+                                                    '<input class="hidden reflectionsheet-upload" type="file" at="'+name_folder+'" nth="'+i+'" member_id="'+element.member_id+'">'+
                                                 '</div>'+
                                             '</div>';
                                 });
@@ -356,11 +356,12 @@
             var url = '{{ route("sakuraBackup") }}';
             var files = $(this)[0].files;
             var fd = new FormData();
+            var nth = $(this).attr('nth');
             fd.append('file',files[0]);
             fd.append('member_id',$(this).attr('member_id'));
             fd.append('at',$(this).attr('at'));
             fd.append('backup_type','reflectionsheet');
-            backupWithNewSWP(url,fd,'reflectionsheet');
+            backupWithNewSWP(url,fd,'reflectionsheet',nth);
         })
         function downloadFile(url,name){
             var link = document.createElement("a");
@@ -371,7 +372,7 @@
             document.body.removeChild(link);
             delete link;
         }
-        function backupWithNewSWP(url,data,kind){
+        function backupWithNewSWP(url,data,kind,nth){
             $('.become-manager-screen').addClass('in-process');
             $.ajax({
                 url,
@@ -383,7 +384,11 @@
                 dataType: 'json',
                 success: function(response) {
                     if(response.success){
-                        $('.'+kind).find('.confirmation').attr('link', base_url+'/'+response.url);
+                        if(nth){
+                            $('.'+kind).find('.reflec_'+nth).find('.confirmation').attr('link', base_url+'/'+response.url);
+                        }else{
+                            $('.'+kind).find('.confirmation').attr('link', base_url+'/'+response.url);
+                        }
                     }
                 },
                 error: function(xhr, textStatus, errorThrown) {
