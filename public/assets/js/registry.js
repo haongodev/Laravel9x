@@ -168,6 +168,7 @@ function validate_required(form)
         if (this_input.html() != undefined) {
             var this_type = this_input.attr('type');
             if (
+                (this_type == 'text' && this_input.val().trim() == '') ||
                 (this_type == 'input' && this_input.val().trim() == '') ||
                 (this_type == 'radio' && !this_input.is(':checked')) ||
                 (this_type == 'date' && this_input.val().trim() == '')
