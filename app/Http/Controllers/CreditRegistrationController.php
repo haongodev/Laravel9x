@@ -364,4 +364,30 @@ class CreditRegistrationController extends Controller
 
         return response()->json(array('success' => true, 'isViewCheck' => $isViewCheck,'videoName'=>$videoName));
     }
+
+    public function validateViewVideoEdit(Request $request)
+    {
+        $questionFormData = $request->get('question',[]);
+        $typeNativeId = $request->get('type_native_id',0);
+
+        $videoName = '';
+        $isViewCheck = false;
+//        $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+//        $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
+//        $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
+//
+//        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);
+//        $condition = [
+//            'answerVideo' => $answerVideo,
+//            'registerYear' => $registerYear
+//        ];
+//        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$condition);
+//
+//        if($answerInfoData){
+//            $videoName = $answerInfoData->answer;
+//            $isViewCheck = true;
+//        }
+
+        return response()->json(array('success' => true, 'isViewCheck' => $isViewCheck,'videoName'=>$videoName));
+    }
 }
