@@ -1,6 +1,6 @@
 <tr class="facesheet-id-{{$faceSheetManager->id}}">
     <td class="w-100px" >
-        <div class="share-facesheet manager {{$faceSheetManager->share_flg ? 'share' : ''}}"
+        <div class="share-facesheet manager {{$faceSheetManager->share_flg ? 'share btn-eff-pri' : 'btn-eff-ora'}}"
              data-current-share="{{$faceSheetManager->share_flg}}"
              data-id="{{$faceSheetManager->id}}"
              data-display-name="{{$faceSheetManager->display_name}}"
@@ -10,6 +10,8 @@
     <td>
         <div class="manager"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->user_add_info->login_id.'/facesheet/'.$faceSheetManager->file_name}}">{{$faceSheetManager->display_name}}</a></div>
     </td>
+
+
     <td class="w-100px">
         <div class="remove" data-id="{{$faceSheetManager->id}}"
              data-display-name="{{$faceSheetManager->display_name}}"

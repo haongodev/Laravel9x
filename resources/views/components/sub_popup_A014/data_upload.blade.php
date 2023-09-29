@@ -1,7 +1,7 @@
 <tr class="reflectionsheet-id-{{$reflectionSheetManager->id}}">
     <td style="width: 100px">
         <div
-            class="share-reflectionsheet manager {{$reflectionSheetManager->share_flg ? 'share' : ''}}"
+            class="share-reflectionsheet manager {{$reflectionSheetManager->share_flg ? 'share btn-eff-pri' : 'btn-eff-ora'}}"
             data-current-share="{{$reflectionSheetManager->share_flg}}"
             data-id="{{$reflectionSheetManager->id}}"
             data-display-name="{{$reflectionSheetManager->display_name}}"
