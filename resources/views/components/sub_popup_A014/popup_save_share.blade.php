@@ -107,14 +107,18 @@
             var display_name = $(this).attr('data-display-name');
             var url = '{{route('updateShareReflectionSheet')}}';
             var reflection_class = $(this).closest('.table-manager').attr('data-class');
-            var is_exist_share = isExistsShareReflection(reflection_class);
-
+            var is_exist_share = false;
+            $('.table-manager-class-' + reflection_class).find('.manager').each(function () {
+                if ($(this).hasClass('share')) {
+                    is_exist_share = true
+                }
+            });
             //Check exist file share
             if (current_share == 1) {
                 //show popup 36
                 var html = '振り返りシート（' + display_name + '）の共有を解除しますか？';
             } else {
-                if (isExistsShare()) {
+                if (is_exist_share) {
                     //Show popup 44
                     var html = '振り返りシート（' + display_name + '）に共有を変更しますか？';
                 } else {
@@ -139,30 +143,20 @@
 
         })
 
-                $('.popup-A014-save-share').on('click','.remove',function (){
-                    var id = $(this).data('id');
-                    var display_name = $(this).attr('data-display-name');
-                    var url = '{{route('sakuraRemoveReflectionSheet')}}';
-                    var html = '振り返りシート（'+display_name+'）を削除します？';
+        $('.popup-A014-save-share').on('click','.remove',function (){
+            var id = $(this).data('id');
+            var display_name = $(this).attr('data-display-name');
+            var url = '{{route('sakuraRemoveReflectionSheet')}}';
+            var html = '振り返りシート（'+display_name+'）を削除します？';
 
-                    $('.popup-A014-confirm').find('input[name="id"]').val(id);
-                    $('.popup-A014-confirm').find('input[name="url"]').val(url);
-                    $('.popup-A014-confirm').find('input[name="is_remove"]').val(1);
-                    $('.popup-A014-confirm').find('.header-content').html(html)
-                    //Show popup 24
-                    $('.popup-A014-confirm').removeClass('hidden');
-                    $('.popup-A014-save-share').addClass('hidden');
-                })
+            $('.popup-A014-confirm').find('input[name="id"]').val(id);
+            $('.popup-A014-confirm').find('input[name="url"]').val(url);
+            $('.popup-A014-confirm').find('input[name="is_remove"]').val(1);
+            $('.popup-A014-confirm').find('.header-content').html(html)
+            //Show popup 24
+            $('.popup-A014-confirm').removeClass('hidden');
+            $('.popup-A014-save-share').addClass('hidden');
+        })
 
-        function isExistsShareReflection(reflection_class) {
-            var isShare = false;
-            console.log(reflection_class);
-            $('.table-manager-class-' + reflection_class).find('.manager').each(function () {
-                if ($(this).hasClass('share')) {
-                    isShare = true
-                }
-            });
-            return isShare;
-        }
     </script>
 @endpush
