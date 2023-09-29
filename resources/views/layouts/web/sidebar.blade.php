@@ -6,10 +6,10 @@
                     <span class="member_num">構成員番号：{{auth()->user()->user_add_info->login_id ?? auth()->user()->id}}</span>
                     <span class="welcom">ようこそ、{{auth()->user()->name}}さん</span>
                 </div>
-                <form action="/logout" method="post">
-                    @csrf
-                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>
-                </form>
+{{--                <form action="/logout" method="post">--}}
+{{--                    @csrf--}}
+{{--                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>--}}
+{{--                </form>--}}
                 <button class="registed-btn">現在の単位登録数</button>
                 @php
                     $answerInfoPattern = answerInfoPattern();
