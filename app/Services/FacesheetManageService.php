@@ -51,7 +51,7 @@ class FacesheetManageService
      * */
     private function generateFileName($fileName,$fileType, $index = 1)
     {
-        $memberId = auth()->user()->id;
+        $memberId = auth()->user()->user_add_info->login_id;
         if(file_exists(public_path('/storage/upload/'.$memberId.'/facesheet/'.$fileName.'.'.$fileType))) {
             if($index == 1){
                 $fileName = $fileName.' ('.$index.')';

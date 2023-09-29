@@ -323,7 +323,7 @@ class SakuraSetController extends Controller
                     if (file_exists($location . '/' . $instance->file_name)) {
                         $extension = pathinfo($instance->file_name, PATHINFO_EXTENSION);
                         $newFilenameWithoutExtension = pathinfo($instance->file_name, PATHINFO_FILENAME);
-                        $namebk = $newFilenameWithoutExtension.'_bk.'.$extension;
+                        $namebk = $newFilenameWithoutExtension.bin2hex(random_bytes(10)).'.'.$extension;
                         rename($location . '/' . $instance->file_name, $location . '/' . $namebk);
                         // insert file backup to db
                         $this->sakurasetService->createBackupData($repo,$namebk,$instance->display_name,$request->member_id,$class);
