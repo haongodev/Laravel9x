@@ -1,8 +1,9 @@
 @extends('layouts.web.main',
     [
         'pageSlug' => 'らセットに取り組む',
-        'header_button' => '<button type="button" class="header-buttom btn-eff-yel btn-hov" style="background:#FFFF00;color:#000;">さくらセットについて</button>',
-        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraReviewManage'=>$sakuraReviewManage])
+        'header_button' => '<a href="https://www.jamhsw.or.jp/ugoki/kensyu/sakura-set.html" target="_blank"><button type="button" class="header-buttom btn-eff-yel btn-hov" style="background:#FFFF00;color:#000;">さくらセットについて</button></a>',
+        'sidebarInclude' => view('components.sakuraSet_sideBar',['sakuraReviewManage'=>$sakuraReviewManage]),
+        'button_operation_manual' => true
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css/sakuraSet.css" rel="stylesheet" />
@@ -89,6 +90,6 @@
                 }
             });
         }
-       
+
     </script>
 @endpush

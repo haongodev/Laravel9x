@@ -64,6 +64,12 @@ button.disabled{
     color: #fff;
     cursor: pointer;
 }
+.main-header .right-side .container .header-buttom.action-btn{
+    background: #FFB366;
+}
+.main-header .right-side .container .header-buttom.accept-btn{
+    background: #007FFF;
+}
 .wrapper-container{
     display: flex;
     padding: 20px 0px;
@@ -321,5 +327,7 @@ button.disabled{
     transform: translateY(5px);
 }
 
-
+.right-side a{
+    text-decoration: none;
+}
 

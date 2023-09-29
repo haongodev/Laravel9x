@@ -1,4 +1,8 @@
-@extends('layouts.web.main', ['pageSlug' => '単位登録'])
+@extends('layouts.web.main', [
+    'pageSlug' => '単位登録',
+    'button_unit_guidelines' => true,
+    'button_operation_manual' => true
+    ])
 @push('styles')
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
