@@ -73,13 +73,18 @@
             var current_share = $(this).attr('data-current-share');
             var display_name = $(this).attr('data-display-name');
             var url = '{{route('sakuraUpdateShareFaceSheet')}}';
-            var is_exist_share = isExistsShare();
+            var is_exist_share = false;
+            $('.popup-A013-save-share').find('.manager').each(function (val){
+                if($(this).hasClass('share')){
+                    is_exist_share = true
+                }
+            });
             //Check exist file share
             if(current_share == 1){
                 //show popup 34
                 var html = 'フェイスシート（'+display_name+'）を共有を解除しますか？';
             }else{
-                if (isExistsShare()) {
+                if (is_exist_share) {
                     //Show popup 43
                     var html = 'フェイスシート（'+display_name+'）に共有を変更しますか？';
                 }else{
@@ -87,7 +92,6 @@
                     var html = 'フェイスシート（'+display_name+'）を共有しますか？';
                 }
             }
-
             $('.popup-A013-confirm').find('input[name="id"]').val(id);
             $('.popup-A013-confirm').find('input[name="share_flg"]').val(current_share == 1 ? 0 : 1);
             $('.popup-A013-confirm').find('input[name="url"]').val(url);
@@ -116,15 +120,5 @@
             $('.popup-A013-confirm').removeClass('hidden');
             $('.popup-A013-save-share').addClass('hidden');
         })
-
-        function isExistsShare(){
-            var isShare = false;
-            $('.table-manager').find('.manager').each(function (){
-                if($(this).hasClass('share')){
-                    isShare = true
-                }
-            });
-            return isShare;
-        }
     </script>
 @endpush
