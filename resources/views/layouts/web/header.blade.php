@@ -8,13 +8,13 @@
     <div class="right-side">
         <div class="container">
             @if(!empty($button_unit_guidelines))
-                <a href="/templates/sidebar/単位ガイドライン（20230926改訂）.pdf" download>
+                <a href="/templates/sidebar/単位ガイドライン（20230926改訂）.pdf" target="_blank">
                     <button type="button" class="header-buttom accept-btn btn-hov btn-eff-pri">単位ガイドライン</button>
                 </a>
             @endif
             @if(!empty($button_operation_manual))
-                <a href="/templates/sidebar/操作マニュアル_本運用版.pdf" download>
-                    <button type="button" class="header-buttom action-btn btn-hov btn-eff-ora">作マニュアル</button>
+                <a href="/templates/sidebar/操作マニュアル_本運用版.pdf" target="_blank">
+                    <button type="button" class="header-buttom action-btn btn-hov btn-eff-ora">操作マニュアル</button>
                 </a>
             @endif
             @if (isset($header_button))
