@@ -230,10 +230,10 @@ class SakuraSetController extends Controller
         $sakuraManage = null;
         if($status == 4){
             $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$member_id],['member_id',$this->loginId()]],['reviewer_member','made_member']);
-            $emailTo = $sakuraManage->made_member->email;
+            $emailTo = $sakuraManage->reviewer_member->email;
         }else{
             $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$member_id]],['reviewer_member','made_member']);
-            $emailTo = $sakuraManage->reviewer_member->email;
+            $emailTo = $sakuraManage->made_member->email;
         }
         if($sakuraManage->reviewer_member){
             $emailConfig = ['to' => $emailTo,'subject' => '「振り返り担当者」の解除申請が承認されました（自動送信メール）','sakuraData' => $sakuraManage];
@@ -281,7 +281,7 @@ class SakuraSetController extends Controller
     }
     public function backup(Request $request){
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:png,jpg,jpeg,csv,txt,pdf|max:2048'
+            'file' => 'required|mimes:png,jpg,jpeg,csv,docx,xlsx,txt,pdf|max:200000'
         ]);
         if ($validator->fails()) {
             $data['success'] = false;

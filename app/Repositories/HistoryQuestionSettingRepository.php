@@ -32,8 +32,11 @@ class HistoryQuestionSettingRepository
 
     public function getByIds($ids = [])
     {
-
         return $this->model->whereIn('id', $ids)->get()->keyBy('id');
+    }
 
+    public function getChildByQuestionId($questionId = 0)
+    {
+        return $this->model->where('question_id', $questionId)->where('level','<>',1)->where('parent_question_id','<>', 0)->whereNull('parent_question_option_id')->get();
     }
 }
