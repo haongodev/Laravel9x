@@ -22,6 +22,7 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
                         id="checkbox{{$questionOption->id}}"
                         value="{{$questionOption->id}}"
                         {{in_array($questionOption->option_name, $arrAnswer) ? 'selected' : ''}}
+                        data-viewing-flag="{{$questionOption->viewing_check_flg}}"
                         data-question-option-setting-id="{{$questionOption->id}}">{{$questionOption->option_name}}</option>
                 @endforeach
 

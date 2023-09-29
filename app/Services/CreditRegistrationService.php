@@ -349,8 +349,21 @@ class CreditRegistrationService
     }
     public function checkViewVideo($typeNativeId = 0, $condition = [])
     {
-
         return $this->answerManageRepository->checkViewVideo($typeNativeId,$condition);
+    }
+
+    public function checkViewVideoOption($question_option_id, $type = 'add')
+    {
+        if($type == 'add'){
+            $questionOption = $this->questionOptionSettingRepository->getByIds([$question_option_id]);
+        }else{
+            $questionOption = $this->historyQuestionOptionsSettingRepository->getByIds([$question_option_id]);
+        }
+        if($questionOption->viewing_check_flg == 0){
+            return true;
+        }
+        $answerInfo = $this->answerInfoRepository->checkViewOption();
+
     }
 
 }

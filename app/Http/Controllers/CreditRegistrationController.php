@@ -334,22 +334,31 @@ class CreditRegistrationController extends Controller
         return $returnHTML;
     }
 
+    /*
+     * Validate from question setting
+     * */
     public function validateViewVideo(Request $request)
     {
         $questionFormData = $request->get('question',[]);
         $typeNativeId = $request->get('type_native_id',0);
+        $action = $request->get('action','add');
         $videoName = '';
         $isViewCheck = false;
-        $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
-        $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
-        $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
+        $answerInfoData = [];
+        if($action == 'add'){
+            $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+            $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
+            $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
 
-        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);
-        $condition = [
-            'answerVideo' => $answerVideo,
-            'registerYear' => $registerYear
-        ];
-        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$condition);
+            $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);
+            $condition = [
+                'answerVideo' => $answerVideo,
+                'registerYear' => $registerYear
+            ];
+            $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$condition);
+        }else{
+            //'action edit'
+        }
 
         if($answerInfoData){
             $videoName = $answerInfoData->answer;
@@ -357,5 +366,10 @@ class CreditRegistrationController extends Controller
         }
 
         return response()->json(array('success' => true, 'isViewCheck' => $isViewCheck,'videoName'=>$videoName));
+    }
+
+    public function validateViewVideoOption(Request $request)
+    {
+       //dd($request->all());
     }
 }

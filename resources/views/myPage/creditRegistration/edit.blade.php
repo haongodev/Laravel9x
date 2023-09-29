@@ -26,6 +26,7 @@
                 <input type="hidden" id="urlValidateViewVideo" value="{{route('validateViewVideo')}}">
                 <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
+                <input type="hidden" name="action" value="edit">
                 @include('myPage.creditRegistration.registry_question_edit')
                 <div class="action">
                     <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov hidden">確認</button>

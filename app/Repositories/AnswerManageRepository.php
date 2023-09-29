@@ -205,4 +205,16 @@ class AnswerManageRepository
             ->whereIn('answer_info.answer',$answerVideo)->get()->first();
         ;
     }
+
+    public function checkViewOption()
+    {
+        $memberId = auth()->user()->id;
+        return $this->model->join('answer_info', function ($q) {
+            $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+        })
+        ->where('answer_manage.member_id',$memberId)
+        ->where('answer_info.title', 'like', '%本協会作成のSV動画を視聴する%')
+            ->get();
+            ;
+    }
 }
