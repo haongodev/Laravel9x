@@ -25,8 +25,8 @@
         <input type="hidden" name="is_remove">
         <input type="hidden" name="reflection_class">
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept reflectionsheet-accept">はい</button>
-            <button type="button" class="btn-popup-decline close-A014-confirm">いいえ</button>
+            <button type="button" class="btn-popup-accept reflectionsheet-accept btn-eff-ora btn-hov">はい</button>
+            <button type="button" class="btn-popup-decline close-A014-confirm btn-eff-ora btn-hov">いいえ</button>
         </div>
     </div>
 </div>
