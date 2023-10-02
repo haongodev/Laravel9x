@@ -80,7 +80,7 @@
     <div class="sub-desc">
         <ul class="text-danger">
             <li>
-                <p>生涯研修制度の受講履歴は、マイページの「研修受講履歴</p>
+                <p>生涯研修制度の受講履歴は、マイページの「研修受講履歴」</p>
             </li>
         </ul>
     </div>
