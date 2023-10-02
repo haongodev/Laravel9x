@@ -232,33 +232,7 @@ function validate_view_video(form)
 
 }
 
-function validate_view_video_option(option_id)
-{
-    $.ajax({
-        'async': false,
-        type: "post",
-        url: $('#urlValidateViewVideoOption').val(),
-        cache: false,
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        data: {
-            option_id : option_id
-        },
-        success: function (data) {
-            // if(data.isViewCheck){
-            //     toastr.options.timeOut = 3000;
-            //     toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
-            //     validate =  false;
-            // }else{
-            //     validate = true;
-            //
-            // }
-            console.log(data);
 
-        },
-    });
-    return validate
-
-}
 function showButton(){
     $('#registry').find('.submit-btn').removeClass('hidden');
 }

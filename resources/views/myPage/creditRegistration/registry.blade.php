@@ -30,7 +30,6 @@
                 <input type="hidden" id="urlGetQuestion" value="{{route('getBranchQuestion')}}">
                 <input type="hidden" id="urlGetLinkQuestion" value="{{route('getLinkQuestion')}}">
                 <input type="hidden" id="urlValidateViewVideo" value="{{route('validateViewVideo')}}">
-                <input type="hidden" id="urlValidateViewVideoOption" value="{{route('validateViewVideoOption')}}">
                 <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
                 <input type="hidden" name="action" value="add">

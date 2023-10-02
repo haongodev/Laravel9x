@@ -355,14 +355,19 @@ class CreditRegistrationService
     public function checkViewVideoOption($question_option_id, $type = 'add')
     {
         if($type == 'add'){
-            $questionOption = $this->questionOptionSettingRepository->getByIds([$question_option_id]);
+            $questionOption = $this->questionOptionSettingRepository->getByIds([$question_option_id])->first();
         }else{
-            $questionOption = $this->historyQuestionOptionsSettingRepository->getByIds([$question_option_id]);
+            $questionOption = $this->historyQuestionOptionsSettingRepository->getByIds([$question_option_id])->first();
         }
-        if($questionOption->viewing_check_flg == 0){
+
+        if(empty($questionOption) || $questionOption->viewing_check_flg == 0){
             return true;
         }
-        $answerInfo = $this->answerInfoRepository->checkViewOption();
+        $answerInfo = $this->answerManageRepository->checkViewOption();
+        if(!$answerInfo->isEmpty()){
+            return true;
+        }
+        return false;
 
     }
 
