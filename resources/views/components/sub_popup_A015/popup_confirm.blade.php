@@ -19,8 +19,8 @@
         <input type="hidden" name="is_exist_share">
         <input type="hidden" name="is_remove">
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept initiativetable-accept">はい</button>
-            <button type="button" class="btn-popup-decline close-A015-confirm">いいえ</button>
+            <button type="button" class="btn-popup-accept initiativetable-accept btn-eff-ora btn-hov">はい</button>
+            <button type="button" class="btn-popup-decline close-A015-confirm btn-eff-ora btn-hov">いいえ</button>
         </div>
     </div>
 </div>
