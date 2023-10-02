@@ -230,11 +230,13 @@ class SakuraSetController extends Controller
         $sakuraManage = null;
         if($status == 4){
             $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$member_id],['member_id',$this->loginId()]],['reviewer_member','made_member']);
+            $emailTo = $sakuraManage->reviewer_member->email;
         }else{
             $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$member_id]],['reviewer_member','made_member']);
+            $emailTo = $sakuraManage->made_member->email;
         }
         if($sakuraManage->reviewer_member){
-            $emailConfig = ['to' => $sakuraManage->made_member->email,'subject' => '「振り返り担当者」の解除申請が承認されました（自動送信メール）','sakuraData' => $sakuraManage];
+            $emailConfig = ['to' => $emailTo,'subject' => '「振り返り担当者」の解除申請が承認されました（自動送信メール）','sakuraData' => $sakuraManage];
             if($sakuraManage->delete()){
                 $msg = 'Delete Successfully';
                 $view = 'email.sakuraSet.'.$request->view;
@@ -279,7 +281,7 @@ class SakuraSetController extends Controller
     }
     public function backup(Request $request){
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:png,jpg,jpeg,csv,txt,pdf|max:2048'
+            'file' => 'required|mimes:png,jpg,jpeg,csv,docx,xlsx,txt,pdf|max:200000'
         ]);
         if ($validator->fails()) {
             $data['success'] = false;
@@ -321,7 +323,7 @@ class SakuraSetController extends Controller
                     if (file_exists($location . '/' . $instance->file_name)) {
                         $extension = pathinfo($instance->file_name, PATHINFO_EXTENSION);
                         $newFilenameWithoutExtension = pathinfo($instance->file_name, PATHINFO_FILENAME);
-                        $namebk = $newFilenameWithoutExtension.'_bk.'.$extension;
+                        $namebk = $newFilenameWithoutExtension.bin2hex(random_bytes(10)).'.'.$extension;
                         rename($location . '/' . $instance->file_name, $location . '/' . $namebk);
                         // insert file backup to db
                         $this->sakurasetService->createBackupData($repo,$namebk,$instance->display_name,$request->member_id,$class);

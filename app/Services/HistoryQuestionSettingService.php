@@ -36,4 +36,18 @@ class HistoryQuestionSettingService
     {
         return $this->historyQuestionSettingRepository->getByIds($ids);
     }
+
+    public function getChildByQuestionId($questionId = 0)
+    {
+        return $this->historyQuestionSettingRepository->getChildByQuestionId($questionId);
+    }
+
+    public function convertKeyToParentQuestionKey($questionSettingData)
+    {
+        $data = [];
+        foreach ($questionSettingData as $key => $questionSetting){
+            $data[$questionSetting->parent_question_id][]= $questionSetting;
+        }
+        return $data;
+    }
 }

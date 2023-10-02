@@ -162,6 +162,7 @@ class CreditRegistrationController extends Controller
     public function creditEdit(Request $request)
     {
         $answerManageId = $request->get('answer_manage_id');
+        $typeNativeId = $request->get('type_native_id');
         if (!$answerManageId) {
             abort(404);
         }
@@ -176,12 +177,17 @@ class CreditRegistrationController extends Controller
         Session::put('answer_info_data', $answerInfoData);
         //Get original question id get from answer info data
 
-
+        $questionManageData = $this->questionManageService->getByTypeNativeId($typeNativeId);
         $hisQuestionSettingData = $this->historyQuestionSettingService->getByOriginalQuestionIds($originalQuestionIds);
+        $questionId = $questionManageData->first()->id ?? '';
+        $hisQuestionSettingChildData = $this->historyQuestionSettingService->getChildByQuestionId($questionId);
+        $hisQuestionSettingChildData = $this->historyQuestionSettingService->convertKeyToParentQuestionKey($hisQuestionSettingChildData);
+        Session::put('question_child_data', $hisQuestionSettingChildData);
 
         return view('myPage/creditRegistration/edit', [
             'guidanceData' => $guidanceData,
             'questionSettingData' => $hisQuestionSettingData,
+            'questionSettingChildData' => $hisQuestionSettingChildData,
             'answerInfoData' => $answerInfoData,
             'answerManageId' => $answerManageId,
             'questionManagerId' => $answerManage->question_id,
@@ -364,6 +370,32 @@ class CreditRegistrationController extends Controller
             $videoName = $answerInfoData->answer;
             $isViewCheck = true;
         }
+
+        return response()->json(array('success' => true, 'isViewCheck' => $isViewCheck,'videoName'=>$videoName));
+    }
+
+    public function validateViewVideoEdit(Request $request)
+    {
+        $questionFormData = $request->get('question',[]);
+        $typeNativeId = $request->get('type_native_id',0);
+
+        $videoName = '';
+        $isViewCheck = false;
+//        $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+//        $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
+//        $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
+//
+//        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);
+//        $condition = [
+//            'answerVideo' => $answerVideo,
+//            'registerYear' => $registerYear
+//        ];
+//        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$condition);
+//
+//        if($answerInfoData){
+//            $videoName = $answerInfoData->answer;
+//            $isViewCheck = true;
+//        }
 
         return response()->json(array('success' => true, 'isViewCheck' => $isViewCheck,'videoName'=>$videoName));
     }

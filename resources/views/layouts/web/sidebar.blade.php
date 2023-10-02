@@ -6,10 +6,10 @@
                     <span class="member_num">構成員番号：{{auth()->user()->user_add_info->login_id ?? auth()->user()->id}}</span>
                     <span class="welcom">ようこそ、{{auth()->user()->name}}さん</span>
                 </div>
-                <form action="/logout" method="post">
-                    @csrf
-                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>
-                </form>
+{{--                <form action="/logout" method="post">--}}
+{{--                    @csrf--}}
+{{--                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>--}}
+{{--                </form>--}}
                 <button class="registed-btn">現在の単位登録数</button>
                 @php
                     $answerInfoPattern = answerInfoPattern();
@@ -80,7 +80,7 @@
     <div class="sub-desc">
         <ul class="text-danger">
             <li>
-                <p>本協会の受講履歴を確認したい場合はマイページの「研修受講履歴」を選択 してください。</p>
+                <p>生涯研修制度の受講履歴は、マイページの「研修受講履歴」</p>
             </li>
         </ul>
     </div>

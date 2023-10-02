@@ -17,7 +17,7 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">保存・共有する</button>
-                <button class="title-popup btn-success btn-list upload" data-click="0" data-popup="A014">6か月目 <img
+                <button class="title-popup btn-success btn-list upload btn-eff-gre" data-click="0" data-popup="A014">6か月目 <img
                         src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 <input type="file" class="hidden" name="a014_upload" id="a014_upload" upload-class="12">
                 <table class="table-manager w-500px table-manager-class-0" data-class="0">
@@ -28,7 +28,7 @@
                     @endforeach
                 </table>
 
-                <button class="title-popup btn-success btn-list upload" data-click="1" data-popup="A014">12か月目<img
+                <button class="title-popup btn-success btn-list upload btn-eff-gre" data-click="1" data-popup="A014">12か月目<img
                         src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 {{--                <input type="file" class="hidden" name="a014_upload" id="a014_upload">--}}
                 <table class="table-manager w-500px table-manager-class-1" data-class="1">
@@ -39,7 +39,7 @@
                     @endforeach
                 </table>
 
-                <button class="title-popup btn-success btn-list upload" data-popup="A014" data-click="2">随時<img
+                <button class="title-popup btn-success btn-list upload btn-eff-gre" data-popup="A014" data-click="2">随時<img
                         src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 {{--                <input type="file" class="hidden" name="a014_upload" id="a014_upload">--}}
                 <table class="table-manager w-500px table-manager-class-2" data-class="2">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="popup-footer">
-            <button class="button-close close-A014-save-share">戻る</button>
+            <button class="button-close close-A014-save-share btn-eff-bla">戻る</button>
         </div>
     </div>
 </div>
@@ -107,14 +107,18 @@
             var display_name = $(this).attr('data-display-name');
             var url = '{{route('updateShareReflectionSheet')}}';
             var reflection_class = $(this).closest('.table-manager').attr('data-class');
-            var is_exist_share = isExistsShareReflection(reflection_class);
-
+            var is_exist_share = false;
+            $('.table-manager-class-' + reflection_class).find('.manager').each(function () {
+                if ($(this).hasClass('share')) {
+                    is_exist_share = true
+                }
+            });
             //Check exist file share
             if (current_share == 1) {
                 //show popup 36
                 var html = '振り返りシート（' + display_name + '）の共有を解除しますか？';
             } else {
-                if (isExistsShare()) {
+                if (is_exist_share) {
                     //Show popup 44
                     var html = '振り返りシート（' + display_name + '）に共有を変更しますか？';
                 } else {
@@ -139,30 +143,20 @@
 
         })
 
-                $('.popup-A014-save-share').on('click','.remove',function (){
-                    var id = $(this).data('id');
-                    var display_name = $(this).attr('data-display-name');
-                    var url = '{{route('sakuraRemoveReflectionSheet')}}';
-                    var html = '振り返りシート（'+display_name+'）を削除します？';
+        $('.popup-A014-save-share').on('click','.remove',function (){
+            var id = $(this).data('id');
+            var display_name = $(this).attr('data-display-name');
+            var url = '{{route('sakuraRemoveReflectionSheet')}}';
+            var html = '振り返りシート（'+display_name+'）を削除します？';
 
-                    $('.popup-A014-confirm').find('input[name="id"]').val(id);
-                    $('.popup-A014-confirm').find('input[name="url"]').val(url);
-                    $('.popup-A014-confirm').find('input[name="is_remove"]').val(1);
-                    $('.popup-A014-confirm').find('.header-content').html(html)
-                    //Show popup 24
-                    $('.popup-A014-confirm').removeClass('hidden');
-                    $('.popup-A014-save-share').addClass('hidden');
-                })
+            $('.popup-A014-confirm').find('input[name="id"]').val(id);
+            $('.popup-A014-confirm').find('input[name="url"]').val(url);
+            $('.popup-A014-confirm').find('input[name="is_remove"]').val(1);
+            $('.popup-A014-confirm').find('.header-content').html(html)
+            //Show popup 24
+            $('.popup-A014-confirm').removeClass('hidden');
+            $('.popup-A014-save-share').addClass('hidden');
+        })
 
-        function isExistsShareReflection(reflection_class) {
-            var isShare = false;
-            console.log(reflection_class);
-            $('.table-manager-class-' + reflection_class).find('.manager').each(function () {
-                if ($(this).hasClass('share')) {
-                    isShare = true
-                }
-            });
-            return isShare;
-        }
     </script>
 @endpush

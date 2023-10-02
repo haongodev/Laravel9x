@@ -8,7 +8,7 @@
         </div>
         <div class="popup-content">
             <div class="header-content not-remove">
-                <button class="title-popup">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" class="upload" data-popup="A015" alt=""></button>
+                <button class="title-popup btn-eff-pri">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" class="upload" data-popup="A015" alt=""></button>
                 <input type="file" class="hidden" name="a013_upload" id="a015_upload">
                 <div class="a015-initive-list">
                     @foreach($initiativetableManagerData as $initiativetableData)
@@ -67,12 +67,18 @@
             var current_share = $(this).attr('data-current-share');
             var display_name = $(this).attr('data-display-name');
             var url = '{{route('updateShareInitiativeTable')}}';
+            var is_exist_share = false;
+            $('.a015-initive-list').children('div').each(function () {
+                if ($(this).children('button').hasClass('sharing')) {
+                    is_exist_share = true;
+                }
+            });
             //Check exist file share
             if (current_share == 1) {
                 //show popup 25
                 var html = 'さくらセット取り組み表（' + display_name + '）の共有を解除しますか？';
             } else {
-                if (isExistsShare()) {
+                if (is_exist_share) {
                     //Show popup 33
                     var html = 'さくらセット取り組み表（' + display_name + '）に共有を変更しますか？';
                 } else {
@@ -88,7 +94,7 @@
             $('.popup-A015-confirm').find('input[name="last_confirm"]').val(current_share);
             // if exsits file share
             $('.popup-A015-confirm').find('input[name="is_remove"]').val(0);
-            $('.popup-A015-confirm').find('input[name="is_exist_share"]').val(isExistsShare() ? 1 : 0);
+            $('.popup-A015-confirm').find('input[name="is_exist_share"]').val(is_exist_share ? 1 : 0);
             $('.popup-A015-confirm').find('.header-content').html(html)
             $('.popup-A015-confirm').removeClass('hidden');
             $('.popup-A015-save-share').addClass('hidden');
@@ -108,15 +114,5 @@
             $('.popup-A015-confirm').removeClass('hidden');
             $('.popup-A015-save-share').addClass('hidden');
         })
-
-        function isExistsShare() {
-            var isShare = false;
-            $('.a015-initive-list').children('div').each(function () {
-                if ($(this).children('button').hasClass('sharing')) {
-                    isShare = true;
-                }
-            });
-            return isShare;
-        }
     </script>
 @endpush

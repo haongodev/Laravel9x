@@ -14,7 +14,7 @@
         </div>
         <div class="popup-content">
             <div class="header-content not-remove">
-                <button class="title-popup upload" data-popup="A013">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
+                <button class="title-popup upload btn-eff-pri" data-popup="A013">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 <input type="file" class="hidden" name="a013_upload" id="a013_upload">
                 <table class="table-manager w-500px">
                     @foreach($faceSheetManagerData as $faceSheetManager)
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="popup-footer">
-            <button class="button-close close-A013-save-share">戻る</button>
+            <button class="button-close close-A013-save-share btn-eff-bla">戻る</button>
         </div>
     </div>
 </div>
@@ -73,13 +73,18 @@
             var current_share = $(this).attr('data-current-share');
             var display_name = $(this).attr('data-display-name');
             var url = '{{route('sakuraUpdateShareFaceSheet')}}';
-            var is_exist_share = isExistsShare();
+            var is_exist_share = false;
+            $('.popup-A013-save-share').find('.manager').each(function (val){
+                if($(this).hasClass('share')){
+                    is_exist_share = true
+                }
+            });
             //Check exist file share
             if(current_share == 1){
                 //show popup 34
                 var html = 'フェイスシート（'+display_name+'）を共有を解除しますか？';
             }else{
-                if (isExistsShare()) {
+                if (is_exist_share) {
                     //Show popup 43
                     var html = 'フェイスシート（'+display_name+'）に共有を変更しますか？';
                 }else{
@@ -87,7 +92,6 @@
                     var html = 'フェイスシート（'+display_name+'）を共有しますか？';
                 }
             }
-
             $('.popup-A013-confirm').find('input[name="id"]').val(id);
             $('.popup-A013-confirm').find('input[name="share_flg"]').val(current_share == 1 ? 0 : 1);
             $('.popup-A013-confirm').find('input[name="url"]').val(url);
@@ -116,15 +120,5 @@
             $('.popup-A013-confirm').removeClass('hidden');
             $('.popup-A013-save-share').addClass('hidden');
         })
-
-        function isExistsShare(){
-            var isShare = false;
-            $('.table-manager').find('.manager').each(function (){
-                if($(this).hasClass('share')){
-                    isShare = true
-                }
-            });
-            return isShare;
-        }
     </script>
 @endpush

@@ -1,4 +1,8 @@
-@extends('layouts.web.main', ['pageSlug' => '研鑽を記録する (単位登録)'])
+@extends('layouts.web.main', [
+    'pageSlug' => '研鑽を記録する (単位登録)',
+    'button_unit_guidelines' => true,
+    'button_operation_manual' => true
+    ])
 
 @section('content')
     {{ Breadcrumbs::render('creditRegistration') }}
