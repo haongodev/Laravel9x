@@ -10,7 +10,7 @@
     </td>
     <td>
         <?php $pathClass = $reflectionSheetManager->class == 2 ? 'at' : ($reflectionSheetManager->class == 1 ? '12m' : '6m') ?>
-        <div class="manager"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->user_add_info->login_id.'/reflectionsheet/'.$pathClass.'/'.$reflectionSheetManager->file_name}}">{{$reflectionSheetManager->display_name}}</a></div>
+        <div class="manager btn-eff-ora"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->user_add_info->login_id.'/reflectionsheet/'.$pathClass.'/'.$reflectionSheetManager->file_name}}">{{$reflectionSheetManager->display_name}}</a></div>
     </td>
     <td style="width: 100px">
         <div class="remove" data-id="{{$reflectionSheetManager->id}}"
