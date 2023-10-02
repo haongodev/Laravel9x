@@ -260,19 +260,29 @@ class CreditRegistrationController extends Controller
     public function getBranchQuestion(Request $request)
     {
         $questionOptionSettingId = $request->get('question_option_setting_id',-1);
+        $type = $request->get('type','add');
+        $checkViewVideo = $this->creditRegistrationService->checkViewVideoOption($questionOptionSettingId,$type);
 
-        $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionOptionSettingId);
-        $questionSettingChildData = Session::get('question_child_data');
-        $answerInfoData = Session::get('answer_info_data');
         $returnHTML = '';
-        if ($questionSetting) {
-            $viewQuestion = 'input_method_' . $questionSetting->input_method;
-            $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion,[
-                'questionSetting'=> $questionSetting,
-                'answerInfoData' => $answerInfoData,
-                'questionSettingChildData' => $questionSettingChildData
+        if($checkViewVideo){
+            $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionOptionSettingId);
+            $questionSettingChildData = Session::get('question_child_data');
+            $answerInfoData = Session::get('answer_info_data');
+
+            if ($questionSetting) {
+                $viewQuestion = 'input_method_' . $questionSetting->input_method;
+                $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion,[
+                    'questionSetting'=> $questionSetting,
+                    'answerInfoData' => $answerInfoData,
+                    'questionSettingChildData' => $questionSettingChildData
+                ])->render();
+            }
+        }else{
+            $returnHTML = view('myPage/creditRegistration/question/validate_view_video_option_question',[
+
             ])->render();
         }
+
 
         return response()->json(array('success' => true, 'html' => $returnHTML));
 
@@ -305,16 +315,24 @@ class CreditRegistrationController extends Controller
     public function getBranchHisQuestion(Request $request)
     {
         $questionOptionSettingId = $request->get('question_option_setting_id',-1);
-
-        $questionSetting = $this->historyQuestionSettingService->getByParentQuestionOptionId($questionOptionSettingId);
-        $answerInfoData = Session::get('answer_info_data');
-
+        $type = $request->get('type','edit');
+        $checkViewVideo = $this->creditRegistrationService->checkViewVideoOption($questionOptionSettingId,$type);
         $returnHTML = '';
-        if ($questionSetting) {
-            $viewQuestion = 'input_method_' . $questionSetting->input_method;
-            $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion, [
-                'questionSetting' => $questionSetting,
-                'answerInfoData' => $answerInfoData
+        if($checkViewVideo){
+            $questionSetting = $this->historyQuestionSettingService->getByParentQuestionOptionId($questionOptionSettingId);
+            $answerInfoData = Session::get('answer_info_data');
+
+            if ($questionSetting) {
+                $viewQuestion = 'input_method_' . $questionSetting->input_method;
+                $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion, [
+                    'questionSetting' => $questionSetting,
+                    'answerInfoData' => $answerInfoData
+                ])->render();
+            }
+
+        }else{
+            $returnHTML = view('myPage/creditRegistration/question/validate_view_video_option_question',[
+
             ])->render();
         }
 
@@ -340,22 +358,31 @@ class CreditRegistrationController extends Controller
         return $returnHTML;
     }
 
+    /*
+     * Validate from question setting
+     * */
     public function validateViewVideo(Request $request)
     {
         $questionFormData = $request->get('question',[]);
         $typeNativeId = $request->get('type_native_id',0);
+        $action = $request->get('action','add');
         $videoName = '';
         $isViewCheck = false;
-        $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
-        $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
-        $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
+        $answerInfoData = [];
+        if($action == 'add'){
+            $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+            $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
+            $registerYear = $this->creditRegistrationService->getRegistrationYear($questionFormData,$questionSettingRegistryData);
 
-        $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);
-        $condition = [
-            'answerVideo' => $answerVideo,
-            'registerYear' => $registerYear
-        ];
-        $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$condition);
+            $answerVideo = $this->creditRegistrationService->filterAnswerQuestionViewVideo($questionFormData);
+            $condition = [
+                'answerVideo' => $answerVideo,
+                'registerYear' => $registerYear
+            ];
+            $answerInfoData = $this->creditRegistrationService->checkViewVideo($typeNativeId,$condition);
+        }else{
+            //'action edit'
+        }
 
         if($answerInfoData){
             $videoName = $answerInfoData->answer;
@@ -390,4 +417,5 @@ class CreditRegistrationController extends Controller
 
         return response()->json(array('success' => true, 'isViewCheck' => $isViewCheck,'videoName'=>$videoName));
     }
+
 }
