@@ -19,7 +19,6 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
                                        name="question[{{$questionSetting->id}}]"
                                        value="{{$questionOption->id}}" id="checkbox{{$questionOption->id}}"
                                        data-question-option-setting-id="{{$questionOption->id}}"
-                                       data-viewing-flag="{{$questionOption->viewing_check_flg}}"
                                     {{in_array($questionOption->option_name, $arrAnswer) ? 'checked' : ''}}
                                 >
                                 <label
