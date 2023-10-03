@@ -35,5 +35,17 @@
         $('.open-A015').click(function () {
             $('.popup-a015').removeClass('hidden');
         })
+
+        //JS 3d button Execute Share A013,A014,A015
+        function  proccessButton3d(this_choose,is_share){
+            if(is_share == 0){
+                this_choose.removeClass('share');
+                this_choose.removeClass('btn-eff-pri');
+                this_choose.addClass('btn-eff-ora');
+            }else{
+                this_choose.addClass('share btn-eff-pri');
+                this_choose.removeClass('btn-eff-ora');
+            }
+        }
     </script>
 @endpush

@@ -109,17 +109,25 @@
                             if(share_flg == 1){
                                 $('.popup-A013-save-share').find('.share-facesheet').each(function(){
                                     $(this).attr('data-current-share',0)
-                                    $(this).removeClass('share');
+                                    // $(this).removeClass('share');
+                                    // $(this).removeClass('btn-eff-pri');
+                                    // $(this).addClass('btn-eff-ora');
+                                    proccessButton3d($(this),0)
                                 })
                                 $('.popup-A013-save-share').find('.remove').each(function(){
 
                                     $(this).html('<img src="/assets/images/icon/delete.png" alt="close icon">')
                                 })
-                                $('.facesheet-id-'+id).find('.share-facesheet').addClass('share');
+                               // $('.facesheet-id-'+id).find('.share-facesheet').removeClass('btn-eff-ora');
+                              //  $('.facesheet-id-'+id).find('.share-facesheet').addClass('share btn-eff-pri');
+                                proccessButton3d($('.facesheet-id-'+id).find('.share-facesheet'),1)
                                 $('.facesheet-id-'+id).find('.remove').html('');
 
                             }else{
-                                $('.facesheet-id-'+id).find('.share-facesheet').removeClass('share');
+                                // $('.facesheet-id-'+id).find('.share-facesheet').removeClass('share');
+                                // $('.facesheet-id-'+id).find('.share-facesheet').removeClass('btn-eff-pri');
+                                // $('.facesheet-id-'+id).find('.share-facesheet').addClass('btn-eff-ora');
+                                proccessButton3d($('.facesheet-id-'+id).find('.share-facesheet'),0)
                                 $('.facesheet-id-'+id).find('.remove').html('<img src="/assets/images/icon/delete.png" alt="close icon">');
                             }
                             $('.facesheet-id-'+id).find('.share-facesheet').attr('data-current-share',share_flg);
