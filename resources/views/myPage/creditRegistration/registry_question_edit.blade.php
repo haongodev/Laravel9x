@@ -47,7 +47,7 @@
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group second">
                     <div class="date-container">
-                        <input type="text" class="datepicker" name="question[{{$questionSetting->id}}]"
+                        <input type="text" class="datepicker" name="question[{{$questionSetting->id}}]" readonly
                                value="{{$answerData->answer}}"/>
                         <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
                     </div>
@@ -63,15 +63,24 @@
         @php
             $arrAnswer =explode(',',$answerData->answer);
         @endphp
+
         <div class="input-group">
             <div class="w-100 group-control">
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group">
-                    <input class="date-register" type="date" name="question[{{$questionSetting->id}}][start]"
-                           value="{{date('Y-m-d H:i:s',strtotime($arrAnswer[0]))}}"/>
+                    <div class="date-container">
+                        <input class="date-register datepicker" type="text" readonly
+                               name="question[{{$questionSetting->id}}][start]"
+                               value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}"/>
+                        <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
+                    </div>
                     <span>~</span>
-                    <input class="date-register" type="date" name="question[{{$questionSetting->id}}][end]"
-                           value="{{date('Y-m-d H:i:s',strtotime($arrAnswer[1]))}}"/>
+                    <div class="date-container">
+                        <input class="date-register datepicker" type="text" readonly
+                               name="question[{{$questionSetting->id}}][end]"
+                               value="{{!empty($arrAnswer[1]) ? date('Y-m-d',strtotime($arrAnswer[1])) : ''}}"/>
+                        <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
         </div>

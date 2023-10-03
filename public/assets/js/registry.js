@@ -219,7 +219,8 @@ function validate_view_video(form)
         success: function (data) {
             if(data.isViewCheck){
                 toastr.options.timeOut = 3000;
-                toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
+               // toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
+                toastr.info('本動画は今年度既に単位登録されています（１年度に１回のみ単位登録可）')
                 validate =  false;
             }else{
                 validate = true;

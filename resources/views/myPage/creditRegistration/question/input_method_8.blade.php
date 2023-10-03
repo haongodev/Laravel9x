@@ -11,13 +11,13 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
                    data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <div class="w-75 date-group">
                 <div class="date-container">
-                    <input class="date-register datepicker" type="text" name="question[{{$questionSetting->id}}][start]"
-                           value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}"/>
+                    <input class="date-register datepicker" type="text" readonly name="question[{{$questionSetting->id}}][start]"
+                           value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}" />
                     <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
                 </div>
                 <span>~</span>
                 <div class="date-container">
-                    <input class="date-register datepicker" type="text" name="question[{{$questionSetting->id}}][end]"
+                    <input class="date-register datepicker" type="text" readonly name="question[{{$questionSetting->id}}][end]"
                            value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[1])) : ''}}"/>
                     <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
                 </div>
