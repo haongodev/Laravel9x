@@ -109,16 +109,19 @@
                             if(share_flg == 1){
                                 $('.popup-A014-save-share').find('.table-manager-class-'+reflection_class).find('.share-reflectionsheet').each(function(){
                                     $(this).attr('data-current-share',0)
-                                    $(this).removeClass('share');
+                                    //$(this).removeClass('share');
+                                    proccessButton3d($(this),0)
                                 })
                                 $('.popup-A014-save-share').find('.table-manager-class-'+reflection_class).find('.remove').each(function(){
                                     $(this).html('<img src="/assets/images/icon/delete.png" alt="close icon">')
                                 })
-                                $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').addClass('share');
+                                //$('.reflectionsheet-id-'+id).find('.share-reflectionsheet').addClass('share');
+                                proccessButton3d($('.reflectionsheet-id-'+id).find('.share-reflectionsheet'),1)
                                 $('.reflectionsheet-id-'+id).find('.remove').html('');
 
                             }else{
-                                $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').removeClass('share');
+                                //$('.reflectionsheet-id-'+id).find('.share-reflectionsheet').removeClass('share');
+                                proccessButton3d($('.reflectionsheet-id-'+id).find('.share-reflectionsheet'),0)
                                 $('.reflectionsheet-id-'+id).find('.remove').html('<img src="/assets/images/icon/delete.png" alt="close icon">');
                             }
                             $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').attr('data-current-share',share_flg);
