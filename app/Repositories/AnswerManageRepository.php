@@ -190,20 +190,24 @@ class AnswerManageRepository
         return $this->model->where('id',$id)->get()->first();
     }
 
-    public function checkViewVideo($typeNativeId = 0, $condition = [])
+    public function checkViewVideo($typeNativeId = 0, $condition = [], $action = 'add')
     {
         $answerVideo = $condition['answerVideo'] ?? [];
         $registerYear = $condition['registerYear'] ?? 0;
         $memberId = auth()->user()->id;
-        return  $this->model->join('answer_info', function ($q) {
+        $query =  $this->model->join('answer_info', function ($q) {
             $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
         })
             ->where('answer_manage.type_native_id',$typeNativeId)
             ->where('answer_manage.member_id',$memberId)
             ->where('answer_info.viewing_check_flg',1)
             ->where('answer_manage.registration_year',$registerYear)
-            ->whereIn('answer_info.answer',$answerVideo)->get()->first();
-        ;
+            ->whereIn('answer_info.answer',$answerVideo);
+        if($action=='edit'){
+            $answerManageId = $condition['answerManageId'] ?? 0;
+            $query->where('answer_info.answer_manage_id','!=',$answerManageId);
+        }
+        return $query->get()->first();
     }
 
     public function checkViewOption()
