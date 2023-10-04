@@ -366,7 +366,7 @@
             to = new Date(to);
             // 2023年 7月 ～ 2028年 1月　
             var titleBoard = from.getFullYear()+'年 '+(from.getMonth()+1)+'月 ~ '+to.getFullYear()+'年 '+(to.getMonth()+1)+'月 '+'研鑽スコアリングボード';
-            toastr.options.timeOut = 3000;
+            toastr.options.timeOut = 6000;
             if (from > to) {
                 toastr.info('範囲指定に誤りがあります');
                 return false;

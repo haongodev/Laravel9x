@@ -198,7 +198,7 @@ function validate_required(form)
         console.log(question_id, required);
     });
     if(!validate){
-        toastr.options.timeOut = 3000;
+        toastr.options.timeOut = 6000;
         toastr.info('未回答の項目があります。')
     }
     return validate
@@ -218,8 +218,8 @@ function validate_view_video(form)
         data: data,
         success: function (data) {
             if(data.isViewCheck){
-                toastr.options.timeOut = 3000;
-               // toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
+                toastr.options.timeOut = 6000;
+                // toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
                 toastr.info('本動画は今年度既に単位登録されています（１年度に１回のみ単位登録可）')
                 validate =  false;
             }else{

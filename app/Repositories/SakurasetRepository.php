@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Models\SakurasetManage;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class SakurasetRepository
 {
@@ -95,6 +96,7 @@ class SakurasetRepository
         $arrData = [
             'file_name' => $namebk,
             'share_flg' => 0,
+            'delete_date' => Carbon::now(),
             'member_id' => $memberId,
             'display_name' => $namedis,
         ];
