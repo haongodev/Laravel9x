@@ -81,4 +81,5 @@ Route::get('/dashboard', function () {
 
 Route::any('api/login', [Authenticate::class, 'login'])->name('api_login');
 require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';
 
