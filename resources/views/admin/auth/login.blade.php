@@ -1,4 +1,4 @@
-@extends('layouts.web.main_without_login', ['pageSlug' => 'Login'])
+@extends('admin.layouts.main_without_login', ['pageSlug' => 'Login'])
 
 @section('content')
 
@@ -34,7 +34,7 @@
                         @enderror
                         <div class="row no-gutters mt-4">
                             <div class="offset-lg-5 col-lg-12 col-md-7 offset-md-5 col-sm-7 offset-sm-5">
-                                <input style="width: 150px" type="submit" value="ログイン" class="btn btn-block btn-primary m-auto">
+                                <input style="width: 150px" type="submit" value="ログイン" class="btn btn-block btn-warning m-auto">
                             </div>
                         </div>
                     </form>
