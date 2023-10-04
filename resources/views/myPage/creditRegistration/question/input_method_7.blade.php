@@ -23,6 +23,7 @@ $answerData = $answerInfoData[$questionSetting->id] ?? [];
 </div>
 <script src="{{asset('assets/js/date.js')}}"></script>
 @if($questionSetting->terminal_flg==1)
+    <input type="hidden" class="terminal_flg" value="1">
     <script>
         showButton()
     </script>
