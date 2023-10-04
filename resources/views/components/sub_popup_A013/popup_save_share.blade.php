@@ -14,7 +14,7 @@
         </div>
         <div class="popup-content">
             <div class="header-content not-remove">
-                <button class="title-popup upload" data-popup="A013">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
+                <button class="title-popup upload btn-eff-pri btn-hov" data-popup="A013">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 <input type="file" class="hidden" name="a013_upload" id="a013_upload">
                 <table class="table-manager w-500px">
                     @foreach($faceSheetManagerData as $faceSheetManager)
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="popup-footer">
-            <button class="button-close close-A013-save-share">戻る</button>
+            <button class="button-close close-A013-save-share btn-eff-bla btn-hov">戻る</button>
         </div>
     </div>
 </div>

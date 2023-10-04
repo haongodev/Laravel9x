@@ -24,8 +24,8 @@
         <input type="hidden" name="is_exist_share">
         <input type="hidden" name="is_remove">
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept facesheet-accept">はい</button>
-            <button type="button" class="btn-popup-decline close-A013-confirm">いいえ</button>
+            <button type="button" class="btn-popup-accept facesheet-accept btn-eff-ora btn-hov">はい</button>
+            <button type="button" class="btn-popup-decline close-A013-confirm btn-eff-ora btn-hov">いいえ</button>
         </div>
     </div>
 </div>
@@ -109,17 +109,25 @@
                             if(share_flg == 1){
                                 $('.popup-A013-save-share').find('.share-facesheet').each(function(){
                                     $(this).attr('data-current-share',0)
-                                    $(this).removeClass('share');
+                                    // $(this).removeClass('share');
+                                    // $(this).removeClass('btn-eff-pri');
+                                    // $(this).addClass('btn-eff-ora');
+                                    proccessButton3d($(this),0)
                                 })
                                 $('.popup-A013-save-share').find('.remove').each(function(){
 
                                     $(this).html('<img src="/assets/images/icon/delete.png" alt="close icon">')
                                 })
-                                $('.facesheet-id-'+id).find('.share-facesheet').addClass('share');
+                               // $('.facesheet-id-'+id).find('.share-facesheet').removeClass('btn-eff-ora');
+                              //  $('.facesheet-id-'+id).find('.share-facesheet').addClass('share btn-eff-pri');
+                                proccessButton3d($('.facesheet-id-'+id).find('.share-facesheet'),1)
                                 $('.facesheet-id-'+id).find('.remove').html('');
 
                             }else{
-                                $('.facesheet-id-'+id).find('.share-facesheet').removeClass('share');
+                                // $('.facesheet-id-'+id).find('.share-facesheet').removeClass('share');
+                                // $('.facesheet-id-'+id).find('.share-facesheet').removeClass('btn-eff-pri');
+                                // $('.facesheet-id-'+id).find('.share-facesheet').addClass('btn-eff-ora');
+                                proccessButton3d($('.facesheet-id-'+id).find('.share-facesheet'),0)
                                 $('.facesheet-id-'+id).find('.remove').html('<img src="/assets/images/icon/delete.png" alt="close icon">');
                             }
                             $('.facesheet-id-'+id).find('.share-facesheet').attr('data-current-share',share_flg);

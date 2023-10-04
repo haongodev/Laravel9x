@@ -1,4 +1,8 @@
-@extends('layouts.web.main', ['pageSlug' => '修正'])
+@extends('layouts.web.main', [
+    'pageSlug' => '修正',
+    'button_unit_guidelines' => true,
+    'button_operation_manual' => true
+    ])
 @push('styles')
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet" />
@@ -23,9 +27,10 @@
                 <input type="hidden" value="{{$answerManageId}}" name="answer_manage_id">
                 <input type="hidden" id="urlGetLinkQuestion" value="{{route('getLinkQuestion')}}">
                 <input type="hidden" id="urlGetQuestion" value="{{route('getBranchHisQuestion')}}">
-                <input type="hidden" id="urlValidateViewVideo" value="{{route('validateViewVideo')}}">
+                <input type="hidden" id="urlValidateViewVideo" value="{{route('validateViewVideoEdit')}}">
                 <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
+                <input type="hidden" id="action" name="action" value="edit">
                 @include('myPage.creditRegistration.registry_question_edit')
                 <div class="action">
                     <button type="button" class="accept-btn submit-btn btn-eff-pri btn-hov hidden">確認</button>

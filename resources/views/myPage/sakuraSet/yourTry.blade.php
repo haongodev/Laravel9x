@@ -1,8 +1,9 @@
 @extends('layouts.web.main',
     [
         'pageSlug' => 'らセットに取り組む',
-        'header_button' => '<button type="button" class="header-buttom btn-eff-yel btn-hov" style="background:#FFFF00;color:#000;">さくらセットについて</button>',
-        'sidebarInclude' => view('components.sakuraSet_sideBar')
+        'header_button' => '<a href="https://www.jamhsw.or.jp/ugoki/kensyu/sakura-set.html" target="_blank"><button type="button" class="header-buttom btn-eff-yel btn-hov" style="background:#FFFF00;color:#000;">さくらセットについて</button></a>',
+        'sidebarInclude' => view('components.sakuraSet_sideBar'),
+        'button_operation_manual' => true
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css/sakuraSet.css" rel="stylesheet" />
@@ -34,5 +35,17 @@
         $('.open-A015').click(function () {
             $('.popup-a015').removeClass('hidden');
         })
+
+        //JS 3d button Execute Share A013,A014,A015
+        function  proccessButton3d(this_choose,is_share){
+            if(is_share == 0){
+                this_choose.removeClass('share');
+                this_choose.removeClass('btn-eff-pri');
+                this_choose.addClass('btn-eff-ora');
+            }else{
+                this_choose.addClass('share btn-eff-pri');
+                this_choose.removeClass('btn-eff-ora');
+            }
+        }
     </script>
 @endpush

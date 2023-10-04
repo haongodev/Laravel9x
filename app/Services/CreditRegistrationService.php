@@ -306,11 +306,16 @@ class CreditRegistrationService
 
     }
 
-    public function filterAnswerQuestionViewVideo($formData)
+    public function filterAnswerQuestionViewVideo($formData, $action = 'add')
     {
         $answerArr = [];
         $questionSettingIds = array_keys($formData);
-        $questionFlagVideo = $this->questionSettingRepository->getViewCheckFlagTrueByIds($questionSettingIds)->keyBy('id');
+        if($action=='add'){
+            $questionFlagVideo = $this->questionSettingRepository->getViewCheckFlagTrueByIds($questionSettingIds)->keyBy('id');
+        }else{
+            $questionFlagVideo = $this->historyQuestionSettingRepository->getViewCheckFlagTrueByIds($questionSettingIds)->keyBy('id');
+        }
+
 
         //$questionFlagVideoId = $this->questionSettingRepository->getViewCheckFlagTrueByIds($questionSettingIds)->pluck('id')->toArray();
         foreach ($questionFlagVideo as $id => $questionSetting){
@@ -347,10 +352,28 @@ class CreditRegistrationService
 
         return $answerArr;
     }
-    public function checkViewVideo($typeNativeId = 0, $condition = [])
+    public function checkViewVideo($typeNativeId = 0, $condition = [], $action = 'add')
     {
+        return $this->answerManageRepository->checkViewVideo($typeNativeId,$condition, $action);
+    }
 
-        return $this->answerManageRepository->checkViewVideo($typeNativeId,$condition);
+    public function checkViewVideoOption($question_option_id, $type = 'add')
+    {
+        if($type == 'add'){
+            $questionOption = $this->questionOptionSettingRepository->getByIds([$question_option_id])->first();
+        }else{
+            $questionOption = $this->historyQuestionOptionsSettingRepository->getByIds([$question_option_id])->first();
+        }
+
+        if(empty($questionOption) || $questionOption->viewing_check_flg == 0){
+            return true;
+        }
+        $answerInfo = $this->answerManageRepository->checkViewOption();
+        if(!$answerInfo->isEmpty()){
+            return true;
+        }
+        return false;
+
     }
 
 }

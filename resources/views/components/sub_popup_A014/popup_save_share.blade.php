@@ -17,7 +17,7 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">保存・共有する</button>
-                <button class="title-popup btn-success btn-list upload" data-click="0" data-popup="A014">6か月目 <img
+                <button class="title-popup btn-success btn-list upload btn-eff-gre btn-hov" data-click="0" data-popup="A014">6か月目 <img
                         src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 <input type="file" class="hidden" name="a014_upload" id="a014_upload" upload-class="12">
                 <table class="table-manager w-500px table-manager-class-0" data-class="0">
@@ -28,7 +28,7 @@
                     @endforeach
                 </table>
 
-                <button class="title-popup btn-success btn-list upload" data-click="1" data-popup="A014">12か月目<img
+                <button class="title-popup btn-success btn-list upload btn-eff-gre btn-hov" data-click="1" data-popup="A014">12か月目<img
                         src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 {{--                <input type="file" class="hidden" name="a014_upload" id="a014_upload">--}}
                 <table class="table-manager w-500px table-manager-class-1" data-class="1">
@@ -39,7 +39,7 @@
                     @endforeach
                 </table>
 
-                <button class="title-popup btn-success btn-list upload" data-popup="A014" data-click="2">随時<img
+                <button class="title-popup btn-success btn-list upload btn-eff-gre btn-hov" data-popup="A014" data-click="2">随時<img
                         src="{{ asset('assets') }}/images/icon/upload.png" alt=""></button>
                 {{--                <input type="file" class="hidden" name="a014_upload" id="a014_upload">--}}
                 <table class="table-manager w-500px table-manager-class-2" data-class="2">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="popup-footer">
-            <button class="button-close close-A014-save-share">戻る</button>
+            <button class="button-close close-A014-save-share btn-eff-bla btn-hov">戻る</button>
         </div>
     </div>
 </div>

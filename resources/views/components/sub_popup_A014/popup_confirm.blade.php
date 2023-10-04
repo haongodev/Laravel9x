@@ -25,8 +25,8 @@
         <input type="hidden" name="is_remove">
         <input type="hidden" name="reflection_class">
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept reflectionsheet-accept">はい</button>
-            <button type="button" class="btn-popup-decline close-A014-confirm">いいえ</button>
+            <button type="button" class="btn-popup-accept reflectionsheet-accept btn-eff-ora btn-hov">はい</button>
+            <button type="button" class="btn-popup-decline close-A014-confirm btn-eff-ora btn-hov">いいえ</button>
         </div>
     </div>
 </div>
@@ -109,16 +109,19 @@
                             if(share_flg == 1){
                                 $('.popup-A014-save-share').find('.table-manager-class-'+reflection_class).find('.share-reflectionsheet').each(function(){
                                     $(this).attr('data-current-share',0)
-                                    $(this).removeClass('share');
+                                    //$(this).removeClass('share');
+                                    proccessButton3d($(this),0)
                                 })
                                 $('.popup-A014-save-share').find('.table-manager-class-'+reflection_class).find('.remove').each(function(){
                                     $(this).html('<img src="/assets/images/icon/delete.png" alt="close icon">')
                                 })
-                                $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').addClass('share');
+                                //$('.reflectionsheet-id-'+id).find('.share-reflectionsheet').addClass('share');
+                                proccessButton3d($('.reflectionsheet-id-'+id).find('.share-reflectionsheet'),1)
                                 $('.reflectionsheet-id-'+id).find('.remove').html('');
 
                             }else{
-                                $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').removeClass('share');
+                                //$('.reflectionsheet-id-'+id).find('.share-reflectionsheet').removeClass('share');
+                                proccessButton3d($('.reflectionsheet-id-'+id).find('.share-reflectionsheet'),0)
                                 $('.reflectionsheet-id-'+id).find('.remove').html('<img src="/assets/images/icon/delete.png" alt="close icon">');
                             }
                             $('.reflectionsheet-id-'+id).find('.share-reflectionsheet').attr('data-current-share',share_flg);

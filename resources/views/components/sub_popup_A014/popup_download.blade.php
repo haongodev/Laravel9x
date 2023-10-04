@@ -14,15 +14,15 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">ダウンロードする</button>
-                <button class="title-popup button-link"><a download href="/templates/reflection/reflectionsheet.xlsx">Excel</a></button>
+                <button class="title-popup button-link btn-eff-ora btn-hov"><a download href="/templates/reflection/reflectionsheet.xlsx">Excel</a></button>
                 <button class="title-popup button-link btn-primary">PDF</button>
-                <button class="title-popup button-link"><a download href="/templates/reflection/reflectionsheet_6m.pdf">６か月目</a></button>
-                <button class="title-popup button-link"><a download href="/templates/reflection/reflectionsheet_12m.pdf">12か月目</a></button>
-                <button class="title-popup button-link"><a download href="/templates/reflection/reflectionsheet_at.pdf">随時</a></button>
+                <button class="title-popup button-link btn-eff-ora btn-hov"><a download href="/templates/reflection/reflectionsheet_6m.pdf">６か月目</a></button>
+                <button class="title-popup button-link btn-eff-ora btn-hov"><a download href="/templates/reflection/reflectionsheet_12m.pdf">12か月目</a></button>
+                <button class="title-popup button-link btn-eff-ora btn-hov"><a download href="/templates/reflection/reflectionsheet_at.pdf">随時</a></button>
             </div>
         </div>
         <div class="popup-footer">
-            <button class="button-close close-A014-download">戻る</button>
+            <button class="button-close close-A014-download btn-eff-bla btn-hov">戻る</button>
         </div>
     </div>
 </div>
