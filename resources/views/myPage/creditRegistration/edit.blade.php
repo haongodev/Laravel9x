@@ -80,7 +80,7 @@
                     type: 'POST',
                     data: { "_token": "{{ csrf_token() }}" },
                     success: function(response) {
-                        toastr.options.timeOut = 3000;
+                        toastr.options.timeOut = 6000;
                         toastr.options.onHidden = function() {
                             $('.confirm-popup').addClass('hidden');
                             window.location.href = "{{ route('typeSelected',['type_native_id'=>$typeNativeId])}}";

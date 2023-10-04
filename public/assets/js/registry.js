@@ -205,7 +205,7 @@ function validate_required(form)
         console.log(question_id, required);
     });
     if(!validate){
-        toastr.options.timeOut = 3000;
+        toastr.options.timeOut = 6000;
         toastr.info('未回答の項目があります。')
     }
     return validate
@@ -225,7 +225,7 @@ function validate_view_video(form)
         data: data,
         success: function (data) {
             if(data.isViewCheck){
-                toastr.options.timeOut = 3000;
+                toastr.options.timeOut = 6000;
                 toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
                 validate =  false;
             }else{

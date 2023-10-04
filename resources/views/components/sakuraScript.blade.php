@@ -48,7 +48,7 @@
                     if(response.success){
                         $('.popup-wrapper').addClass('hidden');
                         $('body').removeClass('ovf-hidden');
-                        toastr.options.timeOut = 3000;
+                        toastr.options.timeOut = 6000;
                         toastr.info('申請を承認しました');
                         $('.btn-popup-accept').removeClass().addClass('btn-popup-accept');
                         that.removeClass('reviewer').removeClass('btn-eff-gre').addClass('btn-eff-pri').addClass('sharing');
@@ -176,7 +176,7 @@
                         type: 'POST',
                         success: function(response) {
                             if(response.success){
-                                toastr.options.timeOut = 3000;
+                                toastr.options.timeOut = 6000;
                                 toastr.info('共有解除申請を承認しました');
                                 $('.botton-navigate .pull-left ul li:nth-child(1) a').removeClass('disabled');
                                 $('.botton-navigate .pull-left ul li:nth-child(1) a button').removeClass('in-active').addClass('active')
@@ -204,7 +204,7 @@
                             if(response.success){
                                 $('.pull-right button').html('解除依頼中').addClass('had-change');
                                 $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
-                                toastr.options.timeOut = 3000;
+                                toastr.options.timeOut = 6000;
                                 toastr.info('共有解除を申請しました');
                             }
                         },
@@ -244,7 +244,7 @@
                     type: 'POST',
                     success: function(response) {
                         if(response.success){
-                            toastr.options.timeOut = 3000;
+                            toastr.options.timeOut = 6000;
                             toastr.info('共有解除申請を承認しました');
                             $('.sakuraSet-sideBar ul li:nth-child('+nth+')').remove();
                             $('.botton-navigate .pull-left ul li:nth-child(2)').html('未申請')
@@ -288,7 +288,7 @@
                             globalBtn.removeClass('sharing').removeClass('btn-eff-pri').addClass('btn-eff-red').addClass('cancel');
                             globalBtn.html('解除申請');
                             $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm');
-                            toastr.options.timeOut = 3000;
+                            toastr.options.timeOut = 6000;
                             toastr.info('共有解除を申請しました');
                         }
                     },
@@ -423,7 +423,7 @@
                         $('.result_search').val(fullName).attr('member_id',res.login_id).attr('email',res.email);
                         $('.resultReviewerInfo .apply').removeClass('disabled');
                     }else{
-                        toastr.options.timeOut = 3000;
+                        toastr.options.timeOut = 6000;
                         toastr.info('振り返り担当者が見つかりません。');
                         $('.result_search').val('').removeAttr('member_id').removeAttr('email');
                         $('.resultReviewerInfo .apply').addClass('disabled');
@@ -453,7 +453,7 @@
                         $('.result_search').removeAttr('member_id');
                         $('.result_search').removeAttr('email');
                         $('.resultReviewerInfo .apply').addClass('disabled');
-                        toastr.options.timeOut = 3000;
+                        toastr.options.timeOut = 6000;
                         toastr.info(name_reviewer+' に振り返り担当を申請しました。');
                     }
                 },
