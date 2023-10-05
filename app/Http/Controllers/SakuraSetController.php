@@ -290,6 +290,7 @@ class SakuraSetController extends Controller
             $instance = null;
             $repo = null;
             $class = null;
+            $subjectEmail = '';
             if($request->file('file')) {
                 $file = $request->file('file');
                 $location = 'storage/upload/'.$request->member_id.'/'.$request->backup_type;
@@ -307,14 +308,17 @@ class SakuraSetController extends Controller
                     case 'facesheet':
                         $repo = $this->facesheetManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
+                        $subjectEmail = 'フェイスシートを共有しました（自動送信メール）';
                         break;
                     case 'initiative':
                         $repo = $this->initiativetableManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
+                        $subjectEmail = 'さくらセット取り組み表を共有しました（自動送信メール）';
                         break;
                     default:
                         $repo = $this->reflectionsheetManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,['member_id' => $request->member_id, 'class' => $class],'only',['id','file_name','display_name','member_id']);
+                        $subjectEmail = '振り返りシートを共有しました（自動送信メール）';
                         break;
                 }
                 $newFilename = $file->getClientOriginalName();
@@ -340,7 +344,7 @@ class SakuraSetController extends Controller
                 $file->move($location,$newFilename);
                 // send email func
                 $reviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$request->member_id]],['reviewer_member','made_member']);
-                $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer->made_member];
+                $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => $subjectEmail,'sakuraData' => $reviewer];
                 $view = 'email.sakuraSet.backup_'.$request->backup_type;
                 if(!view()->exists($view)){
                     $msg = 'Template Email do not exist';
