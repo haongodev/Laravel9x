@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\GuidanceSettingService;
-
 class MyPageController extends Controller
 {
     /**
@@ -26,7 +25,6 @@ class MyPageController extends Controller
     public function index()
     {
         $guidanceData = $this->guidanceSettingService->getByScreenId('A001')->first();
-
         return view('myPage/index',['guidanceData'=>$guidanceData]);
     }
 
