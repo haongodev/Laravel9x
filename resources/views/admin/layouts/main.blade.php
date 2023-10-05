@@ -11,10 +11,10 @@
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>
-    <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet" />
-    <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />
-    <meta class="base_url" value="{{url('/')}}" />
+{{--    <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>--}}
+    <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet" />
+{{--    <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />--}}
+    <meta class="base_url" value="{{url('/admin')}}" />
 </head>
 
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">
@@ -23,9 +23,9 @@
 @if (!empty(session('show_popup_confirm')))
     @include('components.popup_confirm')
 @endif
-@include('layouts.web.header')
+@include('admin.layouts.header')
 <div class="wrapper-container">
-    @include('layouts.web.sidebar')
+    @include('admin.layouts.sidebar')
 
     <div class="main-content">
         @yield('content')

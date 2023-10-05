@@ -4,16 +4,17 @@
     ])
 
 @section('content')
-    {{ Breadcrumbs::render('mypage') }}
+{{--    {{ Breadcrumbs::render('mypage') }}--}}
     <div class="container">
         <div class="row">
-            @if($guidanceData)
-                @if($guidanceData->sentence_class)
-                    {!! $guidanceData->guidance !!}
-                @else
-                    {{$guidanceData->guidance}}
-                @endif
-            @endif
+{{--            @if($guidanceData)--}}
+                ahihihihihii
+{{--                @if($guidanceData->sentence_class)--}}
+{{--                    {!! $guidanceData->guidance !!}--}}
+{{--                @else--}}
+{{--                    {{$guidanceData->guidance}}--}}
+{{--                @endif--}}
+{{--            @endif--}}
         </div>
     </div>
 @endsection
