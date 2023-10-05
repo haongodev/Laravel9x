@@ -5,7 +5,6 @@ $('#registry').on('click', '.branch-question', function (e) {
     var parent_question_id = this_choose.data('parent-question-id');
     if (this_choose.attr('type') == 'checkbox') {
         if (this_choose.is(':checked') == false) {
-            removeAlertInputMethod9(question_option_setting_id);
             removeQuestion(this_choose)
             isGetQuestion = false;
         }
@@ -15,7 +14,6 @@ $('#registry').on('click', '.branch-question', function (e) {
         var parent_div = this_choose.closest('div.input-group');
         $(parent_div).find('input[type="radio"]').each(function () {
             if ($(this).is(':checked') == false) {
-                removeAlertInputMethod9(question_option_setting_id);
                 removeQuestion($(this))
             }
         })
@@ -33,7 +31,6 @@ $('#registry').on('change', '.select-branch-question', function (e) {
         var current_id = $(this).data('question-option-setting-id');
 
         if (!$(this).is(':selected')) {
-            removeAlertInputMethod9(current_id);
             removeQuestion($(this))
         } else {
             if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
@@ -147,10 +144,6 @@ $('.submit-btn').click(function () {
 
 })
 
-function removeAlertInputMethod9(option_id){
-    $('#checkbox'+option_id).removeClass('alert-input-method-9');
-    $('#checkbox'+option_id).attr('alert-title','');
-}
 
 function validate_required(form)
 {
@@ -226,7 +219,8 @@ function validate_view_video(form)
         success: function (data) {
             if(data.isViewCheck){
                 toastr.options.timeOut = 6000;
-                toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
+                // toastr.info('（'+data.videoName+'）は既に視聴している動画です。')
+                toastr.info('本動画は今年度既に単位登録されています（１年度に１回のみ単位登録可）')
                 validate =  false;
             }else{
                 validate = true;
@@ -238,6 +232,7 @@ function validate_view_video(form)
     return validate
 
 }
+
 
 function showButton(){
     $('#registry').find('.submit-btn').removeClass('hidden');

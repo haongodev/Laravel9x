@@ -39,4 +39,9 @@ class HistoryQuestionSettingRepository
     {
         return $this->model->where('question_id', $questionId)->where('level','<>',1)->where('parent_question_id','<>', 0)->whereNull('parent_question_option_id')->get();
     }
+
+    public function getViewCheckFlagTrueByIds(array $ids = [])
+    {
+        return $this->model->whereIn('id',$ids)->where('viewing_check_flg',1)->get();
+    }
 }

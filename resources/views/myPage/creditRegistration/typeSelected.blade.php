@@ -1,4 +1,8 @@
-@extends('layouts.web.main', ['pageSlug' => '選択した類型'])
+@extends('layouts.web.main', [
+    'pageSlug' => '選択した類型',
+    'button_unit_guidelines' => true,
+    'button_operation_manual' => true
+    ])
 @push('styles')
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
 @endpush

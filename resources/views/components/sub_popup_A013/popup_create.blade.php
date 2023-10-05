@@ -14,12 +14,12 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">作成する</button>
-                <button class="title-popup button-link"><a href="https://www.jamhsw.or.jp/ugoki/kensyu/document/sakura_set/02-3.pdf" target="_blank">ワークシート作成要綱を確認する</a></button>
-                <button class="title-popup open-A013-download">ダウンロードする</button>
+                <button class="title-popup button-link btn-eff-ora btn-hov"><a href="https://www.jamhsw.or.jp/ugoki/kensyu/document/sakura_set/02-3.pdf" target="_blank">ワークシート作成要綱を確認する</a></button>
+                <button class="title-popup open-A013-download btn-eff-ora btn-hov">ダウンロードする</button>
             </div>
         </div>
         <div class="popup-footer">
-            <button class="button-close close-A013-create">戻る</button>
+            <button class="button-close close-A013-create btn-eff-bla btn-hov">戻る</button>
         </div>
     </div>
 </div>

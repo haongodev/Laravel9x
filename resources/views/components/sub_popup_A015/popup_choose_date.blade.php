@@ -13,8 +13,8 @@
             </div>
         </div>
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept initiative-accept">はい</button>
-            <button type="button" class="btn-popup-decline close-A015-choose_date">いいえ</button>
+            <button type="button" class="btn-popup-accept initiative-accept btn-eff-ora btn-hov">はい</button>
+            <button type="button" class="btn-popup-decline close-A015-choose_date btn-eff-ora btn-hov">いいえ</button>
         </div>
     </div>
 </div>

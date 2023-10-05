@@ -8,7 +8,7 @@
         </div>
         <div class="popup-content">
             <div class="header-content not-remove">
-                <button class="title-popup">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" class="upload" data-popup="A015" alt=""></button>
+                <button class="title-popup btn-eff-pri btn-hov">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" class="upload" data-popup="A015" alt=""></button>
                 <input type="file" class="hidden" name="a013_upload" id="a015_upload">
                 <div class="a015-initive-list">
                     @foreach($initiativetableManagerData as $initiativetableData)

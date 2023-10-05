@@ -1,4 +1,8 @@
-@extends('layouts.web.main', ['pageSlug' => '単位登録'])
+@extends('layouts.web.main', [
+    'pageSlug' => '単位登録',
+    'button_unit_guidelines' => true,
+    'button_operation_manual' => true
+    ])
 @push('styles')
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
@@ -28,6 +32,7 @@
                 <input type="hidden" id="urlValidateViewVideo" value="{{route('validateViewVideo')}}">
                 <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
+                <input type="hidden" name="action" value="add">
                 @include('myPage.creditRegistration.registry_question')
                 @if($isHasQuestion)
                     <div class="action">
