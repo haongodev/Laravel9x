@@ -1,0 +1,102 @@
+.form-search .row{
+    display: flex;
+    margin-top: 20px;
+    gap:20px;
+}
+.form-search .row .group-control{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-search .vertical-button{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    gap: 40px;
+}
+.form-search .vertical-button button{
+    width: 100%;
+    font-size: 29px;
+    border: unset;
+    color: #fff;
+    padding: 10px 0px;
+}
+.form-search .vertical-button .redirect-btn{
+    border-radius: 35px;
+    background: #FFB366;
+    cursor: pointer;
+}
+.form-search .vertical-button .credited-btn{
+    border-radius: 15px;
+    background: #60C659;
+    cursor: pointer;
+}
+.form-search .vertical-button .credited{
+    border-top: 1px solid #cbd5e1;
+    padding-top: 20px;
+}
+
+.form-search .input-group .group-control{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form-search .input-group label{
+    font-size: 29px;
+}
+.form-search .input-group input[type="text"]{
+    margin-left: 5px;
+}
+.form-search .input-group select,input{
+    padding: 6px;
+    font-size: 19px;
+    border:1px solid #5c5c5c;
+}
+
+.form-search .action{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 30px;
+}
+.form-search .button-search{
+    justify-content:end;
+    margin-right: 70px;
+}
+
+.form-search .action .action-btn{
+    color: #fff;
+    background: #FFB366;
+    border-radius: 30px;
+    border: unset;
+    padding: 10px 30px;
+    font-size: 24px;
+}
+.form-search .area-input{
+    margin-top: 20px;
+}
+
+.form-search .action button{
+    border-radius: 10px;
+    font-size: 20px;
+    border: 1px solid #000000;
+    padding: 5px 50px;
+    background: #FFFFFF;
+}
+
+
+/*breadcrumb*/
+.wrapper-container .main-content .bread-crumb .breadcrumb .breadcrumb-title{
+  padding-top: 15px;
+}
+
+.wrapper-container .main-content .bread-crumb .breadcrumb .btn-title{
+    background: #B9E0A5;
+    border: 1px solid;
+    padding: 2px 25px 2px 25px;
+}
+
+/*end breadcrumb*/

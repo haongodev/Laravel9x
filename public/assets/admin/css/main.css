@@ -56,14 +56,15 @@ button.disabled{
     align-items: center;
     background: #FFE4E1;
 }
-.main-header .right-side .container .header-buttom{
+.main-header .container .header-buttom{
     font-size: 19px;
-    background: #60C659;
+    background: #ffffff;
     padding: 10px 25px;
     border: 0;
-    border-radius: 50px;
-    color: #fff;
+    border-radius: 10px;
+    color: #000000;
     cursor: pointer;
+    margin-right: 10px;
 }
 .main-header .right-side .container .header-buttom.action-btn{
     background: #FFB366;
@@ -71,6 +72,11 @@ button.disabled{
 .main-header .right-side .container .header-buttom.accept-btn{
     background: #007FFF;
 }
+
+.main-header .left-side .main-title{
+    margin-left: 10px;
+}
+
 .wrapper-container{
     display: flex;
     padding: 20px 0px;
@@ -86,12 +92,15 @@ button.disabled{
     margin-right: 15px;
     min-width: 310px;
 }
+
 .wrapper-container .main-content > .container{
     margin-top: 50px;
 }
 .wrapper-container .main-content .bread-crumb{
-    background: #FFE4E1;
-    padding: 1px 20px;
+    /*background: #FFE4E1;*/
+    /*padding: 40px 20px;*/
+    border: 1px solid #cbd5e1;
+    border-radius: 15px;
 }
 .wrapper-container .main-content .bread-crumb .breadcrumb{
     padding: 10px 16px;
@@ -109,6 +118,7 @@ button.disabled{
     color: black;
     content: ">";
 }
+
 .wrapper-container .left-side .side-top,.side-bot{
     margin-bottom: 20px;
     border: 1px solid #94a3b8;
@@ -205,28 +215,29 @@ button.disabled{
 }
 .wrapper-container .left-side .side-bot .container .row ul{
     list-style-type: none;
-    padding: 0;
+    padding-bottom: 10px;
 }
 .wrapper-container .left-side .side-bot .container .row ul li{
     padding: 5px 0;
+    text-align: center;
 }
-.wrapper-container .left-side .side-bot .container .row ul li:nth-child(1){
-    padding: 0;
-}
-.wrapper-container .left-side .side-bot .container .row ul li:nth-child(1) a{
-    justify-content: center;
-    border-bottom: 1px solid #cbd5e1;
-    padding-bottom: 20px;
-    color: #475569;
-}
+/*.wrapper-container .left-side .side-bot .container .row ul li:nth-child(1){*/
+/*    !*padding: 0;*!*/
+/*}*/
+/*.wrapper-container .left-side .side-bot .container .row ul li:nth-child(1) a{*/
+/*    justify-content: center;*/
+/*    padding-bottom: 20px;*/
+/*    color: #475569;*/
+/*}*/
 .wrapper-container .left-side .side-bot .container .row ul li a{
-    color: #72C02C;
+    color: #000000;
     font-size: 20px;
     text-decoration: none;
-    margin: 10px;
-    display: flex;
+    /*margin: 10px;*/
+    /*display: flex;*/
     align-items: center;
     word-break: keep-all;
+    text-align: center;
 }
 .wrapper-container .left-side .side-bot .container .row ul li a img{
     width: 30px;
@@ -332,3 +343,6 @@ button.disabled{
     text-decoration: none;
 }
 
+.ml-10px{
+    margin-left: 10px;
+}
