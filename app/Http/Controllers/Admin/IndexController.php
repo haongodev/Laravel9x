@@ -11,7 +11,7 @@ class IndexController extends Controller
     {
         $user = Auth::guard('admin')->user();
         echo 'Xin chào Admin, '. $user->name;
-        die;
+        return view('admin.index');
     }
 
 }
