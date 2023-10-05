@@ -9,6 +9,8 @@ use App\Http\Controllers\ReflectionsheetController;
 use App\Http\Controllers\InitiativetableController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Authenticate;
+use App\Events\MessageSent;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +26,11 @@ use App\Http\Controllers\Api\Authenticate;
 Route::get('/send-email', [SakuraSetController::class, 'testMail']);
 
 Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
+    Route::post('message', function (Request $request) {
+        broadcast(new MessageSent(auth()->user(), $request->input('message')));
+        return $request->input('message');
+    });
+
     Route::get('/',[MyPageController::class, 'index'])->name('mypage');
 
     Route::group(['prefix' => 'cls'],function() {
