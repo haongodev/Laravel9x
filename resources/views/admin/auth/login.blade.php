@@ -9,7 +9,7 @@
                     <div class="text-center">
                         <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
                     </div>
-                    <form class="" action="{{route('admin.login')}}" method="post">
+                    <form style="padding-top: 140px" action="{{route('admin.login')}}" method="post">
                         @csrf
                         <div class="row no-gutters mt-4">
                             <label class="col-md-3 col-lg-2 col-sm-12 text-center" for="username">ID</label>
