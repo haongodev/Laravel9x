@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property int    $created_at
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $password
  * @property string $remember_token
  */
-class SysUsers extends Model
+class SysUsers extends Authenticatable
 {
     /**
      * The database table used by the model.
@@ -44,7 +45,7 @@ class SysUsers extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**
