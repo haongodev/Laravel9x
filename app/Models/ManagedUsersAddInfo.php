@@ -5,20 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int      $id
- * @property int      $id
- * @property int      $attribute
- * @property int      $manager_class
- * @property int      $users_id
- * @property int      $attribute
- * @property int      $delete_flg
- * @property int      $manager_class
- * @property int      $users_id
- * @property boolean  $delete_flg
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property DateTime $registration_date
- * @property DateTime $update_date
+ * Class ManagedUsersAddInfo
+ * @package App\Models
  */
 class ManagedUsersAddInfo extends Model
 {
@@ -51,7 +39,7 @@ class ManagedUsersAddInfo extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**
@@ -60,7 +48,13 @@ class ManagedUsersAddInfo extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'int', 'id' => 'int', 'attribute' => 'int', 'delete_flg' => 'boolean', 'manager_class' => 'int', 'registration_date' => 'datetime', 'update_date' => 'datetime', 'users_id' => 'int', 'attribute' => 'int', 'delete_flg' => 'int', 'manager_class' => 'int', 'registration_date' => 'datetime', 'update_date' => 'datetime', 'users_id' => 'int'
+        'id' => 'int',
+        'users_id' => 'int',
+        'manager_class' => 'int',
+        'attribute' => 'int',
+        'delete_flg' => 'boolean',
+        'registration_date' => 'datetime',
+        'update_date' => 'datetime',
     ];
 
     /**

@@ -39,6 +39,7 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
     </div>
 </div>
 @if($questionSetting->terminal_flg==1)
+    <input type="hidden" class="terminal_flg" value="1">
     <script>
         showButton()
     </script>

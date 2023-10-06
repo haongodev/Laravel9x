@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UsersAddInfo;
-class LoginRequest extends FormRequest
+class AdminLoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -48,13 +48,14 @@ class LoginRequest extends FormRequest
             'password' => $this->input('password'),
             'active_flg' => true
         ];
+
         if(!$userInfo){
             throw ValidationException::withMessages([
                 'id' => trans('auth.failed'),
             ]);
         }
 
-        if (! Auth::guard('web')->attempt($credentials, $this->boolean('remember'))) {
+        if (! Auth::guard('admin')->attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
