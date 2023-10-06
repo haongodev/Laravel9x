@@ -29,7 +29,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
     Route::post('message', function (Request $request) {
         broadcast(new MessageSent(auth()->user(), $request->input('message')));
         return $request->input('message');
-    });
+    })->name('testRealTime');
 
     Route::get('/',[MyPageController::class, 'index'])->name('mypage');
 
