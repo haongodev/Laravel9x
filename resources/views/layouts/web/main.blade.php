@@ -16,6 +16,7 @@
     <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta class="base_url" value="{{url('/')}}" />
+    <meta class="room_id" value="{{getSakuraSetRoom()}}" />
 </head>
 
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">

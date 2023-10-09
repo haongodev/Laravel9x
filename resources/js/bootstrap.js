@@ -26,9 +26,45 @@ window.Echo = new Echo({
     client: io
 });
 
-
-window.Echo.join('chat').here((users) => {
-    console.log(users);
-}).listen('MessageSent', (event) => {
-    console.log(event);
-});
+var roomId = $('.room_id').attr('value');
+if(roomId){
+    window.Echo.private('sakura.'+roomId).listen('SakuraShare', (event) => {
+        var base_url = $('.base_url').attr('value');
+        if(event.sakura.hasOwnProperty('from') && event.sakura.from === 'teach'){
+            if(event.sakura.class !== null){
+                console.log(event);
+                $('.'+event.sakura.popup).find('.table-manager-class-'+event.sakura.class).find('.sharing').parent('td').next().find('a').attr('href',base_url+'/'+event.sakura.url);
+            }else{
+                $('.'+event.sakura.popup).find('.sharing').parent('td').next().find('a').attr('href',base_url+'/'+event.sakura.url);
+            }
+        }else{
+            var classRef = '';
+            if(event.sakura.hasOwnProperty('class')){
+                classRef = '6m';
+                if(event.sakura.class == 1){
+                    classRef = '12m'
+                }else if(event.sakura.class == 2){
+                    classRef = 'at';
+                }
+            }
+            var fullPathpath = base_url+'/storage/upload/'+event.sakura.member_id+'/'+event.sakura.type+(classRef !== '' ? '/'+classRef+'/' :'/')+event.sakura.file_name;
+            if($('.become-manager-screen').length){
+                if(parseInt(event.sakura.share_flg ) > 0){
+                    // change current url
+                    if(event.sakura.type == 'reflectionsheet'){
+                        $('.'+event.sakura.type+' .reflec_'+event.sakura.class+' .confirmation').removeClass('disabled').attr('link',fullPathpath);
+                    }else{
+                        $('.'+event.sakura.type+' .confirmation').removeClass('disabled').attr('link',fullPathpath);
+                    }
+                }else{
+                    // disable url
+                    if(event.sakura.type == 'reflectionsheet'){
+                        $('.'+event.sakura.type+' .reflec_'+event.sakura.class+' .confirmation').addClass('disabled').removeAttr('link');
+                    }else{
+                        $('.'+event.sakura.type+' .confirmation').addClass('disabled').removeAttr('link');
+                    }
+                }
+            }
+        }
+    });   
+}
