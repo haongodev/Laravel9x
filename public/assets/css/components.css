@@ -331,3 +331,8 @@
     cursor: pointer;
 }
 
+
+.popup_study_scoring_board .layout-popup .popup-content .scoring_board_content .table-show-credit table .text-break{
+    width: 31%;
+    line-break: anywhere;
+}
