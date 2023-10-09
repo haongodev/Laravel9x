@@ -509,7 +509,7 @@
 
                 answerWdispl = items[htmlItem].answer
 
-            return '<td class="'+className+'">'+titleDate+'<br>[内容]<br>'+answerWdispl+'</td>';
+            return '<td class="'+className+' text-break">'+titleDate+'<br>[内容]<br>'+answerWdispl+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }
