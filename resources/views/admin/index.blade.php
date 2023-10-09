@@ -3,6 +3,9 @@
     'button_operation_manual' => true
     ])
 
+@push('styles')
+    <link href="{{ asset('assets/admin/css/index.css') }}" rel="stylesheet" />
+@endpush
 @section('content')
     <div class="bread-crumb">
         <ol class="breadcrumb">
@@ -16,28 +19,31 @@
                         <div class="w-100 group-control">
                             <label for="email" class="w-25">構成員ID</label>
                             <div class="w-75">
-                                <input class="count-length" type="text" name="aaa"
+                                <input class="count-length" type="text" name="login_id"
                                        placeholder=""
-                                       value="{{$answerData->answer ?? ''}}"/>
+                                       value="{{request('login_id')}}"/>
                             </div>
                         </div>
                         <div class="w-100 group-control">
-                            <label for="email" class="w-25">構成員ID</label>
+                            <label for="email" class="w-25">氏名</label>
                             <div class="w-75">
-                                <input class="count-length" type="text" name="aaa"
+                                <input class="count-length" type="text" name="name"
                                        placeholder=""
-                                       value="{{$answerData->answer ?? ''}}"/>
+                                       value="{{request('name')}}"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="w-50 group-control">
-                            <label for="email" class="w-25">構成員ID</label>
-                            <div class="w-75">
-                                <input class="count-length" type="text" name="aaa"
-                                       placeholder=""
-                                       value="{{$answerData->answer ?? ''}}"/>
-                            </div>
+                            <label for="email" class="w-25">会員種別</label>
+{{--                            <div class="w-75">--}}
+                                <select class="w-75" name="membership_type" id="membership_type">
+                                    <option value=""></option>
+                                    @foreach(config('constants.membershipType') as $key => $value)
+                                        <option value="{{$value}}" {{request('membership_type')==$value ? 'selected' : ''}}>{{$value}}</option>
+                                    @endforeach
+                                </select>
+{{--                            </div>--}}
                         </div>
                     </div>
 
@@ -51,14 +57,30 @@
     </div>
     <div class="container">
         <div class="row">
-{{--            @if($guidanceData)--}}
-                ahihihihihii
-{{--                @if($guidanceData->sentence_class)--}}
-{{--                    {!! $guidanceData->guidance !!}--}}
-{{--                @else--}}
-{{--                    {{$guidanceData->guidance}}--}}
-{{--                @endif--}}
-{{--            @endif--}}
+            <table class="">
+                <tr>
+                    <th>No</th>
+                    <th>構成員ID</th>
+                    <th>氏名</th>
+                    <th>会員種別</th>
+                    <th>メールアドレス</th>
+                </tr>
+                @php $i=0; @endphp
+                @foreach($memberData as $member)
+                    @php
+                        $i++;
+                        $page = request('page',1);
+                    @endphp
+                    <tr>
+                        <td>{{($page-1)*15 + $i}}</td>
+                        <td>{{$member->login_id}}</td>
+                        <td>{{$member->name1}} {{$member->name2}}</td>
+                        <td>{{$member->telephone_number}}</td>
+                        <td>{{$member->publicationed_at}}</td>
+                    </tr>
+                @endforeach
+            </table>
+            {{ $memberData->appends(request()->query())->links() }}
         </div>
     </div>
 @endsection

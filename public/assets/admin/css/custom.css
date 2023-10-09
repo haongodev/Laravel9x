@@ -55,6 +55,12 @@
     border:1px solid #5c5c5c;
 }
 
+.form-search .row select,input{
+    padding: 6px;
+    font-size: 19px;
+    border:1px solid #5c5c5c;
+}
+
 .form-search .action{
     display: flex;
     justify-content: center;
