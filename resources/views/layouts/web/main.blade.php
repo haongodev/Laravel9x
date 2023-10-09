@@ -14,12 +14,9 @@
     <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta class="base_url" value="{{url('/')}}" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.4.0/socket.io.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.0/echo.common.min.js"></script>
-    
+    <meta class="room_id" value="{{getSakuraSetRoom()}}" />
 </head>
 
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">
@@ -34,9 +31,6 @@
 
     <div class="main-content">
         @yield('content')
-    </div>
-    <div id="app">
-        <button @click="sendMessage" class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
     </div>
 </div>
 
@@ -62,35 +56,6 @@
             console.log(xhr.responseText);
         }
     });
-</script>
-<script>
-    new Vue({
-      el: "#app",
-      data() {
-        return {
-          message: "dưqdqdqwdqwdqwdqw",
-          users: [],
-        }
-      },
-      methods: {
-        sendMessage() {
-          axios.post('/mypage/message', { message: this.message })
-          this.message = ""
-        }
-      },
-      mounted() {
-        const echo = new Echo({
-          broadcaster: "socket.io",
-          host: window.location.hostname + ':6001'
-        })
-
-        echo.join('chat').here((users) => {
-          this.users = users
-        }).listen('MessageSent', (event) => {
-          console.log(event);
-        });
-      },
-    })
 </script>
 @stack('sub_js')
 

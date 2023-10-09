@@ -574,4 +574,10 @@ class UsersAddInfo extends Model
     // Functions ...
 
     // Relations ...
+    public function sakuraMember(){
+        return $this->hasOne(SakurasetManage::class,'member_id','login_id');
+    }
+    public function sakuraReviewer(){
+        return $this->hasOne(SakurasetManage::class,'reviewer_id','login_id');
+    }
 }

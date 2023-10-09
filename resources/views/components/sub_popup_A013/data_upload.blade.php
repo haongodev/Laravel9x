@@ -1,6 +1,6 @@
 <tr class="facesheet-id-{{$faceSheetManager->id}}">
     <td class="w-100px" >
-        <div class="share-facesheet manager {{$faceSheetManager->share_flg ? 'share btn-eff-pri' : 'btn-eff-ora'}} btn-hov"
+        <div class="share-facesheet manager {{$faceSheetManager->share_flg ? 'sharing btn-eff-pri' : 'btn-eff-ora'}} btn-hov"
              data-current-share="{{$faceSheetManager->share_flg}}"
              data-id="{{$faceSheetManager->id}}"
              data-display-name="{{$faceSheetManager->display_name}}"
