@@ -357,7 +357,8 @@
                                 size: 15,
                                 weight: 'bold',
                             }
-                        }
+                        },
+                        suggestedMin: 0,
                     }
                 },
                 plugins: {
