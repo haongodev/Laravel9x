@@ -75,7 +75,7 @@
             var url = '{{route('sakuraUpdateShareFaceSheet')}}';
             var is_exist_share = false;
             $('.popup-A013-save-share').find('.manager').each(function (val){
-                if($(this).hasClass('share')){
+                if($(this).hasClass('sharing')){
                     is_exist_share = true
                 }
             });
