@@ -1,12 +1,13 @@
 @if($paginator->hasPages())
     <ul class="pagination pagination-separated justify-content-center justify-content-sm-end mb-sm-0">
+        <li>{{$paginator->lastPage()}}</li>
         @if ($paginator->onFirstPage())
             <li class="page-item disabled">
-                <a href="javascript:void(0)" class="page-link"><</a>
+                <a href="javascript:void(0)" class="page-link">最初</a>
             </li>
         @else
             <li class="page-item">
-                <a href="<?php echo e($paginator->previousPageUrl()); ?>" class="page-link"><</a>
+                <a href="<?php echo e($paginator->previousPageUrl()); ?>" class="page-link">最初</a>
             </li>
         @endif
         @if($paginator->currentPage() > 3)
@@ -39,15 +40,14 @@
 
         @if ($paginator->hasMorePages())
             <li class="page-item">
-                <a href="{{ $paginator->nextPageUrl() }}" class="page-link">></a>
-                {{--                <a href="{{ $paginator->nextPageUrl() }}" class="page-link">{{__('cms::translation.next')}}</a>--}}
+                <a href="{{ $paginator->nextPageUrl() }}" class="page-link">最後</a>
             </li>
         @else
             <li class="page-item disabled">
-                {{--                <a href="javascript:void(0)" class="page-link">{{__('cms::translation.next')}}</a>--}}
-                <a href="javascript:void(0)" class="page-link">></a>
+                <a href="javascript:void(0)" class="page-link">最後</a>
             </li>
         @endif
 
     </ul>
 @endif
+
