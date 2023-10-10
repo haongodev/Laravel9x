@@ -125,7 +125,7 @@
                                         name_folder = 'at';
                                     }
                                     if(refl >= 0){
-                                        link = base_url+'/storage/upload/'+response.data.reflectionsheet[refl].member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+response.data.reflectionsheet[refl].member_id.file_name;
+                                        link = base_url+'/storage/upload/'+response.data.reflectionsheet[refl].member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+response.data.reflectionsheet[refl].file_name;
                                     }
                                     html += '<div class="flex-column reflec_'+i+'">'+
                                                 '<div class="sub-title">'+
@@ -387,9 +387,9 @@
                 success: function(response) {
                     if(response.success){
                         if(nth){
-                            $('.'+kind).find('.reflec_'+nth).find('.confirmation').attr('link', base_url+'/'+response.url);
+                            $('.'+kind).find('.reflec_'+nth).find('.confirmation').removeClass('disabled').attr('link', base_url+'/'+response.url);
                         }else{
-                            $('.'+kind).find('.confirmation').attr('link', base_url+'/'+response.url);
+                            $('.'+kind).find('.confirmation').removeClass('disabled').attr('link', base_url+'/'+response.url);
                         }
                     }
                 },

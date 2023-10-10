@@ -257,7 +257,6 @@ class SakuraSetController extends Controller
         $faceSheetManagerData = $this->facesheetManageService->getByUserId($this->loginId());
         $reflectionSheetManagerData = $this->reflectionsheetManageService->getByUserId($this->loginId());
         $initiativetableManagerData = $this->initiativetableManageService->getByUserId($this->loginId());
-
         return view('myPage/sakuraSet/yourTry',[
             'faceSheetManagerData' => $faceSheetManagerData,
             'reflectionSheetManagerData' => $reflectionSheetManagerData,
