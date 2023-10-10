@@ -89,3 +89,19 @@ if (!function_exists('rangeYear')) {
 
     }
 }
+
+if (!function_exists('getSakuraSetRoom')) {
+    function getSakuraSetRoom()
+    {
+        $roomId = null;
+        $member = auth()->user()->user_add_info->sakuraMember()->first();
+        $reviewer = auth()->user()->user_add_info->sakuraReviewer()->first();
+        if($member !== null){
+            $roomId = $member->reviewer_id.'_'.$member->member_id;
+        }
+        if($reviewer !== null){
+            $roomId = $reviewer->reviewer_id.'_'.$reviewer->member_id;
+        }
+        return $roomId;
+    }
+}

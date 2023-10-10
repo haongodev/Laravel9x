@@ -262,7 +262,7 @@
         const answerGroup = [
             '健康状態の自己管理',
             '仕事と家庭のバランス',
-            '基本 姿勢 やマナー',
+            '基本姿勢やマナー',
             '組織人としての役割遂行',
             '専門的支援関係形成力（個人、小集団、地域等）',
             'アセスメント力',
@@ -509,7 +509,7 @@
 
                 answerWdispl = items[htmlItem].answer
 
-            return '<td class="'+className+'">'+titleDate+'<br>[内容]<br>'+answerWdispl+'</td>';
+            return '<td class="'+className+' text-break">'+titleDate+'<br>[内容]<br>'+answerWdispl+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }

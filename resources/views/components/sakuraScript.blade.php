@@ -112,27 +112,29 @@
                             }
                             if(key === 'reflectionsheet'){
                                 var html = '';
-                                response.data.reflectionsheet.forEach((element,i) => {
+                                [0,1,2].forEach((elm,i) => {
+                                    var refl = response.data.reflectionsheet.findIndex((item) => item.class === elm);
+                                    var link = '';
                                     var name = '6か月目';
                                     var name_folder = '6m';
-                                    if(element.class == 1){
+                                    if(elm == 1){
                                         name = '12か月目';
                                         name_folder = '12m'
-                                    }else if(element.class == 2){
+                                    }else if(elm == 2){
                                         name = '随時';
                                         name_folder = 'at';
                                     }
-                                    if(element !== null){
-                                        link = '/storage/upload/'+element.member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+element.file_name;
+                                    if(refl >= 0){
+                                        link = base_url+'/storage/upload/'+response.data.reflectionsheet[refl].member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+response.data.reflectionsheet[refl].member_id.file_name;
                                     }
                                     html += '<div class="flex-column reflec_'+i+'">'+
                                                 '<div class="sub-title">'+
                                                     '<button>'+name+'</button>'+
                                                     '</div>'+
                                                 '<div class="flex-between">'+
-                                                    '<button class="confirmation '+(link === '' ? 'disabled' : '')+'" link="'+base_url+link+'">確認</button>'+
+                                                    '<button class="confirmation '+(link === '' ? 'disabled' : '')+'" link="'+link+'">確認</button>'+
                                                     '<button class="swp">実施者と共有</button>'+
-                                                    '<input class="hidden reflectionsheet-upload" type="file" at="'+name_folder+'" nth="'+i+'" member_id="'+element.member_id+'">'+
+                                                    '<input class="hidden reflectionsheet-upload" type="file" at="'+name_folder+'" nth="'+i+'" member_id="'+member_id+'">'+
                                                 '</div>'+
                                             '</div>';
                                 });
