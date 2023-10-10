@@ -58,12 +58,12 @@
     <div class="container">
         <div class="row">
             <table class="">
-                <tr>
-                    <th class="text-center">No</th>
-                    <th class="text-center">構成員ID</th>
-                    <th class="text-center">氏名</th>
-                    <th class="text-center">会員種別</th>
-                    <th class="text-center">メールアドレス</th>
+                <tr class="text-center">
+                    <th>No</th>
+                    <th>構成員ID</th>
+                    <th>氏名</th>
+                    <th>会員種別</th>
+                    <th>メールアドレス</th>
                 </tr>
                 @php $i=0; @endphp
                 @foreach($memberData as $member)
@@ -71,12 +71,12 @@
                         $i++;
                         $page = request('page',1);
                     @endphp
-                    <tr>
+                    <tr class="text-center">
                         <td>{{($page-1)*15 + $i}}</td>
                         <td>{{$member->login_id}}</td>
                         <td>{{$member->name1}} {{$member->name2}}</td>
-                        <td>{{$member->telephone_number}}</td>
-                        <td>{{$member->publicationed_at ? date('Y年 m月 d日',strtotime($member->publicationed_at)) : ''}}</td>
+                        <td>{{$member->membership_type}}</td>
+                        <td>{{$member->email}}</td>
                     </tr>
                 @endforeach
             </table>
