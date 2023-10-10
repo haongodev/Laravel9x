@@ -1,6 +1,6 @@
 @if($paginator->hasPages())
     <ul class="pagination pagination-separated justify-content-center justify-content-sm-end mb-sm-0">
-        <li>{{$paginator->lastPage()}}</li>
+        <li class="page-item me-2"><a href="javascript:void(0)" class="page-link">{{$paginator->lastPage()}}</a></li>
         @if ($paginator->onFirstPage())
             <li class="page-item disabled">
                 <a href="javascript:void(0)" class="page-link">最初</a>

@@ -12,7 +12,7 @@
     </div>
     <div class="bread-crumb">
         <div class="container">
-            <form class="row" action="" method="GET" id="formSearch">
+            <form class="row m-3" action="" method="GET" id="formSearch">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="row">
@@ -31,23 +31,25 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-6 mt-3">
-                    <div class="row">
-                        <label for="membership_type" class="col-sm-3 col-md-3 col-form-label">会員種別</label>
-                        <div class="col-sm-9 col-md-9">
-                            <select name="membership_type" id="membership_type" class="form-control">
-                                <option value=""></option>
-                                @foreach(config('constants.membershipType') as $key => $value)
-                                    <option value="{{$value}}" {{request('membership_type')==$value ? 'selected' : ''}}>{{$value}}</option>
-                                @endforeach
-                            </select>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 mt-3">
+                        <div class="row">
+                            <label for="membership_type" class="col-sm-3 col-md-3 col-form-label">会員種別</label>
+                            <div class="col-sm-9 col-md-9">
+                                <select name="membership_type" id="membership_type" class="form-select">
+                                    <option value=""></option>
+                                    @foreach(config('constants.membershipType') as $key => $value)
+                                        <option value="{{$value}}" {{request('membership_type')==$value ? 'selected' : ''}}>{{$value}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-sm-12 col-md-12 mt-3">
-                    <div class="row col-md-3">
-                        <button type="submit" class="decline-btn">検索</button>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 offset-sm-6 col-md-3 offset-md-9 mt-3">
+                        <button type="submit" class="btn btn-success w-100">検索</button>
                     </div>
                 </div>
             </form>
@@ -57,11 +59,11 @@
         <div class="row">
             <table class="">
                 <tr>
-                    <th>No</th>
-                    <th>構成員ID</th>
-                    <th>氏名</th>
-                    <th>会員種別</th>
-                    <th>メールアドレス</th>
+                    <th class="text-center">No</th>
+                    <th class="text-center">構成員ID</th>
+                    <th class="text-center">氏名</th>
+                    <th class="text-center">会員種別</th>
+                    <th class="text-center">メールアドレス</th>
                 </tr>
                 @php $i=0; @endphp
                 @foreach($memberData as $member)
@@ -78,14 +80,13 @@
                     </tr>
                 @endforeach
             </table>
-            <div class="table-footer row">
-                <div class="col-sm-12 col-md-4"></div>
-                <div class="col-sm-12 col-md-4">
+            <div class="table-footer row mt-3">
+                <div class="col-sm-12 col-md-6 offset-md-3">
                     <div class="pagination">
                         {{ $memberData->appends(request()->query())->links('admin.layouts.paging') }}
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 col-md-3">
                     <div class="button">
                         <button>CSVアップロード</button>
                     </div>

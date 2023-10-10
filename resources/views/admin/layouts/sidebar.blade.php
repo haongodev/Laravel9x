@@ -93,14 +93,4 @@
         </div>
     </div>
 </div>
-<style>
-    .wrapper-container .left-side .side-bot .container .row ul li.title{
-        background: #B9E0A5;
-        padding: 10px;
-    }
-    .wrapper-container .left-side .side-bot .container .row ul li.action{
-        border: 1px solid #cbd5e1;
-        border-radius: 10px ;
-        margin-top: 5px;
-    }
-</style>
+
