@@ -7,53 +7,51 @@
     <link href="{{ asset('assets/admin/css/index.css') }}" rel="stylesheet" />
 @endpush
 @section('content')
+    <div class="breadcrumb-title">
+        <button class="btn-title btn-success">構成員一覧</button>
+    </div>
     <div class="bread-crumb">
-        <ol class="breadcrumb">
-            <div class="breadcrumb-title">
-                <button class="btn-title">構成員一覧</button>
-            </div>
-            <div class="form-search">
-                <form action="" method="GET" id="formSearch">
-
-                    <div class="row">
-                        <div class="w-100 group-control">
-                            <label for="email" class="w-25">構成員ID</label>
-                            <div class="w-75">
-                                <input class="count-length" type="text" name="login_id"
-                                       placeholder=""
-                                       value="{{request('login_id')}}"/>
-                            </div>
-                        </div>
-                        <div class="w-100 group-control">
-                            <label for="email" class="w-25">氏名</label>
-                            <div class="w-75">
-                                <input class="count-length" type="text" name="name"
-                                       placeholder=""
-                                       value="{{request('name')}}"/>
+        <div class="container">
+            <form class="row" action="" method="GET" id="formSearch">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="row">
+                            <label for="login_id" class="col-sm-3 col-md-3 col-form-label">構成員ID</label>
+                            <div class="col-sm-9 col-md-9">
+                                <input type="text" class="form-control" id="login_id" name="login_id" value="{{request('login_id')}}">
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="w-50 group-control">
-                            <label for="email" class="w-25">会員種別</label>
-{{--                            <div class="w-75">--}}
-                                <select class="w-75" name="membership_type" id="membership_type">
-                                    <option value=""></option>
-                                    @foreach(config('constants.membershipType') as $key => $value)
-                                        <option value="{{$value}}" {{request('membership_type')==$value ? 'selected' : ''}}>{{$value}}</option>
-                                    @endforeach
-                                </select>
-{{--                            </div>--}}
+                    <div class="col-sm-12 col-md-6">
+                        <div class="row">
+                            <label for="name" class="col-sm-3 col-md-3 col-form-label">氏名</label>
+                            <div class="col-sm-9 col-md-9">
+                                <input type="text" class="form-control" name="name" id="name" value="{{request('name')}}">
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-12 col-md-6 mt-3">
+                    <div class="row">
+                        <label for="membership_type" class="col-sm-3 col-md-3 col-form-label">会員種別</label>
+                        <div class="col-sm-9 col-md-9">
+                            <select name="membership_type" id="membership_type" class="form-control">
+                                <option value=""></option>
+                                @foreach(config('constants.membershipType') as $key => $value)
+                                    <option value="{{$value}}" {{request('membership_type')==$value ? 'selected' : ''}}>{{$value}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-                    <div class="action button-search">
+                <div class="col-sm-12 col-md-12 mt-3">
+                    <div class="row col-md-3">
                         <button type="submit" class="decline-btn">検索</button>
                     </div>
-                </form>
-            </div>
-
-        </ol>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="container">
         <div class="row">
@@ -76,11 +74,24 @@
                         <td>{{$member->login_id}}</td>
                         <td>{{$member->name1}} {{$member->name2}}</td>
                         <td>{{$member->telephone_number}}</td>
-                        <td>{{$member->publicationed_at}}</td>
+                        <td>{{$member->publicationed_at ? date('Y年 m月 d日',strtotime($member->publicationed_at)) : ''}}</td>
                     </tr>
                 @endforeach
             </table>
-            {{ $memberData->appends(request()->query())->links() }}
+            <div class="table-footer row">
+                <div class="col-sm-12 col-md-4"></div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="pagination">
+                        {{ $memberData->appends(request()->query())->links('admin.layouts.paging') }}
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="button">
+                        <button>CSVアップロード</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 @endsection

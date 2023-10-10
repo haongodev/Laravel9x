@@ -129,12 +129,12 @@ button.disabled{
     padding: 0 20px;
     font-size: 17px;
 }
-.wrapper-container .left-side .side-top .container .row{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap:15px;
-}
+/*.wrapper-container .left-side .side-top .container .row{*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    flex-direction: column;*/
+/*    gap:15px;*/
+/*}*/
 .wrapper-container .left-side .side-top .container .row .title-sign{
     display: flex;
     flex-direction: column;

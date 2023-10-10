@@ -5,7 +5,7 @@
                 <ul>
                     <li class="action">
                         <a href="javascript:void(0)">
-                            <span>（ログインID）</span>
+                            <span>{{auth('admin')->user()->user_add_info->login_id ?? ''}}</span>
                         </a>
                     </li>
                 </ul>
@@ -14,7 +14,7 @@
                         <span>構成員管理</span>
                     </li>
                     <li class="action">
-                        <a href="javascript:void(0)">
+                        <a href="{{route('admin.index')}}">
                             <span>構成員一覧</span>
                         </a>
                     </li>

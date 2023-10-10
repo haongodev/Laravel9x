@@ -11,7 +11,7 @@
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-{{--    <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>--}}
+    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
     <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/admin/css/custom.css') }}" rel="stylesheet" />
 {{--    <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />--}}

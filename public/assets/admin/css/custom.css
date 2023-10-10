@@ -95,14 +95,15 @@
 
 
 /*breadcrumb*/
-.wrapper-container .main-content .bread-crumb .breadcrumb .breadcrumb-title{
+.main-content  .breadcrumb-title{
   padding-top: 15px;
 }
 
-.wrapper-container .main-content .bread-crumb .breadcrumb .btn-title{
+.main-content  .btn-title{
     background: #B9E0A5;
     border: 1px solid;
-    padding: 2px 25px 2px 25px;
+    padding: 2px 40px 2px 40px;
+    margin-bottom: 20px;
 }
 
 /*end breadcrumb*/
