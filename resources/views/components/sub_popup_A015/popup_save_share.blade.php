@@ -53,7 +53,7 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
-                        $('.a015-initive-list').append(response.html);
+                        $('.popup-A015-save-share .table-manager').append(response.html);
                     }
                 },
                 error: function (xhr) {

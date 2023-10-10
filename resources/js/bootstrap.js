@@ -29,6 +29,7 @@ window.Echo = new Echo({
 var roomId = $('.room_id').attr('value');
 if(roomId){
     window.Echo.private('sakura.'+roomId).listen('SakuraShare', (event) => {
+        console.log(event);
         var base_url = $('.base_url').attr('value');
         if(event.sakura.hasOwnProperty('from') && event.sakura.from === 'teach'){
             if(event.sakura.class !== null){

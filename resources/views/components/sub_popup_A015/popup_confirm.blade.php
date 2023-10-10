@@ -85,7 +85,6 @@
                                 $('.initiativetable-id-'+id).find('.share-initiativetable').addClass('sharing').removeClass('none-share');
                                 $('.initiativetable-id-'+id).find('.share-initiativetable').addClass('btn-eff-pri').removeClass('btn-eff-ora');
                                 $('.initiativetable-id-'+id).find('img').remove('');
-                                $('.initiativetable-id-'+id).append('<div style="width:50px"></div>');
                             }else{
                                 $('.initiativetable-id-'+id).find('.share-initiativetable').removeClass('sharing').addClass('none-share');
                                 $('.initiativetable-id-'+id).find('.share-initiativetable').removeClass('btn-eff-pri').addClass('btn-eff-ora');
