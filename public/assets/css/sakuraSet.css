@@ -259,28 +259,6 @@
 .popup-wrapper .layout-popup .popup-content .header-content button.btn-list {
     margin: 15px 0px 10px 0px;
 }
-.popup-A015-save-share .a015-initive-list{
-    width: 80%;
-    display: flex;
-    flex-flow: column;
-}
-.popup-A015-save-share .a015-initive-list div{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-}
-.popup-A015-save-share .a015-initive-list div button:nth-child(2){
-    width: 60%;
-}
-.popup-A015-save-share .a015-initive-list div button{
-    min-width: unset !important;
-}
-.popup-A015-save-share .a015-initive-list div img{
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-}
 .registerReviewerForm {
     border: 1px solid #000000;
     border-radius: 10px;

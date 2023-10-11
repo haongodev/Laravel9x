@@ -1,4 +1,4 @@
-<tr class="initiativetable-id-{{$initiativetableManager->id}}">
+<tr class="a015-initive-list initiativetable-id-{{$initiativetableManager->id}}">
     <td class="w-100px" >
         <div class="share-initiativetable manager title-popup btn-list {{$initiativetableManager->share_flg ? 'sharing btn-eff-pri' : 'none-share btn-eff-ora'}} btn-hov"
              data-current-share="{{$initiativetableManager->share_flg}}"

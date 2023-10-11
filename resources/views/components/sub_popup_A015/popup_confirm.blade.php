@@ -75,23 +75,20 @@
                         if (response.success) {
                             // Update giao dien
                             if(share_flg == 1){
-                                $('.a015-initive-list').children('div').each(function(){
+                                $('.a015-initive-list').each(function(e,i){
                                     $(this).find('.sharing').attr('data-current-share',0).removeClass('sharing').addClass('none-share').removeClass('btn-eff-pri').addClass('btn-eff-ora');
                                     if(!$(this).find('img').length){
-                                        $(this).find('div').remove();
-                                        $(this).append('<img class="remove" src="/assets/images/icon/delete.png" alt="close icon">');
+                                        $(this).find('.remove').html('<img class="remove" src="/assets/images/icon/delete.png" alt="close icon">');
                                     }
                                 })
 
                                 $('.initiativetable-id-'+id).find('.share-initiativetable').addClass('sharing').removeClass('none-share');
                                 $('.initiativetable-id-'+id).find('.share-initiativetable').addClass('btn-eff-pri').removeClass('btn-eff-ora');
                                 $('.initiativetable-id-'+id).find('img').remove('');
-                                $('.initiativetable-id-'+id).append('<div style="width:50px"></div>');
                             }else{
                                 $('.initiativetable-id-'+id).find('.share-initiativetable').removeClass('sharing').addClass('none-share');
                                 $('.initiativetable-id-'+id).find('.share-initiativetable').removeClass('btn-eff-pri').addClass('btn-eff-ora');
-                                $('.initiativetable-id-'+id).find('div').remove();
-                                $('.initiativetable-id-'+id).append('<img class="remove" src="/assets/images/icon/delete.png" alt="close icon">');
+                                $('.initiativetable-id-'+id).find('.remove').html('<img class="remove" src="/assets/images/icon/delete.png" alt="close icon">');
                             }
                             $('.initiativetable-id-'+id).find('.share-initiativetable').attr('data-current-share',share_flg);
                             $('.popup-A015-confirm').addClass('hidden');

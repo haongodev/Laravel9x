@@ -257,7 +257,6 @@ class SakuraSetController extends Controller
         $faceSheetManagerData = $this->facesheetManageService->getByUserId($this->loginId());
         $reflectionSheetManagerData = $this->reflectionsheetManageService->getByUserId($this->loginId());
         $initiativetableManagerData = $this->initiativetableManageService->getByUserId($this->loginId());
-
         return view('myPage/sakuraSet/yourTry',[
             'faceSheetManagerData' => $faceSheetManagerData,
             'reflectionSheetManagerData' => $reflectionSheetManagerData,
@@ -349,7 +348,7 @@ class SakuraSetController extends Controller
                 $file->move($location,$newFilename);
                 // send email func
                 $reviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$request->member_id]],['reviewer_member','made_member']);
-                $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => $subjectEmail,'sakuraData' => $reviewer];
+                $emailConfig = ['to' => $reviewer->made_member->email,'subject' => $subjectEmail,'sakuraData' => $reviewer];
                 $view = 'email.sakuraSet.backup_'.$request->backup_type;
                 if(!view()->exists($view)){
                     $msg = 'Template Email do not exist';
