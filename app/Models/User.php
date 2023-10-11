@@ -33,6 +33,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public $timestamps = ["registration_date"];
+    public const UPDATED_AT = null;
+
     /**
      * The attributes that should be cast.
      *
