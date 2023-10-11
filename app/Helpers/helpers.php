@@ -50,6 +50,9 @@ if (!function_exists('scheduledDate')) {
     {
         $memberId = auth()->user()->user_add_info->login_id;
         $scheduled_date = SakurasetManage::where('member_id', $memberId)->pluck('scheduled_date')->first();
+        if(!$scheduled_date){
+            return false;
+        }
         return Carbon::parse($scheduled_date)->format('Y年 m月 d日');
     }
 
