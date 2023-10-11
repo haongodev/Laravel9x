@@ -17,7 +17,7 @@
         this_select.trigger("chosen:updated");
 
     }
-    toastr.options.timeOut = 1000;
+    toastr.options.timeOut = 6000;
     toastr.info(title)
 </script>
 
