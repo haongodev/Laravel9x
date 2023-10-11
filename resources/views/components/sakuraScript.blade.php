@@ -98,20 +98,10 @@
                     $('.become-manager-screen .title-manager .name-member').html(nameMember);
                     if(response.success){
                         for (const key in response.data) {
-                            $('.'+key).removeClass('hidden');
                             var link = '';
-                            if(response.data[key] !== null && response.data[key].hasOwnProperty('member_id')){
-                                link = '/storage/upload/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
-                            }
-                            if(link !== ''){
-                                $('.'+key+' .confirmation').attr('link',base_url+link);
-                                $('.'+key+' .'+key+'-upload').attr('member_id',response.data[key].member_id);
-                            }else{
-                                $('.'+key+' .confirmation').addClass('disabled');
-                                $('.'+key+' .'+key+'-upload').attr('member_id',member_id);
-                            }
                             if(key === 'reflectionsheet'){
                                 var html = '';
+                                $('.'+key).removeClass('hidden');
                                 [0,1,2].forEach((elm,i) => {
                                     var refl = response.data.reflectionsheet.findIndex((item) => item.class === elm);
                                     var link = '';
@@ -127,7 +117,7 @@
                                     if(refl >= 0){
                                         link = base_url+'/storage/upload/'+response.data.reflectionsheet[refl].member_id+'/'+key.toLowerCase()+'/'+name_folder+'/'+response.data.reflectionsheet[refl].file_name;
                                     }
-                                    html += '<div class="flex-column reflec_'+i+'">'+
+                                    html += '<div class="flex-column reflec_'+i+' '+(link === '' ? ' hidden' : '')+'">'+
                                                 '<div class="sub-title">'+
                                                     '<button>'+name+'</button>'+
                                                     '</div>'+
@@ -139,6 +129,19 @@
                                             '</div>';
                                 });
                                 $('.'+key).html(html);
+                            }else{
+                                if(response.data[key] !== null && response.data[key].hasOwnProperty('member_id')){
+                                    link = '/storage/upload/'+response.data[key].member_id+'/'+key.toLowerCase()+'/'+response.data[key].file_name;
+                                }
+                                if(link !== ''){
+                                    $('.'+key).removeClass('hidden');
+                                    $('.'+key+' .confirmation').attr('link',base_url+link);
+                                    $('.'+key+' .'+key+'-upload').attr('member_id',response.data[key].member_id);
+                                }else{
+                                    $('.'+key).addClass('hidden');
+                                    $('.'+key+' .confirmation').addClass('disabled');
+                                    $('.'+key+' .'+key+'-upload').attr('member_id',member_id);
+                                }
                             }
                         }
                     }
