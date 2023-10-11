@@ -193,6 +193,10 @@ button.disabled{
     font-size: 21px;
     background:#3399FF;
 }
+.wrapper-container .left-side .side-top .container .row .block-scheduled{
+    width: 100%;
+    text-align: center;
+}
 .wrapper-container .left-side .side-top .container .row .scheduled-btn{
     border: 0;
     color: #000;
