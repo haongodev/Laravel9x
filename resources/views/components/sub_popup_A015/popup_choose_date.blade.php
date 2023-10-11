@@ -111,8 +111,15 @@
                 success: function (response) {
                     if (response.success) {
                         $('.popup-A015-choose_date').addClass('hidden');
-                        $('.current-time').html(scheduledDate);
-                        console.log(response);
+                        if($('.block-scheduled').length > 0){
+                            $('.current-time').html(scheduledDate);
+                        }else{
+                            var html = '<div class="block-scheduled">'+
+                                            '<button class="scheduled-btn">次回のさくらセット<br>取り組み予定</button>'+
+                                            '<p class="current-time">'+scheduledDate+'</p>'+
+                                        '</div>';
+                            $('.side-top .container .row').append(html);
+                        }
                     }else{
                         alert(response.message);
                     }
