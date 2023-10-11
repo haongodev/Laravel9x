@@ -23,4 +23,29 @@ class IndexController extends Controller
         return view('admin.index', ['memberData' => $memberData]);
     }
 
+    public function changePassWord(Request $request)
+    {
+        $response = ['success'=>true, 'message' => ''];
+        $password = $request->get('password');
+        $passwordConfirm = $request->get('password_confirm');
+
+        //Validate
+        if($password != $passwordConfirm){
+            $response['message'] = 'パスワードとパスワード（確認用）が異なっています。';
+        }else if($password == '' && $passwordConfirm == ''){
+            $response['message'] = 'パスワードを入力して下さい';
+
+        }
+        if($response['message']){
+            return response()->json($response);
+        }
+
+        $userId = auth()->user()->id;
+        $data = $this->memberService->updatePassWord($userId,$password);
+        if(!$data){
+            $response['success'] = false;
+        }
+        return response()->json($response);
+    }
+
 }

@@ -26,9 +26,7 @@ body{
 .w-100{
     width: 100%;
 }
-.hidden{
-    display: none!important;
-}
+
 .label-bor{
     border-radius: 15px;
 }

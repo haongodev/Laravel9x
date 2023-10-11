@@ -33,5 +33,9 @@ class UserRepository
             ->get()->first();
     }
 
+    public function updateById($id = '', $data = [])
+    {
+        return $this->model->where('id', $id)->update($data);
+    }
 
 }

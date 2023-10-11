@@ -108,3 +108,27 @@
 }
 
 /*end breadcrumb*/
+
+.btn-white{
+    color: #000;
+    background-color: #FFFFFF;
+    border-color: #060606;
+}
+
+#toast-container{
+    width: 100% !important;
+    top: 0!important;
+    left: 0!important;
+    height: 100%!important;
+    background: #0000009c!important;
+    display: flex!important;
+    justify-content: center!important;
+    align-items: center!important;
+}
+.toast-top-right {
+    top: calc(50% - 60px) !important;
+    right: calc(50% - 150px)!important;
+}
+.toast-info{
+    background-color: #66B2FF !important;
+}

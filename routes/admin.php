@@ -13,4 +13,5 @@ Route::any('/logout', [AuthenticatedSessionController::class, 'logout'])
 
 Route::group(['middleware'=>'auth:admin'],function() {
     Route::get('/',[IndexController::class, 'index'])->name('admin.index');
+    Route::post('/',[IndexController::class, 'changePassWord'])->name('admin.change.password');
 });

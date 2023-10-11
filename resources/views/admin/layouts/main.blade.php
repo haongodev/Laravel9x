@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
+    <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css" rel="stylesheet" />
     <link href="{{ asset('assets/admin/css/main.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/admin/css/custom.css') }}" rel="stylesheet" />
 {{--    <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />--}}
@@ -20,10 +21,6 @@
 
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">
 @stack('styles')
-@include('components.popup')
-@if (!empty(session('show_popup_confirm')))
-    @include('components.popup_confirm')
-@endif
 @include('admin.layouts.header')
 <div class="wrapper-container">
     @include('admin.layouts.sidebar')
@@ -39,6 +36,7 @@
 <script src="{{ asset('assets/js-lib/jquery-ui.js') }}"></script>
 <script src="{{ asset('assets/js-lib/jquery-ui-jp.js') }}"></script>
 <script src="{{ asset('assets/js-lib/jquery-ui-vi.js') }}"></script>
+<script src="{{ asset('assets/js-lib/bootstrap.bundle.min.js')}}"></script>
 @stack('js')
 <script>
     var url = '{{ route("sakuraCheckMark") }}';
