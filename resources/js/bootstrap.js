@@ -53,15 +53,19 @@ if(roomId){
                 if(parseInt(event.sakura.share_flg ) > 0){
                     // change current url
                     if(event.sakura.type == 'reflectionsheet'){
+                        $('.'+event.sakura.type+' .reflec_'+event.sakura.class).removeClass('hidden');
                         $('.'+event.sakura.type+' .reflec_'+event.sakura.class+' .confirmation').removeClass('disabled').attr('link',fullPathpath);
                     }else{
                         $('.'+event.sakura.type+' .confirmation').removeClass('disabled').attr('link',fullPathpath);
+                        $('.'+event.sakura.type).removeClass('hidden');
                     }
                 }else{
                     // disable url
                     if(event.sakura.type == 'reflectionsheet'){
+                        $('.'+event.sakura.type+' .reflec_'+event.sakura.class).addClass('hidden');
                         $('.'+event.sakura.type+' .reflec_'+event.sakura.class+' .confirmation').addClass('disabled').removeAttr('link');
                     }else{
+                        $('.'+event.sakura.type).addClass('hidden');
                         $('.'+event.sakura.type+' .confirmation').addClass('disabled').removeAttr('link');
                     }
                 }

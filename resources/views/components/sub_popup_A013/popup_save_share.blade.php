@@ -58,7 +58,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if(response.success){
-                        $('.table-manager').append(response.html)
+                        $('.popup-A013-save-share .table-manager').append(response.html)
                         $('#a013_upload').val('');
                     }
                 },
