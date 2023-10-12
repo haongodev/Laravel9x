@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\Authenticate;
 Route::get('/send-email', [SakuraSetController::class, 'testMail']);
 
 Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
+
     Route::get('/',[MyPageController::class, 'index'])->name('mypage');
 
     Route::group(['prefix' => 'cls'],function() {
@@ -81,4 +82,5 @@ Route::get('/dashboard', function () {
 
 Route::any('api/login', [Authenticate::class, 'login'])->name('api_login');
 require __DIR__.'/auth.php';
+//require __DIR__.'/admin.php';
 

@@ -109,7 +109,7 @@
             var reflection_class = $(this).closest('.table-manager').attr('data-class');
             var is_exist_share = false;
             $('.table-manager-class-' + reflection_class).find('.manager').each(function () {
-                if ($(this).hasClass('share')) {
+                if ($(this).hasClass('sharing')) {
                     is_exist_share = true
                 }
             });

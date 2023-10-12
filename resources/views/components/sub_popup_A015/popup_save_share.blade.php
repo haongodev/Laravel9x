@@ -10,11 +10,11 @@
             <div class="header-content not-remove">
                 <button class="title-popup btn-eff-pri btn-hov">保存・共有する <img src="{{ asset('assets') }}/images/icon/upload.png" class="upload" data-popup="A015" alt=""></button>
                 <input type="file" class="hidden" name="a013_upload" id="a015_upload">
-                <div class="a015-initive-list">
+                <table class="table-manager w-500px">
                     @foreach($initiativetableManagerData as $initiativetableData)
                         @include('components.sub_popup_A015.data_upload',['initiativetableManager' => $initiativetableData])
                     @endforeach
-                </div>
+                </table>
             </div>
         </div>
         <div class="popup-footer">
@@ -53,7 +53,7 @@
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
-                        $('.a015-initive-list').append(response.html);
+                        $('.popup-A015-save-share .table-manager').append(response.html);
                     }
                 },
                 error: function (xhr) {

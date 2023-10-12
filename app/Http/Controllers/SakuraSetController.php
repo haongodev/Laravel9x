@@ -12,6 +12,7 @@ use App\Services\InitiativetableManageService;
 use App\Repositories\FacesheetManageRepository;
 use App\Repositories\InitiativetableManageRepository;
 use App\Repositories\ReflectionsheetManageRepository;
+use App\Events\SakuraShare;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -256,7 +257,6 @@ class SakuraSetController extends Controller
         $faceSheetManagerData = $this->facesheetManageService->getByUserId($this->loginId());
         $reflectionSheetManagerData = $this->reflectionsheetManageService->getByUserId($this->loginId());
         $initiativetableManagerData = $this->initiativetableManageService->getByUserId($this->loginId());
-
         return view('myPage/sakuraSet/yourTry',[
             'faceSheetManagerData' => $faceSheetManagerData,
             'reflectionSheetManagerData' => $reflectionSheetManagerData,
@@ -290,6 +290,8 @@ class SakuraSetController extends Controller
             $instance = null;
             $repo = null;
             $class = null;
+            $popupName = '';
+            $subjectEmail = '';
             if($request->file('file')) {
                 $file = $request->file('file');
                 $location = 'storage/upload/'.$request->member_id.'/'.$request->backup_type;
@@ -305,16 +307,22 @@ class SakuraSetController extends Controller
                 }
                 switch ($request->backup_type) {
                     case 'facesheet':
+                        $popupName = 'popup-A013-save-share';
                         $repo = $this->facesheetManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
+                        $subjectEmail = 'フェイスシート を更新しました（自動送信メール）';
                         break;
                     case 'initiative':
+                        $popupName = 'popup-A015-save-share';
                         $repo = $this->initiativetableManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
+                        $subjectEmail = 'さくらセット取り組み表 を更新しました（自動送信メール）';
                         break;
                     default:
+                        $popupName = 'popup-A014-save-share';
                         $repo = $this->reflectionsheetManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,['member_id' => $request->member_id, 'class' => $class],'only',['id','file_name','display_name','member_id']);
+                        $subjectEmail = '振り返りシート を更新しました（自動送信メール）';
                         break;
                 }
                 $newFilename = $file->getClientOriginalName();
@@ -340,7 +348,7 @@ class SakuraSetController extends Controller
                 $file->move($location,$newFilename);
                 // send email func
                 $reviewer = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$request->member_id]],['reviewer_member','made_member']);
-                $emailConfig = ['to' => $reviewer->reviewer_member->email,'subject' => '[研修システム] お知らせ','sakuraData' => $reviewer->made_member];
+                $emailConfig = ['to' => $reviewer->made_member->email,'subject' => $subjectEmail,'sakuraData' => $reviewer];
                 $view = 'email.sakuraSet.backup_'.$request->backup_type;
                 if(!view()->exists($view)){
                     $msg = 'Template Email do not exist';
@@ -351,6 +359,13 @@ class SakuraSetController extends Controller
                     }
                 }
                 $data['url'] = $location.'/'.$newFilename;
+                $dataShare = [
+                    'from' => 'teach',
+                    'url' => $data['url'],
+                    'class' => $class,
+                    'popup' => $popupName,
+                ];
+                broadcast(new SakuraShare($dataShare));
                 $data['success'] = true;
                 $data['message'] = $msg;
             }
@@ -364,12 +379,13 @@ class SakuraSetController extends Controller
           'success'=>false,
           'html' => ''
         ];
+        $dataShare = null;
         if($request->get('type') == 'reflectionsheet'){
             $reflectionSheetId = $this->reflectionsheetManageService->upload($request);
             if($reflectionSheetId){
-                $reflectionSheetManager = $this->reflectionsheetManageService->getById($reflectionSheetId);
+                $dataShare = $this->reflectionsheetManageService->getById($reflectionSheetId);
                 $returnHTML = view('components/sub_popup_A014/data_upload',[
-                    'reflectionSheetManager'=>$reflectionSheetManager
+                    'reflectionSheetManager'=>$dataShare
                 ])->render();
                 $data['success'] = true;
                 $data['html'] = $returnHTML;
@@ -377,9 +393,9 @@ class SakuraSetController extends Controller
         }elseif($request->get('type') == 'initiative'){
             $initiativetableId = $this->initiativetableManageService->upload($request);
             if($initiativetableId){
-                $initiativetableManager = $this->initiativetableManageService->getById($initiativetableId);
+                $dataShare = $this->initiativetableManageService->getById($initiativetableId);
                 $returnHTML = view('components/sub_popup_A015/data_upload',[
-                   'initiativetableManager'=>$initiativetableManager
+                   'initiativetableManager'=>$dataShare
                 ])->render();
                 $data['success'] = true;
                 $data['html'] = $returnHTML;
@@ -387,45 +403,86 @@ class SakuraSetController extends Controller
         }else{
             $faceSheetId = $this->facesheetManageService->upload($request);
             if($faceSheetId){
-                $faceSheetManager = $this->facesheetManageService->getById($faceSheetId);
+                $dataShare = $this->facesheetManageService->getById($faceSheetId);
                 $returnHTML = view('components/sub_popup_A013/data_upload',[
-                   'faceSheetManager'=>$faceSheetManager
+                   'faceSheetManager'=>$dataShare
                 ])->render();
                 $data['success'] = true;
                 $data['html'] = $returnHTML;
             }
         }
+        broadcast(new SakuraShare($dataShare))->toOthers();
         return response()->json($data);
     }
 
     public function updateShareFaceSheet(Request $request)
     {
         try {
+            $subjectEmail = 'フェイスシートを共有しました（自動送信メール）';
             $id = $request->get('id');
             $shareFlg = $request->get('share_flg');
-            $dataUpdate = [
-                'share_flg' => $shareFlg
-            ];
-
+            $type = 'facesheet';
+            $msg = '';
             //Update all share flag off when share = true
             if($shareFlg){
                 $this->facesheetManageService->updateByMemberId($this->loginId(),['share_flg' => 0]);
+                $msg = $this->sendEmailFromActiveShare($type,$subjectEmail);
             }
-            $data['update'] = $this->facesheetManageService->update($id, $dataUpdate);
+            $dataFaceSheet = $this->facesheetManageService->getById($id);
+            $dataFaceSheet->share_flg = $shareFlg;
+            $dataFaceSheet->save();
+            $dataToSocket = $dataFaceSheet->toArray();
+            $dataToSocket['type'] = $type;
+
+            // sent event to socket io
+            broadcast(new SakuraShare($dataToSocket))->toOthers();
             $data['success'] = true;
+            $data['update'] = true;
+            $data['msg'] = $msg;
         } catch (Exception $e) {
             $data['success'] = false;
         }
 
         return response()->json($data);
     }
+    
+    public function updateShareInitiativeTable(Request $request){
+        try {
+            $subjectEmail = 'さくらセット取り組み表を共有しました（自動送信メール）';
+            $id = $request->get('id');
+            $shareFlg = $request->get('share_flg');
+            $type = 'initiative';
+            $msg = '';
+            //Update all share flag off when share = true
+            if($shareFlg){
+                $this->initiativetableManageService->updateByMemberId($this->loginId(),['share_flg' => 0]);
+                $msg = $this->sendEmailFromActiveShare($type,$subjectEmail);
+            }
+            $dataInitiativetable = $this->initiativetableManageService->getById($id);
+            $dataInitiativetable->share_flg = $shareFlg;
+            $dataInitiativetable->save();
+            $dataToSocket = $dataInitiativetable->toArray();
+            $dataToSocket['type'] = $type;
+            // sent event to socket io
+            broadcast(new SakuraShare($dataToSocket))->toOthers();
+            $data['update'] = true;
+            $data['success'] = true;
+            $data['msg'] = $msg;
+        } catch (Exception $e) {
+            $data['success'] = false;
+        }
 
+        return response()->json($data);
+    }
     public function updateShareReflectionSheet(Request $request)
     {
         try {
+            $subjectEmail = '振り返りシートを共有しました（自動送信メール）';
             $id = $request->get('id');
             $class = $request->get('class');
             $shareFlg = $request->get('share_flg');
+            $type = 'reflectionsheet';
+            $msg = '';
             $dataUpdate = [
                 'share_flg' => $shareFlg
             ];
@@ -433,15 +490,42 @@ class SakuraSetController extends Controller
             //Update all share flag off when share = true
             if($shareFlg){
                 $this->reflectionsheetManageService->updateByMemberId($this->loginId(),$class,['share_flg' => 0]);
+                $msg = $this->sendEmailFromActiveShare($type,$subjectEmail);
             }
-            $data['update'] = $this->reflectionsheetManageService->update($id, $dataUpdate);
+            $dataReflectionsheet = $this->reflectionsheetManageService->getById($id);
+            $dataReflectionsheet->share_flg = $shareFlg;
+            $dataReflectionsheet->save();
+            $dataToSocket = $dataReflectionsheet->toArray();
+            $dataToSocket['type'] = $type;
+
+            // sent event to socket io
+            broadcast(new SakuraShare($dataToSocket))->toOthers();
+            $data['update'] = true;
             $data['success'] = true;
+            $data['msg'] = $msg;
         } catch (Exception $e) {
             $data['success'] = false;
         }
         return response()->json($data);
     }
-
+    function sendEmailFromActiveShare($type,$subjectEmail){
+        // share to email
+        $msg = 'Send email success';
+        $sakura = $this->sakurasetService->getByLoggedId(['member_id',$this->loginId()],['reviewer_member','made_member']);
+        if($sakura){
+            $emailConfig = ['to' => $sakura->reviewer_member->email,'subject' => $subjectEmail,'sakuraData' => $sakura];
+            $view = 'email.sakuraSet.upload_'.$type;
+            if(!view()->exists($view)){
+                $msg = 'Template Email do not exist';
+            }else{
+                $status = Mail::send(new SendMail($view, $emailConfig));
+                if(!$status){
+                    $msg = 'Send email failed';
+                }
+            }
+        }
+        return $msg;
+    }
     public function removeShareFaceSheet(Request $request)
     {
         try{
@@ -476,30 +560,9 @@ class SakuraSetController extends Controller
         }
         return response()->json($data);
     }
-    public function updateShareInitiativeTable(Request $request){
-        try {
-            $id = $request->get('id');
-            $shareFlg = $request->get('share_flg');
-            $dataUpdate = [
-                'share_flg' => $shareFlg
-            ];
-
-            //Update all share flag off when share = true
-            if($shareFlg){
-                $this->initiativetableManageService->updateByMemberId($this->loginId(),['share_flg' => 0]);
-            }
-            $data['update'] = $this->initiativetableManageService->update($id, $dataUpdate);
-            $data['success'] = true;
-        } catch (Exception $e) {
-            $data['success'] = false;
-        }
-
-        return response()->json($data);
-    }
     public function updateScheduled(Request $request)
     {
         $data['success'] = false;
-        $data['message'] = 'Sakuraset do not exist';
         if(!$request->has('scheduled')){
             return response()->json($data);
         }
@@ -510,6 +573,7 @@ class SakuraSetController extends Controller
             }
         }catch (Exception $e) {
             $data['success'] = false;
+            $data['message'] = 'Sakuraset do not exist';
         }
         return response()->json($data);
     }

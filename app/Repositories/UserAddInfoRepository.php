@@ -32,4 +32,31 @@ class UserAddInfoRepository
         ->where([['users.active_flg',1],['users.class',0]])
         ->get();
     }
+
+    public function getByCondition($condition)
+    {
+        $loginId = $condition['login_id'] ?? '';
+        $name = $condition['name'] ?? '';
+        $membershipType = $condition['membership_type'] ?? '';
+
+        return $this->model
+            ->select('id','login_id','email','name1','name2','membership_type')
+            ->when(!empty($loginId), function ($query) use ($loginId) {
+                return $query->where('login_id', $loginId);
+            })
+            ->when(!empty($name), function ($query) use ($name) {
+                $name = str_replace('　','',$name);
+                $name = str_replace(' ','',$name);
+                return $query->whereRaw('CONCAT(name1,name2)="'.$name.'"');
+            })
+            ->when(!empty($membershipType), function ($query) use ($membershipType) {
+                return $query->where('membership_type', $membershipType);
+            })
+            ;
+    }
+
+    public function getByLoginId($loginId = '')
+    {
+        return $this->model->where('login_id', $loginId)->get()->first();
+    }
 }

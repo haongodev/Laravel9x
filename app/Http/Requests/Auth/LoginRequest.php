@@ -54,7 +54,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        if (! Auth::attempt($credentials, $this->boolean('remember'))) {
+        if (! Auth::guard('web')->attempt($credentials, $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

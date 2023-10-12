@@ -50,6 +50,9 @@ if (!function_exists('scheduledDate')) {
     {
         $memberId = auth()->user()->user_add_info->login_id;
         $scheduled_date = SakurasetManage::where('member_id', $memberId)->pluck('scheduled_date')->first();
+        if(!$scheduled_date){
+            return false;
+        }
         return Carbon::parse($scheduled_date)->format('Y年 m月 d日');
     }
 
@@ -87,5 +90,21 @@ if (!function_exists('rangeYear')) {
         }
         return $data;
 
+    }
+}
+
+if (!function_exists('getSakuraSetRoom')) {
+    function getSakuraSetRoom()
+    {
+        $roomId = null;
+        $member = auth()->user()->user_add_info->sakuraMember()->first();
+        $reviewer = auth()->user()->user_add_info->sakuraReviewer()->first();
+        if($member !== null){
+            $roomId = $member->reviewer_id.'_'.$member->member_id;
+        }
+        if($reviewer !== null){
+            $roomId = $reviewer->reviewer_id.'_'.$reviewer->member_id;
+        }
+        return $roomId;
     }
 }

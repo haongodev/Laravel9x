@@ -14,7 +14,9 @@
     <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta class="base_url" value="{{url('/')}}" />
+    <meta class="room_id" value="{{getSakuraSetRoom()}}" />
 </head>
 
 <body class="{{ (isset($page_name)) ? $page_name : 'about-us' }} sidebar-collapse">
@@ -33,8 +35,8 @@
 </div>
 
 <script src="{{asset('assets/js/jquery.min.js')}}"></script>
-<script src="{{asset('assets/js/toastr/toastr.min.js')}}"></script>
 <script src="{{asset('assets/js/common.js')}}"></script>
+<script src="{{asset('assets/js/toastr/toastr.min.js')}}"></script>
 <script src="{{ asset('assets/js-lib/jquery-ui.js') }}"></script>
 <script src="{{ asset('assets/js-lib/jquery-ui-jp.js') }}"></script>
 <script src="{{ asset('assets/js-lib/jquery-ui-vi.js') }}"></script>
