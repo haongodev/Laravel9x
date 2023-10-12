@@ -1,5 +1,5 @@
 {
-	"authHost": "http://54.65.127.18",
+	"authHost": "http://trainingmanagement.test",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [],
 	"database": "redis",
