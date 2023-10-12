@@ -54,7 +54,11 @@ class MemberService
             Log::error($exc->getMessage(), $exc->getTrace());
             return false;
         }
+    }
 
+    public function getByLoginId($loginId = '')
+    {
+        return $this->userAddInfoRepository->getByLoginId($loginId);
     }
 }
 
