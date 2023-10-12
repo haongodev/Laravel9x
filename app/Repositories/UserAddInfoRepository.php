@@ -53,6 +53,10 @@ class UserAddInfoRepository
                 return $query->where('membership_type', $membershipType);
             })
             ;
+    }
 
+    public function getByLoginId($loginId = '')
+    {
+        return $this->model->where('login_id', $loginId)->get()->first();
     }
 }

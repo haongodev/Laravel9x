@@ -72,9 +72,9 @@
                         $page = request('page',1);
                     @endphp
                     <tr class="text-center">
-                        <td>{{($page-1)*15 + $i}}</td>
-                        <td>{{$member->login_id}}</td>
-                        <td>{{$member->name1}} {{$member->name2}}</td>
+                        <td><a href="{{route('admin.member.detail',['login_id'=>$member->login_id])}}">{{($page-1)*15 + $i}}</a></td>
+                        <td><a href="{{route('admin.member.detail',['login_id'=>$member->login_id])}}">{{$member->login_id}}</a></td>
+                        <td><a href="{{route('admin.member.detail',['login_id'=>$member->login_id])}}">{{$member->name1}} {{$member->name2}}</a></td>
                         <td>{{$member->membership_type}}</td>
                         <td>{{$member->email}}</td>
                     </tr>
@@ -96,5 +96,4 @@
         </div>
     </div>
 @endsection
-@push('js')
-@endpush
+
