@@ -4,22 +4,42 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\MemberService;
+use App\Services\FacesheetManageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MemberController extends Controller
 {
     protected $memberService;
+    protected $facesheetManageService;
 
-    public function __construct(MemberService $memberService)
+    public function __construct(
+        MemberService $memberService,
+        FacesheetManageService $facesheetManageService
+    )
     {
         $this->memberService = $memberService;
+        $this->facesheetManageService = $facesheetManageService;
     }
 
     public function detail(Request $request, $loginId)
     {
         $member = $this->memberService->getByLoginId($loginId);
+        if(!$member){
+            abort(404);
+        }
         return view('admin.member.detail', ['member' => $member]);
+    }
+
+    public function listFile(Request $request, $loginId)
+    {
+        $member = $this->memberService->getByLoginId($loginId);
+        $fileUploadData = [];
+        if(!$member){
+            abort(404);
+        }
+        $fileUploadData = $this->facesheetManageService->getAllTypeFileUploadByMemberId($member->login_id)->paginate(1);
+        return view('admin.member.list_file', ['member' => $member,'fileUploadData' => $fileUploadData]);
     }
 
     public function changePassWord(Request $request)

@@ -12,10 +12,10 @@
 }
 
 main-content .container table , th{
-    background: #B9E0A5;
+    background: #D5E8D4;
 }
 
-main-content .container table .member, th{
+main-content .container table .member th{
     background: #99CCFF;
     width: 300px;
 }

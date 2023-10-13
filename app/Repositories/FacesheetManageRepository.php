@@ -43,4 +43,9 @@ class FacesheetManageRepository
     {
         return $this->model->where('id',$id)->get()->first();
     }
+
+    public function getAllTypeFileUploadByMemberId($loginId)
+    {
+        return $this->model->where('member_id',$loginId);
+    }
 }

@@ -89,4 +89,9 @@ class FacesheetManageService
     {
         return $this->facesheetManageRepository->getById($id);
     }
+
+    public function getAllTypeFileUploadByMemberId($loginId = 0)
+    {
+        return $this->facesheetManageRepository->getAllTypeFileUploadByMemberId($loginId);
+    }
 }
