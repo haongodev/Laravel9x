@@ -48,11 +48,11 @@
                 }]
             },
             options: {
-                tooltips: {
-                    enabled: false
-                },
                 responsive: true,
                 plugins: {
+                    tooltip: {
+                        enabled: false
+                    },
                     legend: false,
                     title: false,
                     datalabels: {
