@@ -16,5 +16,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/storage
 laravel-echo-server.json
 laravel-echo-server.lock
