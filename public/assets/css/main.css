@@ -55,15 +55,6 @@ button.disabled{
     padding: 40px 0px;
     align-items: center;
 }
-.main-header .left-side{
-    width: 25%;
-    min-width: 320px;
-}
-.main-header .right-side{
-    width: 75%;
-    min-width: 960px;
-    text-align: right;
-}
 .main-header .right-side .container .header-buttom{
     font-size: 19px;
     background: #60C659;
@@ -86,14 +77,13 @@ button.disabled{
     margin: 0 auto;
 }
 .wrapper-container .main-content{
-    width: calc(75% - 15px);
-    min-width: 945px;
+    width: 75%;
     margin-left: 15px;
 }
 .wrapper-container .left-side{
-    width: calc(25% - 15px);
+    width: 25%;
     margin-right: 15px;
-    min-width: 305px;
+    min-width: 310px;
 }
 .wrapper-container .main-content > .container{
     margin-top: 50px;
@@ -160,7 +150,7 @@ button.disabled{
 .wrapper-container .left-side .side-top .container .row .list-info li > a{
     text-decoration: none;
     text-align: center;
-    width: 60%;
+    width: 57%;
     padding: 5px;
     color: #fff;
 }
