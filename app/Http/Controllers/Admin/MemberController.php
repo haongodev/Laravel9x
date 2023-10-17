@@ -34,11 +34,10 @@ class MemberController extends Controller
     public function listFile(Request $request, $loginId)
     {
         $member = $this->memberService->getByLoginId($loginId);
-        $fileUploadData = [];
         if(!$member){
             abort(404);
         }
-        $fileUploadData = $this->facesheetManageService->getAllTypeFileUploadByMemberId($member->login_id)->paginate(1);
+        $fileUploadData = $this->facesheetManageService->getAllTypeFileUploadByMemberId($member->login_id)->paginate(15);
         return view('admin.member.list_file', ['member' => $member,'fileUploadData' => $fileUploadData]);
     }
 
