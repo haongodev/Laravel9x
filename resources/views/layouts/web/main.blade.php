@@ -14,6 +14,7 @@
     <link href="{{ asset('assets') }}/css-lib/jquery-ui/jquery-ui.css" rel="stylesheet"/>
     <link href="{{ asset('assets') }}/css/main.css" rel="stylesheet" />
     <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet" />
+    <link href="{{ asset('assets') }}/css/responsive.css" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta class="base_url" value="{{url('/')}}" />
     <meta class="room_id" value="{{getSakuraSetRoom()}}" />

@@ -1,6 +1,6 @@
 <div class="popup-wrapper hidden popup_study_scoring_board">
     <input type="hidden" class="value_study_score_board"/>
-    <div class="layout-popup" style="width: 97%;max-height: 94%;height:100%;">
+    <div class="layout-popup" style="width: 97%;max-height: 94%;height:100%;min-width:1600px;">
         <div class="popup-header">
             <div class="title"></div>
             <div class="close-side">
@@ -21,7 +21,7 @@
         </div>
         <div class="popup-content">
             <div class="scoring_board_content">
-                <div class="table-show-credit">
+                <div class="table-show-credit" style="overflow-x: auto">
                     <table>
                         <tr>
                             <th></th>
