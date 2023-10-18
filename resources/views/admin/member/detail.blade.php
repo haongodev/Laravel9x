@@ -8,7 +8,7 @@
 @section('content')
     <div class="breadcrumb-title">
         <button class="btn-title btn-success">構成員詳細</button>
-        <span class="ms-3 text-primary">アップロードファイル一覧　＞</span>
+        <span class="ms-3 text-primary" onclick="window.location.href='{{route('admin.member.list_file',$member->login_id)}}'">アップロードファイル一覧　＞</span>
     </div>
     <div class="container">
         <div class="row">

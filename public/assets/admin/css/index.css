@@ -11,12 +11,16 @@
     border: 1px solid #000000;
 }
 
-main-content .container table , th{
-    background: #B9E0A5;
+.main-content .container table  th{
+    background: #D5E8D4;
 }
 
-main-content .container table .member, th{
+.main-content .container table.member th{
     background: #99CCFF;
     width: 300px;
 }
 
+.main-content .container table .download{
+    width: 25%;
+    height: auto;
+}
