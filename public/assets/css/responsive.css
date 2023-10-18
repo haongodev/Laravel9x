@@ -1,0 +1,10 @@
+@media only screen and (max-width: 800px) {
+    .popup-wrapper{
+        justify-content:start;
+    }
+}
+@media only screen and (max-width: 1600px) {
+    .popup_study_scoring_board {
+        justify-content:start;
+    }
+}
