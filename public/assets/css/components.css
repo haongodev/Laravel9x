@@ -9,14 +9,14 @@
     align-items: center;
     background: #0000005e;
     z-index: 1;
+    overflow-x: auto;
 }
 .popup-wrapper .layout-popup{
     background: #fff;
     border-radius: 7px;
     padding: 20px;
-    width: 780pt;
+    min-width: 760px;
     max-height: 85%;
-    overflow: auto;
 }
 .popup-wrapper .layout-popup .popup-header{
     display: flex;
