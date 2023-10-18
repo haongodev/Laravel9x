@@ -144,6 +144,8 @@
     min-width: 190pt;
 }
 .popup_study_scoring_board .layout-popup .popup-content .scoring_board_content{
+    min-width: 1600px;
+    background: #fff;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
