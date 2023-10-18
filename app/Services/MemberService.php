@@ -60,5 +60,10 @@ class MemberService
     {
         return $this->userAddInfoRepository->getByLoginId($loginId);
     }
+
+    public function getUserManage($condition = [])
+    {
+        return $this->userRepository->getUserManage($condition = []);
+    }
 }
 

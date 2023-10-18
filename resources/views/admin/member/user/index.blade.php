@@ -7,7 +7,8 @@
 @endpush
 @section('content')
     <div class="breadcrumb-title">
-        <button class="btn-title btn-success">構成員一覧</button>
+        <button class="btn-title btn-success">管理ユーザー一覧</button>
+        <button class="btn btn-white col-sm-12 col-md-3">登録 chuyen toi M009</button>
     </div>
     <div class="bread-crumb">
         <div class="container">
@@ -15,7 +16,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <div class="row">
-                            <label for="login_id" class="col-sm-3 col-md-3 col-form-label">構成員ID</label>
+                            <label for="login_id" class="col-sm-3 col-md-3 col-form-label">ユーザーID</label>
                             <div class="col-sm-9 col-md-9">
                                 <input type="text" class="form-control" id="login_id" name="login_id" value="{{request('login_id')}}">
                             </div>
@@ -33,9 +34,9 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6 mt-3">
                         <div class="row">
-                            <label for="membership_type" class="col-sm-3 col-md-3 col-form-label">会員種別</label>
+                            <label for="attribute" class="col-sm-3 col-md-3 col-form-label">属性</label>
                             <div class="col-sm-9 col-md-9">
-                                <select name="membership_type" id="membership_type" class="form-select">
+                                <select name="attribute" id="attribute" class="form-select">
                                     <option value=""></option>
                                     @foreach(config('constants.membershipType') as $key => $value)
                                         <option value="{{$value}}" {{request('membership_type')==$value ? 'selected' : ''}}>{{$value}}</option>
@@ -59,30 +60,30 @@
             <table class="">
                 <tr class="text-center">
                     <th>No</th>
-                    <th>構成員ID</th>
+                    <th>ユーザーID</th>
                     <th>氏名</th>
-                    <th>会員種別</th>
-                    <th>メールアドレス</th>
+                    <th>属性</th>
+                    <th>管理者区分</th>
                 </tr>
                 @php $i=0; @endphp
-                @foreach($memberData as $member)
+                @foreach($userData as $user)
                     @php
                         $i++;
                         $page = request('page',1);
                     @endphp
                     <tr class="text-center">
-                        <td><a href="{{route('admin.member.detail',['login_id'=>$member->login_id])}}">{{($page-1)*15 + $i}}</a></td>
-                        <td><a href="{{route('admin.member.detail',['login_id'=>$member->login_id])}}">{{$member->login_id}}</a></td>
-                        <td><a href="{{route('admin.member.detail',['login_id'=>$member->login_id])}}">{{$member->name1}} {{$member->name2}}</a></td>
-                        <td>{{$member->membership_type}}</td>
-                        <td>{{$member->email}}</td>
+                        <td><a href="{{route('admin.member.detail',['login_id'=>$user->name])}}">{{($page-1)*15 + $i}}</a></td>
+                        <td><a href="{{route('admin.member.detail',['login_id'=>$user->name])}}">{{$user->name}}</a></td>
+                        <td><a href="{{route('admin.member.detail',['login_id'=>$user->name])}}">{{$user->name}} {{$user->name}}</a></td>
+                        <td>{{$user->membership_type}}</td>
+                        <td>{{$user->email}}</td>
                     </tr>
                 @endforeach
             </table>
             <div class="table-footer row mt-3">
                 <div class="col-sm-12 col-md-6 offset-md-3">
                     <div class="pagination">
-                        {{ $memberData->appends(request()->query())->links('admin.layouts.paging') }}
+{{--                        {{ $userData->appends(request()->query())->links('admin.layouts.paging') }}--}}
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3">

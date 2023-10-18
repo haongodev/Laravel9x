@@ -47,4 +47,11 @@ class MemberController extends Controller
         return response()->json($response);
     }
 
+    public function userManage(Request $request)
+    {
+        $loginId = auth()->user()->user_add_info->login_id;
+        $userData = $this->memberService->getUserManage($request->all())->paginate(15);
+        return view('admin.member.user.index',['userData'=>$userData]);
+    }
+
 }
