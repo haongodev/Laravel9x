@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\UserAddInfoRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\ManagedUsersAddInfoRepository;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +21,7 @@ class MemberService
      * @var UserRepository
      */
     protected $userRepository;
+    protected $managedUsersAddInfoRepository;
 
 
     /**
@@ -29,11 +31,13 @@ class MemberService
      */
     public function __construct(
         UserAddInfoRepository $userAddInfoRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        ManagedUsersAddInfoRepository $managedUsersAddInfoRepository
     )
     {
         $this->userAddInfoRepository = $userAddInfoRepository;
         $this->userRepository = $userRepository;
+        $this->managedUsersAddInfoRepository = $managedUsersAddInfoRepository;
     }
 
     public function getByCondition($condition = [])
@@ -63,7 +67,7 @@ class MemberService
 
     public function getUserManage($condition = [])
     {
-        return $this->userRepository->getUserManage($condition = []);
+        return $this->managedUsersAddInfoRepository->getUserManage($condition);
     }
 }
 

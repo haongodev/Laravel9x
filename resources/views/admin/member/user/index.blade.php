@@ -7,8 +7,14 @@
 @endpush
 @section('content')
     <div class="breadcrumb-title">
-        <button class="btn-title btn-success">管理ユーザー一覧</button>
-        <button class="btn btn-white col-sm-12 col-md-3">登録 chuyen toi M009</button>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <button class="btn-title btn-success">管理ユーザー一覧</button>
+            </div>
+            <div class="col-sm-12 col-md-6 text-end">
+                <button class="btn btn-white me-2" onclick="window.location.href='/M009'">登録</button>
+            </div>
+        </div>
     </div>
     <div class="bread-crumb">
         <div class="container">
@@ -37,9 +43,9 @@
                             <label for="attribute" class="col-sm-3 col-md-3 col-form-label">属性</label>
                             <div class="col-sm-9 col-md-9">
                                 <select name="attribute" id="attribute" class="form-select">
-                                    <option value=""></option>
-                                    @foreach(config('constants.membershipType') as $key => $value)
-                                        <option value="{{$value}}" {{request('membership_type')==$value ? 'selected' : ''}}>{{$value}}</option>
+                                    <option value="-1"></option>
+                                    @foreach(config('constants.userAttribute') as $key => $value)
+                                        <option value="{{$key}}" {{request('attribute',-1)==$key ? 'selected' : ''}}>{{$value}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -72,23 +78,18 @@
                         $page = request('page',1);
                     @endphp
                     <tr class="text-center">
-                        <td><a href="{{route('admin.member.detail',['login_id'=>$user->name])}}">{{($page-1)*15 + $i}}</a></td>
-                        <td><a href="{{route('admin.member.detail',['login_id'=>$user->name])}}">{{$user->name}}</a></td>
-                        <td><a href="{{route('admin.member.detail',['login_id'=>$user->name])}}">{{$user->name}} {{$user->name}}</a></td>
-                        <td>{{$user->membership_type}}</td>
-                        <td>{{$user->email}}</td>
+                        <td><a href="{{route('admin.member.user.detail',['login_id'=>$user->login_id])}}">{{($page-1)*15 + $i}}</a></td>
+                        <td><a href="{{route('admin.member.user.detail',['login_id'=>$user->login_id])}}">{{$user->login_id}}</a></td>
+                        <td><a href="{{route('admin.member.user.detail',['login_id'=>$user->login_id])}}">{{$user->name}}</a></td>
+                        <td>{{config('constants.userAttribute')[$user->attribute] ?? ''}}</td>
+                        <td>{{config('constants.userManagerClass')[$user->manager_class] ?? ''}}</td>
                     </tr>
                 @endforeach
             </table>
             <div class="table-footer row mt-3">
                 <div class="col-sm-12 col-md-6 offset-md-3">
                     <div class="pagination">
-{{--                        {{ $userData->appends(request()->query())->links('admin.layouts.paging') }}--}}
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-3">
-                    <div class="button">
-                        <button>CSVアップロード</button>
+                        {{ $userData->appends(request()->query())->links('admin.layouts.paging') }}
                     </div>
                 </div>
             </div>

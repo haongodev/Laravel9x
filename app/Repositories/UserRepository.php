@@ -38,19 +38,4 @@ class UserRepository
         return $this->model->where('id', $id)->update($data);
     }
 
-    public function getUserManage()
-    {
-        return $this->model
-            ->select(
-                'users.name',
-                'users.id',
-                'managed_users_add_info.manager_class',
-                'managed_users_add_info.attribute',
-            )
-            ->join('managed_users_add_info', function ($q) {
-                $q->on('users.id', '=', 'managed_users_add_info.users_id');
-            })
-            ;
-    }
-
 }
