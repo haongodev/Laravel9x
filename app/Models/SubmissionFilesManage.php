@@ -5,28 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property int      $id
- * @property int      $id
- * @property int      $agreement_user_id
- * @property int      $file_type
- * @property int      $agreement_flg
- * @property int      $agreement_user_id
- * @property int      $file_type
- * @property DateTime $agreement_date
- * @property DateTime $delete_date
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property DateTime $agreement_date
- * @property DateTime $delete_date
- * @property DateTime $registration_date
- * @property DateTime $update_date
- * @property boolean  $agreement_flg
- * @property string   $file_name
- * @property string   $member_id
- * @property string   $share_member_id
- * @property string   $file_name
- * @property string   $member_id
- * @property string   $share_member_id
+ * Class SubmissionFilesManage
+ * @package App\Models
  */
 class SubmissionFilesManage extends Model
 {
@@ -59,7 +39,7 @@ class SubmissionFilesManage extends Model
      * @var array
      */
     protected $hidden = [
-        
+
     ];
 
     /**
