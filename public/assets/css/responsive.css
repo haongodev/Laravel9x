@@ -1,9 +1,19 @@
 @media only screen and (max-width: 800px) {
+    @supports (-webkit-overflow-scrolling: touch) {
+        .popup-wrapper {
+          justify-content: start;
+        }
+    }
     .popup-wrapper{
         justify-content:start;
     }
 }
 @media only screen and (max-width: 1600px) {
+    @supports (-webkit-overflow-scrolling: touch) {
+        .popup_study_scoring_board {
+          justify-content: start;
+        }
+    }
     .popup_study_scoring_board {
         justify-content:start;
     }
