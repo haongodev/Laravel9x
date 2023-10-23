@@ -239,7 +239,8 @@ button.disabled{
     margin: 10px;
     display: flex;
     align-items: center;
-    word-break: keep-all;
+    word-break: keep-all;    
+    overflow-wrap: anywhere;
 }
 .wrapper-container .left-side .side-bot .container .row ul li a img{
     width: 30px;
