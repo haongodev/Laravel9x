@@ -66,4 +66,15 @@ class MemberController extends Controller
         return response()->json($response);
     }
 
+    public function userManage(Request $request)
+    {
+        $userData = $this->memberService->getUserManage($request->all())->paginate(15);
+        return view('admin.member.user.index',['userData'=>$userData]);
+    }
+
+    public function userDetail(Request $request)
+    {
+
+    }
+
 }

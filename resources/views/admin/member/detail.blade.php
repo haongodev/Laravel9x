@@ -1,6 +1,5 @@
 @extends('admin.layouts.main', [
     'pageSlug' => '私の研鑽データ',
-    'button_operation_manual' => true
     ])
 
 @push('styles')
