@@ -37,9 +37,9 @@
                 </div>
                 <div class="input-group">
                     <div class="w-50 group-control">
-                        <label for="registration_year">登録年度</label>
+                        <label for="registration_year">研鑽年度</label>
                         <select id="registration_year" name="registration_year" style="width:70%;">
-                            <option value="0">（登録年度）</option>
+                            <option value="0">（研鑽年度）</option>
                             @foreach($registrationYearData as $value)
                                 <option value="{{$value}}">{{$value}}</option>
                             @endforeach

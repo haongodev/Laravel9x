@@ -17,6 +17,7 @@
     padding: 20px;
     min-width: 760px;
     max-height: 85%;
+    overflow: auto;
 }
 .popup-wrapper .layout-popup .popup-header{
     display: flex;

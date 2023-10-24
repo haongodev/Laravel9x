@@ -2,7 +2,7 @@
 <div>
     <p>構成員番号: {{ $config['sakuraData']->made_member->login_id }}</p>
     <p>{{ $config['sakuraData']->made_member->name1.' '.$config['sakuraData']->made_member->name2 }} 様</p>
-    <p>生涯研修制度「研鑽管理システム」よりお知らせです。</p>
+    <p>生涯研修制度「私の研鑽データ（研鑽管理システム）」よりお知らせです。</p>
     <p>{{ $config['sakuraData']->reviewer_member->name1.' '.$config['sakuraData']->reviewer_member->name2 }} 様（構成員番号{{ $config['sakuraData']->reviewer_member->login_id }}）から、さくらセットの振り返り担当者解除の申請がありました。</p>
     <p>以下の＜ご確認の流れ＞を参考に、ご確認のほど宜しくお願い申しあげます。</p>
     <p>＜ご確認の流れ＞</p>
