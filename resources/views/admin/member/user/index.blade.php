@@ -3,7 +3,7 @@
     ])
 
 @push('styles')
-    <link href="{{ asset('assets/admin/css/index.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/admin/css/index.css') }}" rel="stylesheet"/>
 @endpush
 @section('content')
     <div class="breadcrumb-title">
@@ -24,7 +24,8 @@
                         <div class="row">
                             <label for="login_id" class="col-sm-3 col-md-3 col-form-label">ユーザーID</label>
                             <div class="col-sm-9 col-md-9">
-                                <input type="text" class="form-control" id="login_id" name="login_id" value="{{request('login_id')}}">
+                                <input type="text" class="form-control" id="login_id" name="login_id"
+                                       value="{{request('login_id')}}">
                             </div>
                         </div>
                     </div>
@@ -32,7 +33,8 @@
                         <div class="row">
                             <label for="name" class="col-sm-3 col-md-3 col-form-label">氏名</label>
                             <div class="col-sm-9 col-md-9">
-                                <input type="text" class="form-control" name="name" id="name" value="{{request('name')}}">
+                                <input type="text" class="form-control" name="name" id="name"
+                                       value="{{request('name')}}">
                             </div>
                         </div>
                     </div>
@@ -45,7 +47,8 @@
                                 <select name="attribute" id="attribute" class="form-select">
                                     <option value="-1"></option>
                                     @foreach(config('constants.userAttribute') as $key => $value)
-                                        <option value="{{$key}}" {{request('attribute',-1)==$key ? 'selected' : ''}}>{{$value}}</option>
+                                        <option
+                                            value="{{$key}}" {{request('attribute',-1)==$key ? 'selected' : ''}}>{{$value}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -78,9 +81,14 @@
                         $page = request('page',1);
                     @endphp
                     <tr class="text-center">
-                        <td><a href="{{route('admin.member.user.detail',['login_id'=>$user->login_id])}}">{{($page-1)*15 + $i}}</a></td>
-                        <td><a href="{{route('admin.member.user.detail',['login_id'=>$user->login_id])}}">{{$user->login_id}}</a></td>
-                        <td><a href="{{route('admin.member.user.detail',['login_id'=>$user->login_id])}}">{{$user->name}}</a></td>
+                        <td>
+                            <a href="{{route('admin.member.user.detail',['user_id'=>$user->id])}}">{{($page-1)*15 + $i}}</a>
+                        </td>
+                        <td>
+                            <a href="{{route('admin.member.user.detail',['user_id'=>$user->id])}}">{{$user->login_id}}</a>
+                        </td>
+                        <td><a href="{{route('admin.member.user.detail',['user_id'=>$user->id])}}">{{$user->name}}</a>
+                        </td>
                         <td>{{config('constants.userAttribute')[$user->attribute] ?? ''}}</td>
                         <td>{{config('constants.userManagerClass')[$user->manager_class] ?? ''}}</td>
                     </tr>
