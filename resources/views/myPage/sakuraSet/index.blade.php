@@ -21,9 +21,9 @@
             </div>
         @endforeach
         <div class="button-list">
-            <button type="button" class="btn-eff-ora btn-hov"><a href="https://www.jamhsw.or.jp/ugoki/kensyu/sakura-set.html" target="_blank">さくらセットを理解する</a></button>
-            <button type="button" class="btn-eff-ora btn-hov"><a href="{{ route('yourTry') }}">あなたの取り組み状況</a></button>
-            <button type="button" class="btn btn-eff-ora btn-hov"><a href="{{ route('registerReviewer') }}">振返り担当者の申請</a></button>
+            <a href="https://www.jamhsw.or.jp/ugoki/kensyu/sakura-set.html" target="_blank"><button type="button" class="btn-eff-ora btn-hov">さくらセットを理解する</button></a>
+            <a href="{{ route('yourTry') }}"><button type="button" class="btn-eff-ora btn-hov">あなたの取り組み状況</button></a>
+            <a href="{{ route('registerReviewer') }}"><button type="button" class="btn btn-eff-ora btn-hov">振返り担当者の申請</button></a>
         </div>
         <div class="botton-navigate">
             <div class="pull-left">

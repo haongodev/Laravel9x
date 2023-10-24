@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class ManagedUsersAddInfo
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ManagedUsersAddInfo extends Model
 {
+    use SoftDeletes;// add soft delete
+    const DELETED_AT = 'delete_date';
     /**
      * The database table used by the model.
      *
@@ -30,7 +33,7 @@ class ManagedUsersAddInfo extends Model
      * @var array
      */
     protected $fillable = [
-        'attribute', 'delete_flg', 'manager_class', 'registration_date', 'update_date', 'users_id', 'attribute', 'delete_flg', 'manager_class', 'registration_date', 'update_date', 'users_id'
+        'id', 'users_id', 'login_id', 'manager_class', 'attribute', 'delete_flg', 'registration_date', 'update_date'
     ];
 
     /**

@@ -25,7 +25,7 @@
                         <span>管理ユーザー管理</span>
                     </li>
                     <li class="action">
-                        <a href="javascript:void(0)">
+                        <a href="{{route('admin.member.user.manage')}}">
                             <span>ユーザー一覧</span>
                         </a>
                     </li>
