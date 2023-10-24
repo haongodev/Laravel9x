@@ -42,4 +42,46 @@ class ManagedUsersAddInfoRepository
                 return $query->where('managed_users_add_info.attribute', $attribute);
             });
     }
+
+    public function getUserManageByLoginId($loginId = '')
+    {
+        return $this->model
+            ->select(
+                'users.name',
+                'users.id',
+                'managed_users_add_info.login_id',
+                'managed_users_add_info.manager_class',
+                'managed_users_add_info.attribute',
+            )
+            ->join('users', function ($q) {
+                $q->on('users.id', '=', 'managed_users_add_info.users_id');
+            })
+            ->where('managed_users_add_info.login_id', $loginId)->get()->first();;
+    }
+
+    public function getUserManageByUserId($userId = '')
+    {
+        return $this->model
+            ->select(
+                'users.name',
+                'users.id',
+                'managed_users_add_info.login_id',
+                'managed_users_add_info.manager_class',
+                'managed_users_add_info.attribute',
+            )
+            ->join('users', function ($q) {
+                $q->on('users.id', '=', 'managed_users_add_info.users_id');
+            })
+            ->where('users.id', $userId)->get()->first();;
+    }
+
+    public function updateByUserId($userId, $data)
+    {
+        return $this->model->where('users_id', $userId)->update($data);
+    }
+
+    public function deleteByUserId($userId)
+    {
+        return $this->model->where('users_id', $userId)->delete();
+    }
 }

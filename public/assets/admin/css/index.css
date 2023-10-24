@@ -19,6 +19,9 @@
     background: #99CCFF;
     width: 300px;
 }
+.main-content .container table.member tr, .main-content .container table.member th, .main-content .container table.member td{
+    border: 1px solid #ffffff;
+}
 
 .main-content .container table .download{
     width: 25%;
