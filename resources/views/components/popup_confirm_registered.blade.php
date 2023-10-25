@@ -21,7 +21,6 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
             </div>
         </div>
         <div class="popup-content" id="table-confirm-registry">
-            <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet">
             <input type="hidden" name="file_name" value="{{$fileName}}">
             <div class="header-content">
                 <span>{{$patternName}}</span>
@@ -33,7 +32,7 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
                         @foreach($answerData as $answer)
                             <div class="column">
                                 <?php $score += $answer->score?>
-                                <div class="tb-left">{{$answer->title}}</div>
+                                <div class="tb-left">{!!$answer->title!!}</div>
                                 @if(in_array($answer->input_method,[2,3,6]))
                                     <div class="tb-right">{!! str_replace(',','<br>',$answer->answer) !!}</div>
                                 @elseif($answer->input_method ==7)
