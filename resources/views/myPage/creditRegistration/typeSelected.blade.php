@@ -5,6 +5,28 @@
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css/registry.css" rel="stylesheet"/>
+    <style>
+        .content .table{
+            display: flex;
+            flex-flow: column;
+        }
+        .content .table .column{
+            display: flex;
+            border: 1px solid;
+        }
+        .content .table .column .tb-left,.tb-right{
+            width: 50%;
+            display: flex;
+            align-items: center;
+            padding: 5px 15px;
+        }
+        .content .table .column .tb-left{
+            border-right: 1px solid;
+            background-color:#FFE6CC;
+            text-align: left;
+            font-weight: 600;
+        }
+    </style>
 @endpush
 @section('content')
     {{ Breadcrumbs::render('typeSelected') }}
