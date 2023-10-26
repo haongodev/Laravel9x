@@ -53,7 +53,7 @@
                         $('.btn-popup-accept').removeClass().addClass('btn-popup-accept');
                         that.removeClass('reviewer').removeClass('btn-eff-gre').addClass('btn-eff-pri').addClass('sharing');
                         that.prev('span').addClass('become-manager');
-                        that.html('共有中');
+                        that.html('担当中');
                     }
                 },
                 error: function(xhr) {

@@ -10,7 +10,7 @@ if (!empty($typeNativeId)) {
     $typeNativeId = 0;
     $patternName = 'スーパービジョン（SV）';
 }
-$fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
+$fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
 ?>
 <div class="popup-wrapper confirm-popup">
     <div class="layout-popup">
@@ -21,40 +21,38 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
             </div>
         </div>
         <div class="popup-content" id="table-confirm-registry">
-            <link href="{{ asset('assets') }}/css/components.css" rel="stylesheet">
             <input type="hidden" name="file_name" value="{{$fileName}}">
             <div class="header-content">
                 <span>{{$patternName}}</span>
                 <button class="btn-export-pdf btn-eff-ora btn-hov">PDF</button>
             </div>
             <div class="content">
-                <table>
+                <div class="table">
                     <?php $score = 0?>
                         @foreach($answerData as $answer)
-                            <tr>
+                            <div class="column">
                                 <?php $score += $answer->score?>
-                                <th>{{$answer->title}}</th>
+                                <div class="tb-left">{!!$answer->title!!}</div>
                                 @if(in_array($answer->input_method,[2,3,6]))
-                                    <td>{!! str_replace(',','<br>',$answer->answer) !!}</td>
+                                    <div class="tb-right">{!! str_replace(',','<br>',$answer->answer) !!}</div>
                                 @elseif($answer->input_method ==7)
-                                    <td>{{date('Y年 m月 d日',strtotime($answer->answer))}}</td>
+                                    <div class="tb-right">{{date('Y年 m月 d日',strtotime($answer->answer))}}</div>
                                 @elseif($answer->input_method == 8)
                                         @php
                                             $arrAnswer =explode(',',$answer->answer);
                                         @endphp
-                                        <td>{{date('Y年 m月 d日',strtotime($arrAnswer[0]))}}~{{date('Y年 m月 d日',strtotime($arrAnswer[1]))}}</td>
+                                        <div class="tb-right">{{date('Y年 m月 d日',strtotime($arrAnswer[0]))}}~{{date('Y年 m月 d日',strtotime($arrAnswer[1]))}}</div>
                                     @else
-                                        <td>{{$answer->answer}}{{$answer->input_method==10 ? '年度' :''}}</td>
+                                        <div class="tb-right">{{$answer->answer}}{{$answer->input_method==10 ? '年度' :''}}</div>
                                 @endif
 
-                            </tr>
+                            </div>
                         @endforeach
-                    <tr>
-                        <th>登録できる単位数</th>
-                        <td>{{$score}}単位</td>
-
-                    </tr>
-                </table>
+                    <div class="column">
+                        <div class="tb-left">登録できる単位数</div>
+                        <div class="tb-right">{{$score}}単位</div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="popup-footer">
@@ -64,6 +62,8 @@ $fileName = '単位申請_' . $patternName . '_' . date('Ymd') . '.pdf';
         </div>
     </div>
 </div>
+
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>

@@ -310,19 +310,19 @@ class SakuraSetController extends Controller
                         $popupName = 'popup-A013-save-share';
                         $repo = $this->facesheetManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
-                        $subjectEmail = 'フェイスシート を更新しました（自動送信メール）';
+                        $subjectEmail = 'フェイスシート を修正しました（自動送信メール）';
                         break;
                     case 'initiative':
                         $popupName = 'popup-A015-save-share';
                         $repo = $this->initiativetableManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,$request->member_id,'only',['id','file_name','display_name','member_id']);
-                        $subjectEmail = 'さくらセット取り組み表 を更新しました（自動送信メール）';
+                        $subjectEmail = 'さくらセット取り組み表 を修正しました（自動送信メール）';
                         break;
                     default:
                         $popupName = 'popup-A014-save-share';
                         $repo = $this->reflectionsheetManageRepository;
                         $instance = $this->sakurasetService->getFileInfoByReviewerId($repo,['member_id' => $request->member_id, 'class' => $class],'only',['id','file_name','display_name','member_id']);
-                        $subjectEmail = '振り返りシート を更新しました（自動送信メール）';
+                        $subjectEmail = '振り返りシート を修正しました（自動送信メール）';
                         break;
                 }
                 $newFilename = $file->getClientOriginalName();
