@@ -26,7 +26,7 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
                 <span>{{$patternName}}</span>
                 <button class="btn-export-pdf btn-eff-ora btn-hov">PDF</button>
             </div>
-            <div class="content">
+            <div class="content" >
                 <div class="table">
                     <?php $score = 0?>
                         @foreach($answerData as $answer)
@@ -65,9 +65,8 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
 
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-<script>
+<script type="text/javascript" src="{{ asset('assets') }}/js-lib/domtopng.js"></script>
+<script type="module">
     $(document).ready(function () {
         $('.close-icon,.btn-popup-decline').click(function (e) {
             $('.popup-wrapper .popup-content .content').html('');
@@ -78,19 +77,22 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
         $('.btn-export-pdf').click(function () {
             $('.btn-export-pdf').addClass('hidden');
             var file_name = $('#table-confirm-registry').find('input[name="file_name"]').val()
-            html2canvas($('#table-confirm-registry')[0], {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [{
-                            image: data,
-                            width: 500
-                        }]
-                    };
-                    pdfMake.createPdf(docDefinition).download(file_name);
+            var node = document.getElementById('table-confirm-registry');
+            domtoimage.toPng(node, { width: node.scrollWidth, height: 1500 })
+            .then (function (dataUrl) {
+                console.log(dataUrl);
+                var docDefinition = {
+                    content: [{
+                        image: dataUrl,
+                        width: 500
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download(file_name);
 
-                    $('.btn-export-pdf').removeClass('hidden');
-                }
+                $('.btn-export-pdf').removeClass('hidden');
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
             });
         })
 

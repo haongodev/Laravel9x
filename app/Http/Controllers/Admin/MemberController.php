@@ -73,6 +73,16 @@ class MemberController extends Controller
         return view('admin.member.user.index',['userData'=>$userData]);
     }
 
+    public function userRegistration(Request $request)
+    {
+        return view('admin.member.user.registration');
+    }
+
+    public function userPostRegistration(Request $request)
+    {
+        dd($request->all());
+    }
+    
     public function userDetail($userId = '')
     {
         Session::forget('manage_user_add_info');
