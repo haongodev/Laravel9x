@@ -19,4 +19,6 @@ Route::group(['middleware'=>'auth:admin'],function() {
     Route::get('/member/list_file/{login_id}',[MemberController::class, 'listFile'])->name('admin.member.list_file');
     Route::get('/member/manage',[MemberController::class, 'userManage'])->name('admin.member.user.manage');
     Route::get('/member/manage/detail/{login_id}',[MemberController::class, 'userDetail'])->name('admin.member.user.detail');
+    Route::get('/member/manage/register',[MemberController::class, 'userRegistration'])->name('admin.member.user.registration');
+    Route::post('/member/manage/postRegister',[MemberController::class, 'userPostRegistration'])->name('admin.member.user.postRegister');
 });

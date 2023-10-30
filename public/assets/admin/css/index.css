@@ -24,3 +24,41 @@
     width: 25%;
     height: auto;
 }
+.form{
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+}
+.form .form-group{
+    display: flex;
+    align-items: center;
+}
+.form .form-group input{
+    padding: 0;
+    border-radius: 4px;
+}
+.form .form-group label{
+    min-width: 200px;
+    padding: 5px;
+    margin-right: 5px;
+    background-color: #99CCFF;
+}
+.form .form-group .button-submit{
+    padding: 5px 25px;
+    border-radius: 4px;
+    background-color: #ffff;
+}
+.button-back{
+    padding: 5px 25px;
+    border-radius: 4px;
+    background-color: #ffff;
+}
+.w-full{
+    width: 100%;
+}
+.align-center{
+    justify-content: center;
+}
+.mt-4{
+    margin-top: 4rem;
+}

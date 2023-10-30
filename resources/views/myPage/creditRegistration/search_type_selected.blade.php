@@ -32,7 +32,6 @@
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 data: {answer_manage_id: answer_manage_id, original_question_id:original_question_id, type_native_id :type_native_id},
                 success: function (data) {
-                    console.log(data);
                     $('body').append(data);
                 },
             });
