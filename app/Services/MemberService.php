@@ -21,6 +21,10 @@ class MemberService
      * @var UserRepository
      */
     protected $userRepository;
+
+    /**
+     * @var ManagedUsersAddInfoRepository
+     */
     protected $managedUsersAddInfoRepository;
 
 
@@ -28,6 +32,7 @@ class MemberService
      * MemberService constructor.
      * @param UserAddInfoRepository $userAddInfoRepository
      * @param UserRepository $userRepository
+     * @param ManagedUsersAddInfoRepository $managedUsersAddInfoRepository
      */
     public function __construct(
         UserAddInfoRepository $userAddInfoRepository,
@@ -69,5 +74,44 @@ class MemberService
     {
         return $this->managedUsersAddInfoRepository->getUserManage($condition);
     }
+
+    public function getUserManageByLoginId($loginId = '')
+    {
+        return $this->managedUsersAddInfoRepository->getUserManageByLoginId($loginId);
+    }
+
+    public function getUserManageByUserId($userId = '')
+    {
+        return $this->managedUsersAddInfoRepository->getUserManageByUserId($userId);
+    }
+
+    public function updateUserManage($userId = 0, $data = [])
+    {
+        DB::beginTransaction();
+        try {
+            if (!empty($data['password']) && $data['password'] != config('constants.passwordDefault')) {
+                $dataUser['password'] = Hash::make($data['password']);
+            }
+            $dataUser['name'] = $data['name'];
+            $this->userRepository->updateById($userId, $dataUser);
+
+            $dataUserInfo['login_id'] = $data['login_id'];
+            $dataUserInfo['manager_class'] = $data['manager_class'];
+            $dataUserInfo['attribute'] = $data['attribute'];
+            $this->managedUsersAddInfoRepository->updateByUserId($userId, $dataUserInfo);
+            DB::commit();
+            return true;
+        } catch (QueryException $exc) {
+            DB::rollBack();
+            Log::error($exc->getMessage(), $exc->getTrace());
+            return false;
+        }
+    }
+
+    public function deleteUserManageByUserId($userId = 0)
+    {
+        return $this->managedUsersAddInfoRepository->deleteByUserId($userId);
+    }
+
 }
 

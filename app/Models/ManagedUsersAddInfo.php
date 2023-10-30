@@ -13,6 +13,8 @@ class ManagedUsersAddInfo extends Model
 {
     use SoftDeletes;// add soft delete
     const DELETED_AT = 'delete_date';
+    public const CREATED_AT = 'registration_date';
+    public const UPDATED_AT = 'update_date';
     /**
      * The database table used by the model.
      *
