@@ -66,9 +66,14 @@
     border: unset;
     padding: 0px 50px;
     cursor: pointer;
-    background: #FFB366;
     font-size: 32px;
     min-width: 227px;
+}
+.popup-wrapper .layout-popup .popup-footer .btn-accept,.btn-popup-accept,.btn-popup-decline{
+    background: #FFB366;
+}
+.popup-wrapper .layout-popup .popup-footer .btn-delete{
+    background: #999999;
 }
 .confirm-popup .layout-popup .popup-footer .btn-popup-accept{
     background: #007FFF;
@@ -95,6 +100,7 @@
     border: 1px solid;
 }
 #toast-container{
+    position: fixed;
     width: 100% !important;
     top: 0!important;
     left: 0!important;

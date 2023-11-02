@@ -80,7 +80,18 @@ class MemberController extends Controller
 
     public function userPostRegistration(Request $request)
     {
-        dd($request->all());
+        $response = ['success'=>true, 'message' => ''];
+        $password = $request->get('password');
+        $passwordConfirm = $request->get('password_confirm');
+        //Validate
+        if($password != $passwordConfirm){
+            $response['message'] = 'パスワードとパスワード（確認用）が異なっています。';
+        }else if($password == '' && $passwordConfirm == ''){
+            $response['message'] = 'パスワードを入力して下さい';
+        }
+        if($response['message']){
+            return response()->json($response);
+        }
     }
     
     public function userDetail($userId = '')

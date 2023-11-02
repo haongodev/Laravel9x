@@ -15,7 +15,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <form class="form" action="{{ route('admin.member.user.postRegister') }}" method="post">
+            <form class="formRegister form" action="{{ route('admin.member.user.postRegister') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label>ID</label>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group">
                     <label>管理者区分</label>
-                    <select name="manager_class">
+                    <select name="manager_class" class="w-full">
                         <option value="0">権限 1</option>
                         <option value="1">権限 2</option>
                         <option value="2">権限 3</option>
@@ -43,11 +43,11 @@
                 </div>
                 <div class="form-group">
                     <label>パスワード</label>
-                    <input type="password" name="password">
+                    <input type="password" class="password" name="password">
                 </div>
                 <div class="form-group">
                     <label>パスワード（確認）</label>
-                    <input type="password" name="password_confirm">
+                    <input type="password" class="password_confirm" name="password_confirm">
                 </div>
                 <div class="form-group align-center mt-4">
                     <button type="submit" class="button-submit">確認</button>
@@ -58,3 +58,23 @@
     </div>
 @endsection
 
+@push('js')
+    <script>
+        $(".formRegister").submit(function (e) { 
+            e.preventDefault();
+            var password = $('#password').val();
+            var password_confirm = $('#password_confirm').val();
+            var state = true;
+            if(password !== password_confirm){
+                toastr.options.timeOut = 3000;
+                toastr.info('パスワードとパスワード（確認用）が異なっています。')
+                state = false;
+            }else if(password == '' && password_confirm == ''){
+                toastr.options.timeOut = 3000;
+                toastr.info('パスワードを入力して下さい')
+                state = false;
+            }
+            return state;
+        });
+    </script>
+@endpush
