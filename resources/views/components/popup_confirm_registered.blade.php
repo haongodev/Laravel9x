@@ -20,7 +20,7 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
                 <img class="close-icon" src="{{ asset('assets') }}/images/menu-icon/close.png" alt="close icon">
             </div>
         </div>
-        <div class="popup-content" id="table-confirm-registry">
+        <div class="popup-content" id="table-confirm-registry" originId="{{ $originalQuestionId }}" answerManageId="{{ $answerManageId }}">
             <input type="hidden" name="file_name" value="{{$fileName}}">
             <div class="header-content">
                 <span>{{$patternName}}</span>
@@ -56,9 +56,10 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
             </div>
         </div>
         <div class="popup-footer">
-            <button type="button" class="btn-next btn-eff-ora btn-hov" register="true"
+            <button type="button" class="btn-next btn-accept btn-eff-ora btn-hov" register="true"
                     onclick="window.location='{{Route('creditEdit',['answer_manage_id'=>$answerManageId, 'type_native_id' => $typeNativeId])}}'">
                 修正する</button>
+            <button type="button" class="btn-next btn-eff-bla btn-delete btn-hov delete-cre">削除する</button>
         </div>
     </div>
 </div>
@@ -69,6 +70,13 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
 <script type="module">
     $(document).ready(function () {
         $('.close-icon,.btn-popup-decline').click(function (e) {
+            var hasLayer = $(this).parents('.popup-wrapper').attr('hasLayer');
+            if (typeof hasLayer !== 'undefined' && hasLayer !== false) {
+                $(this).parents('.popup-wrapper').find(".content").html('');
+                $(this).parents('.popup-wrapper').addClass("hidden");
+                $(this).prev().removeAttr("last-confirm");
+                return false;
+            }
             $('.popup-wrapper .popup-content .content').html('');
             $('.popup-wrapper').addClass('hidden');
             $('.btn-popup-accept').removeAttr('last-confirm');
@@ -80,7 +88,6 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
             var node = document.getElementById('table-confirm-registry');
             domtoimage.toPng(node, { width: node.scrollWidth, height: 1500 })
             .then (function (dataUrl) {
-                console.log(dataUrl);
                 var docDefinition = {
                     content: [{
                         image: dataUrl,
@@ -96,8 +103,46 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
             });
         })
 
-        $('.btn-next').click(function (){
-
+        $('.btn-delete').click(function (){
+            var mess = "単位を削除しますか？";
+            $('#popup_confirm_back_register').removeClass('hidden').attr('hasLayer',true).css('zIndex',12);
+            $('#popup_confirm_back_register .content').html(mess);
+            
+        })
+        $('.btn-popup-accept').click(function (){
+            var lastConfirm = $(this).attr('last-confirm');
+            if (typeof lastConfirm !== 'undefined' && lastConfirm !== false) {
+                var origin_id = $('#table-confirm-registry').attr('originId');
+                var answer_id = $('#table-confirm-registry').attr('answerManageId');
+                var url = '{{ route("handleCreditDelete") }}';
+                var data = {
+                    origin_id,
+                    answer_id
+                }
+                $.ajax({
+                    url: url,
+                    data: data,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            $('.answer_'+answer_id).remove();
+                            toastr.options.timeOut = 3000;
+                            toastr.info('単位を削除しました。');
+                            $('.popup-wrapper .popup-content .content').html('');
+                            $('.popup-wrapper').addClass('hidden');
+                            $('.btn-popup-accept').removeAttr('last-confirm');
+                        }
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                    }
+                });
+            }
+            var mess = "本当に削除しますか？";
+            $('#popup_confirm_back_register .content').html(mess);
+            $(this).attr('last-confirm',true);
+            
         })
     })
 </script>

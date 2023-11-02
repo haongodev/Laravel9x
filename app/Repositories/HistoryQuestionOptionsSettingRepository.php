@@ -24,4 +24,8 @@ class HistoryQuestionOptionsSettingRepository
     {
         return $this->model->whereIn('id',$ids)->get()->keyBy('id');
     }
+    public function getByQuestionId($questionId = 0)
+    {
+        return $this->model->where('question_id',$questionId)->get();
+    }
 }

@@ -1,6 +1,6 @@
 @foreach($creditsData as $credits)
     <a href="javascript:void(0)"
-       class="registered"
+       class="registered answer_{{$credits->answer_manage_id}}"
        data-answer-manage-id="{{$credits->answer_manage_id}}"
        data-original-question-id="{{$credits->original_question_id}}"
        data-type-native-id = {{$typeNativeId}}
