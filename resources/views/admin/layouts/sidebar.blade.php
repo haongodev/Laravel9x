@@ -30,7 +30,7 @@
                         </a>
                     </li>
                     <li class="action">
-                        <a href="{{ route('admin.member.user.registration') }}">
+                        <a href="{{ route('admin.member.user.create') }}">
                             <span>ユーザー登録</span>
                         </a>
                     </li>

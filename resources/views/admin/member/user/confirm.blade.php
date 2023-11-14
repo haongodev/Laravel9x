@@ -20,9 +20,9 @@
         </div>
     </div>
     <div class="container">
-        <form action="{{route('admin.member.user.update',['user_id'=>$user->id])}}">
+        <form action="{{route('admin.member.user.update',['user_id'=>$user->id ?? null])}}">
             <div class="row">
-                <input type="hidden" name="id" value="{{$user->id}}">
+                <input type="hidden" name="id" value="{{$user->id ?? null}}">
                 <table class="member">
                     <tr>
                         <th>ID</th>
@@ -58,7 +58,7 @@
                     <div class="col-sm-12 md-3 col-md-2">
                         <div class="row">
                             <button class="btn btn-white" type="button"
-                                    onclick="window.location.href='{{route('admin.member.user.edit',['user_id'=>$user->id])}}'">
+                                    onclick="window.location.href='{{ isset($user->id) ? route('admin.member.user.edit',['user_id'=>$user->id]) : route('admin.member.user.create')}}'">
                                 戻る
                             </button>
                         </div>

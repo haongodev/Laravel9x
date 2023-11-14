@@ -18,7 +18,7 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
                     {{-- 3 --}}
                     <tr rowspan="{{count($questionSetting->question_option_setting)}}">
                         @foreach($questionSetting->question_option_setting as $questionOption)
-                            <td><input class="branch-question branch-question-{{$questionSetting->id}}" type="checkbox"
+                            <td><input class="creditInput branch-question branch-question-{{$questionSetting->id}}" type="checkbox"
                                        name="question[{{$questionSetting->id}}][]" value="{{$questionOption->id}}"
                                        id="checkbox{{$questionOption->id}}"
                                        data-question-option-setting-id="{{$questionOption->id}}"

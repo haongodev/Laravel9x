@@ -29,7 +29,7 @@
             <div class="w-100 group-control">
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75">
-                    <textarea class="auto_grow count-length" rows="10" name="question[{{$questionSetting->id}}]">
+                    <textarea class="auto_grow count-length textarea" rows="10" name="question[{{$questionSetting->id}}]">
                         {{$answerData->answer ?? ''}}
                     </textarea>
                         <p class="input-length"><span class="number">0</span>文字</p>
@@ -323,7 +323,6 @@ $(document).ready(function(){
                 removeQuestion($(this))
             } else {
                 if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
-                    console.log('add', current_id);
                     getQuestionBranch(this_choose, current_id)
                 }
 

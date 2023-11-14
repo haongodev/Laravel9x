@@ -9,7 +9,7 @@ $answerData = $answerInfoData[$questionSetting->id] ?? [];
                    data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <div class="w-75 date-group second">
                 <div class="date-container">
-                    <input type="text" class="datepicker" name="question[{{$questionSetting->id}}]" readonly
+                    <input type="text" class="creditInput datepicker" name="question[{{$questionSetting->id}}]" readonly
                            value="{{!empty($answerData->answer) ? date('Y-m-d', strtotime($answerData->answer)) : ''}}"/>
                     <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
                 </div>

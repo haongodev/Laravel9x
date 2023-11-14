@@ -73,12 +73,13 @@ class MemberController extends Controller
         return view('admin.member.user.index',['userData'=>$userData]);
     }
 
-    public function userRegistration(Request $request)
+    public function userCreate(Request $request)
     {
-        return view('admin.member.user.registration');
+        $old = Session::get('manage_create_user');
+        return view('admin.member.user.registration',['old' => $old]);
     }
 
-    public function userPostRegistration(Request $request)
+    public function userCreateConfirm(Request $request)
     {
         $response = ['success'=>true, 'message' => ''];
         $password = $request->get('password');
@@ -92,8 +93,11 @@ class MemberController extends Controller
         if($response['message']){
             return response()->json($response);
         }
+        $user = $request->except('_token');
+        $user = (object) $request->all();
+        Session::put('manage_create_user', $user);
+        return view('admin.member.user.confirm', ['user' => $user]);
     }
-    
     public function userDetail($userId = '')
     {
         Session::forget('manage_user_add_info');

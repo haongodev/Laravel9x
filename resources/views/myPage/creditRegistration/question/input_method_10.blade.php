@@ -10,7 +10,7 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
 
             <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}"
                    data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
-            <select class="w-75 select-branch-question select-chosen"
+            <select class="creditInput w-75 select-branch-question select-chosen"
                     id="question_select_{{$questionSetting->id}}"
                     name="question[{{$questionSetting->id}}]">
                 <option value=""></option>
@@ -48,7 +48,6 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
                     removeQuestion($(this))
                 } else {
                     if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
-                        console.log('add', current_id);
                         getQuestionBranch(this_choose, current_id)
                     }
 
