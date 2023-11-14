@@ -131,9 +131,12 @@ $('.submit-btn').click(function () {
     var form_id = form.attr('id');
    // var required = validate_required(form);
    // var not_view_video = validate_view_video(form)
+
     if(!validate_required(form)){
         return false;
     }else if(!validate_view_video(form)){
+        return  false;
+    }else if(!validate_date_system(form)){
         return  false;
     }else{
         $('#'+form_id).submit();
@@ -227,6 +230,36 @@ function validate_view_video(form)
     });
     return validate
 
+}
+
+function validate_date_system(form)
+{
+    const now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth();
+    var validate = true;
+    form.find('.validate-date').each(function () {
+        var value = $(this).val();
+        if($(this).hasClass('input-method-10')){
+            var year_system = month > 3 ? year : year-1
+            if(value != '' && value > year_system){
+                validate = false;
+                $(this).closest('.group-control').find('.title').addClass('text-danger');
+            }
+        }else if(value != ''){
+            var dateForm = new Date(value);
+            if(dateForm > now){
+                validate = false;
+                $(this).closest('.group-control').find('.title').addClass('text-danger');
+            }
+        }
+
+    })
+    if(!validate){
+        toastr.options.timeOut = 6000;
+        toastr.info('未来日は登録できません。')
+    }
+    return validate
 }
 
 
