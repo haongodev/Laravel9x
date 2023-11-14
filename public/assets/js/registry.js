@@ -19,7 +19,6 @@ $('#registry').on('click', '.branch-question', function (e) {
         })
     }
 
-    console.log(question_option_setting_id);
     if (isGetQuestion) {
         getQuestionBranch(this_choose, question_option_setting_id)
     }
@@ -34,7 +33,6 @@ $('#registry').on('change', '.select-branch-question', function (e) {
             removeQuestion($(this))
         } else {
             if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
-                console.log('add', current_id);
                 getQuestionBranch(this_choose, current_id)
             }
 
@@ -197,8 +195,6 @@ function validate_required(form)
         if(!required){
             $(this).addClass('text-danger');
         }
-
-        console.log(question_id, required);
     });
     if(!validate){
         toastr.options.timeOut = 6000;

@@ -48,7 +48,6 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
                     removeQuestion($(this))
                 } else {
                     if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
-                        console.log('add', current_id);
                         getQuestionBranch(this_choose, current_id)
                     }
 

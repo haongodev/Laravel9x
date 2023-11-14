@@ -18,11 +18,13 @@ Route::group(['middleware'=>'auth:admin'],function() {
     Route::get('/member/detail/{login_id}',[MemberController::class, 'detail'])->name('admin.member.detail');
     Route::get('/member/list_file/{login_id}',[MemberController::class, 'listFile'])->name('admin.member.list_file');
     Route::get('/member/manage',[MemberController::class, 'userManage'])->name('admin.member.user.manage');
-    Route::get('/member/manage/register',[MemberController::class, 'userRegistration'])->name('admin.member.user.registration');
-    Route::post('/member/manage/postRegister',[MemberController::class, 'userPostRegistration'])->name('admin.member.user.postRegister');
     Route::get('/member/manage/detail/{user_id}',[MemberController::class, 'userDetail'])->name('admin.member.user.detail');
+    // edit
     Route::get('/member/manage/edit/{user_id}',[MemberController::class, 'userEdit'])->name('admin.member.user.edit');
     Route::post('/member/manage/confirm/{user_id}',[MemberController::class, 'userEditConfirm'])->name('admin.member.user.confirm');
-    Route::post('/member/manage/edit/{user_id}',[MemberController::class, 'userUpdate'])->name('admin.member.user.update');
+    Route::post('/member/manage/edit/{user_id?}',[MemberController::class, 'userUpdate'])->name('admin.member.user.update');
     Route::post('/member/manage/delete}',[MemberController::class, 'userDelete'])->name('admin.member.user.delete');
+    // create
+    Route::get('/member/manage/create',[MemberController::class, 'userCreate'])->name('admin.member.user.create');
+    Route::post('/member/manage/confirm',[MemberController::class, 'userCreateConfirm'])->name('admin.member.user.confirm_create');
 });

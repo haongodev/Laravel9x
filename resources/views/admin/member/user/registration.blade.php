@@ -15,30 +15,30 @@
     </div>
     <div class="container">
         <div class="row">
-            <form class="formRegister form" action="{{ route('admin.member.user.postRegister') }}" method="post">
+            <form class="formRegister form" action="{{ route('admin.member.user.confirm_create') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label>ID</label>
-                    <input type="number" maxlength="10" class="w-full" name="id">
+                    <input type="text" maxlength="10" class="w-full" name="login_id" value="{{$old->login_id ?? ''}}">
                 </div>
                 <div class="form-group">
                     <label>氏名</label>
-                    <input type="text" maxlength="200" class="w-full" name="name">
+                    <input type="text" maxlength="200" class="w-full" name="name" value="{{$old->name ?? ''}}">
                 </div>
                 <div class="form-group">
                     <label>属性</label>
                     <select name="attribute" class="w-full">
                         <option value=""></option>
-                        <option value="0">事務局</option>
-                        <option value="1">研修委員</option>
+                        <option {{$old->attribute == 0 ? 'selected' : ''}} value="0">事務局</option>
+                        <option {{$old->attribute == 1 ? 'selected' : ''}} value="1">研修委員</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>管理者区分</label>
                     <select name="manager_class" class="w-full">
-                        <option value="0">権限 1</option>
-                        <option value="1">権限 2</option>
-                        <option value="2">権限 3</option>
+                        <option {{$old->manager_class == 0 ? 'selected' : ''}} value="0">権限 1</option>
+                        <option {{$old->manager_class == 1 ? 'selected' : ''}} value="1">権限 2</option>
+                        <option {{$old->manager_class == 2 ? 'selected' : ''}} value="2">権限 3</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -61,20 +61,20 @@
 @push('js')
     <script>
         $(".formRegister").submit(function (e) { 
-            e.preventDefault();
-            var password = $('#password').val();
-            var password_confirm = $('#password_confirm').val();
+            var password = $('.password').val();
+            var password_confirm = $('.password_confirm').val();
             var state = true;
             if(password !== password_confirm){
+                e.preventDefault();
                 toastr.options.timeOut = 3000;
                 toastr.info('パスワードとパスワード（確認用）が異なっています。')
                 state = false;
             }else if(password == '' && password_confirm == ''){
+                e.preventDefault();
                 toastr.options.timeOut = 3000;
                 toastr.info('パスワードを入力して下さい')
                 state = false;
             }
-            return state;
         });
     </script>
 @endpush
