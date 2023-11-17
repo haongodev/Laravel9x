@@ -45,4 +45,8 @@ class AnswerInfoService
     {
         return $this->answerInfoRepository->getByAnswerManageId($answerManageId);
     }
+    public function deleteByAnswerManageId($answerManageId = 0)
+    {
+        return $this->answerInfoRepository->deleteByAnswerManageId($answerManageId);
+    }
 }

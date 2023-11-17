@@ -315,6 +315,21 @@
             type: 'bar',
             data: data3,
             options: {
+                onClick: function (evt, activeEls) {
+                    if (activeEls.length > 0) { 
+                        const label = data3.datasets[activeEls[0].datasetIndex].label;
+                        var type_native_id = 0;
+                        if(label=='社会的活動'){
+                            type_native_id = 2
+                        }else if(label=='スーパービジョン'){
+                            type_native_id = 0
+                        }else{
+                            type_native_id = 1;
+                        }
+                        var url = '{{route('typeSelected')}}?type_native_id='+type_native_id;
+                        window.location.href=url;
+                    }
+                },
                 scales: {
                     y: {
                         ticks: {
@@ -501,5 +516,38 @@
                     }
                 });
         });
+        
+        ctx1.onclick = function (e){
+            var activePoints = myChart1.getElementsAtEventForMode(e, 'point', myChart1.options);
+            var firstPoint = activePoints[0];
+            var label = myChart1.data.labels[firstPoint.index];
+            var type_native_id = 0;
+            if(label=='社会的活動'){
+                type_native_id = 2
+            }else if(label=='スーパービジョン'){
+                type_native_id = 0
+            }else{
+                type_native_id = 1;
+            }
+            var url = '{{route('typeSelected')}}?type_native_id='+type_native_id;
+            window.location.href=url;
+        }
+        
+        ctx2.onclick = function (e){
+            var activePoints = myChart2.getElementsAtEventForMode(e, 'point', myChart2.options);
+            var firstPoint = activePoints[0];
+            var label = myChart2.data.labels[firstPoint.index];
+            var type_native_id = 0;
+            if(label=='社会的活動'){
+                type_native_id = 2
+            }else if(label=='スーパービジョン'){
+                type_native_id = 0
+            }else{
+                type_native_id = 1;
+            }
+            var url = '{{route('typeSelected')}}?type_native_id='+type_native_id;
+            window.location.href=url;
+        }
+
     </script>
 @endpush

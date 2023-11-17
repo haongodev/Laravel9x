@@ -23,7 +23,7 @@
                         <tr>
                             <th class="bg-red">{{$index}} {{$className}}</th>
                             @foreach($groupQuestionOption as $keyOption => $questionOption)
-                                <td><input class="branch-question branch-question-{{$questionSetting->id}}"
+                                <td><input class="creditInput branch-question branch-question-{{$questionSetting->id}}"
                                            type="checkbox"
                                            name="question[{{$questionSetting->id}}][]" value="{{$questionOption->id}}"
                                            id="checkbox{{$questionOption->id}}"

@@ -15,7 +15,7 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
                 <table>
                     <tr>
                         @foreach($questionSetting->question_option_setting as $questionOption)
-                            <td><input class="branch-question branch-question-{{$questionSetting->id}}" type="radio"
+                            <td><input class="creditInput branch-question branch-question-{{$questionSetting->id}}" type="radio"
                                        name="question[{{$questionSetting->id}}]"
                                        value="{{$questionOption->id}}" id="checkbox{{$questionOption->id}}"
                                        data-question-option-setting-id="{{$questionOption->id}}"
