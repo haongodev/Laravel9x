@@ -19,7 +19,6 @@ $('#registry').on('click', '.branch-question', function (e) {
         })
     }
 
-    console.log(question_option_setting_id);
     if (isGetQuestion) {
         getQuestionBranch(this_choose, question_option_setting_id)
     }
@@ -34,7 +33,6 @@ $('#registry').on('change', '.select-branch-question', function (e) {
             removeQuestion($(this))
         } else {
             if ($('#registry').find('.before-question-id-' + current_id).length == 0) {
-                console.log('add', current_id);
                 getQuestionBranch(this_choose, current_id)
             }
 
@@ -133,9 +131,12 @@ $('.submit-btn').click(function () {
     var form_id = form.attr('id');
    // var required = validate_required(form);
    // var not_view_video = validate_view_video(form)
+
     if(!validate_required(form)){
         return false;
     }else if(!validate_view_video(form)){
+        return  false;
+    }else if(!validate_date_system(form)){
         return  false;
     }else{
         $('#'+form_id).submit();
@@ -194,8 +195,6 @@ function validate_required(form)
         if(!required){
             $(this).addClass('text-danger');
         }
-
-        console.log(question_id, required);
     });
     if(!validate){
         toastr.options.timeOut = 6000;
@@ -231,6 +230,36 @@ function validate_view_video(form)
     });
     return validate
 
+}
+
+function validate_date_system(form)
+{
+    const now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth();
+    var validate = true;
+    form.find('.validate-date').each(function () {
+        var value = $(this).val();
+        if($(this).hasClass('input-method-10')){
+            var year_system = month > 3 ? year : year-1
+            if(value != '' && value > year_system){
+                validate = false;
+                $(this).closest('.group-control').find('.title').addClass('text-danger');
+            }
+        }else if(value != ''){
+            var dateForm = new Date(value);
+            if(dateForm > now){
+                validate = false;
+                $(this).closest('.group-control').find('.title').addClass('text-danger');
+            }
+        }
+
+    })
+    if(!validate){
+        toastr.options.timeOut = 6000;
+        toastr.info('未来日は登録できません。')
+    }
+    return validate
 }
 
 

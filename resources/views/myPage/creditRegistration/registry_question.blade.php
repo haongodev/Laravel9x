@@ -7,7 +7,7 @@
             <div class="w-100 group-control">
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75">
-                    <input class="count-length" type="text" name="question[{{$questionSetting->id}}]"
+                    <input class="count-length creditInput" type="text" name="question[{{$questionSetting->id}}]"
                            placeholder=""
                            value="{{$answerData->answer ?? ''}}"/>
                     <p class="input-length"><span class="number">0</span>文字</p>
@@ -25,7 +25,7 @@
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}"
                        data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75">
-                <textarea class="auto_grow count-length" rows="10" name="question[{{$questionSetting->id}}]"
+                <textarea class="auto_grow count-length textarea" rows="10" name="question[{{$questionSetting->id}}]"
                 >{{$answerData->answer ?? ''}}</textarea>
                     <p class="input-length"><span class="number">0</span>文字</p>
                 </div>
@@ -42,7 +42,7 @@
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group second">
                     <div class="date-container">
-                        <input type="text" class="datepicker" readonly name="question[{{$questionSetting->id}}]"
+                        <input class="creditInput" type="text" class="datepicker" readonly name="question[{{$questionSetting->id}}]"
                                value="{{!empty($answerData->answer) ? date('Y-m-d',$answerData->answer) : ''}}"/>
                         <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
                     </div>
@@ -63,14 +63,14 @@
                 <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <div class="w-75 date-group">
                     <div class="date-container">
-                        <input class="date-register datepicker" type="text" readonly
+                        <input class="date-register datepicker creditInput" type="text" readonly
                                name="question[{{$questionSetting->id}}][start]"
                                value="{{!empty($arrAnswer[0]) ? date('Y-m-d',strtotime($arrAnswer[0])) : ''}}"/>
                         <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
                     </div>
                     <span>~</span>
                     <div class="date-container">
-                        <input class="date-register datepicker" type="text" readonly
+                        <input class="date-register datepicker creditInput" type="text" readonly
                                name="question[{{$questionSetting->id}}][end]"
                                value="{{!empty($arrAnswer[1]) ? date('Y-m-d',strtotime($arrAnswer[1])) : ''}}"/>
                         <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
@@ -91,7 +91,7 @@
                 <div class="w-100 group-control">
 
                     <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
-                    <select class="w-75 select-branch-question select-chosen"
+                    <select class="w-75 select-branch-question creditInput select-chosen"
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}]">
                         <option value=""></option>
@@ -130,7 +130,7 @@
                         <table>
                             <tr>
                                 @foreach($questionSetting->question_option_setting as $questionOption)
-                                    <td><input class="branch-question" type="checkbox"
+                                    <td><input class="branch-question creditInput" type="checkbox"
                                                name="question[{{$questionSetting->id}}][]"
                                                value="{{$questionOption->id}}"
                                                id="checkbox{{$questionOption->id}}"
@@ -174,7 +174,7 @@
                                 <tr>
                                     <th class="bg-red">{{$index}} {{$className}}</th>
                                     @foreach($groupQuestionOption as $keyOption => $questionOption)
-                                        <td><input class="branch-question" type="checkbox"
+                                        <td><input class="branch-question creditInput" type="checkbox"
                                                    name="question[{{$questionSetting->id}}][]"
                                                    value="{{$questionOption->id}}"
                                                    id="checkbox{{$questionOption->id}}"
@@ -205,7 +205,7 @@
                         <table>
                             <tr>
                                 @foreach($questionSetting->question_option_setting as $questionOption)
-                                    <td><input class="branch-question" type="radio"
+                                    <td><input class="branch-question creditInput" type="radio"
                                                name="question[{{$questionSetting->id}}]"
                                                value="{{$questionOption->id}}"
                                                id="checkbox{{$questionOption->id}}"
@@ -231,7 +231,7 @@
             >
                 <div class="w-100 group-control">
                     <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
-                    <select class="w-75 select-branch-question select-chosen"
+                    <select class="w-75 select-branch-question select-chosen creditInput"
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}]">
                         <option value=""></option>
@@ -254,7 +254,7 @@
                  data-current-question-id="{{$questionSetting->id}}">
                 <div class="w-100 group-control">
                     <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
-                    <select class="w-75 select-branch-question select-chosen" multiple
+                    <select class="w-75 select-branch-question select-chosen creditInput" multiple
                             id="question_select_{{$questionSetting->id}}"
                             name="question[{{$questionSetting->id}}][]">
                         <option value=""></option>

@@ -10,7 +10,7 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
             <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}"
                    data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <div class="w-75">
-                <input class="count-length" type="text" name="question[{{$questionSetting->id}}]"
+                <input class="count-length creditInput" type="text" name="question[{{$questionSetting->id}}]"
                        placeholder=""
                        value="{{$answerData->answer ?? ''}}"/>
                 <p class="input-length"><span class="number">0</span>文字</p>

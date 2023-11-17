@@ -40,6 +40,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::get('/creditRegistry',[CreditRegistrationController::class, 'creditRegistry'])->name('creditRegistry');
         Route::post('/handleCreditRegistry',[CreditRegistrationController::class, 'handleCreditRegistry'])->name('handleCreditRegistry');
         Route::post('/handleCreditUpdate',[CreditRegistrationController::class, 'handleCreditUpdate'])->name('handleCreditUpdate');
+        Route::post('/handleCreditDelete',[CreditRegistrationController::class, 'handleCreditDelete'])->name('handleCreditDelete');
         Route::post('/getBranchQuestion',[CreditRegistrationController::class, 'getBranchQuestion'])->name('getBranchQuestion');
         Route::post('/getLinkQuestion',[CreditRegistrationController::class, 'getLinkQuestion'])->name('getLinkQuestion');
         Route::post('/getBranchHisQuestion',[CreditRegistrationController::class, 'getBranchHisQuestion'])->name('getBranchHisQuestion');

@@ -24,4 +24,8 @@ class HistoryQuestionOptionSettingService
     {
         return $this->historyQuestionOptionsSettingRepository->getByIds($ids);
     }
+    public function getByQuestionId($questionId = 0)
+    {
+        return $this->historyQuestionOptionsSettingRepository->getByQuestionId($questionId);
+    }
 }

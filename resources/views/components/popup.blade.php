@@ -15,8 +15,8 @@
             </div>
         </div>
         <div class="popup-footer">
-            <button type="button" class="btn-popup-accept">はい</button>
-            <button type="button" class="btn-popup-decline">いいえ</button>
+            <button type="button" class="btn-popup-accept btn-eff-ora btn-hov">はい</button>
+            <button type="button" class="btn-popup-decline btn-eff-ora btn-hov">いいえ</button>
         </div>
     </div>
 </div>

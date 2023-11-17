@@ -41,6 +41,9 @@
                     </div>
                 @endif
             </form>
+            <div class="wrapper-loader hidden">
+                <span class="loader"></span>
+            </div>
         </div>
         <div class="contain2">
             @if(!empty($guidanceData[2]))
@@ -68,9 +71,93 @@
             integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-
+        if(localStorage.getItem("myCredit") !== null){
+            $('.wrapper-loader').removeClass('hidden');
+            var localCredit = JSON.parse(localStorage.getItem("myCredit"));
+            localCredit.forEach(element => {
+                if(element.type === 'radio'){
+                    $('input[name="'+element.key+'"][value="'+element.value+'"]').attr('checked','checked');
+                }
+            });
+            setTimeout(() => {
+                localCredit.forEach(element => {
+                    if(element.type === 'select'){
+                        $('select[name="'+element.key+'"]').val(parseInt(element.value));
+                        $('select[name="'+element.key+'"]').trigger("chosen:updated");
+                    }
+                    if(element.type === 'text'){
+                        $('input[name="'+element.key+'"]').val(element.value);
+                    }
+                    if(element.type === 'checkbox'){
+                        $('input[name="'+element.key+'"][value="'+element.value+'"]').attr('checked','checked');
+                    }
+                    if(element.type === 'textarea'){
+                        $('textarea[name="'+element.key+'"]').val(element.value);
+                    }
+                });
+                $('.wrapper-loader').addClass('hidden');
+            }, 5000);
+        }
         //window.jsPDF = window.jspdf.jsPDF;
-
+        setInterval(saveLocalStorage, 5000);
+        function saveLocalStorage(){
+            var myCredit = [];
+            $('.form-registry input,select,textarea').each(function () {
+                var value = $(this).val();
+                if(($(this).attr('type') === 'radio' | $(this).attr('type') === 'checkbox') && $(this).is(':checked')){
+                    let key = $(this).attr('name');
+                    let question = {
+                        type:'',
+                        value:'',
+                        key:'',
+                    };
+                    if($(this).attr('type') === 'checkbox'){
+                        question.key = key;
+                        question.value = value;        
+                        question.type = 'checkbox';  
+                    }else{
+                        question.key = key;
+                        question.value = value;
+                        question.type = 'radio';
+                    }       
+                    myCredit.push(question);
+                }else if($(this).attr('type') === 'text' && value.trim() !== ''){
+                    let key = $(this).attr('name');
+                    let question = {
+                        value:value,
+                        type:'text',
+                        key:key
+                    };
+                    myCredit.push(question);
+                }
+                if($(this).hasClass('select-chosen')){
+                    if(value.trim() !== ''){
+                        let key = $(this).attr('name');
+                        let question = {
+                            value:value,
+                            type:'select',
+                            key:key
+                        };
+                        myCredit.push(question);
+                    }
+                }
+                if($(this).hasClass('textarea')){
+                    if(value.trim() !== ''){
+                        let key = $(this).attr('name');
+                        let question = {
+                            value:value,
+                            type:'textarea',
+                            key:key
+                        };
+                        myCredit.push(question);
+                    }
+                }
+            });
+            if(myCredit.length > 0){
+                var parseJson = JSON.stringify(myCredit);
+                localStorage.setItem("myCredit", parseJson);
+            }
+        }
         $('.decline-btn').click(function () {
             var isValid = true;
             $('.form-registry input').each(function () {
