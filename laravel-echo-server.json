@@ -1,7 +1,12 @@
 {
-	"authHost": "http://trainingmanagement.test",
+	"authHost": "http://54.65.127.18/",
 	"authEndpoint": "/broadcasting/auth",
-	"clients": [],
+	"clients": [
+		{
+			"appId": "bc47a1876470f956",
+			"key": "63254d7b113bf9c7ba82d533dd1dd6e0"
+		}
+	],
 	"database": "redis",
 	"databaseConfig": {
 		"redis": {},
@@ -25,8 +30,8 @@
 	},
 	"apiOriginAllow": {
 		"allowCors": true,
-		"allowOrigin": "",
-		"allowMethods": "POST,GET,PUT",
-		"allowHeaders": ""
+		"allowOrigin": "http://localhost:80",
+		"allowMethods": "GET,POST,PUT",
+		"allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
 	}
 }
