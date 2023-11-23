@@ -7,6 +7,11 @@
     @if(auth()->check())
     <div class="right-side">
         <div class="container">
+            @if(!empty($button_central_study))
+                <a href="https://www.jamhsw.or.jp/ugoki/kensyu.htm" target="_blank">
+                    <button type="button" class="header-buttom btn-pur btn-hov btn-eff-pur">研修センター</button>
+                </a>
+            @endif
             @if(!empty($button_unit_guidelines))
                 <a href="/templates/sidebar/単位ガイドライン（20230926改訂）.pdf" target="_blank">
                     <button type="button" class="header-buttom accept-btn btn-hov btn-eff-pri">単位ガイドライン</button>

@@ -139,6 +139,8 @@ $('.submit-btn').click(function () {
     }else if(!validate_date_system(form)){
         return  false;
     }else{
+        window.onbeforeunload = null;
+        localStorage.removeItem("myCredit");
         $('#'+form_id).submit();
     }
 
