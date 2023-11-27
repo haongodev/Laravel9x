@@ -1,7 +1,8 @@
 @extends('layouts.web.main', [
     'pageSlug' => '現在の研鑽状況',
     'guidanceInclude' => count($guidance) > 0 ? $guidance : null,
-    'button_operation_manual' => true
+    'button_operation_manual' => true,
+    'button_central_study' => true
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css/cdnjs.cloudflare.com_ajax_libs_toastr.js_latest_toastr.min.css" rel="stylesheet" />

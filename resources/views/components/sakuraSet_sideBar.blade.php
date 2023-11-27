@@ -1,5 +1,5 @@
 <div class="sakuraSet-sideBar">
-    <p>[あなた（振り返り担当者）が担当している実施者一覧]</p>
+    <p>あなた（振り返り担当者）が担当している実施者一覧</p>
     <ul>
         @if(isset($sakuraReviewManage))
             @forEach($sakuraReviewManage as $key => $sakuraManage)

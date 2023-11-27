@@ -1,7 +1,8 @@
 @extends('layouts.web.main', [
     'pageSlug' => '研鑽を記録する (単位登録)',
     'button_unit_guidelines' => true,
-    'button_operation_manual' => true
+    'button_operation_manual' => true,
+    'button_central_study' => true
     ])
 
 @section('content')
