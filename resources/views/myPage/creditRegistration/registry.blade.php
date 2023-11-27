@@ -2,6 +2,7 @@
     'pageSlug' => '単位登録',
     'button_unit_guidelines' => true,
     'button_operation_manual' => true,
+    'button_central_study' => true
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
