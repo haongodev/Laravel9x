@@ -1,7 +1,8 @@
 @extends('layouts.web.main', [
     'pageSlug' => '単位登録',
     'button_unit_guidelines' => true,
-    'button_operation_manual' => true
+    'button_operation_manual' => true,
+    'button_central_study' => true
     ])
 @push('styles')
     <link href="{{ asset('assets') }}/css-lib/chosen/chosen.min.css" rel="stylesheet"/>
@@ -71,6 +72,10 @@
             integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        window.onbeforeunload = function() {
+            saveLocalStorage();
+            return "単位登録の途中ですが、解答を破棄しますか？";
+        };
         if(localStorage.getItem("myCredit") !== null){
             $('.wrapper-loader').removeClass('hidden');
             var localCredit = JSON.parse(localStorage.getItem("myCredit"));
@@ -99,7 +104,7 @@
             }, 5000);
         }
         //window.jsPDF = window.jspdf.jsPDF;
-        setInterval(saveLocalStorage, 5000);
+        // setInterval(saveLocalStorage, 5000);
         function saveLocalStorage(){
             var myCredit = [];
             $('.form-registry input,select,textarea').each(function () {

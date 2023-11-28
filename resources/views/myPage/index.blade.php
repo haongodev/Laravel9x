@@ -1,6 +1,7 @@
 @extends('layouts.web.main', [
     'pageSlug' => '私の研鑽データ',
-    'button_operation_manual' => true
+    'button_operation_manual' => true,
+    'button_central_study' => true
     ])
 
 @section('content')
