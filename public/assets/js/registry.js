@@ -279,3 +279,19 @@ $('#registry').on('keyup','.count-length', function (){
     $(this).closest('div').find('.input-length').find('.number').html(value.length);
 
 })
+
+$("body").on("click",".is_desc",function(){
+    var desc = $(this).attr('data_desc');
+    $('.popup-desc').removeClass('hidden');
+    $('.popup-desc .content').html(desc);
+})
+$("body").on("click",".is_desc_blank",function(){
+    var desc = $(this).attr('data_desc');
+    window.open(desc, '_blank');
+})
+$("body").on("click",".popup-desc",function(e){
+    if(!$(e.target.parentElement).hasClass("popup-desc")){
+        $('.popup-desc').addClass('hidden');
+        $('.popup-desc .content').html('');
+    }
+})

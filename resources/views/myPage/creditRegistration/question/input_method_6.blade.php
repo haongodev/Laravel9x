@@ -13,7 +13,7 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
             class="input-group  before-question-id-{{$questionSetting->parent_question_option_id}}"
             data-current-question-id="{{$questionSetting->id}}">
             <div class="w-100 group-control">
-                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}"
+                <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}} {{$questionSetting->description_flg == 1 ? "is_desc" : ""}} {{$questionSetting->description_flg == 2 ? "is_desc_blank" : ""}}" data_desc="{{ $questionSetting->description }}"
                        data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
                 <select
                     class="creditInput w-75 select-branch-question select-branch-question-{{$questionSetting->id}} select-chosen"

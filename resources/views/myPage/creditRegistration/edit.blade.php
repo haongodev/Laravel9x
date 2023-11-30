@@ -47,6 +47,7 @@
                 @endif
             @endif
         </div>
+        <div class="popup-desc hidden"><div class="content"></div></div>
     </div>
 @endsection
 @push('js')
