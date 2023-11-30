@@ -8,7 +8,7 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
     >
         <div class="w-100 group-control">
 
-            <label for="email" class="w-25 title title-required-{{$questionSetting->required_flg}}"
+            <label for="email" class="w-25 title title-required-{{$questionSetting->required_flg}} {{$questionSetting->description_flg == 1 ? "is_desc" : ""}} {{$questionSetting->description_flg == 2 ? "is_desc_blank" : ""}}" data_desc="{{ $questionSetting->description }}"
                    data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <select class="w-75 select-branch-question select-chosen validate-date input-method-10"
                     id="question_select_{{$questionSetting->id}}"
