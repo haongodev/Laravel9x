@@ -55,6 +55,7 @@
                 @endif
             @endif
         </div>
+        <div class="popup-desc hidden"><div class="content"></div></div>
     </div>
 @endsection
 @push('js')
@@ -205,6 +206,7 @@
                         toastr.options.timeOut = 6000;
                         toastr.options.onHidden = function () {
                             $('.confirm-popup').addClass('hidden');
+                            window.onbeforeunload = null;
                             window.location.href = "{{ route('typeSelected',['type_native_id'=>$typeNativeId])}}";
                         }
                         toastr.info('単位登録を実行しました。')

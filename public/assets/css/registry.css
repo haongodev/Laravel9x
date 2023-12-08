@@ -265,4 +265,25 @@ textarea {
     100% {
         transform: rotate(360deg);
     }
-} 
+}
+.is_desc,.is_desc_blank{
+    color: #0000FF;
+    cursor: pointer;
+}
+.popup-desc .content{
+    position: fixed;
+    background: #FFFFCC;
+    padding: 10px;
+    border: 1px solid #eee;
+    top: calc(50% - 70px);
+    left: calc(50% - 250px);
+    width: 500px;
+}
+.popup-desc{
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #00000069;
+}

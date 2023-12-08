@@ -7,10 +7,10 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
         before-question-id-{{$questionSetting->parent_question_option_id}}"
          data-current-question-id="{{$questionSetting->id}}">
         <div class="w-100 group-control">
-            <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}"
+            <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}} {{$questionSetting->description_flg == 1 ? "is_desc" : ""}} {{$questionSetting->description_flg == 2 ? "is_desc_blank" : ""}}" data_desc="{{ $questionSetting->description }}"
                    data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>
             <div class="w-75">
-                <input class="count-length creditInput" type="text" name="question[{{$questionSetting->id}}]"
+                <input class="count-length creditInput"  {{$questionSetting->character_limit > 0 ? "maxlength=$questionSetting->character_limit" : '' }} type="text" name="question[{{$questionSetting->id}}]"
                        placeholder=""
                        value="{{$answerData->answer ?? ''}}"/>
                 <p class="input-length"><span class="number">0</span>文字</p>
