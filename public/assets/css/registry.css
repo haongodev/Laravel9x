@@ -267,23 +267,20 @@ textarea {
     }
 }
 .is_desc,.is_desc_blank{
+    position: relative;
     color: #0000FF;
     cursor: pointer;
 }
-.popup-desc .content{
-    position: fixed;
+.tooltip_desc{
+    position: absolute;
     background: #FFFFCC;
-    padding: 10px;
-    border: 1px solid #eee;
-    top: calc(50% - 70px);
-    left: calc(50% - 250px);
+    padding: 0px 16px 0px 16px;
+    color: #000;
     width: 500px;
+    font-size: 16px;
+    z-index: 1;
+    border: 1px solid #9E9E9E;
 }
-.popup-desc{
-    width: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background: #00000069;
+.is_desc:hover .tooltip_desc{
+    display: block !important;
 }

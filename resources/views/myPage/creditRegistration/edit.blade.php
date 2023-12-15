@@ -56,9 +56,8 @@
     <script src="{{asset('assets/js/registry.js')}}"></script>
     <script src="{{asset('assets/js/select.js')}}"></script>
     <script src="{{asset('assets/js/date.js')}}"></script>
-
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets') }}/js-lib/domtopng.js"></script>
     <script>
         $('.decline-btn').click(function (){
             var isValid = true;
@@ -102,21 +101,25 @@
             $('.popup-wrapper .popup-content .content').html('本当に廃棄しますか？');
             $('.btn-popup-accept').attr('last-confirm',true);
         })
+
         $('.btn-export-pdf').click(function () {
             $('.btn-export-pdf').addClass('hidden');
-            html2canvas($('#table-confirm-registry')[0], {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [{
-                            image: data,
-                            width: 500
-                        }]
-                    };
-                    pdfMake.createPdf(docDefinition).download("registry-details.pdf");
+            var file_name = $('#table-confirm-registry').find('input[name="file_name"]').val()
+            var node = document.getElementById('table-confirm-registry');
+            domtoimage.toPng(node, { width: node.scrollWidth, height: 1500 })
+            .then (function (dataUrl) {
+                var docDefinition = {
+                    content: [{
+                        image: dataUrl,
+                        width: 500
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download(file_name);
 
-                    $('.btn-export-pdf').removeClass('hidden');
-                }
+                $('.btn-export-pdf').removeClass('hidden');
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
             });
         })
     </script>

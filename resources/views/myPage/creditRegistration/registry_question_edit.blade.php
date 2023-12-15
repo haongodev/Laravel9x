@@ -306,8 +306,6 @@ $(document).ready(function(){
                 isGetQuestion = false;
             }
         }
-
-        console.log(question_option_setting_id);
         if (isGetQuestion) {
             getQuestionBranch(this_choose, question_option_setting_id)
         }
