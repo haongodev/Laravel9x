@@ -66,12 +66,8 @@
     <script src="{{asset('assets/js/select.js')}}"></script>
     <script src="{{asset('assets/js/date.js')}}"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript"
-                src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets') }}/js-lib/domtopng.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-            integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         window.onbeforeunload = function() {
             saveLocalStorage();
@@ -221,24 +217,27 @@
             $('.popup-wrapper .popup-content .content').html('本当に廃棄しますか？');
             $('.btn-popup-accept').attr('last-confirm', true);
         })
+
+        
         $('.btn-export-pdf').click(function () {
             $('.btn-export-pdf').addClass('hidden');
             var file_name = $('#table-confirm-registry').find('input[name="file_name"]').val()
-            html2canvas($('#table-confirm-registry')[0], {
-                onrendered: function (canvas) {
-                    var data = canvas.toDataURL();
-                    var docDefinition = {
-                        content: [{
-                            image: data,
-                            width: 500
-                        }]
-                    };
-                    pdfMake.createPdf(docDefinition).download(file_name);
+            var node = document.getElementById('table-confirm-registry');
+            domtoimage.toPng(node, { width: node.scrollWidth, height: 1500 })
+            .then (function (dataUrl) {
+                var docDefinition = {
+                    content: [{
+                        image: dataUrl,
+                        width: 500
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download(file_name);
 
-                    $('.btn-export-pdf').removeClass('hidden');
-                }
+                $('.btn-export-pdf').removeClass('hidden');
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
             });
         })
-
     </script>
 @endpush
