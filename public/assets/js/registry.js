@@ -18,7 +18,7 @@ $('#registry').on('click', '.branch-question', function (e) {
             }
         })
     }
-
+    $(this).closest('.input-group > .group-control').children('label').removeClass('text-danger');
     if (isGetQuestion) {
         getQuestionBranch(this_choose, question_option_setting_id)
     }
@@ -26,6 +26,7 @@ $('#registry').on('click', '.branch-question', function (e) {
 $('#registry').on('change', '.select-branch-question', function (e) {
     var this_choose = $(this);
     var id = $(this).attr('id');
+    $(this).closest('.input-group > .group-control').children('label').removeClass('text-danger');
     $('#' + id + '>option').each(function (index) {
         var current_id = $(this).data('question-option-setting-id');
 
