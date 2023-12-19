@@ -49,6 +49,7 @@ Route::group(['prefix' => 'mypage','middleware'=>'auth'],function() {
         Route::post('/popup-registered',[CreditRegistrationController::class, 'popupRegistered'])->name('popupRegistered');
         Route::post('/validateViewVideo',[CreditRegistrationController::class, 'validateViewVideo'])->name('validateViewVideo');
         Route::post('/validateViewVideoEdit',[CreditRegistrationController::class, 'validateViewVideoEdit'])->name('validateViewVideoEdit');
+        Route::post('/checkDuplicateAnswer',[CreditRegistrationController::class, 'checkDuplicateAnswer'])->name('checkDuplicateAnswer');
     });
 
     Route::group(['prefix' => 'sakuraSet'],function() {
