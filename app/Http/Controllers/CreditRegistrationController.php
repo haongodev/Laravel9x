@@ -194,7 +194,24 @@ class CreditRegistrationController extends Controller
             'typeNativeId' => $answerManage->type_native_id,
         ]);
     }
-
+    public function checkDuplicateAnswer(Request $request){
+        // 07/12/2023 - add new spec check answer at history
+        // current answer
+        $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
+        $ans_has_dup = null;
+        foreach ($answerInfoData as $key => $ans) {
+            $id_quest = $key;
+            $answer = $ans->answer;
+            //scan history
+            $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$answer);
+            if (!empty($scanHis)) {
+                // Exit the foreach loop
+                $ans_has_dup = $scanHis;
+                break;
+            }
+        }
+        return response()->json(array('success' => true, 'data' => $ans_has_dup));
+    }
     public function handleCreditRegistry(Request $request)
     {
         /* show confirm */
@@ -287,18 +304,6 @@ class CreditRegistrationController extends Controller
             $questionSettingChildData = Session::get('question_child_data');
             $answerInfoData = Session::get('answer_info_data');
             if ($questionSetting) {
-                // 07/12/2023 - add new spec check answer at history
-                if($questionSetting->duplicate_flg){
-                    $cur_ans = $questionSetting->current_question_option_setting->option_name;
-                    $checkHisAns = $this->answerInfoService->getAnswerHis($questionSetting->parent_question_id,$cur_ans);
-                    if(count($checkHisAns) > 0){
-                        $returnHTML = view('myPage/creditRegistration/question/warningDuplicate',[
-                            'histAnsw' => $checkHisAns,
-                            'current_input' => $questionSetting->parent_question_option_id
-                        ])->render();
-                        return response()->json(array('success' => true, 'html' => $returnHTML));
-                    }
-                }
                 $viewQuestion = 'input_method_' . $questionSetting->input_method;
                 $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion,[
                     'questionSetting'=> $questionSetting,

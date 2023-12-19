@@ -139,13 +139,13 @@ $('.submit-btn').click(function () {
         return  false;
     }else if(!validate_date_system(form)){
         return  false;
+    }else if(!check_duplicate_answer(form)){
+        return  false;
     }else{
         window.onbeforeunload = null;
         localStorage.removeItem("myCredit");
         $('#'+form_id).submit();
     }
-
-
 })
 
 
@@ -205,6 +205,36 @@ function validate_required(form)
     }
     return validate
 }
+function check_duplicate_answer(form)
+{
+    var form_id = form.attr('id');
+    var data = $('#'+form_id).serialize();
+
+    $.ajax({
+        'async': false,
+        type: "post",
+        url: $('#urlCheckDuplicateAnswer').val(),
+        cache: false,
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        data: data,
+        success: function (data) {
+            console.log(data);
+            if(data.data.length > 0){
+                toastr.options.timeOut = 6000;
+                toastr.warning('本年度に同じ内容で単位登録されています。<br>同一年度内で同じ内容での登録はできません。');
+                var current_input = data.data[0].input_method;
+                if($('#checkbox'+current_input).length){
+                    $('#checkbox'+current_input).closest('.input-group > .group-control').children('label').addClass('text-danger');
+                }
+                validate =  false;
+            }else{
+                validate = true;
+            }
+
+        },
+    });
+    return validate
+}
 
 function validate_view_video(form)
 {
@@ -232,7 +262,6 @@ function validate_view_video(form)
         },
     });
     return validate
-
 }
 
 function validate_date_system(form)
