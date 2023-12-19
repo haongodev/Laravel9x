@@ -375,6 +375,5 @@ class CreditRegistrationService
         return false;
 
     }
-
 }
 
