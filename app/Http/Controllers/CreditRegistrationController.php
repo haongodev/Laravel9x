@@ -197,6 +197,7 @@ class CreditRegistrationController extends Controller
 
     public function handleCreditRegistry(Request $request)
     {
+
         /* show confirm */
         if ($request->has('confirm')) {
             $typeNativeId = $request->get('type_native_id');
@@ -278,27 +279,16 @@ class CreditRegistrationController extends Controller
     public function getBranchQuestion(Request $request)
     {
         $questionOptionSettingId = $request->get('question_option_setting_id',-1);
-        
         $type = $request->get('type','add');
         $checkViewVideo = $this->creditRegistrationService->checkViewVideoOption($questionOptionSettingId,$type);
+
         $returnHTML = '';
         if($checkViewVideo){
             $questionSetting = $this->questionSettingService->getByParentQuestionOptionId($questionOptionSettingId);
             $questionSettingChildData = Session::get('question_child_data');
             $answerInfoData = Session::get('answer_info_data');
+
             if ($questionSetting) {
-                // 07/12/2023 - add new spec check answer at history
-                if($questionSetting->duplicate_flg){
-                    $cur_ans = $questionSetting->current_question_option_setting->option_name;
-                    $checkHisAns = $this->answerInfoService->getAnswerHis($questionSetting->parent_question_id,$cur_ans);
-                    if(count($checkHisAns) > 0){
-                        $returnHTML = view('myPage/creditRegistration/question/warningDuplicate',[
-                            'histAnsw' => $checkHisAns,
-                            'current_input' => $questionSetting->parent_question_option_id
-                        ])->render();
-                        return response()->json(array('success' => true, 'html' => $returnHTML));
-                    }
-                }
                 $viewQuestion = 'input_method_' . $questionSetting->input_method;
                 $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion,[
                     'questionSetting'=> $questionSetting,
@@ -320,7 +310,9 @@ class CreditRegistrationController extends Controller
     public function getLinkQuestion(Request $request)
     {
         $questionSettingId = $request->get('question_setting_id',-1);
+
         $questionSetting = $this->questionSettingService->getByParentQuestionId($questionSettingId);
+
         //process add class css when question input
         $isQuestionInput = false;
         $answerInfoData = Session::get('answer_info_data');

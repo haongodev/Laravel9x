@@ -97,8 +97,4 @@ class QuestionSettings extends Model
     {
         return $this->hasMany(QuestionOptionsSettings::class,'question_settings_id','id')->orderBy('sort_order');
     }
-    public function current_question_option_setting()
-    {
-        return $this->hasOne(QuestionOptionsSettings::class,'id','parent_question_option_id')->orderBy('sort_order');
-    }
 }

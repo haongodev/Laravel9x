@@ -137,18 +137,4 @@ class AnswerInfoRepository
             ->groupBy('answer')
             ->pluck('answer');
     }
-    public function getAnswerHis($idQues,$ansW)
-    {
-        $memberId = auth()->user()->id;
-        return $this->model
-            ->join('answer_manage', function ($q) {
-                $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
-            })
-            ->where('member_id', $memberId)
-            ->where('original_question_id', $idQues)
-            ->where('answer', $ansW)
-            ->orderBy("answer_info.answer_manage_id","DESC")
-            ->get();
-    }
-    
 }
