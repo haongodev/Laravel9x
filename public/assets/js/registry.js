@@ -218,7 +218,6 @@ function check_duplicate_answer(form)
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data: data,
         success: function (data) {
-            console.log(data);
             if(data.data.length > 0){
                 toastr.options.timeOut = 6000;
                 toastr.warning('本年度に同じ内容で単位登録されています。<br>同一年度内で同じ内容での登録はできません。');
