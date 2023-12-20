@@ -201,13 +201,15 @@ class CreditRegistrationController extends Controller
         $ans_has_dup = null;
         foreach ($answerInfoData as $key => $ans) {
             $id_quest = $key;
-            $answer = $ans->answer;
-            //scan history
-            $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$answer);
-            if (!empty($scanHis)) {
-                // Exit the foreach loop
-                $ans_has_dup = $scanHis;
-                break;
+            if($ans->duplicate_flg === 1){
+                $answer = $ans->answer;
+                //scan history
+                $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$answer);
+                if (!empty($scanHis)) {
+                    // Exit the foreach loop
+                    $ans_has_dup = $scanHis;
+                    break;
+                }
             }
         }
         return response()->json(array('success' => true, 'data' => $ans_has_dup));

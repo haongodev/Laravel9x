@@ -272,6 +272,7 @@ class CreditRegistrationService
                 }
             }
             $answerData['answer'] = $tempAnswer;
+            $answerData['duplicate_flg'] = $questionSetting->duplicate_flg;
             $data[$questionSettingId]= (object)$answerData;
         }
         //Session::forget('popup_confirm');
