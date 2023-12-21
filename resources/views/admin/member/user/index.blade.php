@@ -12,7 +12,7 @@
                 <button class="btn-title btn-success">管理ユーザー一覧</button>
             </div>
             <div class="col-sm-12 col-md-6 text-end">
-                <button class="btn btn-white me-2" onclick="window.location.href='/M009'">登録</button>
+                <button class="btn btn-white me-2" onclick="window.location.href='{{ route('admin.member.user.create')}}'">登録</button>
             </div>
         </div>
     </div>

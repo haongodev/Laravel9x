@@ -21,10 +21,11 @@ Route::group(['middleware'=>'auth:admin'],function() {
     Route::get('/member/manage/detail/{user_id}',[MemberController::class, 'userDetail'])->name('admin.member.user.detail');
     // edit
     Route::get('/member/manage/edit/{user_id}',[MemberController::class, 'userEdit'])->name('admin.member.user.edit');
-    Route::post('/member/manage/confirm/{user_id}',[MemberController::class, 'userEditConfirm'])->name('admin.member.user.confirm');
+    Route::post('/member/manage/confirm/{user_id?}',[MemberController::class, 'userEditConfirm'])->name('admin.member.user.confirm');
     Route::post('/member/manage/edit/{user_id?}',[MemberController::class, 'userUpdate'])->name('admin.member.user.update');
     Route::post('/member/manage/delete}',[MemberController::class, 'userDelete'])->name('admin.member.user.delete');
     // create
     Route::get('/member/manage/create',[MemberController::class, 'userCreate'])->name('admin.member.user.create');
-    Route::post('/member/manage/confirm',[MemberController::class, 'userCreateConfirm'])->name('admin.member.user.confirm_create');
+    Route::post('/member/manage/confirm_store',[MemberController::class, 'userStoreConfirm'])->name('admin.member.user.confirm_store');
+    Route::post('/member/manage/store',[MemberController::class, 'userStore'])->name('admin.member.user.store');
 });

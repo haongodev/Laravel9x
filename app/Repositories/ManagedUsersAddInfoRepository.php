@@ -80,6 +80,11 @@ class ManagedUsersAddInfoRepository
         return $this->model->where('users_id', $userId)->update($data);
     }
 
+    public function storeUser($data)
+    {
+        return $this->model->create($data);
+    }
+
     public function deleteByUserId($userId)
     {
         return $this->model->where('users_id', $userId)->delete();

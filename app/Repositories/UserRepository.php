@@ -37,5 +37,9 @@ class UserRepository
     {
         return $this->model->where('id', $id)->update($data);
     }
-
+    public function storeUser($data = [])
+    {
+        return $this->model->create($data);
+    }
+    
 }
