@@ -18,7 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
+        'class',
+        'active_flg',
         'email',
         'password',
     ];
@@ -34,6 +37,7 @@ class User extends Authenticatable
     ];
 
     public $timestamps = ["registration_date"];
+    public const CREATED_AT = 'registration_date';
     public const UPDATED_AT = null;
 
     /**
