@@ -197,6 +197,13 @@ class CreditRegistrationController extends Controller
     public function checkDuplicateAnswer(Request $request){
         // 07/12/2023 - add new spec check answer at history
         // current answer
+        Session::put('popup_confirm', $request->except(['_token', 'confirm']));
+        $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+        $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
+        $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
+        $questionOptionSettingRegistryData = $this->questionOptionSettingService->getByIds($questionOptionSettingIds);
+        Session::put('question_confirm', $questionSettingRegistryData);
+        Session::put('question_option_confirm', $questionOptionSettingRegistryData);
         $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
         $ans_has_dup = null;
         foreach ($answerInfoData as $key => $ans) {
@@ -219,14 +226,14 @@ class CreditRegistrationController extends Controller
         /* show confirm */
         if ($request->has('confirm')) {
             $typeNativeId = $request->get('type_native_id');
-            Session::put('popup_confirm', $request->except(['_token', 'confirm']));
+            // Session::put('popup_confirm', $request->except(['_token', 'confirm']));
             Session::put('show_popup_confirm', true);
-            $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
-            $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
-            $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
-            $questionOptionSettingRegistryData = $this->questionOptionSettingService->getByIds($questionOptionSettingIds);
-            Session::put('question_confirm', $questionSettingRegistryData);
-            Session::put('question_option_confirm', $questionOptionSettingRegistryData);
+            // $questionSettingIds = $this->questionSettingService->getQuestionIdByRegistry($request->all());
+            // $questionOptionSettingIds = $this->questionOptionSettingService->getQuestionOptionIdByRegistry($request->all());
+            // $questionSettingRegistryData = $this->questionSettingService->getByIds($questionSettingIds);
+            // $questionOptionSettingRegistryData = $this->questionOptionSettingService->getByIds($questionOptionSettingIds);
+            // Session::put('question_confirm', $questionSettingRegistryData);
+            // Session::put('question_option_confirm', $questionOptionSettingRegistryData);
             return redirect()->route('creditRegistry',['type_native_id'=>$typeNativeId]);
         } else {
             if (Session::get('popup_confirm')) {
