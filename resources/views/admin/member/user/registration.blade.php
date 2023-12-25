@@ -15,7 +15,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <form class="formRegister form" action="{{ route('admin.member.user.confirm_create') }}" method="post">
+            <form class="formRegister form" action="{{ route('admin.member.user.confirm_store') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label>ID</label>
@@ -29,16 +29,16 @@
                     <label>属性</label>
                     <select name="attribute" class="w-full">
                         <option value=""></option>
-                        <option {{$old->attribute == 0 ? 'selected' : ''}} value="0">事務局</option>
-                        <option {{$old->attribute == 1 ? 'selected' : ''}} value="1">研修委員</option>
+                        <option {{$old && $old->attribute == 0 ? 'selected' : ''}} value="0">事務局</option>
+                        <option {{$old && $old->attribute == 1 ? 'selected' : ''}} value="1">研修委員</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>管理者区分</label>
                     <select name="manager_class" class="w-full">
-                        <option {{$old->manager_class == 0 ? 'selected' : ''}} value="0">権限 1</option>
-                        <option {{$old->manager_class == 1 ? 'selected' : ''}} value="1">権限 2</option>
-                        <option {{$old->manager_class == 2 ? 'selected' : ''}} value="2">権限 3</option>
+                        <option {{$old && $old->manager_class == 0 ? 'selected' : ''}} value="0">権限 1</option>
+                        <option {{$old && $old->manager_class == 1 ? 'selected' : ''}} value="1">権限 2</option>
+                        <option {{$old && $old->manager_class == 2 ? 'selected' : ''}} value="2">権限 3</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -54,7 +54,7 @@
                 </div>
             </form>
         </div>
-        <button type="button" class="button-back">戻る</button>
+        <button type="button" class="button-back" onclick="window.location.href='{{ route('admin.member.user.manage')}}'">戻る</button>
     </div>
 @endsection
 

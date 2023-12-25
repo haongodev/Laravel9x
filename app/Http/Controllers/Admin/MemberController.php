@@ -78,25 +78,21 @@ class MemberController extends Controller
         $old = Session::get('manage_create_user');
         return view('admin.member.user.registration',['old' => $old]);
     }
-
-    public function userCreateConfirm(Request $request)
+    public function userStore(Request $request)
     {
-        $response = ['success'=>true, 'message' => ''];
-        $password = $request->get('password');
-        $passwordConfirm = $request->get('password_confirm');
-        //Validate
-        if($password != $passwordConfirm){
-            $response['message'] = 'パスワードとパスワード（確認用）が異なっています。';
-        }else if($password == '' && $passwordConfirm == ''){
-            $response['message'] = 'パスワードを入力して下さい';
+        // dd($request->all());
+        // handle insert user
+        $data = $request->except('_token');
+        $status = false;
+        if($this->memberService->storeUserManage($data)){
+            $status = true;
         }
-        if($response['message']){
-            return response()->json($response);
-        }
-        $user = $request->except('_token');
-        $user = (object) $request->all();
-        Session::put('manage_create_user', $user);
-        return view('admin.member.user.confirm', ['user' => $user]);
+        return view('admin.member.user.confirm_store', ['status' => $status, 'user' => $request->all()]);
+    }
+
+    public function userStoreConfirm(Request $request)
+    {
+        return view('admin.member.user.confirm_store', ['user' => $request->all()]);
     }
     public function userDetail($userId = '')
     {
@@ -120,12 +116,31 @@ class MemberController extends Controller
         return view('admin.member.user.edit', ['user' => $user]);
     }
 
-    public function userEditConfirm(Request $request, $loginId)
+    public function userEditConfirm(Request $request, $loginId = null)
     {
-        $user = $request->except('_token');
-        $user = (object)$user;
-        Session::put('manage_user_add_info', $user);
-        return view('admin.member.user.confirm', ['user' => $user, 'loginId' => $loginId]);
+        if($loginId){
+            $user = $request->except('_token');
+            $user = (object)$user;
+            Session::put('manage_user_add_info', $user);
+            return view('admin.member.user.confirm', ['user' => $user, 'loginId' => $loginId]);
+        }else{
+            $response = ['success'=>true, 'message' => ''];
+            $password = $request->get('password');
+            $passwordConfirm = $request->get('password_confirm');
+            //Validate
+            if($password != $passwordConfirm){
+                $response['message'] = 'パスワードとパスワード（確認用）が異なっています。';
+            }else if($password == '' && $passwordConfirm == ''){
+                $response['message'] = 'パスワードを入力して下さい';
+            }
+            if($response['message']){
+                return response()->json($response);
+            }
+            $user = $request->except('_token');
+            $user = (object) $request->all();
+            Session::put('manage_create_user', $user);
+            return view('admin.member.user.confirm', ['user' => $user]);
+        }
     }
 
     public function userUpdate(Request $request, $userId)

@@ -9,6 +9,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class MemberService
 {
@@ -83,6 +84,34 @@ class MemberService
     public function getUserManageByUserId($userId = '')
     {
         return $this->managedUsersAddInfoRepository->getUserManageByUserId($userId);
+    }
+
+    public function storeUserManage($data = [])
+    {
+        DB::beginTransaction();
+        try {
+            if (!empty($data['password']) && $data['password'] != config('constants.passwordDefault')) {
+                $dataUser['password'] = Hash::make($data['password']);
+            }
+            $dataUser['name'] = $data['name'];
+            $dataUser['class'] = 1;
+            $dataUser['active_flg'] = 1;
+            $dataUser['id'] = (string) Str::uuid();
+            $this->userRepository->storeUser($dataUser);
+            
+            $dataUserInfo['id'] = (string) Str::uuid();
+            $dataUserInfo['users_id'] = $dataUser['id'];
+            $dataUserInfo['login_id'] = $data['login_id'];
+            $dataUserInfo['manager_class'] = $data['manager_class'];
+            $dataUserInfo['attribute'] = $data['attribute'];
+            $this->managedUsersAddInfoRepository->storeUser($dataUserInfo);
+            DB::commit();
+            return true;
+        } catch (QueryException $exc) {
+            DB::rollBack();
+            Log::error($exc->getMessage(), $exc->getTrace());
+            return false;
+        }
     }
 
     public function updateUserManage($userId = 0, $data = [])

@@ -65,3 +65,60 @@
 .mt-4{
     margin-top: 4rem;
 }
+.contain_confirm{
+    border: 1px solid #000;
+    padding: 0;
+}
+.contain_confirm .header_confirm{
+    padding: 5px 20px;
+    font-size: 15pt;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    background: #B9E0A5;
+}
+.contain_confirm .body_confirm{
+    padding: 20px;
+}
+.contain_confirm .body_confirm table {
+    border-collapse: separate; 
+    border-spacing: 0.5em;
+}
+.contain_confirm .body_confirm table th{
+    padding: 5px;
+}
+.popup_notify_success_insert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #0000004f;
+}
+.popup_notify_success_insert .overlay{
+    position: absolute;
+    width: 700px;
+    left: calc(50% - 350px);
+    top: calc(50% - 350px);
+    display: flex;
+    gap:10px;
+    flex-direction: column;
+    background: #fff;
+    border:1px solid #000;
+    padding: 20px;
+}
+.popup_notify_success_insert .overlay .close_button{
+    text-align: right;
+}
+.popup_notify_success_insert .overlay .close_button img{
+    width: 30px;
+}
+.popup_notify_success_insert .overlay .text-content{
+    text-align: center;
+    font-size: 24px;
+}
+.popup_notify_success_insert .overlay .btn-default{
+    border:1px solid #000;
+    width: fit-content;
+    align-self: center;
+    padding: 5px 30px;
+}

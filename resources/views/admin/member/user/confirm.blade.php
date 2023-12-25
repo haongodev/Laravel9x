@@ -9,7 +9,9 @@
     <div class="breadcrumb-title">
         <div class="row">
             <div class="col-sm-12 col-md-6">
-                <button class="btn-title btn-success">管理ユーザー詳細</button>
+                <button class="btn-title btn-success">
+                    {{ isset($user->id) ? "管理ユーザー詳細" : "管理ユーザー登録"}}
+                </button>
             </div>
             {{--            <div class="col-sm-12 col-md-6 text-end">--}}
             {{--                <button class="btn btn-white me-2"--}}
@@ -20,7 +22,8 @@
         </div>
     </div>
     <div class="container">
-        <form action="{{route('admin.member.user.update',['user_id'=>$user->id ?? null])}}">
+        <form method="POST" action="{{ isset($user->id) ? route('admin.member.user.update',['user_id'=>$user->id ?? null]) : route('admin.member.user.confirm_store') }}">
+            @csrf
             <div class="row">
                 <input type="hidden" name="id" value="{{$user->id ?? null}}">
                 <table class="member">
@@ -51,7 +54,7 @@
                     </tr>
                 </table>
                 <div class="d-grid gap-2 col-2 mx-auto mt-3">
-                    <button class="btn btn-white edit-user" type="button">更新</button>
+                    <button class="btn btn-white {{ isset($user->id) ? "edit-user" : "" }}" type="{{ isset($user->id) ? "button" : "submit" }}">更新</button>
                 </div>
 
                 <div class="table-footer row mt-3">
@@ -76,7 +79,6 @@
             var data = form.serialize();
             var url = form.attr('action');
             var name = form.find('input[name="name"]').val();
-            console.log(url);
             $.ajax({
                 type: "post",
                 url: url,
