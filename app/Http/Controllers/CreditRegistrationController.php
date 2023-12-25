@@ -213,9 +213,17 @@ class CreditRegistrationController extends Controller
                 //scan history
                 $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$answer);
                 if (!empty($scanHis)) {
-                    // Exit the foreach loop
-                    $ans_has_dup = $scanHis;
-                    break;
+                    if($request->action === 'edit'){
+                        $scanHis = $scanHis->reject(function ($item) use($request) {
+                            return $item['answer_manage_id'] === intval($request->answer_manage_id);
+                        });
+                        $ans_has_dup = $scanHis;
+                        break;
+                    }else{
+                        // Exit the foreach loop
+                        $ans_has_dup = $scanHis;
+                        break;
+                    }
                 }
             }
         }
