@@ -28,6 +28,7 @@
                 <input type="hidden" id="urlGetLinkQuestion" value="{{route('getLinkQuestion')}}">
                 <input type="hidden" id="urlGetQuestion" value="{{route('getBranchHisQuestion')}}">
                 <input type="hidden" id="urlValidateViewVideo" value="{{route('validateViewVideoEdit')}}">
+                <input type="hidden" id="urlCheckDuplicateAnswer" value="{{route('checkDuplicateAnswer')}}">
                 <input type="hidden" name="type_native_id" value="{{$typeNativeId}}">
                 <input type="hidden" name="question_manager_id" value="{{$questionManagerId}}">
                 <input type="hidden" id="action" name="action" value="edit">
