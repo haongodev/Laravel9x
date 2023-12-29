@@ -332,7 +332,7 @@ button.disabled{
     box-shadow: 0 5px 0 #034f9b;
 }
 .btn-eff-pur{
-    box-shadow: 0 5px 0 rgb(86, 1, 143);
+    box-shadow: 0 5px 0 rgb(247 125 100)
 }
 .btn-eff-yel{
     box-shadow: 0 5px 0 #bfbf02;
@@ -345,7 +345,7 @@ button.disabled{
     transform: translateY(5px);
 }
 .btn-pur{
-    background: #9900ffff !important;
+    background: #fb9b88ff !important;
 }
 .right-side a{
     text-decoration: none;
