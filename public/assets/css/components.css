@@ -109,6 +109,7 @@
     display: flex!important;
     justify-content: center!important;
     align-items: center!important;
+    flex-direction: column!important;
 }
 .toast-top-right {
     top: calc(50% - 60px) !important;

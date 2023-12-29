@@ -273,6 +273,11 @@ class CreditRegistrationService
             }
             $answerData['answer'] = $tempAnswer;
             $answerData['duplicate_flg'] = $questionSetting->duplicate_flg;
+            $answerData['effective_date_flg'] = $questionSetting->effective_date_flg;
+            $answerData['interval_target_id'] = $questionSetting->interval_target_id;
+            $answerData['interval_month'] = $questionSetting->interval_month;
+            $answerData['input_method'] = $questionSetting->input_method;
+            $answerData['title'] = $questionSetting->title;
             $data[$questionSettingId]= (object)$answerData;
         }
         //Session::forget('popup_confirm');
