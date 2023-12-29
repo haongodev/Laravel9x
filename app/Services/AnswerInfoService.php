@@ -49,7 +49,7 @@ class AnswerInfoService
     {
         return $this->answerInfoRepository->deleteByAnswerManageId($answerManageId);
     }
-    public function getAnswerHis($idQest,$asw){
-        return $this->answerInfoRepository->getAnswerHis($idQest,$asw);
+    public function getAnswerHis($idQest,$questTitle,$year){
+        return $this->answerInfoRepository->getAnswerHis($idQest,$questTitle,$year);
     }
 }

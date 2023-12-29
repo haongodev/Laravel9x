@@ -10,7 +10,7 @@
 {{--                    @csrf--}}
 {{--                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>--}}
 {{--                </form>--}}
-                <button class="registed-btn">現在の単位登録数</button>
+                <button class="registed-btn">今年度の単位登録数</button>
                 @php
                     $answerInfoPattern = answerInfoPattern();
                 @endphp

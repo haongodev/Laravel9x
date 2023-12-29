@@ -217,14 +217,25 @@ function check_duplicate_answer(form)
         cache: false,
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         data: data,
-        success: function (data) {
-            if(data.data.length > 0){
+        success: function ({data}) {
+            if(data.length > 0){
                 toastr.options.timeOut = 6000;
                 toastr.warning('本年度に同じ内容で単位登録されています。<br>同一年度内で同じ内容での登録はできません。');
-                var current_input = data.data[0].input_method;
-                if($('#checkbox'+current_input).length){
-                    $('#checkbox'+current_input).closest('.input-group > .group-control').children('label').addClass('text-danger');
-                }
+                data.forEach(element => {
+                    var current_input = element.input_method;
+                    if($('#checkbox'+current_input).length){
+                        $('#checkbox'+current_input).closest('.input-group > .group-control').children('label').addClass('text-danger');
+                    }
+                    if($('.input-method-'+current_input).length && !element.hasOwnProperty('id')){
+                        $('.input-method-'+current_input).each(function (indexInArray, valueOfElement) { 
+                            if($.trim($(valueOfElement).parents('.group-control').children('label').text()) === element.title){
+                                $(valueOfElement).parents('.group-control').children('label').addClass('text-danger');
+                                toastr.options.timeOut = 6000;
+                                toastr.warning('A（※'+element.title+'）との間隔はB（※'+element.interval_month+'月）以上空ける必要があります。');
+                            }
+                        });
+                    }
+                });
                 validate =  false;
             }else{
                 validate = true;
@@ -316,7 +327,13 @@ $("body").on("click",".is_desc",function(){
 })
 $("body").on("click",".is_desc_blank",function(){
     var desc = $(this).attr('data_desc');
-    window.open(desc, '_blank');
+    var screenWidth = window.screen.width;
+    var screenHeight = window.screen.height;
+    // Open a new window with full width and height
+    var newWindow = window.open(desc, '_blank', 'width=' + screenWidth + ',height=' + screenHeight);
+    if (newWindow) {
+        newWindow.focus();
+    }
 })
 $("body").on("click",".popup-desc",function(e){
     if(!$(e.target.parentElement).hasClass("popup-desc")){
