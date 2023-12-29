@@ -205,24 +205,50 @@ class CreditRegistrationController extends Controller
         Session::put('question_confirm', $questionSettingRegistryData);
         Session::put('question_option_confirm', $questionOptionSettingRegistryData);
         $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
-        $ans_has_dup = null;
+        $ans_has_dup = [];
         foreach ($answerInfoData as $key => $ans) {
             $id_quest = $key;
+            $answer = $ans->answer;
+            $title = $ans->title;
+            $year = null;
             if($ans->duplicate_flg === 1){
-                $answer = $ans->answer;
                 //scan history
-                $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$answer);
+                if($ans->effective_date_flg === 1){
+                    $hash = explode(',',$answer);
+                    $month = date("m",strtotime($hash[0]));
+                    $year = date("Y",strtotime($hash[0]));
+                    if(intval($month) < 4){
+                        $year = date("Y", strtotime($hash[0] . " -1 year"));
+                    }
+                }
+                $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$title,$year);
                 if (!empty($scanHis)) {
-                    if($request->action === 'edit'){
-                        $scanHis = $scanHis->reject(function ($item) use($request) {
-                            return $item['answer_manage_id'] === intval($request->answer_manage_id);
-                        });
-                        $ans_has_dup = $scanHis;
-                        break;
-                    }else{
-                        // Exit the foreach loop
-                        $ans_has_dup = $scanHis;
-                        break;
+                    foreach ($scanHis as $hisKey => $his) {
+                        if($his->answer === $answer){
+                            
+                            if($request->action === 'edit'){
+                                if(intval($request->answer_manage_id) !== $his->answer_manage_id){
+                                    array_push($ans_has_dup,$his);
+                                }
+                            }else{
+                                array_push($ans_has_dup,$his);
+                            }
+                        }
+                    }
+                }
+            }
+            if($ans->interval_target_id >= 1 && in_array($ans->input_method,[7,8]) && $ans->interval_month > 0){
+                if($ans->input_method === 7){
+                    $month = date("m",strtotime($answer));
+                    if (intval($month) < $ans->interval_month) {
+                        array_push($ans_has_dup,$ans);
+                    }
+                }
+                if($ans->input_method === 8){
+                    $answer = explode(',',$answer)[0];
+                    $month = date("m",strtotime($answer));
+                    if (intval($month) < $ans->interval_month) {
+                        array_push($ans_has_dup,$ans);
                     }
                 }
             }

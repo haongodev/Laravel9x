@@ -10,10 +10,13 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
         data-current-question-id="{{$questionSetting->id}}">
         <div class="w-100 group-control">
             <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}} {{$questionSetting->description_flg == 1 ? "is_desc" : ""}} {{$questionSetting->description_flg == 2 ? "is_desc_blank" : ""}}" {{$questionSetting->description_flg == 2 ? "data_desc=".$questionSetting->description : ""}} data-question-id="{{$questionSetting->id}}">
+                @if ($questionSetting->description_flg == 2)
+                    <i class="date-icon fa fa-calendar" aria-hidden="true"></i>
+                @endif
                 {{$questionSetting->title}}
                 @if($questionSetting->description_flg == 1)
                     <div class="hidden tooltip_desc">
-                        <p>{{$questionSetting->description}}</p>
+                        <p>{!! nl2br(str_replace('\n', '<br>', e($questionSetting->description))) !!}</p>
                     </div>
                 @endif
             </label>
