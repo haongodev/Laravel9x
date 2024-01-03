@@ -97,9 +97,9 @@ class CreditRegistrationService
             $this->answerInfoRepository->store($dataInsertInfo);
 
             /* Insert history question setting*/
-            $this->insertHistoryQuestionSetting($questionManagerId);
+            $this->insertHistoryQuestionSetting($questionManagerId,$idManager);
             /* Insert history question option setting*/
-            $this->insertHistoryQuestionOptionSetting($questionManagerId);
+            $this->insertHistoryQuestionOptionSetting($questionManagerId,$idManager);
             DB::commit();
             return $answerManager;
         } catch (QueryException $exc) {
@@ -173,21 +173,27 @@ class CreditRegistrationService
 
     }
 
-    public function insertHistoryQuestionSetting($questionId = 0)
+    public function insertHistoryQuestionSetting($questionId = 0,$ans_id)
     {
         $questionSettingData = $this->questionSettingRepository->getByQuestionId($questionId,true)->toArray();
         foreach ($questionSettingData as $questionSetting){
             $condition = ['id'=>$questionSetting['id']];
+            if($ans_id){
+                $questionSetting['ans_manage_id'] = $ans_id;
+            }
             $his = $this->historyQuestionSettingRepository->store($condition,$questionSetting);
         }
         return $his;
     }
 
-    public function insertHistoryQuestionOptionSetting($questionId = 0)
+    public function insertHistoryQuestionOptionSetting($questionId = 0,$ans_id)
     {
         $questionOptionSettingData = $this->questionOptionSettingRepository->getByQuestionId($questionId)->toArray();
         foreach ($questionOptionSettingData as $questionOptionSetting){
             $condition = ['id'=>$questionOptionSetting['id']];
+            if($ans_id){
+                $questionOptionSetting['ans_manage_id'] = $ans_id;
+            }
             $his = $this->historyQuestionOptionsSettingRepository->store($condition,$questionOptionSetting);
         }
         return $his;

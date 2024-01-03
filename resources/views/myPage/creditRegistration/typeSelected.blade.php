@@ -139,6 +139,85 @@
                 }
 
             }
+            $('body').on('click','.close-icon,.btn-popup-decline',function (e) {
+                var hasLayer = $(this).parents('.popup-wrapper').attr('hasLayer');
+                if (typeof hasLayer !== 'undefined' && hasLayer !== false) {
+                    $(this).parents('.popup-wrapper').find(".content").html('');
+                    $(this).parents('.popup-wrapper').addClass("hidden");
+                    $(this).prev().removeAttr("last-confirm");
+                    return false;
+                }
+                $('.popup-wrapper .popup-content .content').html('');
+                $('.popup-wrapper').addClass('hidden');
+                $('.btn-popup-accept').removeAttr('last-confirm');
+            })
+
+            $('body').on('click','.btn-export-pdf',function () {
+                $('.btn-export-pdf').addClass('hidden');
+                var file_name = $('#table-confirm-registry').find('input[name="file_name"]').val()
+                var node = document.getElementById('table-confirm-registry');
+                domtoimage.toPng(node, { width: node.scrollWidth, height: 1500 })
+                .then (function (dataUrl) {
+                    var docDefinition = {
+                        content: [{
+                            image: dataUrl,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download(file_name);
+
+                    $('.btn-export-pdf').removeClass('hidden');
+                })
+                .catch(function (error) {
+                    console.error('oops, something went wrong!', error);
+                });
+            })
+
+            $('body').on('click','.btn-delete',function (){
+                var mess = "単位を削除しますか？";
+                var originid = $(this).parents('.confirm-popup').find('#table-confirm-registry').attr("originid");
+                var answerManageId = $(this).parents('.confirm-popup').find('#table-confirm-registry').attr("answerManageId");
+                $('#popup_confirm_back_register').removeClass('hidden').attr('hasLayer',true).css('zIndex',12);
+                $('#popup_confirm_back_register').find('.btn-popup-accept').attr('originId',originid).attr('answerManageId',answerManageId)
+                $('#popup_confirm_back_register .content').html(mess);
+                
+            })
+            $('body').on('click','.btn-popup-accept',function (){
+                var lastConfirm = $(this).attr('last-confirm');
+                if (typeof lastConfirm !== 'undefined' && lastConfirm !== false) {
+                    var origin_id = $(this).attr('originId');
+                    var answer_id = $(this).attr('answerManageId');
+                    var url = '{{ route("handleCreditDelete") }}';
+                    var data = {
+                        origin_id,
+                        answer_id
+                    }
+                    $.ajax({
+                        url: url,
+                        data: data,
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        type: 'POST',
+                        success: function (response) {
+                            if (response.success) {
+                                toastr.remove();
+                                $('.answer_'+answer_id).remove();
+                                toastr.options.timeOut = 3000;
+                                toastr.info('単位を削除しました。');
+                                $('.popup-wrapper .popup-content .content').html('');
+                                $('.popup-wrapper').addClass('hidden');
+                                $('.btn-popup-accept').removeAttr('last-confirm');
+                            }
+                        },
+                        error: function (xhr) {
+                            alert('error');
+                        }
+                    });
+                }
+                var mess = "本当に削除しますか？";
+                $('#popup_confirm_back_register .content').html(mess);
+                $(this).attr('last-confirm',true);
+                
+            })
         })
     </script>
 @endpush

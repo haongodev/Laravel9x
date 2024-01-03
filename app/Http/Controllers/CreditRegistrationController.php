@@ -283,10 +283,6 @@ class CreditRegistrationController extends Controller
         }
     }
     public function handleCreditDelete(Request $request){
-        $hisQuestionSettingData = $this->historyQuestionSettingService->getByOriginalQuestionIds($request->origin_id);
-        if(!$hisQuestionSettingData){
-            return response()->json(array('success' => false,'data' => []));
-        }
         $answerManage = $this->answerManageService->getById($request->answer_id);
         if($answerManage){
             // delete answer manager
@@ -294,12 +290,10 @@ class CreditRegistrationController extends Controller
             // delete answer info
             $this->answerInfoService->deleteByAnswerManageId($request->answer_id);
         }
-        // delete question setting option
-        // $questionOptionSetting = $this->historyQuestionOptionSettingService->getByQuestionId($hisQuestionSettingData->id);
-        // if($questionOptionSetting){
-        //     $questionOptionSetting->delete();
-        // }
-        // $hisQuestionSettingData->delete();
+        // delete question setting option history
+        $this->historyQuestionOptionSettingService->delByAnsManageId($request->answer_id);
+        // delete question setting history
+        $this->historyQuestionSettingService->delByAnsManageId($request->answer_id);
         return response()->json(array('success' => true,'data' => []));
     }
     public function handleCreditUpdate(Request $request)
