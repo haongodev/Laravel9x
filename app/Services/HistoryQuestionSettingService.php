@@ -50,4 +50,8 @@ class HistoryQuestionSettingService
         }
         return $data;
     }
+    public function delByAnsManageId($ans_manage_id = 0)
+    {
+        return $this->historyQuestionSettingRepository->delByAnsManageId($ans_manage_id);
+    }
 }

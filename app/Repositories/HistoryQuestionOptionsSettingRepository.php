@@ -28,4 +28,8 @@ class HistoryQuestionOptionsSettingRepository
     {
         return $this->model->where('question_id',$questionId)->get();
     }
+    public function delByAnsManageId($ans_manage_id = 0)
+    {
+        return $this->model->where('ans_manage_id',$ans_manage_id)->delete();
+    }
 }

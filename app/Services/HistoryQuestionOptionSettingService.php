@@ -28,4 +28,9 @@ class HistoryQuestionOptionSettingService
     {
         return $this->historyQuestionOptionsSettingRepository->getByQuestionId($questionId);
     }
+    public function delByAnsManageId($ans_manage_id = 0)
+    {
+        return $this->historyQuestionOptionsSettingRepository->delByAnsManageId($ans_manage_id);
+    }
+    
 }
