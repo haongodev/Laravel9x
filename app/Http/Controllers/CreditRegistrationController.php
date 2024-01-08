@@ -344,7 +344,7 @@ class CreditRegistrationController extends Controller
                 // 07/12/2023 - add new spec check answer at history
                 if($questionSetting->duplicate_flg){
                     $cur_ans = $questionSetting->current_question_option_setting->option_name;
-                    $checkHisAns = $this->answerInfoService->getAnswerHis($questionSetting->parent_question_id,$cur_ans);
+                    $checkHisAns = $this->answerInfoService->getAnswerHis($questionSetting->parent_question_id,$cur_ans,null);
                     if(count($checkHisAns) > 0){
                         $returnHTML = view('myPage/creditRegistration/question/warningDuplicate',[
                             'histAnsw' => $checkHisAns,
