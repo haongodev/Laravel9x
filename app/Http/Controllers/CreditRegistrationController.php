@@ -341,6 +341,18 @@ class CreditRegistrationController extends Controller
             $questionSettingChildData = Session::get('question_child_data');
             $answerInfoData = Session::get('answer_info_data');
             if ($questionSetting) {
+                // 07/12/2023 - add new spec check answer at history
+                if($questionSetting->duplicate_flg){
+                    $cur_ans = $questionSetting->current_question_option_setting->option_name;
+                    $checkHisAns = $this->answerInfoService->getAnswerHis($questionSetting->parent_question_id,$cur_ans,null);
+                    if(count($checkHisAns) > 0){
+                        $returnHTML = view('myPage/creditRegistration/question/warningDuplicate',[
+                            'histAnsw' => $checkHisAns,
+                            'current_input' => $questionSetting->parent_question_option_id
+                        ])->render();
+                        return response()->json(array('success' => true, 'html' => $returnHTML));
+                    }
+                }
                 $viewQuestion = 'input_method_' . $questionSetting->input_method;
                 $returnHTML = view('myPage/creditRegistration/question/' . $viewQuestion,[
                     'questionSetting'=> $questionSetting,

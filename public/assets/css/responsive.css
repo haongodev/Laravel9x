@@ -18,3 +18,88 @@
         justify-content:start;
     }
 }
+@media only screen and (max-width: 430px) {
+    .main-header{
+        max-width: 430px;
+        padding: 10px 10px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    .main-header .left-side{
+        min-width: 220px;
+    }
+    .main-header .left-side img{
+        width: 100%;
+    }
+    .main-header .right-side{
+        text-align: left;
+        min-width: 410px;
+    }
+    .main-header .right-side .container{
+        display: flex!important;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .main-header .right-side .container .header-buttom{
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+    .wrapper-container{
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+    .wrapper-container .left-side{
+        min-width:410px;
+    }
+    .wrapper-container .left-side .side-top .container .row{
+        align-items: flex-start;
+        flex-direction: row;
+    }
+    .wrapper-container .left-side .side-top .container .row .stack_1,.stack_2{
+        width: 50%;
+        display: flex!important;
+        flex-direction: column;
+        gap: 7px;
+    }
+    .wrapper-container .left-side .side-top .container .row span, .wrapper-container .left-side .side-top .container .row button, .wrapper-container .left-side .side-top .container .row a{
+        font-size: 13px!important;
+    }
+    .wrapper-container .left-side .side-top .container .row .list-info li > a{
+        width: 71%;
+    }
+    .wrapper-container .left-side .side-top,.wrapper-container .left-side .side-bot{
+        padding: 10px;
+    }
+    .wrapper-container .left-side .side-top,.wrapper-container .left-side .sub-desc p{
+        font-size: 15px;
+    }
+    .wrapper-container .left-side .side-bot .container .row ul li a{
+        font-size: 13px;
+    }
+    .wrapper-container .left-side .side-bot .container .row ul li a img{
+        width: 20px;
+    }
+    .wrapper-container .left-side .side-bot .container .row ul li:nth-child(1) a{
+        padding-bottom: 10px;
+    }
+    .wrapper-container .left-side .side-bot .container .row ul li a{
+        margin: 0px 10px;
+    }
+    .wrapper-container .left-side .side-bot .container .row ul{
+        margin: 0;
+    }
+    .wrapper-container .main-content{
+        margin-left: 0px;
+        min-width:410px;
+    }
+    .wrapper-container .main-content .bread-crumb{
+        padding: 0 10px;
+    }
+    .wrapper-container .main-content .bread-crumb .breadcrumb-item{
+        font-size: 22px;
+    }
+    .wrapper-container .main-content .bread-crumb .breadcrumb{
+        margin: 0;
+    }
+}

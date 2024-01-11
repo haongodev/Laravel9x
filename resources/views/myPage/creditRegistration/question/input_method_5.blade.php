@@ -45,8 +45,6 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
     {{--        @include('myPage.creditRegistration.question.input_method',['questionSettingChild'=>$questionSettingChildData[$questionSetting->id]])--}}
     {{--    @endif--}}
 
-    <script src="{{asset('assets/js/select.js')}}"></script>
-
 </div>
 @if($questionSetting->terminal_flg==1)
     <input type="hidden" class="terminal_flg" value="1">
