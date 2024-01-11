@@ -19,8 +19,9 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         $memberData = $this->memberService->getByCondition($request->all())->paginate(15);
+        $percentUse = $this->memberService->getPercentUse();
         //
-        return view('admin.index', ['memberData' => $memberData]);
+        return view('admin.index', ['memberData' => $memberData,'percentUse' => $percentUse]);
     }
 
     public function changePassWord(Request $request)

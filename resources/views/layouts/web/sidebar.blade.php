@@ -2,42 +2,46 @@
     <div class="side-top">
         <div class="container">
             <div class="row">
-                <div class="title-sign">
-                    <span class="member_num">構成員番号：{{auth()->user()->user_add_info->login_id ?? auth()->user()->id}}</span>
-                    <span class="welcom">ようこそ、{{auth()->user()->name}}さん</span>
-                </div>
-{{--                <form action="/logout" method="post">--}}
-{{--                    @csrf--}}
-{{--                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>--}}
-{{--                </form>--}}
-                <button class="registed-btn">今年度の単位登録数</button>
-                @php
-                    $answerInfoPattern = answerInfoPattern();
-                @endphp
-                <ul class="list-info">
-                    <li>
-                        <a href="{{route('typeSelected',['type_native_id'=>0])}}" class="bg-primary">スーパービジョン</a><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
-                    </li>
-                    <li>
-                        <a href="{{route('typeSelected',['type_native_id'=>1])}}" class="bg-yellow">研修・学会等</a><span>{{$answerInfoPattern[1]['score_total'] ?? 0}}</span>
-                    </li>
-                    <li>
-                        <a href="{{route('typeSelected',['type_native_id'=>2])}}" class="bg-green">社会的活動</a><span>{{$answerInfoPattern[2]['score_total'] ?? 0}}</span>
-                    </li>
-                </ul>
-                @if(auth()->user()->user_add_info->membership_type == '認定保健福祉士')
-                    <div class="cert-box">
-                        <button class="handle-btn">認定期限</button>
-                        <span>{{getCertificationYear()  ? getCertificationYear().'年度' : ''}}</span>
+                <div class="stack_1" style="display: contents">
+                    <div class="title-sign">
+                        <span class="member_num">構成員番号：{{auth()->user()->user_add_info->login_id ?? auth()->user()->id}}</span>
+                        <span class="welcom">ようこそ、{{auth()->user()->name}}さん</span>
                     </div>
-                @endif
-                @php $scheduledDate = scheduledDate() @endphp
-                @if($scheduledDate)
-                <div class="block-scheduled">
-                    <button class="scheduled-btn">次回のさくらセット<br>取り組み予定</button>
-                    <p class="current-time">{{$scheduledDate}}</p>
+    {{--                <form action="/logout" method="post">--}}
+    {{--                    @csrf--}}
+    {{--                    <button class="close-btn btn-eff-bla btn-hov">閉じる</button>--}}
+    {{--                </form>--}}
+                    <button class="registed-btn">今年度の単位登録数</button>
+                    @php
+                        $answerInfoPattern = answerInfoPattern();
+                    @endphp
+                    <ul class="list-info">
+                        <li>
+                            <a href="{{route('typeSelected',['type_native_id'=>0])}}" class="bg-primary">スーパービジョン</a><span>{{$answerInfoPattern[0]['score_total'] ?? 0}}</span>
+                        </li>
+                        <li>
+                            <a href="{{route('typeSelected',['type_native_id'=>1])}}" class="bg-yellow">研修・学会等</a><span>{{$answerInfoPattern[1]['score_total'] ?? 0}}</span>
+                        </li>
+                        <li>
+                            <a href="{{route('typeSelected',['type_native_id'=>2])}}" class="bg-green">社会的活動</a><span>{{$answerInfoPattern[2]['score_total'] ?? 0}}</span>
+                        </li>
+                    </ul>
                 </div>
-                @endif
+                <div class="stack_2" style="display: contents">
+                    @if(auth()->user()->user_add_info->membership_type == '認定保健福祉士')
+                        <div class="cert-box">
+                            <button class="handle-btn">認定期限</button>
+                            <span>{{getCertificationYear()  ? getCertificationYear().'年度' : ''}}</span>
+                        </div>
+                    @endif
+                    @php $scheduledDate = scheduledDate() @endphp
+                    @if($scheduledDate)
+                    <div class="block-scheduled">
+                        <button class="scheduled-btn">次回のさくらセット<br>取り組み予定</button>
+                        <p class="current-time">{{$scheduledDate}}</p>
+                    </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

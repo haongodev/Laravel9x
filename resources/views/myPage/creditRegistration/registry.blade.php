@@ -82,23 +82,28 @@
                     $('input[name="'+element.key+'"][value="'+element.value+'"]').attr('checked','checked');
                 }
             });
+            const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
             setTimeout(() => {
-                localCredit.forEach(element => {
-                    if(element.type === 'select'){
-                        $('select[name="'+element.key+'"]').val(parseInt(element.value));
-                        $('select[name="'+element.key+'"]').trigger("chosen:updated");
-                    }
-                    if(element.type === 'text'){
-                        $('input[name="'+element.key+'"]').val(element.value);
-                    }
-                    if(element.type === 'checkbox'){
-                        $('input[name="'+element.key+'"][value="'+element.value+'"]').attr('checked','checked');
-                    }
-                    if(element.type === 'textarea'){
-                        $('textarea[name="'+element.key+'"]').val(element.value);
-                    }
-                });
-                $('.wrapper-loader').addClass('hidden');
+                (async () => {
+                    for (const element of localCredit) {
+                        if(element.type === 'select'){
+                            await delay(1000);
+
+                            $('select[name="' + element.key + '"]').val(parseInt(element.value)).change();
+                            $('select[name="' + element.key + '"]').trigger("chosen:updated");
+                        }
+                        if(element.type === 'text'){
+                            $('input[name="'+element.key+'"]').val(element.value);
+                        }
+                        if(element.type === 'checkbox'){
+                            $('input[name="'+element.key+'"][value="'+element.value+'"]').attr('checked','checked');
+                        }
+                        if(element.type === 'textarea'){
+                            $('textarea[name="'+element.key+'"]').val(element.value);
+                        }
+                    };
+                    $('.wrapper-loader').addClass('hidden');
+                })();
             }, 5000);
         }
         //window.jsPDF = window.jspdf.jsPDF;

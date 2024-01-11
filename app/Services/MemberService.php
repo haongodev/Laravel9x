@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\UserAddInfoRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\ManagedUsersAddInfoRepository;
+use App\Repositories\AnswerManageRepository;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,11 @@ class MemberService
      */
     protected $managedUsersAddInfoRepository;
 
-
+    /**
+     * @var AnswerManageRepository
+     */
+    protected $answerManageRepository;
+    
     /**
      * MemberService constructor.
      * @param UserAddInfoRepository $userAddInfoRepository
@@ -38,12 +43,14 @@ class MemberService
     public function __construct(
         UserAddInfoRepository $userAddInfoRepository,
         UserRepository $userRepository,
-        ManagedUsersAddInfoRepository $managedUsersAddInfoRepository
+        ManagedUsersAddInfoRepository $managedUsersAddInfoRepository,
+        AnswerManageRepository $answerManageRepository
     )
     {
         $this->userAddInfoRepository = $userAddInfoRepository;
         $this->userRepository = $userRepository;
         $this->managedUsersAddInfoRepository = $managedUsersAddInfoRepository;
+        $this->answerManageRepository = $answerManageRepository;
     }
 
     public function getByCondition($condition = [])
@@ -140,6 +147,12 @@ class MemberService
     public function deleteUserManageByUserId($userId = 0)
     {
         return $this->managedUsersAddInfoRepository->deleteByUserId($userId);
+    }
+    public function getPercentUse(){
+        $totalNum = $this->userRepository->countUserUse();
+        $activeNum = $this->answerManageRepository->countAnswer();
+        $result = ($activeNum / $totalNum) * 100;
+        return number_format($result,1);
     }
 
 }

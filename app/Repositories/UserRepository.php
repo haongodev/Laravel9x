@@ -41,5 +41,9 @@ class UserRepository
     {
         return $this->model->create($data);
     }
-    
+
+    public function countUserUse()
+    {
+        return $this->model->where('class', 0)->whereNot('name','四葉')->count();
+    }
 }

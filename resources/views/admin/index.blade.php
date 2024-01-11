@@ -8,6 +8,7 @@
 @section('content')
     <div class="breadcrumb-title">
         <button class="btn-title btn-success">構成員一覧</button>
+        <div><button class="btn-title btn-pinkin">利用率</button> {{ $percentUse }}％</div>
     </div>
     <div class="bread-crumb">
         <div class="container">
