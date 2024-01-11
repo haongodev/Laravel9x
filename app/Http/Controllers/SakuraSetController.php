@@ -232,6 +232,9 @@ class SakuraSetController extends Controller
         if($status == 4){
             $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$member_id],['member_id',$this->loginId()]],['reviewer_member','made_member']);
             $emailTo = $sakuraManage->reviewer_member->email;
+        }elseif($status == 1){
+            $sakuraManage = $this->sakurasetService->getByLoggedId([['member_id',$this->loginId()],['reviewer_id',$member_id]],['reviewer_member','made_member']);
+            $emailTo = $sakuraManage->reviewer_member->email;
         }else{
             $sakuraManage = $this->sakurasetService->getByLoggedId([['reviewer_id',$this->loginId()],['member_id',$member_id]],['reviewer_member','made_member']);
             $emailTo = $sakuraManage->made_member->email;

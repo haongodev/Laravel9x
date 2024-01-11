@@ -49,7 +49,7 @@
                 @if($sakuraMemberManage)
                     @if($sakuraMemberManage->reviewer_member !== null && ($sakuraMemberManage->reviewer_status !== 3))
                         @if($sakuraMemberManage->reviewer_status === 1)
-                        <button class="btn-eff-red btn-hov">申請中</button>
+                        <button class="unilateral-termination btn-eff-red btn-hov" data-status="{{ $sakuraMemberManage->reviewer_status }}" data-id="{{ $sakuraMemberManage->reviewer_member->login_id}}">取消し</button>
                         @else
                     		<button class="cancal-sharing btn-eff-red btn-hov" data-status="{{ $sakuraMemberManage->reviewer_status }}" data-id="{{ $sakuraMemberManage->reviewer_member->login_id}}">{{ $sakuraMemberManage->reviewer_status === 4 ? '解除受付' : '共有解除' }}</button>
                         @endif

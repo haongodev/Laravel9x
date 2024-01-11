@@ -97,6 +97,8 @@
 /*breadcrumb*/
 .main-content  .breadcrumb-title{
   padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .main-content  .btn-title{
@@ -106,7 +108,11 @@
     margin-bottom: 20px;
     color: #000000;
 }
-
+.btn-pinkin{
+    background: #FFCCE6!important;
+    border: unset!important;
+    border-radius: 20px;
+}
 /*end breadcrumb*/
 
 .btn-white{

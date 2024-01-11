@@ -221,4 +221,8 @@ class AnswerManageRepository
             ->get();
             ;
     }
+
+    public function countAnswer(){
+        return $this->model->distinct('member_id')->count('member_id');
+    }
 }

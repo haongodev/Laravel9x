@@ -44,7 +44,6 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
              data-current-question-id="{{$questionSetting->id}}">
 
         </div>
-        <script src="{{asset('assets/js/select.js')}}"></script>
 
     </div>
     <script>
