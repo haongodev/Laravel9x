@@ -18,6 +18,21 @@
             $('.btn-popup-accept').attr('data-id',member_id).attr('data-status',status);
         })
 
+        $('.unilateral-termination').click(function (){
+            if($(this).hasClass('had-change')){
+                return false;
+            }
+            var status = $(this).attr('data-status');
+            var member_id = $(this).attr('data-id');
+            $('.popup-wrapper .popup-content .content').html('振り返り担当者の申請を取り消しますか？');
+            $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">確認</button>');
+            $('.popup-wrapper .popup-footer').removeClass('hidden');
+            $('.popup-wrapper').removeClass('hidden');
+            $('.btn-popup-accept').addClass('btn-popup-confirm_unilateral_termination_from_rev');
+            $('body').addClass('ovf-hidden');
+            $('.btn-popup-accept').attr('data-id',member_id).attr('data-status',status);
+        })
+
         $('body').on('click','.reviewer',function (){
             var nth = $(this).attr('class');
             var classes = nth.split(' ');
@@ -221,6 +236,49 @@
                 $('body').removeClass('ovf-hidden');
             }else{
                 $('.popup-wrapper .popup-content .content').html('本当に共有を解除しますか？');
+                $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">最終確認</button>');
+                $(this).attr('last-confirm',true);
+            }
+        })
+        $('body').on('click','.btn-popup-confirm_unilateral_termination_from_rev',function (){
+            const checkLast = $(this).attr('last-confirm');
+            if(checkLast && checkLast === 'true'){
+                $('.popup-wrapper .popup-content .content').html('');
+                $('.popup-wrapper .popup-content .header-content').html('');
+                $('.popup-wrapper').addClass('hidden');
+                $(this).removeAttr('last-confirm');
+                $('.btn-popup-accept').removeClass('btn-popup-confirm_unilateral_termination_from_rev');
+                var member_id = $(this).attr('data-id');
+                var status = $(this).attr('data-status');
+                var data = null;
+                data = {
+                    view:'unilateral_termination_from_rev',
+                    member_id,
+                    status
+                }
+                $.ajax({
+                    url: '{{ route("sakuraDelete") }}',
+                    data: data,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: 'POST',
+                    success: function(response) {
+                        if(response.success){
+                            toastr.options.timeOut = 6000;
+                            toastr.info('共有解除申請を承認しました');
+                            $('.botton-navigate .pull-left ul li:nth-child(1) a').removeClass('disabled');
+                            $('.botton-navigate .pull-left ul li:nth-child(1) a button').removeClass('in-active').addClass('active')
+                            $('.botton-navigate .pull-left ul li:nth-child(2)').html('未申請')
+                            $('.botton-navigate .pull-right').html('')
+                            $('.btn-popup-accept').removeClass().addClass('btn-popup-accept').removeAttr('last-confirm').removeAttr('data-status');
+                        }
+                    },
+                    error: function(xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
+                $('body').removeClass('ovf-hidden');
+            }else{
+                $('.popup-wrapper .popup-content .content').html('本当に承認しますか？');
                 $('.popup-wrapper .popup-content .header-content').html('<button class="title-popup">最終確認</button>');
                 $(this).attr('last-confirm',true);
             }
