@@ -17,7 +17,7 @@
         @endif
     </div>
     <div class="container">
-        <div class="row" style="width:613px;margin: 0 auto;">
+        <div class="row chart-wrp" style="margin: 0 auto;">
             <canvas id="myChart"></canvas>
         </div>
     </div>
@@ -36,7 +36,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script>
         const ctx = document.getElementById('myChart');
-
+        var width = $(window).width();
+        var wCans = 613;
+        var textFont = 32;
+        if(width < 500){
+            wCans = 400;
+            textFont = 20;
+        }
+        $('.chart-wrp').css('width', wCans+'px');
         var myChart = new Chart(ctx, {
             type: 'pie',
             data: {
@@ -63,7 +70,7 @@
                             return context.chart.data.labels[context.dataIndex];
                         },
                         font: {
-                            size: 32,
+                            size: textFont,
                         }
                     }
                 }
