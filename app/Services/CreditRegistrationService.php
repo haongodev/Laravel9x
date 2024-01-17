@@ -103,7 +103,7 @@ class CreditRegistrationService
             DB::commit();
             return $answerManager;
         } catch (QueryException $exc) {
-            dd(1);
+            dd($exc->getMessage());
             DB::rollBack();
             Log::error($exc->getMessage(), $exc->getTrace());
             return false;
