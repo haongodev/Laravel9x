@@ -46,7 +46,6 @@ class HisQuestionSettings extends Model
         'level',
         'ans_manage_id',
         'parent_question_id',
-        'child_list',
         'parent_question_option_id',
         'input_method',
         'score',
