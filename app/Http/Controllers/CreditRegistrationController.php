@@ -173,17 +173,14 @@ class CreditRegistrationController extends Controller
         if(Session::get('popup_confirm')){
             $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
         }
-
         Session::put('answer_info_data', $answerInfoData);
         //Get original question id get from answer info data
-
         $questionManageData = $this->questionManageService->getByTypeNativeId($typeNativeId);
         $hisQuestionSettingData = $this->historyQuestionSettingService->getByOriginalQuestionIds($originalQuestionIds);
         $questionId = $questionManageData->first()->id ?? '';
         $hisQuestionSettingChildData = $this->historyQuestionSettingService->getChildByQuestionId($questionId);
         $hisQuestionSettingChildData = $this->historyQuestionSettingService->convertKeyToParentQuestionKey($hisQuestionSettingChildData);
         Session::put('question_child_data', $hisQuestionSettingChildData);
-
         return view('myPage/creditRegistration/edit', [
             'guidanceData' => $guidanceData,
             'questionSettingData' => $hisQuestionSettingData,
@@ -223,9 +220,11 @@ class CreditRegistrationController extends Controller
                 }
                 $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$title,$year);
                 if (!empty($scanHis)) {
+                    if(count($scanHis) > 1){
+                        $fistHis = $scanHis[0]->answer_manage_id;
+                    }
                     foreach ($scanHis as $hisKey => $his) {
                         if($his->answer === $answer){
-                            
                             if($request->action === 'edit'){
                                 if(intval($request->answer_manage_id) !== $his->answer_manage_id){
                                     array_push($ans_has_dup,$his);
