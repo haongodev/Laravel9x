@@ -85,7 +85,7 @@
     @endif
     @if($questionSetting->input_method ==10)
         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-            <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+            <div class="input-group {{$questionSetting->duplicate_flg > 0 ? "is_duplicheck" : '' }} before-question-id-{{$questionSetting->parent_question_option_id}}"
                  data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
@@ -120,7 +120,7 @@
     @endphp
     @if($questionSetting->input_method ==2)
         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-            <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+            <div class="input-group {{$questionSetting->duplicate_flg > 0 ? "is_duplicheck" : '' }} before-question-id-{{$questionSetting->parent_question_option_id}}"
                  {{--                             data-before-question-id="0"--}}
                  data-current-question-id="{{$questionSetting->id}}"
             >
@@ -158,7 +158,7 @@
         @endphp
         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
             <div
-                class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+                class="input-group {{$questionSetting->duplicate_flg > 0 ? "is_duplicheck" : '' }} before-question-id-{{$questionSetting->parent_question_option_id}}"
                 data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
@@ -196,7 +196,7 @@
     @endif
     @if($questionSetting->input_method ==4)
         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-            <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+            <div class="input-group {{$questionSetting->duplicate_flg > 0 ? "is_duplicheck" : '' }} before-question-id-{{$questionSetting->parent_question_option_id}}"
                  {{--                             data-before-question-id="0"--}}
                  data-current-question-id="{{$questionSetting->id}}">
                 <div class="w-100 group-control">
@@ -226,7 +226,7 @@
     @endif
     @if($questionSetting->input_method ==5)
         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-            <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+            <div class="input-group {{$questionSetting->duplicate_flg > 0 ? "is_duplicheck" : '' }} before-question-id-{{$questionSetting->parent_question_option_id}}"
                  data-current-question-id="{{$questionSetting->id}}"
             >
                 <div class="w-100 group-control">
@@ -250,7 +250,7 @@
     @endif
     @if($questionSetting->input_method ==6)
         <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-            <div class="input-group after-question-id-{{$questionSetting->id}} before-question-id-0"
+            <div class="input-group {{$questionSetting->duplicate_flg > 0 ? "is_duplicheck" : '' }} after-question-id-{{$questionSetting->id}} before-question-id-0"
                  data-current-question-id="{{$questionSetting->id}}">
                 <div class="w-100 group-control">
                     <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}}" data-question-id="{{$questionSetting->id}}">{{$questionSetting->title}}</label>

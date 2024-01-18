@@ -173,7 +173,7 @@ class CreditRegistrationService
 
     }
 
-    public function insertHistoryQuestionSetting($questionId = 0,$ans_id)
+    public function insertHistoryQuestionSetting($questionId = 0,$ans_id = null)
     {
         $questionSettingData = $this->questionSettingRepository->getByQuestionId($questionId,true)->toArray();
         foreach ($questionSettingData as $questionSetting){
@@ -186,7 +186,7 @@ class CreditRegistrationService
         return $his;
     }
 
-    public function insertHistoryQuestionOptionSetting($questionId = 0,$ans_id)
+    public function insertHistoryQuestionOptionSetting($questionId = 0,$ans_id = null)
     {
         $questionOptionSettingData = $this->questionOptionSettingRepository->getByQuestionId($questionId)->toArray();
         foreach ($questionOptionSettingData as $questionOptionSetting){
