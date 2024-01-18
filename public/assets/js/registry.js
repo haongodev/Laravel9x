@@ -219,24 +219,35 @@ function check_duplicate_answer(form)
         data: data,
         success: function ({data}) {
             if(data.length > 0){
-                toastr.options.timeOut = 6000;
-                toastr.warning('本年度に同じ内容で単位登録されています。<br>同一年度内で同じ内容での登録はできません。');
-                data.forEach(element => {
-                    var current_input = element.input_method;
-                    if($('#checkbox'+current_input).length){
-                        $('#checkbox'+current_input).closest('.input-group > .group-control').children('label').addClass('text-danger');
-                    }
-                    if($('.input-method-'+current_input).length && !element.hasOwnProperty('id')){
-                        $('.input-method-'+current_input).each(function (indexInArray, valueOfElement) { 
-                            if($.trim($(valueOfElement).parents('.group-control').children('label').text()) === element.title){
-                                $(valueOfElement).parents('.group-control').children('label').addClass('text-danger');
-                                toastr.options.timeOut = 6000;
-                                toastr.warning('A（※'+element.title+'）との間隔はB（※'+element.interval_month+'月）以上空ける必要があります。');
-                            }
-                        });
-                    }
-                });
-                validate =  false;
+                if($('.is_duplicheck').length != data.length){
+                    validate = true;
+                }else{
+                    toastr.options.timeOut = 6000;
+                    toastr.warning('本年度に同じ内容で単位登録されています。<br>同一年度内で同じ内容での登録はできません。');
+                    data.forEach(element => {
+                        var current_input = element.input_method;
+                        if($('#checkbox'+current_input).length){
+                            $('#checkbox'+current_input).closest('.input-group > .group-control').children('label').addClass('text-danger');
+                        }
+                        if($('.input-method-'+current_input).length && !element.hasOwnProperty('id')){
+                            $('.input-method-'+current_input).each(function (indexInArray, valueOfElement) { 
+                                if($.trim($(valueOfElement).parents('.group-control').children('label').text()) === element.title){
+                                    $(valueOfElement).parents('.group-control').children('label').addClass('text-danger');
+                                    toastr.options.timeOut = 6000;
+                                    toastr.warning('A（※'+element.title+'）との間隔はB（※'+element.interval_month+'月）以上空ける必要があります。');
+                                }
+                            });
+                        }
+                        if($('.select-branch-question-'+element.original_question_id).length){
+                            $('.select-branch-question-'+element.original_question_id).each(function (indexInArray, valueOfElement) { 
+                                if($.trim($(valueOfElement).parents('.group-control').children('label').text()) === element.title){
+                                    $(valueOfElement).parents('.group-control').children('label').addClass('text-danger');
+                                }
+                            });
+                        }
+                    });
+                    validate =  false;
+                }
             }else{
                 validate = true;
             }

@@ -220,9 +220,6 @@ class CreditRegistrationController extends Controller
                 }
                 $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$title,$year);
                 if (!empty($scanHis)) {
-                    if(count($scanHis) > 1){
-                        $fistHis = $scanHis[0]->answer_manage_id;
-                    }
                     foreach ($scanHis as $hisKey => $his) {
                         if($his->answer === $answer){
                             if($request->action === 'edit'){
@@ -230,7 +227,20 @@ class CreditRegistrationController extends Controller
                                     array_push($ans_has_dup,$his);
                                 }
                             }else{
-                                array_push($ans_has_dup,$his);
+                                $levelExists = false;
+                                if(count($ans_has_dup) > 0){
+                                    foreach ($ans_has_dup as $item) {
+                                        if ($item->level === $his->level) {
+                                            $levelExists = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!$levelExists) {
+                                        $ans_has_dup[] = $his;
+                                    }
+                                }else{
+                                    $ans_has_dup[] = $his;
+                                }
                             }
                         }
                     }
