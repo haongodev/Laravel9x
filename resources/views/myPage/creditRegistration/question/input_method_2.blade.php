@@ -5,7 +5,8 @@ $arrAnswer = $answerData ? explode(',', $answerData->answer) : [];
 <div class="first-child-question-id-{{$questionSetting->id}} first-div">
     <div
         class="input-group current-question-id-{{$questionSetting->id}}
-            before-question-id-{{$questionSetting->parent_question_option_id}}"
+        {{$questionSetting->duplicate_flg > 0 ? "is_duplicheck" : '' }} 
+        before-question-id-{{$questionSetting->parent_question_option_id}}"
         {{--        data-before-question-id="{{$questionSetting->parent_question_option_id}}"--}}
         data-current-question-id="{{$questionSetting->id}}"
     >

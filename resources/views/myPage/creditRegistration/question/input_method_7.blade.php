@@ -2,7 +2,7 @@
 $answerData = $answerInfoData[$questionSetting->id] ?? [];
 ?>
 <div class="first-child-question-id-{{$questionSetting->id}} first-div">
-    <div class="input-group before-question-id-{{$questionSetting->parent_question_option_id}}"
+    <div class="input-group {{$questionSetting->duplicate_flg > 0 ? "is_duplicheck" : '' }} before-question-id-{{$questionSetting->parent_question_option_id}}"
          data-current-question-id="{{$questionSetting->id}}">
         <div class="w-100 group-control">
             <label for="email" class="w-25 title-required-{{$questionSetting->required_flg}} {{$questionSetting->description_flg == 1 ? "is_desc" : ""}} {{$questionSetting->description_flg == 2 ? "is_desc_blank" : ""}}" {{$questionSetting->description_flg == 2 ? "data_desc=".$questionSetting->description : ""}} data-question-id="{{$questionSetting->id}}">
