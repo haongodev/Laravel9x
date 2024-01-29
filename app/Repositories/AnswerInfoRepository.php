@@ -152,5 +152,24 @@ class AnswerInfoRepository
         }
         return $query->orderBy("answer_info.answer_manage_id","DESC")->get();
     }
-    
+    public function getAnswerHisArr($idQues,$questTitle,$answer,$year)
+    {
+        $memberId = auth()->user()->id;
+        $query = $this->model
+            ->join('answer_manage', function ($q) {
+                $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+            })
+            ->where('member_id', $memberId)
+            ->whereIn('original_question_id', $idQues)
+            ->whereIn('answer', $answer)
+            ->whereIn('title', $questTitle);
+        foreach ($year as $value){
+            if(!is_null($value)){
+                $query = $query->where('answer_manage.registration_year', intval($value));
+            }
+        }
+        return $query
+        ->orderBy("answer_info.answer_manage_id","ASC")
+        ->get();
+    }
 }
