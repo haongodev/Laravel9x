@@ -14,6 +14,7 @@ use App\Services\QuestionOptionSettingService;
 use App\Services\CreditRegistrationService;
 use App\Services\HistoryQuestionSettingService;
 use App\Services\HistoryQuestionOptionSettingService;
+use Illuminate\Support\Collection;
 
 class CreditRegistrationController extends Controller
 {
@@ -203,6 +204,7 @@ class CreditRegistrationController extends Controller
         Session::put('question_option_confirm', $questionOptionSettingRegistryData);
         $answerInfoData = $this->creditRegistrationService->getAnswerInfoForm();
         $ans_has_dup = [];
+        $key_check_dup = [];
         foreach ($answerInfoData as $key => $ans) {
             $id_quest = $key;
             $answer = $ans->answer;
@@ -218,46 +220,71 @@ class CreditRegistrationController extends Controller
                         $year = date("Y", strtotime($hash[0] . " -1 year"));
                     }
                 }
-                $scanHis = $this->answerInfoService->getAnswerHis($id_quest,$title,$year);
-                if (!empty($scanHis)) {
-                    foreach ($scanHis as $hisKey => $his) {
-                        if($his->answer === $answer){
-                            if($request->action === 'edit'){
-                                if(intval($request->answer_manage_id) !== $his->answer_manage_id){
-                                    array_push($ans_has_dup,$his);
-                                }
-                            }else{
-                                $levelExists = false;
-                                if(count($ans_has_dup) > 0){
-                                    foreach ($ans_has_dup as $item) {
-                                        if ($item->level === $his->level) {
-                                            $levelExists = true;
-                                            break;
-                                        }
-                                    }
-                                    if (!$levelExists) {
-                                        $ans_has_dup[] = $his;
-                                    }
-                                }else{
-                                    $ans_has_dup[] = $his;
-                                }
-                            }
-                        }
-                    }
-                }
+
+                $key_check_dup[] = [
+                    'year' => $year,
+                    'title' => $title,
+                    'id_request' => $id_quest,
+                    'answer' => $ans->answer
+                ];
+                
             }
             if($ans->interval_target_id >= 1 && in_array($ans->input_method,[7,8]) && $ans->interval_month > 0){
                 if($ans->input_method === 7){
                     $month = date("m",strtotime($answer));
                     if (intval($month) < $ans->interval_month) {
-                        array_push($ans_has_dup,$ans);
+                        array_push($key_check_dup,[
+                            'year' => $year,
+                            'title' => $title,
+                            'id_request' => $id_quest,
+                            'answer' => $ans->answer
+                        ]);
                     }
                 }
                 if($ans->input_method === 8){
                     $answer = explode(',',$answer)[0];
                     $month = date("m",strtotime($answer));
                     if (intval($month) < $ans->interval_month) {
-                        array_push($ans_has_dup,$ans);
+                        array_push($key_check_dup,[
+                            'year' => $year,
+                            'title' => $title,
+                            'id_request' => $id_quest,
+                            'answer' => $ans->answer
+                        ]);
+                    }
+                }
+            }
+        }
+        $collection = collect($key_check_dup);
+
+        // Tách các giá trị thành các mảng riêng
+        $year = array_unique($collection->pluck('year')->toArray());
+        $title = array_unique($collection->pluck('title')->toArray());
+        $id_request = array_unique($collection->pluck('id_request')->toArray());
+        $answer = array_unique($collection->pluck('answer')->toArray());
+        $scanHis = $this->answerInfoService->getAnswerHisArr($id_request,$title,$answer,$year);
+        if (!empty($scanHis)) {
+            $first_answer_manage_id = 0;
+            foreach ($scanHis as $hisKey => $his) {
+                if($request->action === 'edit'){
+                    if(intval($request->answer_manage_id) !== $his->answer_manage_id){
+                        array_push($ans_has_dup,$his);
+                    }
+                }else{
+                    $levelExists = false;
+                    if(count($ans_has_dup) > 0){
+                        foreach ($ans_has_dup as $item) {
+                            if ($item->level === $his->level) {
+                                $levelExists = true;
+                                break;
+                            }
+                        }
+                        if (!$levelExists && $his->answer_manage_id == $first_answer_manage_id) {
+                            $ans_has_dup[] = $his;
+                        }
+                    }else{
+                        $first_answer_manage_id = $his->answer_manage_id;
+                        $ans_has_dup[] = $his;
                     }
                 }
             }
