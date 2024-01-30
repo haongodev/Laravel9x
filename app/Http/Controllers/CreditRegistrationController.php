@@ -264,7 +264,19 @@ class CreditRegistrationController extends Controller
         $answer = array_unique($collection->pluck('answer')->toArray());
         $scanHis = $this->answerInfoService->getAnswerHisArr($id_request,$title,$answer,$year);
         if (!empty($scanHis)) {
-            $first_answer_manage_id = 0;
+            // quét tìm answer_manage_id nào có kết quả nhiều nhất
+            $find_al = [];
+            foreach ($scanHis as $hisKey => $his) {
+                if(isset($find_al[$his->answer_manage_id])){
+                    $find_al[$his->answer_manage_id] = $find_al[$his->answer_manage_id] + 1;
+                }else{
+                    $find_al[$his->answer_manage_id] = 1;
+                }
+            }
+            $maxValue = max($find_al);
+            $positions = array_keys($find_al, $maxValue);
+            $first_answer_manage_id = end($positions);
+
             foreach ($scanHis as $hisKey => $his) {
                 if($request->action === 'edit'){
                     if(intval($request->answer_manage_id) !== $his->answer_manage_id){
@@ -283,8 +295,9 @@ class CreditRegistrationController extends Controller
                             $ans_has_dup[] = $his;
                         }
                     }else{
-                        $first_answer_manage_id = $his->answer_manage_id;
-                        $ans_has_dup[] = $his;
+                        if ($his->answer_manage_id === $first_answer_manage_id) {
+                            $ans_has_dup[] = $his;
+                        }
                     }
                 }
             }
