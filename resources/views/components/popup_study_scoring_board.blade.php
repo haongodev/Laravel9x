@@ -354,7 +354,7 @@
                         },
                         pointLabels: {
                             font: {
-                                size: 15,
+                                size: 20,
                                 weight: 'bold',
                             }
                         },
@@ -365,6 +365,11 @@
                     legend: {
                         position: 'bottom',
                         align: 'center',
+                        labels: {
+                            font: {
+                                size: 22
+                            }
+                        }
                     },
                 },
                 responsive: false
@@ -508,9 +513,12 @@
                     titleDate = answerDate+'年度';
                 }
 
-                answerWdispl = items[htmlItem].answer
+                answerWdispl = items[htmlItem].answer.slice(0, 20);
+                if(items[htmlItem].answer.length > 20){
+                    answerWdispl = answerWdispl+'...';
+                }
 
-            return '<td class="'+className+' text-break">'+titleDate+'<br>[内容]<br>'+answerWdispl+'</td>';
+            return '<td class="'+className+' text-break">'+titleDate+'<br>[概要]'+answerWdispl+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }
