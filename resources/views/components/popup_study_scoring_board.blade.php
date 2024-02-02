@@ -119,7 +119,7 @@
             $('#'+'column_chart_'+val+'_stack').css('width',widthChart+'px');
             const ctx = document.getElementById('column_chart_'+val);
             const ctxStack = document.getElementById('column_chart_'+val+'_stack');
-            const labels = ['SV','研修・学会等','社会的活動'];
+            const labels = ['スーパービジョン','研修・学会等','社会的活動'];
             const labelsStack = [val+'年度'];
             var dataInitCore1 = groupedDataChart[val].map(item => item.total_score);
             const maxRange = dataInitCore1.reduce((partialSum, a) => parseInt(partialSum) + parseInt(a), 0);
@@ -187,7 +187,7 @@
                             crossAlign: "far",
                         },
                         afterFit: function(scaleInstance) {
-                            scaleInstance.width = 120; // sets the width to 100px
+                            scaleInstance.width = 170; // sets the width to 100px
                         },
                     },
                     x: {
