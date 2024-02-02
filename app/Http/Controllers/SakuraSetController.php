@@ -284,7 +284,7 @@ class SakuraSetController extends Controller
     }
     public function backup(Request $request){
         $validator = Validator::make($request->all(), [
-            'file' => 'required|mimes:png,jpg,jpeg,csv,docx,xlsx,txt,pdf|max:200000'
+            'file' => 'required|mimes:png,jpg,jpeg,csv,docx,xlsx,txt,pdf|max:300000'
         ]);
         if ($validator->fails()) {
             $data['success'] = false;
