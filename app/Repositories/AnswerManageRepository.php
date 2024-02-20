@@ -54,7 +54,7 @@ class AnswerManageRepository
         }else{
             $result = $result->where('registration_year',$year);
         }
-        $result = $result->groupBy('answer_manage.type_native_id')->select('answer_manage.type_native_id', \DB::raw('SUM(score) as total_score'))->get();
+        $result = $result->groupBy('answer_manage.type_native_id')->orderBy('answer_manage.type_native_id','asc')->select('answer_manage.type_native_id', \DB::raw('SUM(score) as total_score'))->get();
         return $result;
     }
     public function sumCoreBwYear($from,$to){
