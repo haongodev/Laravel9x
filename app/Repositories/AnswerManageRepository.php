@@ -31,6 +31,10 @@ class AnswerManageRepository
     }
     public function sumCoreCredits($year){
         $memberId = auth()->user()->id;
+        $possibleTypes = [0, 1, 2];
+        $allTypes = collect($possibleTypes)->map(function ($type) {
+            return ['type_native_id' => $type];
+        });
         if(is_array($year)){
             if($year[0] != 0 && $year[1] !==0){
                 if($year[0] > $year[1]){
@@ -43,18 +47,37 @@ class AnswerManageRepository
                 $year = $years;
             }
         }
+        // Truy vấn dữ liệu
         $result = $this->model
-            ->join('answer_info', function ($q) use ($year){
-                $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
-            })
-            ->where('member_id', $memberId)
-            ->whereIn('answer_manage.type_native_id', [0,1,2]);
-        if(is_array($year)){
-            $result = $result->whereIn('registration_year',$year);
-        }else{
-            $result = $result->where('registration_year',$year);
+                ->leftJoin('answer_info', function ($q) use ($year) {
+                    $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+                })
+                ->where('member_id', $memberId)
+                ->whereIn('answer_manage.type_native_id', $possibleTypes);
+
+        if (is_array($year)) {
+            $result->whereIn('registration_year', $year);
+        } else {
+            $result->where('registration_year', $year);
         }
-        $result = $result->groupBy('answer_manage.type_native_id')->orderBy('answer_manage.type_native_id','asc')->select('answer_manage.type_native_id', \DB::raw('SUM(score) as total_score'))->get();
+
+        $result = $result
+                ->groupBy('answer_manage.type_native_id')
+                ->orderBy('answer_manage.type_native_id', 'asc')
+                ->select(
+                    'answer_manage.type_native_id',
+                    \DB::raw('COALESCE(SUM(score), 0) as total_score')
+                )
+                ->get();
+
+                // Kết hợp kết quả với bảng tạm thời
+        $result = $allTypes->map(function ($type) use ($result) {
+            $match = $result->where('type_native_id', $type['type_native_id'])->first();
+            return [
+                    'type_native_id' => $type['type_native_id'],
+                    'total_score' => $match ? $match['total_score'] : 0,
+            ];
+        });
         return $result;
     }
     public function sumCoreBwYear($from,$to){
