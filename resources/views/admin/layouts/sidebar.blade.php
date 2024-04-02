@@ -36,7 +36,7 @@
                     </li>
 
                 </ul>
-                <ul>
+                {{-- <ul>
                     <li class="title">
                         <span>更新研修管理</span>
                     </li>
@@ -77,7 +77,7 @@
                         </a>
                     </li>
 
-                </ul>
+                </ul> --}}
                 <ul>
                     <li class="title">
                         <span>システム設定</span>
