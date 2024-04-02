@@ -52,4 +52,7 @@ class AnswerInfoService
     public function getAnswerHis($idQest,$questTitle,$year){
         return $this->answerInfoRepository->getAnswerHis($idQest,$questTitle,$year);
     }
+    public function getAnswerHisArr($idQest,$questTitle,$answer,$year){
+        return $this->answerInfoRepository->getAnswerHisArr($idQest,$questTitle,$answer,$year);
+    }
 }

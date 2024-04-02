@@ -119,7 +119,7 @@
             $('#'+'column_chart_'+val+'_stack').css('width',widthChart+'px');
             const ctx = document.getElementById('column_chart_'+val);
             const ctxStack = document.getElementById('column_chart_'+val+'_stack');
-            const labels = ['SV','研修・学会等','社会的活動'];
+            const labels = ['スーパービジョン','研修・学会等','社会的活動'];
             const labelsStack = [val+'年度'];
             var dataInitCore1 = groupedDataChart[val].map(item => item.total_score);
             const maxRange = dataInitCore1.reduce((partialSum, a) => parseInt(partialSum) + parseInt(a), 0);
@@ -187,7 +187,7 @@
                             crossAlign: "far",
                         },
                         afterFit: function(scaleInstance) {
-                            scaleInstance.width = 120; // sets the width to 100px
+                            scaleInstance.width = 170; // sets the width to 100px
                         },
                     },
                     x: {
@@ -354,7 +354,7 @@
                         },
                         pointLabels: {
                             font: {
-                                size: 15,
+                                size: 20,
                                 weight: 'bold',
                             }
                         },
@@ -365,6 +365,11 @@
                     legend: {
                         position: 'bottom',
                         align: 'center',
+                        labels: {
+                            font: {
+                                size: 22
+                            }
+                        }
                     },
                 },
                 responsive: false
@@ -508,9 +513,12 @@
                     titleDate = answerDate+'年度';
                 }
 
-                answerWdispl = items[htmlItem].answer
+                answerWdispl = items[htmlItem].answer.slice(0, 20);
+                if(items[htmlItem].answer.length > 20){
+                    answerWdispl = answerWdispl+'...';
+                }
 
-            return '<td class="'+className+' text-break">'+titleDate+'<br>[内容]<br>'+answerWdispl+'</td>';
+            return '<td class="'+className+' text-break">'+titleDate+'<br>[概要]'+answerWdispl+'</td>';
         }else{
             return '<td class="'+className+'"></td>';
         }
