@@ -6,15 +6,20 @@
     </div>
     @if(auth()->check())
     <div class="right-side">
-        <div class="container">
+        <div class="container" style="min-width: 1020px">
             @if(!empty($button_central_study))
                 <a href="https://www.jamhsw.or.jp/ugoki/kensyu.htm" target="_blank">
                     <button type="button" class="header-buttom btn-pur btn-hov btn-eff-pur">研修センター</button>
                 </a>
             @endif
             @if(!empty($button_unit_guidelines))
-                <a href="/templates/sidebar/単位ガイドライン（20230926改訂）.pdf" target="_blank">
+                <a href="/templates/sidebar/単位ガイドライン（20240401改訂）.pdf" target="_blank">
                     <button type="button" class="header-buttom accept-btn btn-hov btn-eff-pri">単位ガイドライン</button>
+                </a>
+            @endif
+            @if(!empty($button_qa_unit))
+                <a href="/templates/sidebar/単位ガイドラインQ＆A（20240401）.pdf" target="_blank">
+                    <button type="button" class="header-buttom btn-hov btn-eff-grey-purple btn-grey-purple">単位ガイドラインQ＆A</button>
                 </a>
             @endif
             @if(!empty($button_operation_manual))
