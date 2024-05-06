@@ -63,6 +63,8 @@ button.disabled{
     width: 75%;
     min-width: 960px;
     text-align: right;
+    overflow: auto;
+    padding-bottom: 10px;
 }
 .main-header .right-side .container .header-buttom{
     font-size: 19px;
@@ -328,6 +330,12 @@ button.disabled{
 .btn-eff-gre{
     box-shadow: 0 5px 0 #137d0b;
 }
+.btn-eff-grey-purple{
+    box-shadow: 0 5px 0 rgb(159 138 212);
+}
+.btn-grey-purple{
+    background-color:#b4a7d6ff !important;
+}
 .btn-eff-pri{
     box-shadow: 0 5px 0 #034f9b;
 }
@@ -350,4 +358,10 @@ button.disabled{
 .right-side a{
     text-decoration: none;
 }
-
+.main-header .right-side::-webkit-scrollbar {
+    height: 5px;
+    width:100%;
+}
+.main-header .right-side::-webkit-scrollbar-thumb {
+    background: #888;
+}

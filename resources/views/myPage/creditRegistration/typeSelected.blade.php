@@ -1,6 +1,7 @@
 @extends('layouts.web.main', [
     'pageSlug' => '選択した類型',
     'button_unit_guidelines' => true,
+    'button_qa_unit' => true,
     'button_operation_manual' => true,
     'button_central_study' => true
     ])
