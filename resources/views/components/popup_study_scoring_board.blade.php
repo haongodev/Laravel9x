@@ -384,34 +384,41 @@
         var titleChart2 = '';
         var tableHtml = '';
         $('.popup-top .btn-title button').css('marginBottom','30px');
-        html2canvas($('.popup-top .btn-title'),{
-            onrendered: function (canvas) {
-                headPdf = canvas.toDataURL();
-                $('.popup-top .btn-title-chart1').removeClass('hidden');
-                html2canvas($('.popup-top .btn-title-chart1'),{
-                    onrendered: function (canvas) {
-                        $('.popup-top .btn-title-chart1').addClass('hidden');
-                        $('.popup-top .btn-title-chart2').removeClass('hidden');
-                        titleChart1 = canvas.toDataURL();
-                        html2canvas($('.popup-top .btn-title-chart2'),{
-                            onrendered: function (canvas) {
-                                $('.popup-top .btn-title-chart2').addClass('hidden');
-                                $('.table-show-credit').css('overflowX','unset');
-                                titleChart2 = canvas.toDataURL();
-                                html2canvas($('.table-show-credit table'), {
-                                    onrendered: function (canvas) {
-                                        tableHtml = canvas.toDataURL();
-                                        $('.table-show-credit').css('overflowX','auto');
-                                        $('.popup-top .btn-title button').css('marginBottom','unset');
-                                        exportPdfNow();
-                                    }
-                                });
-                            }
-                        })
-                    }
-                })
-            }
-        })
+        
+        var vp = document.getElementById("viewportMeta").getAttribute("content");
+        document.getElementById("viewportMeta").setAttribute("content", "width=2560");
+        setTimeout(() => {
+	        html2canvas($('.popup-top .btn-title button'),{
+	            onrendered: function (canvas) {
+	                headPdf = canvas.toDataURL();
+	                console.log(headPdf);
+	                $('.popup-top .btn-title-chart1').removeClass('hidden');
+	                html2canvas($('.popup-top .btn-title-chart1'),{
+	                    onrendered: function (canvas) {
+	                        $('.popup-top .btn-title-chart1').addClass('hidden');
+	                        $('.popup-top .btn-title-chart2').removeClass('hidden');
+	                        titleChart1 = canvas.toDataURL();
+	                        html2canvas($('.popup-top .btn-title-chart2'),{
+	                            onrendered: function (canvas) {
+	                                $('.popup-top .btn-title-chart2').addClass('hidden');
+	                                $('.table-show-credit').css('overflowX','unset');
+	                                titleChart2 = canvas.toDataURL();
+	                                html2canvas($('.table-show-credit table'), {
+	                                    onrendered: function (canvas) {
+	                                        tableHtml = canvas.toDataURL();
+	                                        $('.table-show-credit').css('overflowX','auto');
+	                                        $('.popup-top .btn-title button').css('marginBottom','unset');
+	                                        exportPdfNow();
+	                                        document.getElementById("viewportMeta").setAttribute("content", vp);
+	                                    }
+	                                });
+	                            }
+	                        })
+	                    }
+	                })
+	            }
+	        })
+        }, 500)
 
 
         function exportPdfNow(){
@@ -507,7 +514,7 @@
                         answerDate = arrDate[0];
                     }
 
-                    titleDate = new Date(answerDate);
+                    titleDate = new Date(answerDate.replace(/-/g, "/"));
                     titleDate = titleDate.getFullYear()+'年 '+(titleDate.getMonth() + 1)+'月 '+titleDate.getDate()+'日'
                 }else{
                     titleDate = answerDate+'年度';
