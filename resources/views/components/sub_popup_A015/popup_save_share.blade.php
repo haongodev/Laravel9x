@@ -54,6 +54,8 @@
                 success: function (response) {
                     if (response.success) {
                         $('.popup-A015-save-share .table-manager').append(response.html);
+                        toastr.options.timeOut = 3000;
+                        toastr.info('保存・共有しました。');
                     }
                 },
                 error: function (xhr) {

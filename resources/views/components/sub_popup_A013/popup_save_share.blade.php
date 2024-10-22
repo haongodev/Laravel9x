@@ -60,6 +60,8 @@
                     if(response.success){
                         $('.popup-A013-save-share .table-manager').append(response.html)
                         $('#a013_upload').val('');
+                        toastr.options.timeOut = 3000;
+                        toastr.info('保存・共有しました。');
                     }
                 },
                 error: function(xhr) {

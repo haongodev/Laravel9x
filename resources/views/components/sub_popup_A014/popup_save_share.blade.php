@@ -93,6 +93,8 @@
                 success: function (response) {
                     if (response.success) {
                         $('.table-manager-class-'+upload_class).append(response.html)
+                        toastr.options.timeOut = 3000;
+                        toastr.info('保存・共有しました。');
                     }
                 },
                 error: function (xhr) {

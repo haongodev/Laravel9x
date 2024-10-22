@@ -22,14 +22,14 @@
     <script>
         $('.download-template').click(function () {
             // URL of the file you want to download
-            var fileURL = '{{ asset('templates/initiative/initiativesheet.xlsx') }}';
+            var fileURL = '{{ asset('templates/initiative/さくらセット取り組み表.xlsx') }}';
             console.log(fileURL);
             // Create a link element
             var link = document.createElement('a');
             link.id = 'downloadLink';
             link.style.display = 'none';
             link.href = fileURL;
-            link.download = 'initiativesheet.xlsx';
+            link.download = 'さくらセット取り組み表.xlsx';
             
             // Append the link to the document
             document.body.appendChild(link);

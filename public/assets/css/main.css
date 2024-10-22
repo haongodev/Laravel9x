@@ -61,15 +61,15 @@ button.disabled{
 }
 .main-header .right-side{
     width: 75%;
-    min-width: 960px;
-    text-align: right;
+    min-width: 900px;
+    text-align: center;
     overflow: auto;
     padding-bottom: 10px;
 }
 .main-header .right-side .container .header-buttom{
     font-size: 19px;
     background: #60C659;
-    padding: 10px 25px;
+    padding: 10px 15px;
     border: 0;
     border-radius: 50px;
     color: #fff;
