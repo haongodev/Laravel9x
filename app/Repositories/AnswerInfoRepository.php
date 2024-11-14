@@ -168,6 +168,7 @@ class AnswerInfoRepository
                 $query = $query->where('answer_manage.registration_year', intval($value));
             }
         }
+
         return $query
         ->orderBy("answer_info.answer_manage_id","ASC")
         ->get();
