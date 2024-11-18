@@ -229,6 +229,9 @@ function check_duplicate_answer(form)
                         if($('#checkbox'+current_input).length){
                             $('#checkbox'+current_input).closest('.input-group > .group-control').children('label').addClass('text-danger');
                         }
+                        if($('.input-method-'+current_input).length){
+                            $('.input-method-'+current_input).closest('.input-group > .group-control').children('label').addClass('text-danger');
+                        }
                         if($('.input-method-'+current_input).length && !element.hasOwnProperty('id')){
                             $('.input-method-'+current_input).each(function (indexInArray, valueOfElement) { 
                                 if($.trim($(valueOfElement).parents('.group-control').children('label').text()) === element.title){

@@ -284,6 +284,7 @@ class CreditRegistrationService
             $answerData['interval_month'] = $questionSetting->interval_month;
             $answerData['input_method'] = $questionSetting->input_method;
             $answerData['title'] = $questionSetting->title;
+            $answerData['level'] = $questionSetting->level;
             $data[$questionSettingId]= (object)$answerData;
         }
         //Session::forget('popup_confirm');

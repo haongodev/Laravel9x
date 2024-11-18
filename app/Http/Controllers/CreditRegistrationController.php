@@ -209,6 +209,7 @@ class CreditRegistrationController extends Controller
             $id_quest = $key;
             $answer = $ans->answer;
             $title = $ans->title;
+            $level = $ans->level;
             $year = null;
             if($ans->duplicate_flg === 1){
                 //scan history
@@ -225,9 +226,9 @@ class CreditRegistrationController extends Controller
                     'year' => $year,
                     'title' => $title,
                     'id_request' => $id_quest,
+                    'level' => $level,
                     'answer' => $ans->answer
                 ];
-                
             }
             if($ans->interval_target_id >= 1 && in_array($ans->input_method,[7,8]) && $ans->interval_month > 0){
                 if($ans->input_method === 7){
@@ -256,46 +257,50 @@ class CreditRegistrationController extends Controller
             }
         }
         $collection = collect($key_check_dup);
-
         // Tách các giá trị thành các mảng riêng
         $year = array_unique($collection->pluck('year')->toArray());
         $title = array_unique($collection->pluck('title')->toArray());
         $id_request = array_unique($collection->pluck('id_request')->toArray());
         $answer = array_unique($collection->pluck('answer')->toArray());
+        $level = array_unique($collection->pluck('level')->toArray());
+        $answerCombine = array_combine($level,$answer);
         $scanHis = $this->answerInfoService->getAnswerHisArr($id_request,$title,$answer,$year);
+        $scanHis = array_filter($scanHis->toArray(), function($item) use ($answerCombine) {
+            return isset($answerCombine[$item['level']]) && $answerCombine[$item['level']] == $item['answer'];
+        });
         if (!empty($scanHis)) {
             // quét tìm answer_manage_id nào có kết quả nhiều nhất
             $find_al = [];
             foreach ($scanHis as $hisKey => $his) {
-                if(isset($find_al[$his->answer_manage_id])){
-                    $find_al[$his->answer_manage_id] = $find_al[$his->answer_manage_id] + 1;
+                if(isset($find_al[$his['answer_manage_id']])){
+                    $find_al[$his['answer_manage_id']] = $find_al[$his['answer_manage_id']] + 1;
                 }else{
-                    $find_al[$his->answer_manage_id] = 1;
+                    $find_al[$his['answer_manage_id']] = 1;
                 }
             }
             $maxValue = max($find_al);
             $positions = array_keys($find_al, $maxValue);
             $first_answer_manage_id = end($positions);
-
             foreach ($scanHis as $hisKey => $his) {
                 if($request->action === 'edit'){
-                    if(intval($request->answer_manage_id) !== $his->answer_manage_id){
+                    if(intval($request->answer_manage_id) !== $his['answer_manage_id']){
                         array_push($ans_has_dup,$his);
                     }
                 }else{
                     $levelExists = false;
                     if(count($ans_has_dup) > 0){
                         foreach ($ans_has_dup as $item) {
-                            if ($item->level === $his->level) {
+                            if ($item['level'] === $his['level']) {
                                 $levelExists = true;
                                 break;
                             }
                         }
-                        if (!$levelExists && $his->answer_manage_id == $first_answer_manage_id) {
+                        
+                        if (!$levelExists && $his['answer_manage_id'] == $first_answer_manage_id) {
                             $ans_has_dup[] = $his;
                         }
                     }else{
-                        if ($his->answer_manage_id === $first_answer_manage_id) {
+                        if ($his['answer_manage_id'] === $first_answer_manage_id) {
                             $ans_has_dup[] = $his;
                         }
                     }
