@@ -32,7 +32,8 @@ class AnswerManageRepository
     public function sumCoreCredits($year){
         $memberId = auth()->user()->id;
         $possibleTypes = [0, 1, 2];
-        $certification_year = strval('20'.auth()->user()->user_add_info->certification_year);
+        $tacy = intval(auth()->user()->user_add_info->training_accreditation_certification_year);
+        $tacyold = $tacy - 4;
         $allTypes = collect($possibleTypes)->map(function ($type) {
             return ['type_native_id' => $type];
         });
@@ -54,13 +55,12 @@ class AnswerManageRepository
                     $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
                 })
                 ->where('member_id', $memberId)
-                ->whereIn('answer_manage.type_native_id', $possibleTypes)
-                ->where('answer_manage.registration_year','>=', $certification_year);
+                ->whereIn('answer_manage.type_native_id', $possibleTypes);
 
         if (is_array($year)) {
             $result->whereIn('registration_year', $year);
         } else {
-            $result->where('registration_year', $year);
+            $result->whereBetween('registration_year', [$tacyold,$tacy]);
         }
 
         $result = $result

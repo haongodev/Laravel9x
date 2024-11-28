@@ -157,7 +157,7 @@
                 $('.btn-export-pdf').addClass('hidden');
                 var file_name = $('#table-confirm-registry').find('input[name="file_name"]').val()
                 var node = document.getElementById('table-confirm-registry');
-                domtoimage.toPng(node, { width: node.scrollWidth, height: 1500 })
+                domtoimage.toPng(node, { width: node.scrollWidth, height: 2000 })
                 .then (function (dataUrl) {
                     var docDefinition = {
                         content: [{

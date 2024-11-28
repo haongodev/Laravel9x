@@ -69,6 +69,7 @@
 <script src="{{ asset('assets') }}/js-lib/cdn.jsdelivr.net_npm_chart.js" ></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/vfs_fonts.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
@@ -391,7 +392,6 @@
 	        html2canvas($('.popup-top .btn-title button'),{
 	            onrendered: function (canvas) {
 	                headPdf = canvas.toDataURL();
-	                console.log(headPdf);
 	                $('.popup-top .btn-title-chart1').removeClass('hidden');
 	                html2canvas($('.popup-top .btn-title-chart1'),{
 	                    onrendered: function (canvas) {
@@ -466,7 +466,13 @@
                 alignment: "center"
             })
             var docDefinition = {
-                content:objChart
+                footer: function(currentPage, pageCount) { 
+                    return {
+                        text: "Page " + currentPage.toString() + ' of ' + pageCount,
+                        alignment: 'center',
+                    };
+                },
+                content:objChart,
             };
             pdfMake.createPdf(docDefinition).download(file_name);
         }
