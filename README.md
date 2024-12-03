@@ -16,7 +16,7 @@ Trước khi bắt đầu, hãy chắc chắn rằng bạn đã cài đặt các
 - **Laravel 9.19**.
 - **Docker** và **Docker Compose** (tải từ [Docker website](https://www.docker.com/get-started)).
 - **Node.js v16** (với Laravel Mix).
-- **Redis**, **MySQL**, **Meilisearch**, **Mailpit**, **Selenium**.
+- **Redis**, **MySQL**, **Mailpit**.
 
 ## Cài Đặt Docker và Docker Compose
 
