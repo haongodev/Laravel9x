@@ -94,8 +94,8 @@
     <script src="{{asset('assets/js/datepicker.js')}}"></script>
 
     <script>
-        var initCoreChart1Data = JSON.parse(`{!! json_encode($sumCoreByInitYear) !!}`);
-        var initCoreChart2Data = JSON.parse(`{!! json_encode($sumCoreByInitYearRange) !!}`);
+        var initCoreChart1Data = JSON.parse(`{!! json_encode($sumCoreByInitYearRange) !!}`);
+        var initCoreChart2Data = JSON.parse(`{!! json_encode($sumCoreByInitYear) !!}`);
         var maxScales1 = 0;
         var dataInitCore1 = [];
         var textInfoScore2 = [];

@@ -468,7 +468,7 @@
             var docDefinition = {
                 footer: function(currentPage, pageCount) { 
                     return {
-                        text: "Page " + currentPage.toString() + ' of ' + pageCount,
+                        text: currentPage.toString() + ' / ' + pageCount,
                         alignment: 'center',
                     };
                 },
