@@ -60,7 +60,11 @@ class AnswerManageRepository
         if (is_array($year)) {
             $result->whereIn('registration_year', $year);
         } else {
-            $result->whereBetween('registration_year', [$tacyold,$tacy]);
+            if($tacy == 2028){
+                $result->whereBetween('registration_year', [$tacyold,$tacy]);
+            }else{
+                $result->where('registration_year', $year);
+            }
         }
 
         $result = $result
