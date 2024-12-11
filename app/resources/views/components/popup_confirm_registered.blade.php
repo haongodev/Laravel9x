@@ -34,16 +34,16 @@ $fileName = '単位登録_' . $patternName . '_' . date('Ymd') . '.pdf';
                                 <?php $score += $answer->score?>
                                 <div class="tb-left">{!!$answer->title!!}</div>
                                 @if(in_array($answer->input_method,[2,3,6]))
-                                    <div class="tb-right">{!! str_replace(',','<br>',$answer->answer) !!}</div>
+                                    <div class="tb-left">{!! str_replace(',','<br>',$answer->answer) !!}</div>
                                 @elseif($answer->input_method ==7)
-                                    <div class="tb-right">{{date('Y年 m月 d日',strtotime($answer->answer))}}</div>
+                                    <div class="tb-left">{{date('Y年 m月 d日',strtotime($answer->answer))}}</div>
                                 @elseif($answer->input_method == 8)
                                         @php
                                             $arrAnswer =explode(',',$answer->answer);
                                         @endphp
-                                        <div class="tb-right">{{date('Y年 m月 d日',strtotime($arrAnswer[0]))}}~{{date('Y年 m月 d日',strtotime($arrAnswer[1]))}}</div>
+                                        <div class="tb-left">{{date('Y年 m月 d日',strtotime($arrAnswer[0]))}}~{{date('Y年 m月 d日',strtotime($arrAnswer[1]))}}</div>
                                     @else
-                                        <div class="tb-right">{{$answer->answer}}{{$answer->input_method==10 ? '年度' :''}}</div>
+                                        <div class="tb-left">{{$answer->answer}}{{$answer->input_method==10 ? '年度' :''}}</div>
                                 @endif
 
                             </div>
