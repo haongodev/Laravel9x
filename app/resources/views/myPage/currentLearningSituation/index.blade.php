@@ -38,8 +38,10 @@
         </div>
 
 
-        @if(   auth()->user()->user_add_info->training_accreditation_certification_status == '認定精神保健福祉士'
-          || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認定精神保健福祉士'
+        @if((auth()->user()->user_add_info->training_accreditation_certification_status == '認定精神保健福祉士'
+          || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認定精神保健福祉士')
+          && auth()->user()->user_add_info->training_accreditation_certification_year 
+          && intval(auth()->user()->user_add_info->training_accreditation_certification_year) >= 2028
         )
             <div class="head-chart flex-between">
                 <div class="side-left">
