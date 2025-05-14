@@ -3,6 +3,9 @@
         <div class="main-logo">
             <img src="{{ asset('assets') }}/images/logo/title_logo.png" alt="training_management_logo">
         </div>
+        <div style="margin-top: 5px; margin-bottom: 0; text-align: center;">
+            <a href="https://business.form-mailer.jp/fms/2eebbc5f214809" target="_blank" style="font-size: 14px; color: #333; text-decoration: underline;">本システムへのご質問及びご要望はこちらへ</a>
+        </div>
     </div>
     @if(auth()->check())
     <div class="right-side">

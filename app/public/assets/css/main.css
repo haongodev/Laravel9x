@@ -52,7 +52,7 @@ button.disabled{
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    padding: 40px 0px;
+    padding: 20px 0px 5px 0px;
     align-items: center;
 }
 .main-header .left-side{
@@ -124,11 +124,6 @@ button.disabled{
     margin-bottom: 20px;
     border: 1px solid #94a3b8;
     padding: 20px;
-}
-.wrapper-container .left-side .sub-desc ul{
-    list-style-type: '※ ';
-    padding: 0 20px;
-    font-size: 17px;
 }
 .wrapper-container .left-side .side-top .container .row{
     display: flex;
@@ -364,4 +359,9 @@ button.disabled{
 }
 .main-header .right-side::-webkit-scrollbar-thumb {
     background: #888;
+}
+.wrapper-container .left-side .sub-desc ul{
+    list-style-type: '※ ';
+    padding: 0 20px;
+    font-size: 17px;
 }
