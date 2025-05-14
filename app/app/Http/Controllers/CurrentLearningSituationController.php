@@ -62,7 +62,8 @@ class CurrentLearningSituationController extends Controller
     }
     public function getSumCoreByYear($year)
     {
-        $sumCoreByInitYear = $this->answerManageService->getSumCoreByTypeNativeId($year);
+        // AJAX呼び出しによる年度切り替えでは、単年度のデータのみを表示する
+        $sumCoreByInitYear = $this->answerManageService->getSumCoreByTypeNativeIdSingleYear($year);
         return response()->json( array('success' => true, 'data' => $sumCoreByInitYear) );
     }
     public function getStudyScoreBwMonth($date){

@@ -57,5 +57,16 @@ class AnswerManageService
         return $this->answerManageRepository->sumScoreBwYearForPattern($from,$to);
     }
 
+    /**
+     * 単年度のみのデータを取得するメソッド
+     * 
+     * @param int $year 年度
+     * @return \Illuminate\Support\Collection
+     */
+    public function getSumCoreByTypeNativeIdSingleYear($year)
+    {
+        return $this->answerManageRepository->sumCoreCreditsSingleYear($year);
+    }
+
 }
 

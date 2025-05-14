@@ -254,4 +254,45 @@ class AnswerManageRepository
     public function countAnswer(){
         return $this->model->distinct('member_id')->count('member_id');
     }
+
+    /**
+     * 単年度のみのデータを取得するメソッド
+     * 年度選択での表示用に、特定の年度のデータのみを取得する
+     * 
+     * @param int $year 年度
+     * @return \Illuminate\Support\Collection
+     */
+    public function sumCoreCreditsSingleYear($year){
+        $memberId = auth()->user()->id;
+        $possibleTypes = [0, 1, 2];
+        $allTypes = collect($possibleTypes)->map(function ($type) {
+            return ['type_native_id' => $type];
+        });
+
+        // 必ず特定の年度のみを対象とする
+        $result = $this->model
+                ->leftJoin('answer_info', function ($q) {
+                    $q->on('answer_manage.id', '=', 'answer_info.answer_manage_id');
+                })
+                ->where('member_id', $memberId)
+                ->whereIn('answer_manage.type_native_id', $possibleTypes)
+                ->where('registration_year', $year) // 常に単一年度のみをクエリ
+                ->groupBy('answer_manage.type_native_id')
+                ->orderBy('answer_manage.type_native_id', 'asc')
+                ->select(
+                    'answer_manage.type_native_id',
+                    \DB::raw('COALESCE(SUM(score), 0) as total_score')
+                )
+                ->get();
+
+        // 結果の形式を整える
+        $result = $allTypes->map(function ($type) use ($result) {
+            $match = $result->where('type_native_id', $type['type_native_id'])->first();
+            return [
+                    'type_native_id' => $type['type_native_id'],
+                    'total_score' => $match ? $match['total_score'] : 0,
+            ];
+        });
+        return $result;
+    }
 }
