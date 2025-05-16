@@ -45,7 +45,6 @@
             <div class="head-chart flex-between">
                 <div class="side-left">
                     <span>{{getCertificationYear()}}年度 認定期限までの研鑽状況</span>
-                    <div style="color: #FF0000; font-size: 12px; margin-top: 3px;">※認定期限が2027年度以前の方は表示されません</div>
                 </div>
                 <div class="side-right">
                     <button class="decline-btn btn-eff-ora btn-hov"><a href="{{ route('creditRegistration') }}">単位登録</a>
@@ -86,6 +85,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            @else
+            <div class="alert" style="color: #FF0000; text-align: left; margin-top: 15px; font-size: 14px;">
+                ※認定期限が2027年度以前の方は表示されません
             </div>
             @endif
         @endif
