@@ -40,18 +40,19 @@
 
         @if((auth()->user()->user_add_info->training_accreditation_certification_status == '認定精神保健福祉士'
           || auth()->user()->user_add_info->training_accreditation_certification_status == '研修認定精神保健福祉士')
-          && auth()->user()->user_add_info->training_accreditation_certification_year 
-          && intval(auth()->user()->user_add_info->training_accreditation_certification_year) >= 2028
+          && auth()->user()->user_add_info->training_accreditation_certification_year
         )
             <div class="head-chart flex-between">
                 <div class="side-left">
                     <span>{{getCertificationYear()}}年度 認定期限までの研鑽状況</span>
+                    <div style="color: #FF0000; font-size: 12px; margin-top: 3px;">※認定期限が2027年度以前の方は表示されません</div>
                 </div>
                 <div class="side-right">
                     <button class="decline-btn btn-eff-ora btn-hov"><a href="{{ route('creditRegistration') }}">単位登録</a>
                     </button>
                 </div>
             </div>
+            @if(intval(auth()->user()->user_add_info->training_accreditation_certification_year) >= 2028)
             <div class="row"
                  style="height: 500px; width:100%;margin: 0 auto;display: flex;align-items: center;position: relative;">
                 <canvas id="myChart2"></canvas>
@@ -86,6 +87,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         @endif
     </div>
     @include('components.popup_filter_scoring_board')
