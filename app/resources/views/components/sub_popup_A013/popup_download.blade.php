@@ -14,8 +14,8 @@
         <div class="popup-content">
             <div class="header-content not-remove">
                 <button class="title-popup">ダウンロードする</button>
-                <button class="title-popup button-link btn-eff-ora btn-hov"><a download href="/templates/facesheet/フェイスシート.xlsx">フェイスシート (Excel)</a></button>
-                <button class="title-popup button-link btn-eff-ora btn-hov"><a download href="/templates/facesheet/facesheet.pdf">フェイスシート (PDF)</a></button>
+                <button class="title-popup button-link btn-eff-ora btn-hov"><a download href="{{ asset('templates/facesheet/フェイスシート.xlsx') }}">フェイスシート (Excel)</a></button>
+                <button class="title-popup button-link btn-eff-ora btn-hov"><a download href="{{ asset('templates/facesheet/facesheet.pdf') }}">フェイスシート (PDF)</a></button>
             </div>
         </div>
         <div class="popup-footer">
