@@ -8,7 +8,7 @@
         >共有</div>
     </td>
     <td>
-        <div class="manager btn-eff-ora btn-hov"><a download class="download" href="{{config('constants.path_upload').'/'.auth()->user()->user_add_info->login_id.'/facesheet/'.$faceSheetManager->file_name}}">{{$faceSheetManager->display_name}}</a></div>
+        <div class="manager btn-eff-ora btn-hov"><a download class="download" href="{{ asset('storage/upload/'.auth()->user()->user_add_info->login_id.'/facesheet/'.$faceSheetManager->file_name) }}">{{$faceSheetManager->display_name}}</a></div>
     </td>
 
 
