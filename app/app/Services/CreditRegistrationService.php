@@ -307,7 +307,8 @@ class CreditRegistrationService
                     if($questionSettingData[$questionSettingId]['input_method'] == 7) {
                         $date = $answer;
                     }elseif($questionSettingData[$questionSettingId]['input_method'] == 8){
-                        $date = $answer['start'];
+                        // 期間入力の場合は終了日の年度を採用する
+                        $date = $answer['end'];
                     }elseif($questionSettingData[$questionSettingId]['input_method'] == 10){
                         return $answer;
                     }
@@ -389,4 +390,3 @@ class CreditRegistrationService
 
     }
 }
-
